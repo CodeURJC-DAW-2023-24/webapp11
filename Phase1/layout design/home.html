@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Event Crafters - Inicio</title>
+
+    <!-- Enlace a la hoja de estilos de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href='home.css'>
+    <link rel="icon" href="logo.jpeg" type="image/png">
+
+    <!-- Estilos personalizados -->
+    
+</head>
+
+<body>
+
+    <!-- Barra de navegación -->
+   
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <a class="logoText" href="#">
+          <img src="logo.jpeg" width="50" height="50" alt="Logo"> Event Crafters
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                  <a class="nav-link" href="#">Inicio</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Mi Perfil
+                </a>
+                <div class="dropdown-menu" aria-labelledby="perfilDropdown">
+                    <a class="dropdown-item" href="#">Mis eventos</a>
+                    <a class="dropdown-item" href="#">Próximos eventos</a>
+                    <a class="dropdown-item" href="#">Configuración</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                </div>
+            </li>
+              <li class="nav-item">
+                  <form class="form-inline">
+                      <input class="form-control mr-sm-2" list="etiquetas" id="busquedaEtiquetas" placeholder="Buscar"
+                          aria-label="Search">
+                      <datalist id="etiquetas">
+                          <option value="Campo">
+                          <option value="Deporte">
+                          <option value="Conferencia">
+                          <!-- Agrega más opciones según sea necesario -->
+                      </datalist>
+                      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
+                  </form>
+              </li>
+          </ul>
+      </div>
+  </nav>
+
+    <!-- Contenido principal -->
+    <div class="container mt-4">
+        <h2 class="titulo-eventos">Próximos Eventos</h2>
+
+        <!-- Actividades -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="actividad">
+                    <img src="campo.jpg" alt="Actividad 1" class="img-fluid">
+                    <h5>Paseo por el campo</h5>
+                    <div class="etiquetas-container">
+                        <span class="etiqueta-evento etiqueta-campo">Campo</span>
+                    </div>
+                    <p class="localizacion"><strong>Parque del Encinar</strong></p>
+                    <p class="descripcion">Paseo por el campo con bici o andando</p>
+                    <a href="#" class="btn btn-primary">Ver Detalles</a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="actividad">
+                    <img src="juegosMesa.png" alt="Actividad 2" class="img-fluid">
+                    <h5>¡Juegos de mesa!</h5>
+                    <div class="etiquetas-container">
+                        <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                    </div>
+                    <p class="localizacion"><strong>Móstoles, tienda de juegos Game-X</strong></p>
+                    <p class="descripcion">¡Tarde de torneos de juegos de mesa! Los ganadores se llevarán
+                        <strong>50€</strong></p>
+                    <a href="#" class="btn btn-primary">Ver Detalles</a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="actividad">
+                    <img src="conferencia.jpg" alt="Actividad 3" class="img-fluid">
+                    <h5>Conferencia sobre usabilidad</h5>
+                    <div class="etiquetas-container">
+                        <span class="etiqueta-evento etiqueta-conferencia">Educación</span>
+                    </div>
+                    <p class="localizacion"><strong>Móstoles, campus URJC</strong></p>
+                    <p class="descripcion">Dada por la gran MariCris, charla de usabilidad en las apps</p>
+                    <a href="#" class="btn btn-primary">Ver Detalles</a>
+                </div>
+            </div>
+          <!--agregar actividades-->
+        </div>
+    </div>
+    <div class="cargar-eventos">
+      <button class="btn">Cargar más eventos</button>
+  </div>
+</div>
+    
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

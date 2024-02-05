@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Event Crafters - Perfil</title>
+    <!-- Enlace a la hoja de estilos de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href='perfil.css'>
+    <link rel="icon" href="/logo.jpeg" type="image/png">
+    <!-- Estilos personalizados -->
+
+</head>
+
+<body>
+
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="logoText" href="#">
+            <img src="logo.jpeg" width="50" height="50" alt="Logo"> Event Crafters
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Inicio</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Mi Perfil
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="perfilDropdown">
+                        <a class="dropdown-item" href="#">Mis eventos</a>
+                        <a class="dropdown-item" href="#">Próximos eventos</a>
+                        <a class="dropdown-item" href="#">Configuración</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                    </div>
+                </li>i
+                <li class="nav-item">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container mt-4">
+
+        <!-- Sección de Perfil -->
+        <div class="perfil-container">
+            <h2 class="titulo-eventos">Mi Perfil</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <img class="perfil-foto" src="fotoPerfil.jpg" alt="Foto de Perfil">
+                </div>
+                <div class="col-md-8">
+                    <div class="datos-usuario">
+                        <p><strong>Nombre:</strong> Pepe</p>
+                        <p><strong>Correo:</strong> pepe@gmail.com</p>
+                        <p><strong>Nick:</strong> pepito_el_mas_bonito</p>
+                        <p><strong>Teléfono:</strong> +123456789</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Eventos Creados por el Usuario -->
+           <!-- Eventos Creados por el Usuario -->
+           <div class="eventos-usuario">
+            <h3 class ="creados">Mis Eventos Creados</h3>
+            <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+                <div class="col-md-4 mb-4">
+                    <div class="actividad d-flex flex-row align-items-center">
+                        <div class="etiquetas-container info">
+                            <span class="etiqueta-evento etiqueta-campo">Campo</span>
+                        </div>
+                        <h5 class="info">Excursión al Valle del Jerte</h5>
+                        <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="actividad d-flex flex-row align-items-center">
+                        <div class="etiquetas-container info">
+                            <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                        </div>
+                        <h5 class="info">Competición de batminton</h5>
+                        <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="actividad d-flex flex-row align-items-center">
+                        <div class="etiquetas-container info">
+                            <span class="etiqueta-evento etiqueta-educacion">Educación</span>
+                        </div>
+                        <h5 class="info">JobDays ETSII</h5>
+                        <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="actividad d-flex flex-row align-items-center">
+                        <div class="etiquetas-container info">
+                            <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                        </div>
+                        <h5 class="info">Competición de batminton</h5>
+                        <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
+                    </div>
+                </div> 
+                
+                <!-- Puedes agregar más eventos según sea necesario -->
+            </div>
+        </div>
+
+        <div class="cargar-eventos">
+            <button class="btn">Cargar más eventos</button>
+        </div>
+        
+        <div class="eventos-usuario">
+            <h3 class ="proximos">Eventos a los que me he apuntado
+            </h3>
+            <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+                <div class="col-md-4 mb-4">
+                    <div class="actividad d-flex flex-row align-items-center">
+                        <div class="etiquetas-container info">
+                            <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                        </div>
+                        <h5 class="info">Partido voley-playa</h5>
+                        <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="actividad d-flex flex-row align-items-center">
+                        <div class="etiquetas-container">
+                            <span class="etiqueta-evento etiqueta-educacion">Educación</span>
+                        </div>
+                        <h5 class="info">Cibernet: delincuentes en las redes</h5>
+                        <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="actividad d-flex flex-row align-items-center">
+                        <div class="etiquetas-container info">
+                            <span class="etiqueta-evento etiqueta-campo">Campo</span>
+                        </div>
+                        <h5 class="info">Ruta de las flores</h5>
+                        <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
+                    </div>
+                </div>
+                <!-- Puedes agregar más eventos según sea necesario -->
+            </div>
+        </div>
+            
+        <div class="cargar-eventos">
+            <button class="btn">Cargar más eventos</button>
+        </div>
+               
+    </div>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
