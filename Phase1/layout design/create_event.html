@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href='create_event.css'>
+    <link rel="icon" href="logo.jpeg" type="image/png">
+    <title>Crear Evento</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <img src="logo.jpeg" alt="Logo" class="img-fluid small-logo">
+                        <h1>Crear Evento</h1>
+                    </div>
+                    <div class="card-body">
+                        <form enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="evento-nombre">Introduce el nombre del evento</label>
+                                <input type="text" class="form-control" id="evento-nombre"
+                                    placeholder="Nombre del Evento" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="evento-descripcion">Introduce la descripción del evento</label>
+                                <textarea class="form-control" id="evento-descripcion"
+                                    placeholder="Descripción del Evento" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="evento-aforo">Introduce el afaro del evento</label>
+                                <input type="number" class="form-control" id="evento-aforo" placeholder="Aforo"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="evento-duracion">Introduce la duracion del evento en minutos</label>
+                                <input type="number" class="form-control" id="evento-duracion" placeholder="Duracion (min)"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="evento-etiqueta">Introduce la categoria del evento</label>
+                                <select class="form-control" id="evento-etiqueta" required>
+                                    <option>Campo</option>
+                                    <option>Bosque</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="evento-foto">Introduce la foto del Evento</label>
+                                <input type="file" class="form-control-file" id="evento-foto" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="evento-direccion">Introduce la direccion del evento</label>
+                                <input type="text" class="form-control" id="evento-direccion" placeholder="Dirección"
+                                    required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="evento-latitud">Introduce la latitud de la direccion del evento</label>
+                                    <input type="text" class="form-control" id="evento-latitud" placeholder="Latitud"
+                                        required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="evento-longitud">Introduce la longitud de la direccion del
+                                        evento</label>
+                                    <input type="text" class="form-control" id="evento-longitud" placeholder="Longitud"
+                                        required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Crear Evento</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
