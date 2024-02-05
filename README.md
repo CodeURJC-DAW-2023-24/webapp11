@@ -39,7 +39,7 @@ To organize the team, we use [ Trello](https://trello.com/b/AJC8iT3W/daw)
  
  It should be noted that, when there are M:N relationships, a third table arises, so there will be some more entity that are not specified in the following diagram.
   
-  ![*1.1 entities*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/diagrama_entidades.png)
+  ![*1.1 entities*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/diagram.png)
 
 
 
