@@ -38,7 +38,7 @@ To organize the team, we use [ Trello](https://trello.com/b/AJC8iT3W/daw)
   
  The entities that will carry **images** will be the user and event ones.
  
- It should be noted that, when there are M:N relationships, a third table arises, so there will be some more entity that is not specified in the following diagram.
+ It should be noted that, when there are M:N relationships, a third table arises, so there will be some more entity that are not specified in the following diagram.
   
   ![*1.1 entities*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/diagrama_entidades.png)
 
@@ -82,5 +82,5 @@ To organize the team, we use [ Trello](https://trello.com/b/AJC8iT3W/daw)
 ## 🎯Optional features
 -  **Ticket Sales Chart**: A chart will be generated for the entire ticket sales you have generated for an event
 -  **Visits chart**: Reflects the visits you have had at an event.
--  **Filter by User Rating algorIthm**: Filter events based on user ratings.
+-  **Filter by User Rating algorithm**: Filter events based on user ratings.
 -  **PDF**: make a PDF with the event information when the user sing up in the events
