@@ -32,9 +32,8 @@ To organize the team, we use [ Trello](https://trello.com/b/AJC8iT3W/daw)
 ## 💻Entities
 - Users
 - Events
-- Chat
 - Reviews
-- Tags
+- Category
   
  The entities that will carry **images** will be the user and event ones.
  
@@ -74,13 +73,14 @@ To organize the team, we use [ Trello](https://trello.com/b/AJC8iT3W/daw)
   
 ## 📊Chart
 - **Attendance chart**: The user will be able to visualize an attendance chart for their event
-- **Tags chart**: The user will be able to visualize a bar chart with the different percentaje of the tags
+- **Category chart**: The user will be able to visualize a bar chart with the different percentaje of the tags
 
-## 💡Advance algorithms
-- **Filter by tag**: This algorithm will allow the user to filter events  based on the most frequently used tags in the events you participate in.
+## 💡Advanced algorithms
+- **Recommend by category**: This algorithm will allow the user to filter events  based on the most frequently used tags in the events you participate in.
 
 ## 🎯Optional features
 -  **Ticket Sales Chart**: A chart will be generated for the entire ticket sales you have generated for an event
 -  **Visits chart**: Reflects the visits you have had at an event.
 -  **Filter by User Rating algorithm**: Filter events based on user ratings.
 -  **PDF**: make a PDF with the event information when the user sing up in the events
+-  **Chat**
