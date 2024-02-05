@@ -2,7 +2,7 @@
 
 # <p align="center"> Events Crafters </p>
 ## 📑Index
-- Fase 0
+- Phase 0
    - [Team members](#team-members)
    - [Team organization](#team-organization)
    - [Entities](#entities)
