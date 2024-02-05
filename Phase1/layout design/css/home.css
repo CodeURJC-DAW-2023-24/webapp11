@@ -16,6 +16,11 @@ body {
     background-color: rgb(154, 154, 154);
 }
 
+.logoText:hover {
+    color: white !important; /* Forzar que el color sea blanco al pasar el ratón */
+    background-color: transparent !important; /* Forzar que el fondo sea transparente al pasar el ratón */
+    text-decoration: none; /* Evitar la subrayado en el hover */
+}
 .actividad {
     margin-bottom: 20px;
     border-radius: 10px;
