@@ -30,8 +30,8 @@
                     <a class="nav-link" href="#">Inicio</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Mi Perfil
                     </a>
                     <div class="dropdown-menu" aria-labelledby="perfilDropdown">
@@ -52,6 +52,32 @@
         </div>
     </nav>
 
+    <!--PopUp tags-->
+    <div class="window-background" id="window-background">
+        <div class="window-container" id="window-container">
+            <a class="close-button" id="close-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="icon-x">
+                    <path
+                        d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z">
+                    </path>
+                </svg>
+            </a>
+            <form enctype="multipart/form-data">
+                <div class="form-group" id="first-part-tag-form">
+                    <label for="tag-name-in">Nombre del tag</label>
+                    <input type="text" class="form-control" id="tag-name-in" placeholder="Nombre del tag">
+                </div>
+                <div class="form-group">
+                    <label for="tag-color-in">Color del tag</label>
+                    <input type="color" class="form-control" id="tag-color-in" placeholder="Color del tag">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" name="btn-safe-tags">Guardar</button>
+            </form>
+        </div>
+    </div>
+    <!--Termina PopUp tags-->
+
     <!-- Contenido principal -->
     <div class="container mt-4">
 
@@ -71,162 +97,207 @@
                 </div>
             </div>
 
+            <!-- Tags -->
+            <div class="eventos-usuario">
+                <h3 class="creados">Tags</h3>
+                <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center" name="tag">
+                            <div class="etiquetas-container info etiqueta-admin-container">
+                                <span class="etiqueta-evento etiqueta-campo etiqueta-admin" name="tag-name">Campo</span>
+                            </div>
+                            <a href="#" class="btn btn-block" name="open-button">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center" name="tag">
+                            <div class="etiquetas-container info etiqueta-admin-container">
+                                <span class="etiqueta-evento etiqueta-deporte etiqueta-admin">Deporte</span>
+                            </div>
+                            <a href="#" class="btn btn-block" name="open-button">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center" name="tag">
+                            <div class="etiquetas-container info etiqueta-admin-container">
+                                <span class="etiqueta-evento etiqueta-educacion etiqueta-admin">Educación</span>
+                            </div>
+                            <a href="#" class="btn btn-block" name="open-button">Ver Detalles</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center" style="justify-content: center"
+                            name="open-button">
+                            <div class="etiquetas-container info">
+                                <span class="etiqueta-evento etiqueta-add etiqueta-admin">+</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Puedes agregar más eventos según sea necesario -->
+                </div>
+            </div>
+            <!--Termina tags-->
+
             <!-- Eventos Creados por el Usuario -->
-           <!-- Eventos Creados por el Usuario -->
-           <div class="eventos-usuario">
-            <h3 class ="creados">Mis Eventos Creados</h3>
-            <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-campo">Campo</span>
+            <!-- Eventos Creados por el Usuario -->
+            <div class="eventos-usuario">
+                <h3 class="creados">Mis Eventos Creados</h3>
+                <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container info">
+                                <span class="etiqueta-evento etiqueta-campo">Campo</span>
+                            </div>
+                            <h5 class="info">Excursión al Valle del Jerte</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
                         </div>
-                        <h5 class="info">Excursión al Valle del Jerte</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
                     </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container info">
+                                <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                            </div>
+                            <h5 class="info">Competición de batminton</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
                         </div>
-                        <h5 class="info">Competición de batminton</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
                     </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-educacion">Educación</span>
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container info">
+                                <span class="etiqueta-evento etiqueta-educacion">Educación</span>
+                            </div>
+                            <h5 class="info">JobDays ETSII</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
                         </div>
-                        <h5 class="info">JobDays ETSII</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
                     </div>
-                </div>
 
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container info">
+                                <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                            </div>
+                            <h5 class="info">Competición de batminton</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
                         </div>
-                        <h5 class="info">Competición de batminton</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
                     </div>
-                </div> 
-                
-                <!-- Puedes agregar más eventos según sea necesario -->
+
+                    <!-- Puedes agregar más eventos según sea necesario -->
+                </div>
+            </div>
+
+            <div class="cargar-eventos">
+                <button class="btn">Cargar más eventos</button>
+            </div>
+
+
+            <div class="eventos-usuario">
+                <h3 class="proximos">Eventos pasados que he creado </h3>
+                <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container info">
+                                <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
+                            </div>
+                            <h5 class="info">Competición de judo</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container">
+                                <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
+                            </div>
+                            <h5 class="info">Huertos urbanos</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <!-- Puedes agregar más eventos según sea necesario -->
+                </div>
+            </div>
+
+            <div class="eventos-usuario">
+                <h3 class="proximos">Eventos a los que me he apuntado
+                </h3>
+                <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container info">
+                                <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                            </div>
+                            <h5 class="info">Partido voley-playa</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container">
+                                <span class="etiqueta-evento etiqueta-educacion">Educación</span>
+                            </div>
+                            <h5 class="info">Cibernet: delincuentes en las redes</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container info">
+                                <span class="etiqueta-evento etiqueta-campo">Campo</span>
+                            </div>
+                            <h5 class="info">Ruta de las flores</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <!-- Puedes agregar más eventos según sea necesario -->
+                </div>
+            </div>
+
+            <div class="cargar-eventos">
+                <button class="btn">Cargar más eventos</button>
+            </div>
+
+            <div class="eventos-usuario">
+                <h3 class="proximos">Eventos pasados a los que me he apuntado
+                </h3>
+                <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container info">
+                                <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
+                            </div>
+                            <h5 class="info">Extreme Programming</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container">
+                                <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
+                            </div>
+                            <h5 class="info">Escalada en MonteBlanco</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="actividad d-flex flex-row align-items-center">
+                            <div class="etiquetas-container info">
+                                <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
+                            </div>
+                            <h5 class="info">Fotografía de paisajes</h5>
+                            <a href="#" class="btn btn-block">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <!-- Puedes agregar más eventos según sea necesario -->
+                </div>
             </div>
         </div>
 
-        <div class="cargar-eventos">
-            <button class="btn">Cargar más eventos</button>
-        </div>
-        
-
-        <div class="eventos-usuario">
-            <h3 class ="proximos">Eventos pasados que he creado </h3>
-            <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
-                        </div>
-                        <h5 class="info">Competición de judo</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container">
-                            <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
-                        </div>
-                        <h5 class="info">Huertos urbanos</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
-                    </div>
-                </div>
-                <!-- Puedes agregar más eventos según sea necesario -->
-            </div>
-        </div>
-
-        <div class="eventos-usuario">
-            <h3 class ="proximos">Eventos a los que me he apuntado
-            </h3>
-            <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
-                        </div>
-                        <h5 class="info">Partido voley-playa</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container">
-                            <span class="etiqueta-evento etiqueta-educacion">Educación</span>
-                        </div>
-                        <h5 class="info">Cibernet: delincuentes en las redes</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-campo">Campo</span>
-                        </div>
-                        <h5 class="info">Ruta de las flores</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
-                    </div>
-                </div>
-                <!-- Puedes agregar más eventos según sea necesario -->
-            </div>
-        </div>
-            
-        <div class="cargar-eventos">
-            <button class="btn">Cargar más eventos</button>
-        </div>
-        
-           <div class="eventos-usuario">
-            <h3 class ="proximos">Eventos pasados a los que me he apuntado
-            </h3>
-            <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
-                        </div>
-                        <h5 class="info">Extreme Programming</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container">
-                            <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
-                        </div>
-                        <h5 class="info">Escalada en MonteBlanco</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
-                        </div>
-                        <h5 class="info">Fotografía de paisajes</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
-                    </div>
-                </div>
-                <!-- Puedes agregar más eventos según sea necesario -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts de Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!-- Scripts de Bootstrap -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!--Scripts JS-->
+        <script src="../js/perfil.js"></script>
 </body>
 
 </html>

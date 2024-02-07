@@ -1,10 +1,15 @@
 body {
-    padding-top: 56px; /* Ajuste para la barra de navegación fija en la parte superior */
+    padding-top: 56px;
+    /* Ajuste para la barra de navegación fija en la parte superior */
 }
+
 .logoText:hover {
-    color: white !important; /* Forzar que el color sea blanco al pasar el ratón */
-    background-color: transparent !important; /* Forzar que el fondo sea transparente al pasar el ratón */
-    text-decoration: none; /* Evitar la subrayado en el hover */
+    color: white !important;
+    /* Forzar que el color sea blanco al pasar el ratón */
+    background-color: transparent !important;
+    /* Forzar que el fondo sea transparente al pasar el ratón */
+    text-decoration: none;
+    /* Evitar la subrayado en el hover */
 }
 
 .perfil-container {
@@ -57,7 +62,7 @@ body {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 70px; 
+    height: 70px;
     position: relative;
     margin-bottom: 0%;
 }
@@ -81,20 +86,22 @@ body {
 
 /*es el botón de ver mas detallas*/
 .actividad a {
-        display: block;
-        align-items: center;
-        justify-content: center;
-        padding: 10px;
-        text-decoration: none;
-        background-color: #007bff;
-        color: #fff;
-        border-radius: 0 10px 10px 0;
-         width: 100px;  
-        height: 100%; /* Ajuste para que el botón ocupe todo el alto */
-        box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
-        margin-left: 10px;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 0 10px 10px 0;
+    width: 100px;
+    height: 100%;
+    /* Ajuste para que el botón ocupe todo el alto */
+    box-sizing: border-box;
+    /* Asegura que el padding no afecte el ancho total */
+    margin-left: 10px;
 }
-    
+
 
 
 .actividad a:hover {
@@ -113,25 +120,27 @@ body {
     display: inline-block;
     padding: 5px 10px;
     margin: 10px;
-    margin-top: 0;
+    top: 50%;
     border-radius: 5px;
     font-weight: bold;
-    color: #fff; 
+    color: #fff;
+
 }
 
 .etiqueta-campo {
-    background-color: #ffc107; 
+    background-color: #ffc107;
 }
 
 .etiqueta-deporte {
-    background-color: #cc00ff; 
+    background-color: #cc00ff;
 }
 
 .etiqueta-educacion {
-    background-color: #28a745; 
+    background-color: #28a745;
 }
+
 .etiqueta-pasado {
-    background-color: #e04242; 
+    background-color: #e04242;
 }
 
 
@@ -140,16 +149,17 @@ body {
 
 .titulo-eventos {
     text-align: center;
-    background-color: #78d1ef; 
-    color: #000000; 
-    padding: 10px 20px; /* Espaciado interno */
-    border-radius: 20px; 
+    background-color: #78d1ef;
+    color: #000000;
+    padding: 10px 20px;
+    /* Espaciado interno */
+    border-radius: 20px;
     margin-top: 3%;
     margin-bottom: 3%;
     margin-left: 15%;
-    margin-right:15%;
-    font-size: 24px; 
-    font-weight: bold; /
+    margin-right: 15%;
+    font-size: 24px;
+    font-weight: bold;/
 }
 
 .creados,
@@ -159,13 +169,93 @@ body {
     border-bottom: 1px solid #ccc;
 }
 
-.cargar-eventos{
-    text-align:center;
+.cargar-eventos {
+    text-align: center;
     margin-bottom: 5%;
-    margin-top:2%;
-    margin-left:42%;
+    margin-top: 2%;
+    margin-left: 42%;
     margin-right: 42%;
     background-color: #d8a6e5;
     border-radius: 10px;
+}
+
+.etiqueta-admin-container {
+    width: 80%;
+}
+
+.btn-admin-tag{
+    width: auto;
+}
+
+.etiqueta-admin {
+    padding: 10px 20px;
+}
+
+.etiqueta-add {
+    color: black;
+    font-size: 300%;
+    margin-top: 0;
+}
+
+.window-background {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    background-color: rgba(255, 255, 255, 0.3);
+    z-index: 1;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.window-container {
+    position: relative;
+    background-color: #fff;
+    width: 550px;
+    height: auto;
+    padding: 1.5rem;
+    border-radius: 8px;
+    animation-name: modal;
+    animation-duration: .5s;
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+@keyframes modal {
+    from {
+        transform: translateY(50vh);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.close {
+    transition: transform 0.5s cubic-bezier(0, -0.42, 1, -0.41);
+    transform: translateY(60vh);
+}
+
+.close-button {
+    position: absolute;
+    border-radius: 50%;
+    top: -15px;
+    right: -15px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.icon-x {
+    fill: rgb(54, 54, 54);
 }
 
