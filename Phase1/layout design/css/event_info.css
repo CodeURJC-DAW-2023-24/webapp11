@@ -1,0 +1,185 @@
+body {
+    background-color: rgb(161, 255, 224);/* Ajuste para la barra de navegación fija en la parte superior */
+    padding-top: 56px;
+}
+
+#fotoEvento {
+    padding: 0px;
+    max-height: 400px;
+    height: auto;
+}
+
+.perfil-container {
+    padding: 30px;
+    border-radius: 30px;
+    background-color: #fff;
+}
+
+.perfil-foto {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.datos-usuario {
+    margin-bottom: 20px;
+}
+
+.eventos-usuario {
+    margin-top: 20px;
+}
+
+
+.logoText {
+    color: white;
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.logoText:hover {
+    color: white !important; /* Forzar que el color sea blanco al pasar el ratón */
+    background-color: transparent !important; /* Forzar que el fondo sea transparente al pasar el ratón */
+    text-decoration: none; /* Evitar la subrayado en el hover */
+}
+
+.nav-link {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+    text-align: left;
+    border-radius: 5xp;
+    margin-right: 10px;
+}
+
+.nav-link:hover {
+    background-color: rgb(154, 154, 154);
+}
+
+
+
+.actividad {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 70px; 
+    position: relative;
+    margin-bottom: 0%;
+}
+
+.etiquetas-container {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.actividad h5 {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.actividad .contenido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/*es el botón de ver mas detallas*/
+.actividad a {
+        display: block;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        text-decoration: none;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 0 10px 10px 0;
+         width: 100px;  
+        height: 100%; /* Ajuste para que el botón ocupe todo el alto */
+        box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+        margin-left: 10px;
+}
+    
+
+.actividad a:hover {
+    background-color: #0056b3;
+}
+
+
+
+.etiquetas-container {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+}
+
+.etiqueta-evento {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #fff; 
+}
+
+.etiqueta-campo {
+    background-color: #ffc107; 
+}
+
+.etiqueta-deporte {
+    background-color: #cc00ff; 
+}
+
+.etiqueta-educacion {
+    background-color: #28a745; 
+}
+
+.etiqueta-aforo{
+    background-color: #d75959;
+}
+
+.titulo-eventos {
+    text-align: center;
+    background-color: #78d1ef; 
+    color: #000000; 
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 20px; 
+    margin-top: 1%;
+    margin-bottom: 3%;
+    font-size: 24px; 
+    font-weight: bold; 
+}
+
+.creados,
+.proximos {
+    text-align: left;
+    margin-bottom: 2%;
+    border-bottom: 1px solid #ccc;
+}
+
+.cargar-eventos{
+    text-align:center;
+    margin-bottom: 5%;
+    margin-top:2%;
+    margin-left:42%;
+    margin-right: 42%;
+    background-color: #d8a6e5;
+    border-radius: 10px;
+}
+
+.contenedor-mapa{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+iframe {
+    max-width: 100%;
+   }
+
+
+
