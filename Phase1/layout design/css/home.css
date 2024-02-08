@@ -100,7 +100,8 @@ body {
 }
 
 .actividad .descripcion,
-.actividad .localizacion {
+.actividad .localizacion,
+.fecha {
     padding: 10px;
     margin-bottom: 2%;
     margin-top: 0px;
@@ -170,3 +171,4 @@ body {
         font-weight: bold;
         margin-left: 9px;
     } 
+
