@@ -9,10 +9,7 @@
     <!-- Enlace a la hoja de estilos de Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel='stylesheet' type='text/css' media='screen' href='../css/home.css'>
-    <link rel="icon" href="../img/logo.jpeg" type="image/png">
-
-    <!-- Estilos personalizados -->
-    
+    <link rel="icon" href="../img/logo.jpeg" type="image/png">    
 </head>
 
 <body>
@@ -52,7 +49,7 @@
                       <datalist id="etiquetas">
                           <option value="Campo">
                           <option value="Deporte">
-                          <option value="Conferencia">
+                          <option value="Educación">
                           <!-- Agrega más opciones según sea necesario -->
                       </datalist>
                       <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
@@ -74,8 +71,9 @@
                     <h5>Paseo por el campo</h5>
                     <div class="etiquetas-container">
                         <span class="etiqueta-evento etiqueta-campo">Campo</span>
+                        <span class="aforo-evento etiqueta-aforoMucho">Aforo: 24/100</span>
                     </div>
-                    <p class="localizacion"><strong>Parque del Encinar</strong></p>
+                    <span class="icoest1">&#128205; Fuenlabrada. Parque Polvoranca</span>
                     <p class="descripcion">Paseo por el campo con bici o andando</p>
                     <a href="#" class="btn btn-primary">Ver Detalles</a>
                 </div>
@@ -87,8 +85,9 @@
                     <h5>¡Juegos de mesa!</h5>
                     <div class="etiquetas-container">
                         <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                        <span class="aforo-evento etiqueta-aforoLimitado">Aforo: 98/100</span>
                     </div>
-                    <p class="localizacion"><strong>Móstoles, tienda de juegos Game-X</strong></p>
+                    <span class="icoest1">&#128205; Móstoles. Tienda X-GAME</span>
                     <p class="descripcion">¡Tarde de torneos de juegos de mesa! Los ganadores se llevarán
                         <strong>50€</strong></p>
                     <a href="#" class="btn btn-primary">Ver Detalles</a>
@@ -101,17 +100,19 @@
                     <h5>Conferencia sobre usabilidad</h5>
                     <div class="etiquetas-container">
                         <span class="etiqueta-evento etiqueta-conferencia">Educación</span>
+                        <span class="aforo-evento etiqueta-aforoCompleto">Aforo: 100/100</span>
                     </div>
-                    <p class="localizacion"><strong>Móstoles, campus URJC</strong></p>
+                     <span class="icoest1">&#128205; Móstoles. Campus URJC</span>
                     <p class="descripcion">Dada por la gran MariCris, charla de usabilidad en las apps</p>
+                    
                     <a href="#" class="btn btn-primary">Ver Detalles</a>
                 </div>
             </div>
           <!--agregar actividades-->
         </div>
-    </div>
+    </div>	
     <div class="cargar-eventos">
-      <button class="btn">Cargar más eventos</button>
+      <button class="btn btn-block">Cargar más eventos</button>
   </div>
 </div>
     

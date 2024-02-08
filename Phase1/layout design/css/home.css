@@ -65,6 +65,16 @@ body {
     color: #fff; /* Agregado: color de texto */
 }
 
+.aforo-evento {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 10px;
+    /*border-radius: 5px;*/
+    font-weight: bold;
+    color: #fff; /* Agregado: color de texto */
+}
+
+
 .etiqueta-campo {
     background-color: #ffc107; /* Amarillo */
 }
@@ -75,6 +85,18 @@ body {
 
 .etiqueta-conferencia {
     background-color: #28a745; /* Verde */
+}
+
+.etiqueta-aforoMucho {
+    background-color: #6adee7; /* Verde */
+}
+
+.etiqueta-aforoLimitado {
+    background-color: #e76aca; /* Verde */
+}
+
+.etiqueta-aforoCompleto {
+    background-color: #e76a6a; /* Verde */
 }
 
 .actividad .descripcion,
@@ -142,3 +164,9 @@ body {
     background-color: #d8a6e5;
     border-radius: 10px;
 }
+
+.icoest1 {font-size: 15px; 
+       color: #000000;
+        font-weight: bold;
+        margin-left: 9px;
+    } 
