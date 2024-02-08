@@ -6,10 +6,10 @@
    - [Team members](#team-members)
    - [Team organization](#team-organization)
    - [Entities](#entities)
-   - [Type of users](#type-of-users)
+   - [Types of users](#types-of-users)
    - [User requirements](#user-requirements)
-   - [Charts](#chart)
-   - [Advanced Algorithms](#advance-algorithms)
+   - [Charts](#charts)
+   - [Advanced Algorithms](#advanced-algorithms)
    - [Optional features](#optional-features)
    
 ### ♨️Phase 0
@@ -27,7 +27,7 @@
 
 ## 🧰Team organization
 
-To organize the team, we use [Trello](https://trello.com/b/AJC8iT3W/daw)
+To help organize the team and keep track of tasks, we use [Trello](https://trello.com/b/AJC8iT3W/daw)
 
 ## 💻Entities
 - Users
@@ -35,18 +35,18 @@ To organize the team, we use [Trello](https://trello.com/b/AJC8iT3W/daw)
 - Reviews
 - Category
   
- The entities that will carry **images** will be the user and event ones.
+ The entities *user* and *event* will have **images** as attributes.
  
- The following diagram shows these entities, and how they relate to each other. It should be noted that, when there are M:N relationships, a third table arises, so there will be some more entities that are not specified in the following diagram.
+ The following diagram shows the system's entities, and how they relate to each other. It should be noted that, when there are M:N relationships, a new table is created to keep track of its instances, so the database will hold an extra table to keep track of the *Register* relationship shown below.
   
-  ![*1.1 entities*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/diagram.png)
+  ![*1.1 entities*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/img/diagram.png)
 
 
 
-## 🤖Type of users
+## 🤖Types of users
 
- - **Anonymus** : type of user who has not signed up, but still has access to some funtionalities.
- - **Registered** :  type of user who has signed up, and has access to a wide variety of funcionalities.
+ - **Anonymus** : users who have not logged into a registered account. They can access basic functionalities.
+ - **Registered** :  users who have logged into a registered account. They can access a wide variety of funcionalities.
  - **Admin** :  type of user who has control over the platform, having the most extensive permissions.
    
 ## 🏁User requirements
@@ -58,29 +58,28 @@ To organize the team, we use [Trello](https://trello.com/b/AJC8iT3W/daw)
 |   Create reviews  | | <p align="center"> ☑️ </p>  | |
 |   Sign up to an event  | | <p align="center"> ☑️ </p>  | |
 |   View event record  | | <p align="center"> ☑️ </p>  | |
-|   Chat  | | <p align="center"> ☑️ </p>  | |
 |   Modify profile information  | | <p align="center"> ☑️ </p>  | |
-|   Modify events information  | | <p align="center"> ☑️ </p>  | |
+|   Modify event information  | | <p align="center"> ☑️ </p>  | |
 |   Delete published events  | | <p align="center"> ☑️ </p>  | |
 |   View graphics  | | <p align="center"> ☑️ </p>  | <p align="center"> ☑️ </p>  |
-|   Delete events (form other users)  | | | <p align="center"> ☑️ </p>  |
+|   Delete events (from other users)  | | | <p align="center"> ☑️ </p>  |
 |   Block users  | | | <p align="center"> ☑️ </p>  |
-|   Add tags  | | | <p align="center"> ☑️ </p>  |
+|   Create/Modify tags  | | | <p align="center"> ☑️ </p>  |
 
 ## 🖱️ Additional Technologies
-- Send emails
-- Google Maps
+- **Send emails**: users will receive emails when signing up for a new event, and in some other cases.
+- **Google Maps**: events will have a Google Maps embed showing the event location and its surroundings
   
 ## 📊Charts
-- **Attendance chart**: The user will be able to visualize an attendance chart for their event
-- **Category chart**: The user will be able to visualize a bar chart showing how many events there are for each tag
+- **Attendance chart**: users will be able to visualize an attendance chart for events they have published.
+- **Categories chart**: users will be able to visualize a bar chart showing how many events there are for each tag
 
 ## 💡Advanced algorithms
-- **Recommend by category**: This algorithm will allow the user to filter events  based on the most frequently used tags in the events you participate in.
+- **Recommend by category**: This algorithm will choose the events to be featured in a registered user's home page based on the most common tags among events the user has attended.
 
 ## 🎯Optional features
--  **Ticket Sales Chart**: A chart will be generated for the entire ticket sales you have generated for an event
--  **Visits chart**: Reflects the visits you have had at an event.
--  **Filter by User Rating algorithm**: Filter events based on user ratings.
--  **PDF**: make a PDF with the event information when the user sing up in the events
--  **Chat**
+-  **Sign-ups over time**: A chart displaying how many people have signed up for an event over time.
+-  **Views chart**: A chart displaying the views an event has received over time.
+-  **Filter by User Rating algorithm**: An algorithm that would promote events published by users whose previous events have been rated positively.
+-  **PDF integration**: allow users to download a PDF holding event information upon sign-up.
+-  **Chat**: give users the possibility of speaking to each other through the app, and/or create a chatroom for each event where users can discuss it.
