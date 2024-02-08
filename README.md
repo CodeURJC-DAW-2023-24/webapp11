@@ -9,8 +9,8 @@
    - [Type of users](#type-of-users)
    - [User requirements](#user-requirements)
    - [Charts](#chart)
-   - [Advance Algorithms](#advance-algorithms)
-   - [Optional feautres](#optional-features)
+   - [Advanced Algorithms](#advance-algorithms)
+   - [Optional features](#optional-features)
    
 ### ♨️Phase 0
 ***
@@ -27,7 +27,7 @@
 
 ## 🧰Team organization
 
-To organize the team, we use [ Trello](https://trello.com/b/AJC8iT3W/daw)
+To organize the team, we use [Trello](https://trello.com/b/AJC8iT3W/daw)
 
 ## 💻Entities
 - Users
@@ -37,7 +37,7 @@ To organize the team, we use [ Trello](https://trello.com/b/AJC8iT3W/daw)
   
  The entities that will carry **images** will be the user and event ones.
  
- It should be noted that, when there are M:N relationships, a third table arises, so there will be some more entity that are not specified in the following diagram.
+ The following diagram shows these entities, and how they relate to each other. It should be noted that, when there are M:N relationships, a third table arises, so there will be some more entities that are not specified in the following diagram.
   
   ![*1.1 entities*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/diagram.png)
 
@@ -55,7 +55,7 @@ To organize the team, we use [ Trello](https://trello.com/b/AJC8iT3W/daw)
 | ------------- | ------------- | ----------- | --------- |
 |   View events  | <p align="center"> ☑️ </p> | <p align="center"> ☑️ </p> | <p align="center"> ☑️ </p>  |
 |   View reviews  | <p align="center"> ☑️ </p> | <p align="center"> ☑️ </p>  | <p align="center"> ☑️ </p>  |
-|   Put reviews  | | <p align="center"> ☑️ </p>  | |
+|   Create reviews  | | <p align="center"> ☑️ </p>  | |
 |   Sign up to an event  | | <p align="center"> ☑️ </p>  | |
 |   View event record  | | <p align="center"> ☑️ </p>  | |
 |   Chat  | | <p align="center"> ☑️ </p>  | |
@@ -71,9 +71,9 @@ To organize the team, we use [ Trello](https://trello.com/b/AJC8iT3W/daw)
 - Send emails
 - Google Maps
   
-## 📊Chart
+## 📊Charts
 - **Attendance chart**: The user will be able to visualize an attendance chart for their event
-- **Category chart**: The user will be able to visualize a bar chart with the different percentaje of the tags
+- **Category chart**: The user will be able to visualize a bar chart showing how many events there are for each tag
 
 ## 💡Advanced algorithms
 - **Recommend by category**: This algorithm will allow the user to filter events  based on the most frequently used tags in the events you participate in.
