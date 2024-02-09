@@ -36,7 +36,17 @@ body {
 }
 
 .small-logo {
-  max-width: 80px; /*Take down to 70 when reorganizing css */
+  max-width: 80px; 
   max-height: 80px;
   border-radius: 10px;
+}
+
+/* Estilos específicos para la animación de las estrellas */
+.rateyo {
+  pointer-events: auto;
+}
+
+/* Ajuste para que las estrellas se muestren correctamente en el formulario */
+.rating .rateyo {
+   cursor: pointer;
 }
