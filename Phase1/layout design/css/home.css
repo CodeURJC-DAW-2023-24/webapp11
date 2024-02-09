@@ -210,3 +210,18 @@ body {
     background-color: #0056b3;
     color: white;
 }
+
+.form-inline .form-control {
+    margin-right: 10px;
+}
+
+.form-inline .btn {
+    background-color: #0056b3;
+    color: white;
+    border-color: #0056b3;
+}
+
+.form-inline .btn:hover {
+    background-color: #004094;
+    border-color: #004094;
+}
