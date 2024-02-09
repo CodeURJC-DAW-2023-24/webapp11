@@ -12,13 +12,14 @@ body {
   }
 
   .card-header {
-    background-color: #fff;
+    /*background-color: #fff;*/
     border-bottom: 1px solid #d1d1d1;
   }
 
   .card-body {
     padding: 30px;
   }
+  
 
   .form-group {
     margin-bottom: 20px;
@@ -35,6 +36,7 @@ body {
   }
 
   .small-logo {
-    width: 70px; 
-    border-radius: 10xp 10xp 10xp 10xp;
+    max-width: 80px; /*Take down to 70 when reorganizing css */
+    max-height: 80px;
+    border-radius: 10px;
   }
