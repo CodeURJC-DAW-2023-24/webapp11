@@ -104,10 +104,11 @@ body {
         margin-left: 10px;
 }
     
-
-.actividad a:hover {
-    background-color: #0056b3;
+.actividad:hover {
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease 0s;
 }
+
 
 
 
