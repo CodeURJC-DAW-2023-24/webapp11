@@ -343,3 +343,15 @@ body {
     background-color: #004094;
     border-color: #004094;
 }
+
+/* Efecto de sombra para los tags */
+.etiqueta-evento:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Efecto de sombra para los contenedores de eventos */
+.actividad:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
+}
