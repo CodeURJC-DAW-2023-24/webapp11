@@ -21,14 +21,20 @@ body {
     background-color: transparent !important; /* Forzar que el fondo sea transparente al pasar el ratón */
     text-decoration: none; /* Evitar la subrayado en el hover */
 }
+
 .actividad {
     margin-bottom: 20px;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     height: 400px;
     position: relative;
 }
+
+.actividad:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
 
 .actividad img {
     width: 100%;
@@ -88,15 +94,15 @@ body {
 }
 
 .etiqueta-aforoMucho {
-    background-color: #6adee7; /* Verde */
+    background-color: #6adee7; /* Cian */
 }
 
 .etiqueta-aforoLimitado {
-    background-color: #e76aca; /* Verde */
+    background-color: #e76aca; /* Morado */
 }
 
 .etiqueta-aforoCompleto {
-    background-color: #e76a6a; /* Verde */
+    background-color: #e76a6a; /* rojo */
 }
 
 .actividad .descripcion,
@@ -166,9 +172,42 @@ body {
     border-radius: 10px;
 }
 
-.icoest1 {font-size: 15px; 
-       color: #000000;
-        font-weight: bold;
-        margin-left: 9px;
-    } 
+.icoest1 {
+    font-size: 15px;
+    color: #000000;
+    font-weight: bold;
+    margin-left: 9px;
+}
 
+.navbar {
+    background-color: #007bff;
+    /* Ajusta el color de fondo según tu preferencia */
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: white !important;
+}
+
+.nav-link {
+    color: white !important;
+    font-size: 16px;
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-menu {
+    border-radius: 0;
+    border-color: #007bff;
+}
+
+.dropdown-item {
+    color: #007bff;
+}
+
+.dropdown-item:hover {
+    background-color: #0056b3;
+    color: white;
+}
