@@ -1,52 +1,52 @@
 body {
-    background-color: #fafafa;
-  }
+  background-color: #fafafa;
+}
 
-  .container {
-    margin-top: 50px;
-  }
+.container {
+  margin-top: 50px;
+}
 
-  .card {
-    border: 1px solid #d1d1d1;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+.card {
+  border: 1px solid #d1d1d1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  .card-header {
-    /*background-color: #fff;*/
-    border-bottom: 1px solid #d1d1d1;
-  }
+.card-header {
+  /*background-color: #fff;*/
+  border-bottom: 1px solid #d1d1d1;
+}
 
-  .card-body {
-    padding: 30px;
-  }
+.card-body {
+  padding: 30px;
+}
 
-  .form-group {
-    margin-bottom: 20px;
-  }
+.form-group {
+  margin-bottom: 20px;
+}
 
-  .btn-primary {
-    background-color: #007bff;
-    border: 1px solid #007bff;
-  }
+.btn-primary {
+  background-color: #007bff;
+  border: 1px solid #007bff;
+}
 
-  .btn-primary:hover {
-    background-color: #0056b3;
-    border: 1px solid #0056b3;
-  }
+.btn-primary:hover {
+  background-color: #0056b3;
+  border: 1px solid #0056b3;
+}
 
-  .card-footer {
-    background-color: #fff;
-    border-top: 1px solid #d1d1d1;
-  }
+.card-footer {
+  background-color: #fff;
+  border-top: 1px solid #d1d1d1;
+}
 
-  .social-icons {
-    font-size: 20px;
-    margin: 0 5px;
-    color: #385185;
-  }
+.social-icons {
+  font-size: 20px;
+  margin: 0 5px;
+  color: #385185;
+}
 
-  .small-logo {
-    max-width: 80px;
-    max-height: 80px;
-    border-radius: 10px;
-  }
+.small-logo {
+  max-width: 80px;
+  max-height: 80px;
+  border-radius: 10px;
+}

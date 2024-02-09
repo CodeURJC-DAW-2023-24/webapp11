@@ -1,42 +1,42 @@
 body {
-    background-color: #fafafa;
-  }
+  background-color: #fafafa;
+}
 
-  .container {
-    margin-top: 100px;
-  }
+.container {
+  margin-top: 100px;
+}
 
-  .card {
-    border: 1px solid #d1d1d1;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+.card {
+  border: 1px solid #d1d1d1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  .card-header {
-    /*background-color: #fff;*/
-    border-bottom: 1px solid #d1d1d1;
-  }
+.card-header {
+  /*background-color: #fff;*/
+  border-bottom: 1px solid #d1d1d1;
+}
 
-  .card-body {
-    padding: 30px;
-  }
+.card-body {
+  padding: 30px;
+}
   
 
-  .form-group {
-    margin-bottom: 20px;
-  }
+.form-group {
+  margin-bottom: 20px;
+}
 
-  .btn-primary {
-    background-color: #3897f0;
-    border: 1px solid #3897f0;
-  }
+.btn-primary {
+  background-color: #3897f0;
+  border: 1px solid #3897f0;
+}
 
-  .btn-primary:hover {
-    background-color: #357ae8;
-    border: 1px solid #357ae8;
-  }
+.btn-primary:hover {
+  background-color: #357ae8;
+  border: 1px solid #357ae8;
+}
 
-  .small-logo {
-    max-width: 80px; /*Take down to 70 when reorganizing css */
-    max-height: 80px;
-    border-radius: 10px;
-  }
+.small-logo {
+  max-width: 80px; /*Take down to 70 when reorganizing css */
+  max-height: 80px;
+  border-radius: 10px;
+}
