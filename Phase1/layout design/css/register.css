@@ -26,13 +26,13 @@ body {
 }
 
 .small-logo {
-  max-width: 80px;
-  max-height: 80px;
-  border-radius: 10px;
+  max-width: 5em; /*previously 80px*/
+  max-height: 5em; /*previously 80px*/
+  border-radius: 0.6em; /*previously 10px*/
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 5%; /*previously 20px*/
 }
 
 .btn-primary {
