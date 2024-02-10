@@ -4,7 +4,8 @@ const windowBackground = document.getElementById('window-background'),
     closeButton = document.getElementById('close-button'),
     colorTrial = document.getElementById('color-trial'),
     tagColorin = document.getElementById('tag-color-in'),
-    tagNamein = document.getElementById('tag-name-in');
+    tagNamein = document.getElementById('tag-name-in'),
+    deleteAccountBtn = document.getElementById('delete-account-btn');
 
 
 // para pasar de rgb a hex
@@ -47,4 +48,18 @@ closeButton.addEventListener('click', () => closeWindow())
 window.addEventListener('click', e => e.target == windowBackground && closeWindow())
 
 tagColorin.addEventListener('input', () => colorTrial.style.background = tagColorin.value)
+
+
+const askForConfirmation = () => {
+    var result = confirm("¿Estás seguro de que deseas continuar?");
+    if (result == true) {
+        // El usuario hizo clic en "Aceptar"
+        alert("Has aceptado.");
+    } else {
+        // El usuario hizo clic en "Cancelar"
+        alert("Has cancelado la acción.");
+    }
+}
+
+deleteAccountBtn.addEventListener('click', () => askForConfirmation())
 
