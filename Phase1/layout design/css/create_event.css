@@ -1,6 +1,6 @@
 body {
   background-color: #fafafa;
-  height: 100vh;
+  /*height: 100vh;*/
   display: flex;
   align-items: center; /*Comment or delete this line to have it be at the top instead of center*/
   justify-content: center;

@@ -1,21 +1,23 @@
 body {
   background-color: #fafafa;
-}
-
-.container {
-  margin-top: 50px;
+  height: 100vh;
+  display: flex;
+  align-items: center; /*Comment or delete this line to have it be at the top instead of center*/
+  justify-content: center;
+  margin: 0;
 }
 
 .card {
   border: 1px solid #d1d1d1;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.card:hover{
+
+.card:hover {
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease 0s;
 }
+
 .card-header {
-  /*background-color: #fff;*/
   border-bottom: 1px solid #d1d1d1;
 }
 
@@ -23,23 +25,24 @@ body {
   padding: 30px;
 }
 
+.small-logo {
+  max-width: 80px;
+  max-height: 80px;
+  border-radius: 10px;
+}
+
 .form-group {
   margin-bottom: 20px;
 }
 
 .btn-primary {
-  background-color: #007bff;
-  border: 1px solid #007bff;
+  background-color: #3897f0; /*previously #007bff*/
+  border: 1px solid #3897f0; /*previously #007bff*/
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
-  border: 1px solid #0056b3;
-}
-
-.card-footer {
-  background-color: #fff;
-  border-top: 1px solid #d1d1d1;
+  background-color: #357ae8; /*previously #0056b3*/
+  border: 1px solid #357ae8; /*previously #0056b3*/
 }
 
 .social-icons {
@@ -48,8 +51,7 @@ body {
   color: #385185;
 }
 
-.small-logo {
-  max-width: 80px;
-  max-height: 80px;
-  border-radius: 10px;
+.card-footer {
+  background-color: #fff;
+  border-top: 1px solid #d1d1d1;
 }
