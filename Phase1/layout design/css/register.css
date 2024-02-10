@@ -1,50 +1,14 @@
-body {
-  background-color: #fafafa;
-  height: 100vh;
-  display: flex;
-  align-items: center; /*Comment or delete this line to have it be at the top instead of center*/
-  justify-content: center;
-  margin: 0;
-}
-
-.card {
-  border: 1px solid #d1d1d1;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.card:hover {
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease 0s;
-}
-
-.card-header {
-  border-bottom: 1px solid #d1d1d1;
-}
-
-.card-body {
-  padding: 30px;
-}
-
-.small-logo {
-  max-width: 5em; /*previously 80px*/
-  max-height: 5em; /*previously 80px*/
-  border-radius: 0.6em; /*previously 10px*/
-}
-
-.form-group {
-  margin-bottom: 5%; /*previously 20px*/
-}
-
+/*
 .btn-primary {
-  background-color: #3897f0; /*previously #007bff*/
-  border: 1px solid #3897f0; /*previously #007bff*/
+  background-color: #3897f0; /*previously #007bff
+  border: 1px solid #3897f0; /*previously #007bff
 }
 
 .btn-primary:hover {
-  background-color: #357ae8; /*previously #0056b3*/
-  border: 1px solid #357ae8; /*previously #0056b3*/
+  background-color: #357ae8; /*previously #0056b3
+  border: 1px solid #357ae8; /*previously #0056b3
 }
-
+*/
 .social-icons {
   font-size: 20px;
   margin: 0 5px;
