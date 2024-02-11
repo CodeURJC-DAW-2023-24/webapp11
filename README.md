@@ -21,7 +21,7 @@
       - [Change Paswword Screen](#change-password-screen)
       - [Create an account Screen](#create-an-account-screen)
    - [Screens Flow](#screens-flow)
-   
+***   
 ### ♨️Phase 0
 ***
  
@@ -93,7 +93,7 @@ To help organize the team and keep track of tasks, we use [Trello](https://trell
 -  **Filter by User Rating algorithm**: An algorithm that would promote events published by users whose previous events have been rated positively.
 -  **PDF integration**: allow users to download a PDF holding event information upon sign-up.
 -  **Chat**: give users the possibility of speaking to each other through the app, and/or create a chatroom for each event where users can discuss it.
-
+***
 ### ♨️Phase 1
 ***
 
@@ -115,5 +115,26 @@ This screen is where the users can find a list of upcoming events. The navbar co
 
 
 
-## :🗺️Screens Flow
+## 🗺️Screens Flow
+Upon entering the application, all users are presented with the Home screen.
 
+- 🟦 For Unregistered Users:
+  - From the Home screen, they can:
+    - Register by clicking on the 'Register' button, leading them to the Register screen.
+    - Log in by clicking on 'Log in', directing them to the Login screen.
+    - View more details about events by clicking on 'See details' for an event, taking them to the Event Info screen.
+  - From the Login screen, they can:
+    - Navigate to 'Forgot my password' to reach the Change Password screen.
+
+- 🔴 For Registered Users:
+  - They can navigate to their Profile by clicking on 'My Profile' in the navigation bar, which takes them to the Profile screen.
+  - On the Profile screen, users can:
+    - Create new events by pressing the 'Create new event' button, leading to the Create Event screen.
+    - View details of events from both the Profile and Home screens.
+    - Make a review of an event by clicking on 'Rate' on the Profile screen, which leads to the Review screen.
+
+- 🟪 For Administrators:
+   - View details of events from the Home screen by clicking on 'See details', similar to unregistered and registered users.
+   - Access their Admin Profile by clicking on 'My Profile' in the navigation bar from the Home screen, which allows them to manage active events, registered users, and the various available categories.
+   - Navigate to the Category screen to create new categories.
+![image](https://github.com/CodeURJC-DAW-2023-24/webapp11/assets/117302441/81caa095-ade3-4627-a8f9-44207c965733)
