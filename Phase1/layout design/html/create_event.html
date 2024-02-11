@@ -4,23 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS for styling and layout -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome for icons -->    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel='stylesheet' type='text/css' media='screen' href='../css/forms.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/create_event.css'>
     <link rel="icon" href="../img/logo.jpeg" type="image/png">
-    <title>Crear Evento</title>
+    <title>Events Crafters: Crear Evento</title>
 </head>
 
 <body>
+    <!-- Main container for the create event form -->
     <div class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
+                <!-- Card element where the form is located -->
                 <div class="card">
+                    <!-- Header of the card with logo and title -->
                     <div class="card-header text-center">
                         <img src="../img/logo.jpeg" alt="Logo" class="img-fluid small-logo">
                         <h1>Crear Evento</h1>
                     </div>
+                    <!-- Body of the card containing the form fields -->
                     <div class="card-body">
                         <form enctype="multipart/form-data">
                             <!-- name -->
@@ -47,7 +53,7 @@
                                 <input type="number" class="form-control" id="event-price"
                                     placeholder="Precio de la entrada" required>
                             </div>
-                            <!-- ficha de inicio y fin -->
+                            <!-- start and end dates -->
                             <div class="form-group">
                                 <label for="event-start">Fecha y hora de inicio del evento</label>
                                 <input type="datetime-local" class="form-control" id="event-start" required>
