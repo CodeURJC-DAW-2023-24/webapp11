@@ -96,10 +96,24 @@ To help organize the team and keep track of tasks, we use [Trello](https://trell
 
 ### ♨️Phase 1
 ***
+
 ## 🖥️Screens
 
 ### 🏠 Home Screen
 This screen is where the users can find a list of upcoming events. The navbar contains two dropdown buttons and a search bar. One dropdown button will be used to filter by categories, and the other one to give the user access to more personalized screens (such as their profile). It's worth that all the displayed content is responsive, making it more accessible across different screens and devices
+
+
+##### img 1: home screen
+![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home.png)
+
+##### img 2: home screen - 'Cargar más' button
+![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home1.png)
+
+##### img 3: home screen - user dropdown botton
+![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home2.png)
+
+##### img 4: home screen - filter dropdown botton
+![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home3.png)
 
 
 
