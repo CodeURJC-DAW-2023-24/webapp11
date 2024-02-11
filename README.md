@@ -137,4 +137,6 @@ Upon entering the application, all users are presented with the Home screen.
    - View details of events from the Home screen by clicking on 'See details', similar to unregistered and registered users.
    - Access their Admin Profile by clicking on 'My Profile' in the navigation bar from the Home screen, which allows them to manage active events, registered users, and the various available categories.
    - Navigate to the Category screen to create new categories.
-![image](https://github.com/CodeURJC-DAW-2023-24/webapp11/assets/117302441/81caa095-ade3-4627-a8f9-44207c965733)
+
+##### img: Screens flow
+![*Screens flow*](https://github.com/CodeURJC-DAW-2023-24/webapp11/assets/117302441/e8512eb5-4e53-48d2-a4de-3a2b1be5c6a0)
