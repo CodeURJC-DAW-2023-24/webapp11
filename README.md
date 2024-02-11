@@ -114,6 +114,18 @@ This screen is where the users can find a list of upcoming events. The navbar co
 
 
 
+### :information_source::ticket: Event Info Screen
+This screen allows users to get detailed information of an event, as well as sign up for it if event tickets aren´t sold out yet. Specifically, this screen is made up of 5 large sections, which are:
+- **Event information:** contains event main information (description, maximum capacity, price, date, hour, duration and additional relevant information about the event).
+- **Tickets availability:** shows how fast tickets has been sold from a week ago to actual date, as well as available tickets amount and the different ticket options for the user to choose and buy.
+- **Event placement:** contains the place where the event is held, as well as a map for easier placement.
+- **Event host contact:** shows event host´s main information (name, nickname and photo). Also, this section includes a link to the host full profile information page.
+- **Other events based on user´s preferences:** shows different events that the user would be interested in, based on the tags of the events the user recently signed up for.
+
+##### Image 1: Event Info Screen
+![*EventInfoScreen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/EventInfoScreen.png)
+
+
 
 ## 🗺️Screens Flow
 Upon entering the application, all users are presented with the Home screen.
