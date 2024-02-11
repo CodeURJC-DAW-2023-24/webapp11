@@ -5,25 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Event Crafters - Perfil</title>
-    <!-- Enlace a la hoja de estilos de Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel='stylesheet' type='text/css' media='screen' href='../css/perfil.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/profile.css'>
     <link rel="icon" href="../img/logo.jpeg" type="image/png">
-    <!-- Estilos personalizados -->
-
+    <!-- Links to Bootstrap's stylesheet for styling and layout -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
 <body>
-
-    <!-- Barra de navegación -->
+    <!-- Navigation bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <!-- Logo and text as part of the navigation -->
         <a class="logoText" href="#">
-            <img src="../img/logo.jpeg" width="50" height="50" alt="Logo"> Event Crafters
+            <img src="../img/logo.jpeg" width="30" height="30" alt="Logo"> Event Crafters
         </a>
+        <!-- Hamburger icon for mobile menu -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <!-- Navigation links -->
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
@@ -51,9 +51,10 @@
         </div>
     </nav>
 
-    <!--PopUp tags-->
+    <!-- Popup for tag creation/editing -->
     <div class="window-background" id="window-background">
         <div class="window-container" id="window-container">
+            <!-- Close button for the popup -->
             <a class="close-button" id="close-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="icon-x">
                     <path
@@ -61,6 +62,7 @@
                     </path>
                 </svg>
             </a>
+            <!-- Form for creating/editing tags -->            
             <form enctype="multipart/form-data">
                 <div class="form-group" id="first-part-tag-form">
                     <label for="tag-name-in">Nombre del tag</label>
@@ -75,26 +77,27 @@
             </form>
         </div>
     </div>
-    <!--Termina PopUp tags-->
 
-    <!-- Contenido principal -->
+    <!-- Main content area -->
     <div class="container mt-4">
 
-        <!-- Sección de Perfil -->
+        <!-- Profile section -->
         <div class="perfil-container">
             <h2 class="titulo-eventos">Mi Perfil</h2>
             <div class="row">
+                <!-- Profile picture -->
                 <div class="col-md-4">
                     <img class="perfil-foto" src="../img/fotoPerfil.jpg" alt="Foto de Perfil">
                 </div>
+                <!-- User information -->
                 <div class="col-md-8">
                     <div class="datos-usuario">
                         <p><strong>Nombre:</strong> Pepe</p>
                         <p><strong>Correo:</strong> pepe@gmail.com</p>
                         <p><strong>Nick:</strong> pepito_el_mas_bonito</p>
-                    </div>
-                    
+                    </div>                    
                 </div>
+                <!-- Buttons for account management -->
                 <div class="container text-center">
                     <div class="row justify-content-center">
                         <div class="col col-lg-2 container-delete-account">
@@ -106,11 +109,10 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Tags -->
+            <!-- Tags section -->
             <div class="eventos-usuario">
                 <h3 class="creados">Tags</h3>
-                <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+                <div class="row flex-wrap">
                     <div class="col-md-4 mb-4">
                         <div class="actividad d-flex flex-row align-items-center" name="tag">
                             <div class="etiquetas-container info etiqueta-admin-container">
@@ -144,14 +146,9 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Puedes agregar más eventos según sea necesario -->
                 </div>
             </div>
-            <!--Termina tags-->
-
-            <!-- Eventos Creados por el Usuario -->
-            <!-- Eventos Creados por el Usuario -->
+            <!-- User-created events section -->
             <div class="eventos-usuario">
                 <h3 class="creados">Mis Eventos Creados</h3>
                 <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
@@ -192,11 +189,8 @@
                             <a href="#" class="btn btn-block">Ver Detalles</a>
                         </div>
                     </div>
-
-                    <!-- Puedes agregar más eventos según sea necesario -->
                 </div>
             </div>
-
             <div class="container text-center mt-4">
                 <div class="row justify-content-center">
                     <div class="col-auto">
@@ -204,11 +198,10 @@
                     </div>
                 </div>
             </div>
-
-
+            <!-- User-created events that have already ended section -->
             <div class="eventos-usuario">
                 <h3 class="proximos">Eventos pasados que he creado </h3>
-                <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+                <div class="row flex-wrap">
                     <div class="col-md-4 mb-4">
                         <div class="actividad d-flex flex-row align-items-center">
                             <div class="etiquetas-container info">
@@ -227,14 +220,13 @@
                             <a href="#" class="btn btn-block">Ver Detalles</a>
                         </div>
                     </div>
-                    <!-- Puedes agregar más eventos según sea necesario -->
                 </div>
             </div>
-
+            <!-- Events user has signed up for -->
             <div class="eventos-usuario">
                 <h3 class="proximos">Eventos a los que me he apuntado
                 </h3>
-                <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+                <div class="row flex-wrap">
                     <div class="col-md-4 mb-4">
                         <div class="actividad d-flex flex-row align-items-center">
                             <div class="etiquetas-container info">
@@ -262,10 +254,8 @@
                             <a href="#" class="btn btn-block">Ver Detalles</a>
                         </div>
                     </div>
-                    <!-- Puedes agregar más eventos según sea necesario -->
                 </div>
             </div>
-
             <div class="container text-center mt-4">
                 <div class="row justify-content-center">
                     <div class="col-auto">
@@ -273,11 +263,11 @@
                     </div>
                 </div>
             </div>
-
+            <!-- Past events user has signed up for -->
             <div class="eventos-usuario">
                 <h3 class="proximos">Eventos pasados a los que me he apuntado
                 </h3>
-                <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+                <div class="row flex-wrap"> 
                     <div class="col-md-4 mb-4">
                         <div class="actividad d-flex flex-row align-items-center">
                             <div class="etiquetas-container info">
@@ -305,16 +295,15 @@
                             <a href="#" class="btn btn-block">Ver Detalles</a>
                         </div>
                     </div>
-                    <!-- Puedes agregar más eventos según sea necesario -->
                 </div>
             </div>
         </div>
 
-        <!-- Scripts de Bootstrap -->
+        <!-- Bootstrap's JavaScript files for interactivity -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <!--Scripts JS-->
+        <!-- Custom JavaScript file -->
         <script src="../js/perfil.js"></script>
 </body>
 
