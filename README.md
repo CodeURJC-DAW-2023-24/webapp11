@@ -122,7 +122,7 @@ This screen allows users to get detailed information of an event, as well as sig
 - **Event host contact:** shows event host´s main information (name, nickname and photo). Also, this section includes a link to the host full profile information page.
 - **Other events based on user´s preferences:** shows different events that the user would be interested in, based on the tags of the events the user recently signed up for.
 
-##### Image 1: Event Info Screen
+##### img: Event Info Screen
 ![*EventInfoScreen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/EventInfoScreen.png)
 
 
