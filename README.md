@@ -112,7 +112,18 @@ This screen is where the users can find a list of upcoming events. The navbar co
 ##### img 3: home screen - filter dropdown botton
 ![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home2.jpg)
 
-
+### 💁 Profile Screen
+This screen has different functions depending on the type of user that accesses it (unregistered users don't have access to this screen).
+- For Registered Users:
+  - View the events that the user has created, recently joined, or already gone to.
+  - Delete the user's account.
+  - Modify the account's information.
+Modify the account's information.
+- For Administrators:
+  - View all the events that the website has hosted or is currently hosting.
+  - View all the event categories available for the users.
+  - Create, update, delete event categories.
+  - Delete events.
 
 ### :information_source::ticket: Event Info Screen
 This screen allows users to get detailed information of an event, as well as sign up for it if event tickets aren´t sold out yet. Specifically, this screen is made up of 5 large sections, which are:
