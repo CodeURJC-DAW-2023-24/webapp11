@@ -48,7 +48,7 @@ To help organize the team and keep track of tasks, we use [Trello](https://trell
  The entities *user* and *event* will have **images** as attributes.
  
  The following diagram shows the system's entities, and how they relate to each other. It should be noted that, when there are M:N relationships, a new table is created to keep track of its instances, so the database will hold an extra table to keep track of the *Register* relationship shown below.
-  
+  ##### img: Entity-Relationship Diagram
   ![*1.1 entities*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/img/diagram.png)
 
 
