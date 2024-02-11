@@ -125,6 +125,19 @@ Modify the account's information.
   - Create, update, delete event categories.
   - Delete events.
 
+##### img 1: registered user profile screen part 1
+![*User Profile Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/user_profile_1.jpg)
+
+##### img 2: registered user profile screen part 2
+![*User Profile Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/user_profile_2.jpg)
+
+##### img 3: admin profile screen
+![*User Profile Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/admin_profile_1.jpg)
+
+##### img 4: update & create categories popup
+![*User Profile Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/admin_popup_cat.jpg)
+
+
 ### :information_source::ticket: Event Info Screen
 This screen allows users to get detailed information of an event, as well as sign up for it if event tickets aren´t sold out yet. Specifically, this screen is made up of 5 large sections, which are:
 - **Event information:** contains event main information (description, maximum capacity, price, date, hour, duration and additional relevant information about the event).
