@@ -15,11 +15,13 @@
 - [Phase 1](#phase-1)
    - [Screens](#screens)
       - [Home Screen](#home-screen)
-      - [Login](#login)
+      - [Login Screen](#login-screen)
       - [Profile Screen](#profile-screen)
       - [Event Screen](#event-screen)
-      - [Change Paswword Screen](#change-password-screen)
-      - [Create an account Screen](#create-an-account-screen)
+      - [Change Password Screen](#change-password-screen)
+      - [Create Account Screen](#create-account-screen)
+      - [Create Review Screen](#create-review-screen)
+      - [Create Event Screen](#create-event-screen)
    - [Screens Flow](#screens-flow)
 ***   
 ### ♨️Phase 0
@@ -112,6 +114,11 @@ This screen is where the users can find a list of upcoming events. The navbar co
 ##### img 3: home screen - filter dropdown botton
 ![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home2.jpg)
 
+### Login Screen
+This is a simple screen containing a form that allows the user to log into their account.
+##### img 1: Login Screen
+![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/login.png)
+
 ### 💁 Profile Screen
 This screen has different functions depending on the type of user that accesses it (unregistered users don't have access to this screen).
 - For Registered Users:
@@ -149,6 +156,25 @@ This screen allows users to get detailed information of an event, as well as sig
 ##### img: Event Info Screen
 ![*EventInfoScreen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/EventInfoScreen.png)
 
+### Change Password Screen
+This is a simple screen containing a form that allows users to change their password. Only users who have logged in may access it. Alternatively, it could be accessed through one-time links.
+##### img 1: Change Password Screen
+![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/changePassword.png)
+
+### Create Account Screen
+This is a simple screen containing a form that allows users to create a new account. It can only be accessed if the user is not currently logged in.
+##### img 1: Create Account Screen
+![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/register.png)
+
+### Create Review Screen
+This is a simple screen containing a form that allows users to leave a review for an event they have attended. In order to be accessed, the user needs to have logged in, they need to have signed up for the event, and the event must be completed.
+##### img 1: Review Screen
+![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/review.png)
+
+### Create Event Screen
+This is a simple screen containing a form that allows users to create a new event. Only users who have logged in may access it.
+##### img 1: Create Event Screen
+![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/createEvent.png)
 
 
 ## 🗺️Screens Flow
