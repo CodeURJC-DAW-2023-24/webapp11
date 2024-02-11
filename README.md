@@ -2,7 +2,7 @@
 
 # <p align="center"> Events Crafters </p>
 ## 📑Index
-- Phase 0
+- [Phase 0](#phase-0)
    - [Team members](#team-members)
    - [Team organization](#team-organization)
    - [Entities](#entities)
@@ -11,6 +11,16 @@
    - [Charts](#charts)
    - [Advanced Algorithms](#advanced-algorithms)
    - [Optional features](#optional-features)
+
+- [Phase 1](#phase-1)
+   - [Screens](#screens)
+      - [Home Screen](#home-screen)
+      - [Login](#login)
+      - [Profile Screen](#profile-screen)
+      - [Event Screen](#event-screen)
+      - [Change Paswword Screen](#change-password-screen)
+      - [Create an account Screen](#create-an-account-screen)
+   - [Screens Flow](#screens-flow)
    
 ### ♨️Phase 0
 ***
@@ -83,3 +93,16 @@ To help organize the team and keep track of tasks, we use [Trello](https://trell
 -  **Filter by User Rating algorithm**: An algorithm that would promote events published by users whose previous events have been rated positively.
 -  **PDF integration**: allow users to download a PDF holding event information upon sign-up.
 -  **Chat**: give users the possibility of speaking to each other through the app, and/or create a chatroom for each event where users can discuss it.
+
+### ♨️Phase 1
+***
+## 🖥️Screens
+
+### 🏠 Home Screen
+This screen is where the users can find a list of upcoming events. The navbar contains two dropdown buttons and a search bar. One dropdown button will be used to filter by categories, and the other one to give the user access to more personalized screens (such as their profile). It's worth that all the displayed content is responsive, making it more accessible across different screens and devices
+
+
+
+
+## :🗺️Screens Flow
+
