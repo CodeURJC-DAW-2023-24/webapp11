@@ -104,16 +104,13 @@ This screen is where the users can find a list of upcoming events. The navbar co
 
 
 ##### img 1: home screen
-![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home.png)
+![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home.jpg)
 
-##### img 2: home screen - 'Cargar más' button
-![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home1.png)
+##### img 2: home screen - user dropdown botton
+![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home1.jpg)
 
-##### img 3: home screen - user dropdown botton
-![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home2.png)
-
-##### img 4: home screen - filter dropdown botton
-![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home3.png)
+##### img 3: home screen - filter dropdown botton
+![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home2.jpg)
 
 
 
