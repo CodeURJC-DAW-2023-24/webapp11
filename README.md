@@ -101,7 +101,7 @@ To help organize the team and keep track of tasks, we use [Trello](https://trell
 
 ## 🖥️Screens
 
-### 🏠 Home Screen
+### 🏠Home Screen
 This screen is where the users can find a list of upcoming events. The navbar contains two dropdown buttons and a search bar. One dropdown button will be used to filter by categories, and the other one to give the user access to more personalized screens (such as their profile). It's worth that all the displayed content is responsive, making it more accessible across different screens and devices
 
 
@@ -119,7 +119,7 @@ This is a simple screen containing a form that allows the user to log into their
 ##### img: Login Screen
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/login.png)
 
-### 💁 Profile Screen
+### 💁Profile Screen
 This screen has different functions depending on the type of user that accesses it (unregistered users don't have access to this screen).
 - For Registered Users:
   - View the events that the user has created, recently joined, or already gone to.
