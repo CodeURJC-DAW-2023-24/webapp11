@@ -17,7 +17,7 @@
       - [Home Screen](#home-screen)
       - [Login Screen](#login-screen)
       - [Profile Screen](#profile-screen)
-      - [Event Screen](#event-screen)
+      - [Event Info Screen](#event-info-screen)
       - [Change Password Screen](#change-password-screen)
       - [Create Account Screen](#create-account-screen)
       - [Create Review Screen](#create-review-screen)
@@ -114,7 +114,8 @@ This screen is where the users can find a list of upcoming events. The navbar co
 ##### img 3: home screen - filter dropdown botton
 ![*Home Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/home2.jpg)
 
-### Login Screen
+
+### 🧑Login Screen
 This is a simple screen containing a form that allows the user to log into their account.
 ##### img: Login Screen
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/login.png)
@@ -161,17 +162,17 @@ This is a simple screen containing a form that allows users to change their pass
 ##### img: Change Password Screen
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/changePassword.png)
 
-### Create Account Screen
+### ✏️Create Account Screen
 This is a simple screen containing a form that allows users to create a new account. It can only be accessed if the user is not currently logged in.
 ##### img: Create Account Screen
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/register.png)
 
-### Create Review Screen
+### 🖋️Create Review Screen
 This is a simple screen containing a form that allows users to leave a review for an event they have attended. In order to be accessed, the user needs to have logged in, they need to have signed up for the event, and the event must be completed.
 ##### img: Review Screen
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/review.png)
 
-### Create Event Screen
+### ▶️Create Event Screen
 This is a simple screen containing a form that allows users to create a new event. Only users who have logged in may access it.
 ##### img: Create Event Screen
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/createEvent.png)
