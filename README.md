@@ -116,7 +116,7 @@ This screen is where the users can find a list of upcoming events. The navbar co
 
 ### Login Screen
 This is a simple screen containing a form that allows the user to log into their account.
-##### img 1: Login Screen
+##### img: Login Screen
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/login.png)
 
 ### 💁 Profile Screen
@@ -158,22 +158,22 @@ This screen allows users to get detailed information of an event, as well as sig
 
 ### Change Password Screen
 This is a simple screen containing a form that allows users to change their password. Only users who have logged in may access it. Alternatively, it could be accessed through one-time links.
-##### img 1: Change Password Screen
+##### img: Change Password Screen
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/changePassword.png)
 
 ### Create Account Screen
 This is a simple screen containing a form that allows users to create a new account. It can only be accessed if the user is not currently logged in.
-##### img 1: Create Account Screen
+##### img: Create Account Screen
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/register.png)
 
 ### Create Review Screen
 This is a simple screen containing a form that allows users to leave a review for an event they have attended. In order to be accessed, the user needs to have logged in, they need to have signed up for the event, and the event must be completed.
-##### img 1: Review Screen
+##### img: Review Screen
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/review.png)
 
 ### Create Event Screen
 This is a simple screen containing a form that allows users to create a new event. Only users who have logged in may access it.
-##### img 1: Create Event Screen
+##### img: Create Event Screen
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/createEvent.png)
 
 
@@ -201,4 +201,4 @@ Upon entering the application, all users are presented with the Home screen.
    - Navigate to the Category screen to create new categories.
 
 ##### img: Screens flow
-![*Screens flow*](https://github.com/CodeURJC-DAW-2023-24/webapp11/assets/117302441/e8512eb5-4e53-48d2-a4de-3a2b1be5c6a0)
+![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/screenflow.png)
