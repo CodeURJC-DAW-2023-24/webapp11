@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS for styling and layout -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome for icons -->    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/forms.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/create_event.css'>
+    <link rel="icon" href="../img/logo.jpeg" type="image/png">
+    <title>Events Crafters: Crear Evento</title>
+</head>
+
+<body>
+    <!-- Main container for the create event form -->
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <!-- Card element where the form is located -->
+                <div class="card">
+                    <!-- Header of the card with logo and title -->
+                    <div class="card-header text-center">
+                        <img src="../img/logo.jpeg" alt="Logo" class="img-fluid small-logo">
+                        <h1>Crear Evento</h1>
+                    </div>
+                    <!-- Body of the card containing the form fields -->
+                    <div class="card-body">
+                        <form enctype="multipart/form-data">
+                            <!-- name -->
+                            <div class="form-group">
+                                <label for="event-name">Introduce el nombre del evento</label>
+                                <input type="text" class="form-control" id="event-name" placeholder="Nombre del Evento"
+                                    required>
+                            </div>
+                            <!-- description -->
+                            <div class="form-group">
+                                <label for="event-description">Introduce la descripción del evento</label>
+                                <textarea class="form-control" id="event-description"
+                                    placeholder="Descripción del Evento" rows="3" required></textarea>
+                            </div>
+                            <!-- (max) capacity-->
+                            <div class="form-group">
+                                <label for="event-capacity">Introduce el aforo del evento</label>
+                                <input type="number" class="form-control" id="event-capacity" placeholder="Aforo"
+                                    required>
+                            </div>
+                            <!-- price -->
+                            <div class="form-group">
+                                <label for="event-price">Introduce el precio de la entrada del evento</label>
+                                <input type="number" class="form-control" id="event-price"
+                                    placeholder="Precio de la entrada" required>
+                            </div>
+                            <!-- start and end dates -->
+                            <div class="form-group">
+                                <label for="event-start">Fecha y hora de inicio del evento</label>
+                                <input type="datetime-local" class="form-control" id="event-start" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-end">Fecha y hora de fin del evento</label>
+                                <input type="datetime-local" class="form-control" id="event-end" required>
+                            </div>
+                            <!-- category-->
+                            <div class="form-group">
+                                <label for="event-category">Introduce la categoria del evento</label>
+                                <select class="form-control" id="event-category" required>
+                                    <option>Campo</option>
+                                    <option>Bosque</option>
+                                </select>
+                            </div>
+                            <!-- photo-->
+                            <div class="form-group">
+                                <label for="event-photo">Introduce la foto del Evento</label>
+                                <input type="file" class="form-control-file" id="event-photo" required>
+                            </div>
+                            <!-- address-->
+                            <div class="form-group">
+                                <label for="event-address">Introduce la direccion del evento</label>
+                                <input type="text" class="form-control" id="event-address" placeholder="Dirección"
+                                    required>
+                            </div>
+                            <!-- coordinates -->
+                            <div class="form-group">
+                                <label for="event-coordinates">Introduce las coordenadas donde se celebrará el evento</label>
+                                <input type="text" class="form-control" id="event-coordinates" placeholder="Coordenadas">
+                            </div>
+                            <!--Extra info-->
+                            <div class="form-group">
+                                <label for="event-extras">Introduce información adicional sobre el evento</label>
+                                <textarea class="form-control" id="event-extras"
+                                    placeholder="Informacion Extra del Evento" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Crear Evento</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
