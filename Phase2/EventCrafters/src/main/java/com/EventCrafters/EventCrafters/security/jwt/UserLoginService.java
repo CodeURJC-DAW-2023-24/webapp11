@@ -1,9 +1,9 @@
 package com.EventCrafters.EventCrafters.security.jwt;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+
+
 
 @Service
 public class UserLoginService {
@@ -31,7 +33,7 @@ public class UserLoginService {
 	@Autowired
 	private JwtCookieManager cookieUtil;
 
-	public ResponseEntity<AuthResponse> login(LoginRequest loginRequest, String encryptedAccessToken, String 
+	public ResponseEntity<AuthResponse> login(LoginRequest loginRequest, String encryptedAccessToken, String
 			encryptedRefreshToken) {
 		
 		Authentication authentication = authenticationManager.authenticate(

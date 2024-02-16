@@ -3,7 +3,7 @@ package com.EventCrafters.EventCrafters.controller;
 import java.security.Principal;
 import java.util.Optional;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import com.EventCrafters.EventCrafters.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ReviewController {
-
+/*
     @Autowired
     private ReviewService service;
 
@@ -31,6 +31,5 @@ public class ReviewController {
         // To-do: save the created review
         return "event_info";
     }
-
-
+*/
 }

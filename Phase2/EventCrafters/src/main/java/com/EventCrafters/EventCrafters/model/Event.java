@@ -1,10 +1,10 @@
 package com.EventCrafters.EventCrafters.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Event {
@@ -13,8 +13,8 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;
 
-	private String title;
-
+	private String name;
+/*
 	@Column(length = 50000)
 	private String description;
 
@@ -23,16 +23,16 @@ public class Event {
 
 	public Event(String nombre, String description) {
 		super();
-		this.title = nombre;
+		this.name = nombre;
 		this.description = description;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String title) {
+		this.name = title;
 	}
 
 	public String getDescription() {
@@ -53,7 +53,7 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", description=" + description + "]";
+		return "Book [id=" + id + ", title=" + name + ", description=" + description + "]";
 	}
-
+*/
 }

@@ -3,7 +3,7 @@ package com.EventCrafters.EventCrafters.controller;
 import java.security.Principal;
 import java.util.Optional;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import com.EventCrafters.EventCrafters.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import com.EventCrafters.EventCrafters.service.EventService;
 
 @Controller
 public class EventWebController {
-
+/*
     @Autowired
     private EventService service;
 
@@ -65,7 +65,7 @@ public class EventWebController {
         } else {
             return "books";
         }*/
-        return "event_info";
+/*        return "event_info";
     }
 
     @PostMapping("/removeEvent/{id}")
@@ -77,7 +77,7 @@ public class EventWebController {
             service.delete(id);
             model.addAttribute("book", book.get());
         }*/
-        return "profile"; //or a dedicated page to tell the user the operation went through
+/*        return "profile"; //or a dedicated page to tell the user the operation went through
     }
 
     @GetMapping("/newEvent")
@@ -91,7 +91,7 @@ public class EventWebController {
         //To-do: save the event. Maybe take inspiration from this
         /* service.save(event);
         model.addAttribute("bookId", event.getId()); */
-        return "profile"; //or event_info for this event, or a dedicated page to tell the user the operation went through
+/*        return "profile"; //or event_info for this event, or a dedicated page to tell the user the operation went through
     }
 
     @GetMapping("/editEvent/{id}")
@@ -106,7 +106,7 @@ public class EventWebController {
             return "books";
         }
         */
-        return "create_event"; //?
+/*        return "create_event"; //?
     }
 
     @PostMapping("/editEvent") //wouldn't we take the id as well?
@@ -115,7 +115,7 @@ public class EventWebController {
         /*service.save(event);
         model.addAttribute("bookId", event.getId());*/
 
-        return "event_info"; //or profile for this event, or a dedicated page to tell the user the operation went through
+/*        return "event_info"; //or profile for this event, or a dedicated page to tell the user the operation went through
     }
-
+*/
 }

@@ -23,7 +23,7 @@ import com.EventCrafters.EventCrafters.service.EventService;
 @RestController
 @RequestMapping("/api/books")
 public class EventRestController {
-
+/*
 	@Autowired
 	private EventService service;
 
@@ -78,4 +78,5 @@ public class EventRestController {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 	}
+	*/
 }

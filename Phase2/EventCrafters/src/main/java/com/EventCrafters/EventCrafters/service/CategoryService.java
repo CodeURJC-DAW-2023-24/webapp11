@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class CategoryService {
-
+/*
 	@Autowired
 	private EventRepository repository;
 
@@ -33,4 +33,6 @@ public class CategoryService {
 	public void delete(long id) {
 		repository.deleteById(id);
 	}
+
+ */
 }
