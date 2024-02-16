@@ -1,27 +1,43 @@
 package com.EventCrafters.EventCrafters.model;
 
+import java.sql.Blob;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+/**
+ *
+ * @author Lucia and Tarek
+ */
+@Data
+@Setter
+@Getter
 @Entity
+@Table(name = "users")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO) //mirar estrategia
 	private Long id;
 
+
 	private String name;
+	private String nickname;
+	private String email;
+
+	@Lob
+	private Blob photo;
 
 	@JsonIgnore
 	private String encodedPassword;
+
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
@@ -29,34 +45,22 @@ public class User {
 	public User() {
 	}
 
-	public User(String name, String encodedPassword, String... roles) {
+	public User(String name,String nickname,String email, Blob photo,String encodedPassword, String... roles) {
 		this.name = name;
+		this.nickname = nickname;
+		this.email = email;
 		this.encodedPassword = encodedPassword;
 		this.roles = List.of(roles);
+		this.photo = photo;
 	}
 
-	public String getName() {
-		return name;
-	}
+	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Event> createdEvents = new HashSet<>();
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	@ManyToMany(mappedBy = "registeredUsers")
+	private Set<Event> registeredInEvents = new HashSet<>();
 
-	public String getEncodedPassword() {
-		return encodedPassword;
-	}
-
-	public void setEncodedPassword(String encodedPassword) {
-		this.encodedPassword = encodedPassword;
-	}
-
-	public List<String> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<String> roles) {
-		this.roles = roles;
-	}
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Review> reviews = new HashSet<>();
 
 }

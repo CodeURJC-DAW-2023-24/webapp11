@@ -1,39 +1,45 @@
 package com.EventCrafters.EventCrafters.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import lombok.Data;
+/**
+ *
+ * @author Lucia and Tarek
+ */
 
+
+@Data
 @Entity
+@Table(name = "Review")
 public class Review {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id = null;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="event_id")
+    private Event event;
+
+    private int rating;
+
     private String text;
-    private Integer rating;
 
-    public Review() {
-    }
+    public Review() {}
 
-    public Review(String text, int rating) {
-        this.text = text;
+    public Review(User user, int rating, String textValoration) {
+        this.user = user;
         this.rating = rating;
+        this.text = textValoration;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
 }
+
+
+
+
+

@@ -1,59 +1,90 @@
 package com.EventCrafters.EventCrafters.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.sql.Blob;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import lombok.Getter;
+import lombok.Setter;
 
+/**
+ *
+ * @author Lucia and Tarek
+ */
+
+@Getter
+@Setter
 @Entity
+@Table(name = "events")
 public class Event {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id = null;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	private String name;
-/*
-	@Column(length = 50000)
+
+	@Lob
+	private Blob photo;
+
+	@Column (length = 5000)
 	private String description;
 
-	public Event() {
-	}
+	private int maxCapacity;
 
-	public Event(String nombre, String description) {
-		super();
-		this.name = nombre;
+	private double price;
+
+	private String location;
+
+	private Double latitude;
+
+	private Double longitude;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date startDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date endDate;
+
+	private String additionalInfo;
+
+	@ManyToOne
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinColumn(name = "creator_id")
+	private User creator;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "event_registered_users",
+			joinColumns = @JoinColumn(name = "event_id"),
+			inverseJoinColumns = @JoinColumn(name = "user_id")
+	)
+	private Set<User> registeredUsers = new HashSet<>();
+
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Review> reviews = new HashSet<>();
+
+
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	private Category category;
+	public Event() {}
+
+	public Event(String name, Blob photo, String description, int maxCapacity, double price, String location,
+				 Double latitude, Double longitude, Date startDate, Date endDate, String additionalInfo) {
+		this.name = name;
+		this.photo = photo;
 		this.description = description;
+		this.maxCapacity = maxCapacity;
+		this.price = price;
+		this.location = location;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.additionalInfo = additionalInfo;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String title) {
-		this.name = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	@Override
-	public String toString() {
-		return "Book [id=" + id + ", title=" + name + ", description=" + description + "]";
-	}
-*/
 }
