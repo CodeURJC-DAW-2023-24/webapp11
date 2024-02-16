@@ -1,7 +1,7 @@
 package com.EventCrafters.EventCrafters.service;
 
-import com.EventCrafters.EventCrafters.model.Event;
-import com.EventCrafters.EventCrafters.repository.EventRepository;
+import com.EventCrafters.EventCrafters.model.Category;
+import com.EventCrafters.EventCrafters.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +10,11 @@ import java.util.Optional;
 
 @Service
 public class CategoryService {
-/*
-	@Autowired
-	private EventRepository repository;
 
-	public Optional<Event> findById(long id) {
+	@Autowired
+	private CategoryRepository repository;
+
+	public Optional<Category> findById(long id) {
 		return repository.findById(id);
 	}
 
@@ -22,17 +22,16 @@ public class CategoryService {
 		return repository.existsById(id);
 	}
 
-	public List<Event> findAll() {
+	public List<Category> findAll() {
 		return repository.findAll();
 	}
 
-	public void save(Event event) {
-		repository.save(event);
+	public void save(Category category) {
+		repository.save(category);
 	}
 
 	public void delete(long id) {
 		repository.deleteById(id);
 	}
 
- */
 }

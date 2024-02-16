@@ -1,7 +1,7 @@
 package com.EventCrafters.EventCrafters.service;
 
-import com.EventCrafters.EventCrafters.model.Event;
-import com.EventCrafters.EventCrafters.repository.EventRepository;
+import com.EventCrafters.EventCrafters.model.User;
+import com.EventCrafters.EventCrafters.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,9 @@ import java.util.Optional;
 public class UserService {
 
 	@Autowired
-	private EventRepository repository;
+	private UserRepository repository;
 
-	public Optional<Event> findById(long id) {
+	public Optional<User> findById(long id) {
 		return repository.findById(id);
 	}
 
@@ -22,12 +22,12 @@ public class UserService {
 		return repository.existsById(id);
 	}
 
-	public List<Event> findAll() {
+	public List<User> findAll() {
 		return repository.findAll();
 	}
 
-	public void save(Event event) {
-		repository.save(event);
+	public void save(User user) {
+		repository.save(user);
 	}
 
 	public void delete(long id) {
