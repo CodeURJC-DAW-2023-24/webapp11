@@ -21,14 +21,17 @@
                     <h2>Reseña del Evento</h2>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form name="reviewForm" action="/newReview" method="post">
                         <div class="form-group rating">
                             <label>Calificación del Evento</label>
                             <div id="rateYo"></div>
                         </div>
+                        <!--Campo oculto para la calificacion de las estrellas-->
+                        <input type="hidden" name="rating" id="rating">
+                        <!--ahora el resto del form-->
                         <div class="form-group">
                             <label for="event-review">Reseña</label>
-                            <textarea class="form-control" id="event-review" rows="5" placeholder="Escribe tu reseña aquí" required></textarea>
+                            <textarea class="form-control" id="event-review" rows="5" name="text" placeholder="Escribe tu reseña aquí" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Enviar Reseña</button>
                     </form>
@@ -48,6 +51,12 @@
         $("#rateYo").rateYo({
             fullStar: true,
         });
+
+
+    });
+    $('form').submit(function (e) {
+        let rating = $("#rateYo").rateYo("rating"); // Obtiene la calificación
+        $('#rating').val(rating); // Actualiza el campo oculto con la calificación
     });
 </script>
 
