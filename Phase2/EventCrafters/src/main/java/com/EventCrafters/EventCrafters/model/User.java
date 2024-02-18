@@ -24,7 +24,7 @@ import lombok.Setter;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO) //mirar estrategia
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //mirar estrategia
 	private Long id;
 
 
@@ -39,7 +39,7 @@ public class User {
 	private String encodedPassword;
 
 
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
 	private List<String> roles;
 
 	public User() {
