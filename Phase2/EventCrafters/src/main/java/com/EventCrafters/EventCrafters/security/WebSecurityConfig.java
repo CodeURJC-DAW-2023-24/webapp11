@@ -36,11 +36,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/login").permitAll();
         http.authorizeRequests().antMatchers("/loginerror").permitAll();
         http.authorizeRequests().antMatchers("/logout").permitAll();
+        http.authorizeRequests().antMatchers("/register").permitAll();
+        http.authorizeRequests().antMatchers("/events/*").permitAll();
+        http.authorizeRequests().antMatchers("/home").permitAll();
+        http.authorizeRequests().antMatchers("/home/*").permitAll();
+        http.authorizeRequests().antMatchers("/error").permitAll();
 
         // Private pages
-        http.authorizeRequests().antMatchers("/newbook").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/editbook/*").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/removebook/*").hasAnyRole("ADMIN");
+        http.authorizeRequests().antMatchers("/profile").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/changePassword").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/logout").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/deleteAccount").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/newEvent").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/deleteEvent/*").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/newReview").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/newCategory").hasAnyRole("ADMIN");
+
+        //This line makes it so that, page not listed above are considered public
+        //It's commented so that they give an error, just in case we forgot something
+        //http.authorizeRequests().anyRequest().permitAll();
 
         // Login form
         http.formLogin().loginPage("/login");

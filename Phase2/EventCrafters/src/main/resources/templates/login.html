@@ -22,12 +22,12 @@
           <h2>Iniciar Sesión</h2>
         </div>
         <div class="card-body">
-          <form>
+          <form action="/login" method="POST">
             <div class="form-group">
-              <input type="text" class="form-control" id="username" placeholder="Usuario" required>
+              <input type="text" class="form-control" name="username" id="username" placeholder="Usuario" required>
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
           </form>
