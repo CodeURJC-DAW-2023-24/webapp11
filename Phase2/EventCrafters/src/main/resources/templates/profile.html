@@ -63,14 +63,14 @@
                 </svg>
             </a>
             <!-- Form for creating/editing tags -->            
-            <form enctype="multipart/form-data">
+            <form action="/newCategory" method="post" enctype="multipart/form-data">
                 <div class="form-group" id="first-part-tag-form">
                     <label for="tag-name-in">Nombre del tag</label>
-                    <input type="text" class="form-control" id="tag-name-in" placeholder="Nombre del tag">
+                    <input type="text" class="form-control" id="tag-name-in" name="category" placeholder="Nombre del tag">
                 </div>
                 <div class="form-group">
                     <label for="tag-color-in">Color del tag</label>
-                    <input type="color" class="form-control" id="tag-color-in" placeholder="Color del tag">
+                    <input type="color" class="form-control" id="tag-color-in" name="color" placeholder="Color del tag">
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block" name="btn-safe-tags">Guardar</button>
