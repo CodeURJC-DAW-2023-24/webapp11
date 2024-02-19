@@ -1,15 +1,23 @@
 package com.EventCrafters.EventCrafters.controller;
 
+import com.EventCrafters.EventCrafters.model.Category;
+import com.EventCrafters.EventCrafters.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.awt.print.Pageable;
+import java.util.List;
 
 @Controller
 public class UserWebController {
-	
+
+
+	@Autowired
+	private CategoryRepository categoryRepository;
+
 	@RequestMapping("/login")
 	public String login() {
 		return "login";
@@ -30,6 +38,22 @@ public class UserWebController {
 	public String newReview(Model model, @PathVariable String nickname) {
 		// To-do: implement the whole thing
 		return "profile";
+	}
+
+	@GetMapping("/profile/admin")
+	public String showAdminProfile(Model model){
+		List<Category> c = categoryRepository.findAll(PageRequest.of(0,1)).getContent();
+		model.addAttribute("category",c);
+		model.addAttribute("show","block");
+		return "profile";
+	}
+
+	@GetMapping("categories")
+	public String loadCategories(Model model, @RequestParam("page") int page) {
+		int pageSize = 1; // Define cuántos elementos quieres por página
+		List<Category> c = categoryRepository.findAll(PageRequest.of(page, pageSize)).getContent();
+		model.addAttribute("category", c);
+		return "categories";
 	}
 
 	@GetMapping("/register")

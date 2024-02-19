@@ -2,7 +2,9 @@ package com.EventCrafters.EventCrafters.service;
 
 import javax.annotation.PostConstruct;
 
+import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
+import com.EventCrafters.EventCrafters.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class DatabaseInitializer {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@PostConstruct
 	public void init() {
@@ -43,6 +48,12 @@ public class DatabaseInitializer {
 
 		userRepository.save(new User("user","user1","", null, passwordEncoder.encode("pass"), "USER"));
 		userRepository.save(new User("admin","admin1","", null, passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
+
+		// categories
+
+		categoryRepository.save(new Category("campo", "#ffc107"));
+		categoryRepository.save(new Category("deporte", "#cc00ff"));
+		categoryRepository.save(new Category("educación", "#28a745"));
 	}
 
 }

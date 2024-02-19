@@ -363,3 +363,11 @@ body {
 .container-delete-account {
     z-index: 2;
 }
+
+/*
+cualquier valor mayor que 0 hara que el elemento con esta clase sea el
+último de todos idependientemente de su posicion en el html/mustache
+ */
+.last {
+    order: 1;
+}
