@@ -21,8 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserLoginService {
 	
-	@Autowired
-	private AuthenticationManager authenticationManager;
+
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -36,10 +35,7 @@ public class UserLoginService {
 	public ResponseEntity<AuthResponse> login(LoginRequest loginRequest, String encryptedAccessToken, String
 			encryptedRefreshToken) {
 		
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		String accessToken = SecurityCipher.decrypt(encryptedAccessToken);
 		String refreshToken = SecurityCipher.decrypt(encryptedRefreshToken);
