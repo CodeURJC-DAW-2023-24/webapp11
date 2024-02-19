@@ -29,45 +29,45 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
     
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity https) throws Exception {
     	
     	// Public pages
-        http.authorizeRequests().antMatchers("/").permitAll();
-        http.authorizeRequests().antMatchers("/login").permitAll();
-        http.authorizeRequests().antMatchers("/loginerror").permitAll();
-        http.authorizeRequests().antMatchers("/logout").permitAll();
-        http.authorizeRequests().antMatchers("/register").permitAll();
-        http.authorizeRequests().antMatchers("/events/*").permitAll();
-        http.authorizeRequests().antMatchers("/home").permitAll();
-        http.authorizeRequests().antMatchers("/home/*").permitAll();
-        http.authorizeRequests().antMatchers("/error").permitAll();
+        https.authorizeRequests().antMatchers("/").permitAll();
+        https.authorizeRequests().antMatchers("/login").permitAll();
+        https.authorizeRequests().antMatchers("/loginerror").permitAll();
+        https.authorizeRequests().antMatchers("/logout").permitAll();
+        https.authorizeRequests().antMatchers("/register").permitAll();
+        https.authorizeRequests().antMatchers("/events/*").permitAll();
+        https.authorizeRequests().antMatchers("/home").permitAll();
+        https.authorizeRequests().antMatchers("/home/*").permitAll();
+        https.authorizeRequests().antMatchers("/error").permitAll();
 
         // Private pages
-        http.authorizeRequests().antMatchers("/profile").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/changePassword").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/logout").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/deleteAccount").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/newEvent").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/deleteEvent/*").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/newReview").hasAnyRole("USER");
-        http.authorizeRequests().antMatchers("/newCategory").hasAnyRole("ADMIN");
+        https.authorizeRequests().antMatchers("/profile").hasAnyRole("USER");
+        https.authorizeRequests().antMatchers("/changePassword").hasAnyRole("USER");
+        https.authorizeRequests().antMatchers("/logout").hasAnyRole("USER");
+        https.authorizeRequests().antMatchers("/deleteAccount").hasAnyRole("USER");
+        https.authorizeRequests().antMatchers("/newEvent").hasAnyRole("USER");
+        https.authorizeRequests().antMatchers("/deleteEvent/*").hasAnyRole("USER");
+        https.authorizeRequests().antMatchers("/newReview").hasAnyRole("USER");
+        https.authorizeRequests().antMatchers("/newCategory").hasAnyRole("ADMIN");
 
         //This line makes it so that, page not listed above are considered public
         //It's commented so that they give an error, just in case we forgot something
-        //http.authorizeRequests().anyRequest().permitAll();
+        //https.authorizeRequests().anyRequest().permitAll();
 
         // Login form
-        http.formLogin().loginPage("/login");
-        http.formLogin().usernameParameter("username");
-        http.formLogin().passwordParameter("password");
-        http.formLogin().defaultSuccessUrl("/");
-        http.formLogin().failureUrl("/loginerror");
+        https.formLogin().loginPage("/login");
+        https.formLogin().usernameParameter("username");
+        https.formLogin().passwordParameter("password");
+        https.formLogin().defaultSuccessUrl("/");
+        https.formLogin().failureUrl("/loginerror");
 
         // Logout
-        http.logout().logoutUrl("/logout");
-        http.logout().logoutSuccessUrl("/");
+        https.logout().logoutUrl("/logout");
+        https.logout().logoutSuccessUrl("/");
 
         //Disable CSRF at the moment
-        http.csrf().disable();
+        https.csrf().disable();
     }
 }
