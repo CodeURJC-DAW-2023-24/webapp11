@@ -2,12 +2,15 @@ package com.EventCrafters.EventCrafters.controller;
 
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.repository.CategoryRepository;
+import com.EventCrafters.EventCrafters.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.AccessType;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +20,7 @@ public class UserWebController {
 
 
 	@Autowired
-	private CategoryRepository categoryRepository;
+	private CategoryService categoryService;
 
 	@RequestMapping("/login")
 	public String login() {
@@ -36,24 +39,23 @@ public class UserWebController {
 	}
 
 	@GetMapping("/profile")
-	public String newReview(Model model) {
+	public String newReview(Model model, HttpServletRequest request) {
 		// To-do: implement the whole thing
-		model.addAttribute("show", "none");
+		if (request.isUserInRole("USER")) {
+			model.addAttribute("show", "none");
+		} else {
+			List<Category> c = categoryService.findAjax(0,1);
+			model.addAttribute("category",c);
+			model.addAttribute("show","block");
+		}
 		return "profile";
 	}
 
-	@GetMapping("/profile/admin")
-	public String showAdminProfile(Model model){
-		List<Category> c = categoryRepository.findAll(PageRequest.of(0,1)).getContent();
-		model.addAttribute("category",c);
-		model.addAttribute("show","block");
-		return "profile";
-	}
 
 	@GetMapping("categories")
 	public String loadCategories(Model model, @RequestParam("page") int page) {
 		int pageSize = 1; // Define cuántos elementos quieres por página
-		List<Category> c = categoryRepository.findAll(PageRequest.of(page, pageSize)).getContent();
+		List<Category> c =categoryService.findAjax(page,pageSize);
 		model.addAttribute("category", c);
 		return "categories";
 	}

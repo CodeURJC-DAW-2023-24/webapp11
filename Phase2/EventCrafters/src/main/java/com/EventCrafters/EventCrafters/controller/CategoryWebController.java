@@ -21,6 +21,6 @@ public class CategoryWebController {
 	public String newCategory(Model model, @RequestParam String category, @RequestParam String color)  {
 		categoryService.save(new Category(category, color));
 		// To-do: implement the whole thing
-		return "redirect:/profile/admin";
+		return "redirect:/profile";
 	}
 }

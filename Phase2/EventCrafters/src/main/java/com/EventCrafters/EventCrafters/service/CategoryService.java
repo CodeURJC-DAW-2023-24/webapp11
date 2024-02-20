@@ -3,6 +3,7 @@ package com.EventCrafters.EventCrafters.service;
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public class CategoryService {
 	public List<Category> findAll() {
 		return repository.findAll();
 	}
+
+	public List<Category> findAjax(int page, int pageSize){ return repository.findAll(PageRequest.of(page,pageSize)).getContent();}
 
 	public void save(Category category) {
 		repository.save(category);
