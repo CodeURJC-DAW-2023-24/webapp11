@@ -48,8 +48,9 @@ public class DatabaseInitializer {
 		eventRepository.save(new Event("Evento 1", image, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
 		eventRepository.save(new Event("Evento 1", image, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
 		eventRepository.save(new Event("Evento 1", image, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 1", image, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
 		*/
+		eventRepository.save(new Event("Evento 1", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+
 		userRepository.save(new User("user","user1","", null, passwordEncoder.encode("pass"), "USER"));
 		userRepository.save(new User("admin","admin1","", null, passwordEncoder.encode("adminpass"), "ADMIN"));
 

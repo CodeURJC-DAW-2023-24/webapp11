@@ -82,16 +82,16 @@
 <div class="container mt-4">
 
     <!-- Profile section -->
-    <div class="perfil-container">
-        <h2 class="titulo-eventos">Mi Perfil</h2>
+    <div class="profile-container">
+        <h2 class="event-title">Mi Perfil</h2>
         <div class="row">
             <!-- Profile picture -->
             <div class="col-md-4">
-                <img class="perfil-foto" src="../img/fotoPerfil.jpg" alt="Foto de Perfil">
+                <img class="profile-photo" src="../img/fotoPerfil.jpg" alt="Foto de Perfil">
             </div>
             <!-- User information -->
             <div class="col-md-8">
-                <div class="datos-usuario">
+                <div class="user-data">
                     <p><strong>Nombre:</strong> Pepe</p>
                     <p><strong>Correo:</strong> pepe@gmail.com</p>
                     <p><strong>Nick:</strong> pepito_el_mas_bonito</p>
@@ -110,26 +110,26 @@
             </div>
         </div>
         <!-- Tags section -->
-        <div class="eventos-usuario"  style="display:{{show}}">
-            <h3 class="creados">Tags</h3>
+        <div class="user-events"  style="display:{{show}}">
+            <h3 class="created">Tags</h3>
             <div class="row flex-wrap" id="categories-container">
                 {{#category}}
                     <div class="col-md-4 mb-4 categories">
-                        <div class="actividad d-flex flex-row align-items-center" name="tag">
-                            <div class="etiquetas-container info etiqueta-admin-container">
-                                <span class="etiqueta-evento etiqueta-admin" style="background-color:{{color}}" name="tag-name">{{name}}</span>
+                        <div class="activity d-flex flex-row align-items-center" name="tag">
+                            <div class="categories-container info admin-category-container">
+                                <span class="event-category admin-category" style="background-color:{{color}}" name="tag-name">{{name}}</span>
                             </div>
-                            <a href="#" class="btn btn-block" id="open-button">Ver Detalles</a>
+                            <button class="btn btn-block">Ver Detalles</button>
                         </div>
                     </div>
                 {{/category}}
 
 
                 <div class="col-md-4 mb-4 last">
-                    <div class="actividad d-flex flex-row align-items-center" style="justify-content: center"
+                    <div class="activity d-flex flex-row align-items-center" style="justify-content: center"
                          id="open-button">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-add etiqueta-admin">+</span>
+                        <div class="categories-container info">
+                            <span class="event-category category-add admin-category">+</span>
                         </div>
                     </div>
                 </div>
@@ -143,44 +143,44 @@
             </div>
         </div>
         <!-- User-created events section -->
-        <div class="eventos-usuario">
-            <h3 class="creados">Mis Eventos Creados</h3>
+        <div class="user-events">
+            <h3 class="created">Mis Eventos Creados</h3>
             <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-campo">Campo</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container info">
+                            <span class="event-category etiqueta-campo">Campo</span>
                         </div>
                         <h5 class="info">Excursión al Valle del Jerte</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container info">
+                            <span class="event-category etiqueta-deporte">Deporte</span>
                         </div>
                         <h5 class="info">Competición de batminton</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-educacion">Educación</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container info">
+                            <span class="event-category etiqueta-educacion">Educación</span>
                         </div>
                         <h5 class="info">JobDays ETSII</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
 
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container info">
+                            <span class="event-category etiqueta-deporte">Deporte</span>
                         </div>
                         <h5 class="info">Competición de batminton</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
             </div>
@@ -193,59 +193,66 @@
             </div>
         </div>
         <!-- User-created events that have already ended section -->
-        <div class="eventos-usuario">
-            <h3 class="proximos">Eventos pasados que he creado </h3>
+        <div class="user-events">
+            <h3 class="next">Eventos pasados que he creado </h3>
             <div class="row flex-wrap">
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container info">
+                            <span class="event-category etiqueta-pasado">Pasado</span>
                         </div>
                         <h5 class="info">Competición de judo</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container">
-                            <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container">
+                            <span class="event-category etiqueta-pasado">Pasado</span>
                         </div>
                         <h5 class="info">Huertos urbanos</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="container text-center mt-4">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <button class="btn btn-primary">Cargar más eventos</button>
+                </div>
+            </div>
+        </div>
         <!-- Events user has signed up for -->
-        <div class="eventos-usuario">
-            <h3 class="proximos">Eventos a los que me he apuntado
+        <div class="user-events">
+            <h3 class="next">Eventos a los que me he apuntado
             </h3>
             <div class="row flex-wrap">
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container info">
+                            <span class="event-category etiqueta-deporte">Deporte</span>
                         </div>
                         <h5 class="info">Partido voley-playa</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container">
-                            <span class="etiqueta-evento etiqueta-educacion">Educación</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container">
+                            <span class="event-category etiqueta-educacion">Educación</span>
                         </div>
                         <h5 class="info">Cibernet: delincuentes en las redes</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-campo">Campo</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container info">
+                            <span class="event-category etiqueta-campo">Campo</span>
                         </div>
                         <h5 class="info">Ruta de las flores</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
             </div>
@@ -258,36 +265,44 @@
             </div>
         </div>
         <!-- Past events user has signed up for -->
-        <div class="eventos-usuario">
-            <h3 class="proximos">Eventos pasados a los que me he apuntado
+        <div class="user-events">
+            <h3 class="next">Eventos pasados a los que me he apuntado
             </h3>
             <div class="row flex-wrap">
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container info">
+                            <span class="event-category etiqueta-pasado">Pasado</span>
                         </div>
                         <h5 class="info">Extreme Programming</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container">
-                            <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container">
+                            <span class="event-category etiqueta-pasado">Pasado</span>
                         </div>
                         <h5 class="info">Escalada en MonteBlanco</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div class="actividad d-flex flex-row align-items-center">
-                        <div class="etiquetas-container info">
-                            <span class="etiqueta-evento etiqueta-pasado">Pasado</span>
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container info">
+                            <span class="event-category etiqueta-pasado">Pasado</span>
                         </div>
                         <h5 class="info">Fotografía de paisajes</h5>
-                        <a href="#" class="btn btn-block">Ver Detalles</a>
+
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="container text-center mt-4">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <button class="btn btn-primary">Cargar más eventos</button>
                 </div>
             </div>
         </div>

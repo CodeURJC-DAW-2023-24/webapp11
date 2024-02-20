@@ -61,17 +61,17 @@
 
     <!-- Contenido principal -->
     <div class="container mt-3">
-        <div class="perfil-container">
-            <h2 class="titulo-eventos">¡Juegos de mesa!</h2>
-            <img src="../img/juegosMesa.png" class="d-block w-100" id="fotoEvento" alt="..."><br>
-            <div class="etiquetas-container info d-flex justify-content-between">
-                <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
-                <span class="etiqueta-evento etiqueta-aforo">Plazas disponibles: 10/300</span>
+        <div class="profile-container">
+            <h2 class="event-title">¡Juegos de mesa!</h2>
+            <img src="../img/juegosMesa.png" class="d-block w-100" id="event-photo" alt="..."><br>
+            <div class="categories-container info d-flex justify-content-between">
+                <span class="event-category etiqueta-deporte">Deporte</span>
+                <span class="event-category etiqueta-aforo">Plazas disponibles: 10/300</span>
             </div>
 
             <!--Sección Información-->
-            <div class="eventos-usuario">
-                <h3 class="proximos">Información</h3>
+            <div class="user-events">
+                <h3 class="next">Información</h3>
                 <div class="row flex-wrap p-3">
                     <p>¡Prepárate para sumergirte en un mundo lleno de estrategia, emoción y diversión en nuestro evento
                         de
@@ -95,7 +95,7 @@
                     <div>
                         <br>
                         <p><strong> Aforo máximo: </strong> 300 personas </p>
-                        <p><strong>Lugar: </strong> <a href="#mapa"">Ver mapa</a></p>
+                        <p><strong>Lugar: </strong> <a href="#map">Ver mapa</a></p>
                         <p><strong>Precio: </strong> Gratuito </p>
                         <p><strong>Fecha de inicio: </strong> 21 de febrero a las 11:00</p>
                         <p><strong>Fecha de fin: </strong> 21 de febrero a las 13:00</p>
@@ -108,8 +108,8 @@
             </div>
 
             <!--Sección Disponibilidad-->
-            <div class="eventos-usuario">
-                <h3 class="proximos">Disponibilidad</h3>
+            <div class="user-events">
+                <h3 class="next">Disponibilidad</h3>
                 <p>No quedan muchas plazas libres. Reserva ahora. </p>
                 <div class="row flex-wrap p-4">
                     <div class="row">
@@ -120,7 +120,7 @@
                             <h4 class="fs-5 mt-4 pb-1">Reservar ahora</h4>
                             <section class="border-top border-bottom"></section>
                             <section class="text-dark w-100 p-1">
-                                <div class="etiquetas-container justify-content-between w-100 align-items-center p-1">
+                                <div class="categories-container justify-content-between w-100 align-items-center p-1">
                                     <h6 class="pt-1">Entrada regular (0€)</h6>
                                     <button class="btn btn-primary px-2">Reservar</button>
                                 </div>
@@ -132,12 +132,12 @@
                 </div>
 
                 <!--Sección Localización-->
-                <div class="eventos-usuario" id="mapa">
-                    <h3 class="creados">Localización</h3>
+                <div class="user-events" id="map">
+                    <h3 class="created">Localización</h3>
                     Este evento tiene lugar en: C. Tulipán, s/n, 28933 Móstoles, Madrid.<br><br>
-                    <div class="container contenedor-mapa">
+                    <div class="container map-container">
                         <div class="row flex-wrap">
-                            <div class="mapa">
+                            <div class="map">
                                 <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3041.3111720853813!2d-3.8799724234960618!3d40.33544266058204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418e7adf68f543%3A0x841755428455a90b!2sUniversidad%20Rey%20Juan%20Carlos%20Campus%20M%C3%B3stoles!5e0!3m2!1ses!2ses!4v1707238497489!5m2!1ses!2ses"
                                     width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"
@@ -148,12 +148,12 @@
                 </div>
 
                 <!--Sección Anfitrión-->
-                <div class="eventos-usuario">
-                    <h3 class="proximos">Anfitrión</h3>
+                <div class="user-events">
+                    <h3 class="next">Anfitrión</h3>
                     <div class="row flex-wrap p-5">
                         <div class="row">
                             <div class="mx-auto">
-                                <img class="perfil-foto" src="../img/fotoPerfil.jpg" alt="Foto de Perfil">
+                                <img class="profile-photo" src="../img/fotoPerfil.jpg" alt="Foto de Perfil">
                             </div>
                             <div>
                                 <h4 class="fs-5 mt-4 px-4 pb-1">Pepe Ramírez (registrado como PeRa87)</h4>
@@ -168,32 +168,32 @@
                 </div>
 
                 <!--Sección Recomendaciones-->
-                <div class="eventos-usuario">
-                    <h3 class="proximos">Según tus gustos, también podría interesarte...
+                <div class="user-events">
+                    <h3 class="next">Según tus gustos, también podría interesarte...
                     </h3>
                     <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
                         <div class="col-md-4 mb-4">
-                            <div class="actividad d-flex flex-row align-items-center">
-                                <div class="etiquetas-container info">
-                                    <span class="etiqueta-evento etiqueta-educacion">Educación</span>
+                            <div class="activity d-flex flex-row align-items-center">
+                                <div class="categories-container info">
+                                    <span class="event-category etiqueta-educacion">Educación</span>
                                 </div>
                                 <h5 class="info">Extreme Programming</h5>
                                 <a href="#" class="btn btn-block">Ver Detalles</a>
                             </div>
                         </div>
                         <div class="col-md-4 mb-4">
-                            <div class="actividad d-flex flex-row align-items-center">
-                                <div class="etiquetas-container">
-                                    <span class="etiqueta-evento etiqueta-deporte">Deporte</span>
+                            <div class="activity d-flex flex-row align-items-center">
+                                <div class="categories-container">
+                                    <span class="event-category etiqueta-deporte">Deporte</span>
                                 </div>
                                 <h5 class="info">Escalada en MonteBlanco</h5>
                                 <a href="#" class="btn btn-block">Ver Detalles</a>
                             </div>
                         </div>
                         <div class="col-md-4 mb-4">
-                            <div class="actividad d-flex flex-row align-items-center">
-                                <div class="etiquetas-container info">
-                                    <span class="etiqueta-evento etiqueta-campo">Campo</span>
+                            <div class="activity d-flex flex-row align-items-center">
+                                <div class="categories-container info">
+                                    <span class="event-category etiqueta-campo">Campo</span>
                                 </div>
                                 <h5 class="info">Fotografía de paisajes</h5>
                                 <a href="#" class="btn btn-block">Ver Detalles</a>

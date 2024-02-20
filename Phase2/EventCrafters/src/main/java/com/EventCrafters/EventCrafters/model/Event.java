@@ -53,7 +53,6 @@ public class Event {
 
 	@ManyToOne
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinColumn(name = "creator_id")
 	private User creator;
 
 	@ManyToMany(fetch = FetchType.EAGER)

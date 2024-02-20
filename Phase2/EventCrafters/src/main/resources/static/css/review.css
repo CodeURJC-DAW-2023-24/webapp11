@@ -1,9 +1,7 @@
-/* Estilos específicos para la animación de las estrellas */
 .rateyo {
     pointer-events: auto;
   }
   
-/* Ajuste para que las estrellas se muestren correctamente en el formulario */
 .rating .rateyo {
    cursor: pointer;
 }

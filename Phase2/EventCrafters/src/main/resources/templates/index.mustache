@@ -57,22 +57,22 @@
 </nav>
 <!-- Contenido principal -->
 <div class="container mt-4">
-    <h2 class="titulo-eventos">Próximos Eventos</h2>
+    <h2 class="event-name">Próximos Eventos</h2>
     <!-- Actividades -->
     <div class="row">
         {{#events}}
             <div class="col-md-4">
-                <div class="actividad">
+                <div class="activity">
                     <img src="../img/campo.jpg" alt="Actividad 1" class="img-fluid">
                     <h5>{{name}}</h5>
-                    <div class="etiquetas-container">
-                        <span class="etiqueta-evento etiqueta-campo">Campo</span>
-                        <span class="aforo-evento etiqueta-aforoMucho">Aforo: {{registeredUsers}}/{{maxCapacity}}</span>
+                    <div class="categories-container">
+                        <span class="event-category etiqueta-campo">Campo</span>
+                        <span class="event-capacity etiqueta-aforoMucho">Aforo: {{registeredUsers}}/{{maxCapacity}}</span>
                     </div>
                     <span class="icoest1">&#128205; {{location}}</span>
-                    <p class="descripcion">{{description}}</p>
+                    <p class="description">{{description}}</p>
                     <p> </p>
-                    <p class="fecha"><strong>Fecha: </strong>{{startDate}}</p>
+                    <p class="date"><strong>Fecha: </strong>{{startDate}}</p>
                     <form action="/event/{{id}}" method="POST">
                         <button class="btn btn-primary" type="submit">Ver Detalles</button>
                     </form>
@@ -94,7 +94,7 @@
         </div>
     </div>
 </div>
-
+<div></div>
 <!-- Scripts de Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

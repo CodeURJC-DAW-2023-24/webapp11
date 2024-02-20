@@ -2,19 +2,19 @@ body {
     padding-top: 56px;
 }
 
-#fotoEvento {
+#event-photo {
     padding: 0px;
     max-height: 400px;
     height: auto;
 }
 
-.perfil-container {
+.profile-container {
     padding: 30px;
     border-radius: 30px;
     background-color: #fff;
 }
 
-.perfil-foto {
+.profile-photo {
     width: 150px;
     height: 150px;
     object-fit: cover;
@@ -22,11 +22,11 @@ body {
     margin-bottom: 20px;
 }
 
-.datos-usuario {
+.user-data {
     margin-bottom: 20px;
 }
 
-.eventos-usuario {
+.user-events {
     margin-top: 20px;
 }
 
@@ -51,7 +51,7 @@ body {
     font-weight: bold;
     margin-left: 10px;
     text-align: left;
-    border-radius: 5xp;
+    border-radius: 5px;
     margin-right: 10px;
 }
 
@@ -61,7 +61,7 @@ body {
 
 
 
-.actividad {
+.activity {
     margin-bottom: 20px;
     border-radius: 10px;
     overflow: hidden;
@@ -71,25 +71,24 @@ body {
     margin-bottom: 0%;
 }
 
-.etiquetas-container {
+.categories-container {
     display: inline-block;
     margin-right: 5px;
 }
 
-.actividad h5 {
+.activity h5 {
     display: inline-block;
     margin-right: 5px;
 }
 
-.actividad .contenido {
+.activity .contenido {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 100%;
 }
 
-/*es el botón de ver mas detallas*/
-.actividad a {
+.activity button {
         display: block;
         align-items: center;
         justify-content: center;
@@ -99,12 +98,12 @@ body {
         color: #fff;
         border-radius: 0 10px 10px 0;
          width: 100px;  
-        height: 100%; /* Ajuste para que el botón ocupe todo el alto */
-        box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+        height: 100%;
+        box-sizing: border-box;
         margin-left: 10px;
 }
     
-.actividad:hover {
+.activity:hover {
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease 0s;
 }
@@ -112,13 +111,13 @@ body {
 
 
 
-.etiquetas-container {
+.categories-container {
     display: flex;
     justify-content: center;
     background-color: white;
 }
 
-.etiqueta-evento {
+.event-category {
     display: inline-block;
     padding: 5px 10px;
     border-radius: 5px;
@@ -142,7 +141,7 @@ body {
     background-color: #d75959;
 }
 
-.titulo-eventos {
+.event-title {
     text-align: center;
     background-color: #78d1ef; 
     color: #000000; 
@@ -154,14 +153,14 @@ body {
     font-weight: bold; 
 }
 
-.creados,
-.proximos {
+.created,
+.next {
     text-align: left;
     margin-bottom: 2%;
     border-bottom: 1px solid #ccc;
 }
 
-.cargar-eventos{
+.load-events{
     text-align:center;
     margin-bottom: 5%;
     margin-top:2%;
@@ -171,7 +170,7 @@ body {
     border-radius: 10px;
 }
 
-.contenedor-mapa{
+.map-container{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -189,7 +188,7 @@ iframe {
     margin-left: 10px;
 }
 
-.titulo-eventos {
+.events-title {
     text-align: center;
     background-color: #78d1ef; /* Color de fondo */
     color: #000000; /* Color del texto */
@@ -203,7 +202,7 @@ iframe {
     font-weight: bold; /* Negrita */
 }
 
-.cargar-eventos{
+.load-events{
     text-align:center;
     margin-bottom: 5%;
     margin-top:5%;

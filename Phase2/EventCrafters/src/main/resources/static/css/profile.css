@@ -12,11 +12,11 @@ body {
     /* Evitar la subrayado en el hover */
 }
 
-.perfil-container {
+.profile-container {
     margin-top: 20px;
 }
 
-.perfil-foto {
+.profile-photo {
     width: 150px;
     height: 150px;
     object-fit: cover;
@@ -24,11 +24,11 @@ body {
     margin-bottom: 20px;
 }
 
-.datos-usuario {
+.user-data {
     margin-bottom: 20px;
 }
 
-.eventos-usuario {
+.user-events {
     margin-top: 20px;
 }
 
@@ -56,7 +56,7 @@ body {
 }
 
 
-.actividad {
+.activity {
     margin-bottom: 20px;
     border-radius: 10px;
     overflow: hidden;
@@ -66,25 +66,24 @@ body {
     margin-bottom: 0%;
 }
 
-.etiquetas-container {
+.categories-container {
     display: inline-block;
     margin-right: 5px;
 }
 
-.actividad h5 {
+.activity h5 {
     display: inline-block;
     margin-right: 5px;
 }
 
-.actividad .contenido {
+.activity .content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 100%;
 }
 
-/*es el botón de ver mas detallas*/
-.actividad a {
+.activity button {
     display: block;
     align-items: center;
     justify-content: center;
@@ -101,21 +100,17 @@ body {
     margin-left: 10px;
 }
 
-
-
-.actividad a:hover {
+.activity button:hover {
     background-color: #0056b3;
 }
 
-
-
-.etiquetas-container {
+.categories-container {
     display: flex;
     justify-content: center;
     background-color: white;
 }
 
-.etiqueta-evento {
+.event-category {
     display: inline-block;
     padding: 5px 10px;
     margin: 10px;
@@ -143,15 +138,11 @@ body {
 }
 
 
-
-
-
-.titulo-eventos {
+.event-title {
     text-align: center;
     background-color: #78d1ef;
     color: #000000;
     padding: 10px 20px;
-    /* Espaciado interno */
     border-radius: 20px;
     margin-top: 3%;
     margin-bottom: 3%;
@@ -161,14 +152,14 @@ body {
     font-weight: bold;/
 }
 
-.creados,
-.proximos {
+.created,
+.next {
     text-align: left;
     margin-bottom: 2%;
     border-bottom: 1px solid #ccc;
 }
 
-.cargar-eventos {
+.load-events {
     text-align: center;
     margin-bottom: 5%;
     margin-top: 2%;
@@ -178,7 +169,7 @@ body {
     border-radius: 10px;
 }
 
-.etiqueta-admin-container {
+.admin-category-container {
     width: 80%;
 }
 
@@ -186,11 +177,11 @@ body {
     width: auto;
 }
 
-.etiqueta-admin {
+.admin-category {
     padding: 10px 20px;
 }
 
-.etiqueta-add {
+.category-add {
     color: black;
     font-size: 300%;
     margin-top: 0;
@@ -266,7 +257,7 @@ body {
     margin-left: 10px;
 }
 
-.titulo-eventos {
+.event-title {
     text-align: center;
     background-color: #78d1ef;
     /* Color de fondo */
@@ -286,7 +277,7 @@ body {
     /* Negrita */
 }
 
-.cargar-eventos {
+.load-events {
     text-align: center;
     margin-bottom: 5%;
     margin-top: 5%;
@@ -351,7 +342,7 @@ body {
 }
 
 /* Efecto de sombra para los contenedores de eventos */
-.actividad:hover {
+.activity:hover {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.3s ease-in-out;
 }

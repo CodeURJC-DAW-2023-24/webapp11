@@ -1,5 +1,5 @@
 body {
-    padding-top: 56px; /* Ajuste para la barra de navegación fija en la parte superior */
+    padding-top: 56px;
 }
 
 .nav-link {
@@ -8,7 +8,7 @@ body {
     font-weight: bold;
     margin-left: 10px;
     text-align: left;
-    border-radius: 5xp;
+    border-radius: 5px;
     margin-right: 10px;
 }
 
@@ -17,12 +17,12 @@ body {
 }
 
 .logoText:hover {
-    color: white !important; /* Forzar que el color sea blanco al pasar el ratón */
-    background-color: transparent !important; /* Forzar que el fondo sea transparente al pasar el ratón */
-    text-decoration: none; /* Evitar la subrayado en el hover */
+    color: white !important;
+    background-color: transparent !important;
+    text-decoration: none;
 }
 
-.actividad {
+.activity {
     margin-bottom: 20px;
     border-radius: 10px;
     overflow: hidden;
@@ -31,58 +31,57 @@ body {
     position: relative;
 }
 
-.actividad:hover {
+.activity:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 
-.actividad img {
+.activity img {
     width: 100%;
     height: 150px;
     object-fit: cover;
     border-bottom: 1px solid #ccc;
 }
 
-.actividad h5 {
+.activity h5 {
     padding: 10px;
     margin-bottom: 0;
     font-size: 20px;
     text-align: center;
     border-bottom: 1px solid #ccc;
-    white-space: nowrap; /* Evita el salto de línea */
-    overflow: hidden; /* Oculta el contenido que desborda el contenedor */
-    text-overflow: ellipsis; /* Agrega puntos suspensivos (...) si el texto es demasiado largo */
-    max-width: 100%; /* Ajusta el ancho máximo según sea necesario */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
-.etiquetas-container {
+.categories-container {
     display: flex;
     justify-content: center;
     border-bottom: 1px solid #ccc;
     background-color: #f2f1f3;
 }
 
-.etiqueta-evento {
+.event-category {
     display: inline-block;
     padding: 5px 10px;
     margin: 10px;
     border-radius: 5px;
     font-weight: bold;
-    color: #fff; /* Agregado: color de texto */
+    color: #fff;
 }
 
-.aforo-evento {
+.event-capacity {
     display: inline-block;
     padding: 5px 10px;
     margin: 10px;
-    /*border-radius: 5px;*/
     font-weight: bold;
-    color: #fff; /* Agregado: color de texto */
+    color: #fff;
 }
 
 
 .etiqueta-campo {
-    background-color: #ffc107; /* Amarillo */
+    background-color: #ffc107;
 }
 
 .etiqueta-deporte {
@@ -122,7 +121,7 @@ body {
     margin-bottom: -30px; /* Espacio entre la descripción y el botón */
 }
 
-.actividad a {
+.activity button {
     display: block;
     padding: 10px;
     text-align: center;
@@ -136,7 +135,7 @@ body {
     width: 100%;
 }
 
-.actividad a:hover {
+.activity button:hover {
     background-color: #0056b3;
 }
 
@@ -148,7 +147,7 @@ body {
     margin-left: 10px;
 }
 
-.titulo-eventos {
+.event-name {
     text-align: center;
     background-color: #78d1ef; /* Color de fondo */
     color: #000000; /* Color del texto */
