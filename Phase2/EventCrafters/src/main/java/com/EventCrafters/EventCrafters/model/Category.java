@@ -26,7 +26,7 @@ public class Category {
     private Long id;
 
     @Column(nullable = false)
-    private String category;
+    private String name;
 
     @Column(nullable = false)
     private String color;
@@ -36,8 +36,8 @@ public class Category {
     public Category (){
     }
 
-    public Category(String category, String color) {
-        this.category = category;
+    public Category(String name, String color) {
+        this.name = name;
         this.color = color;
     }
 

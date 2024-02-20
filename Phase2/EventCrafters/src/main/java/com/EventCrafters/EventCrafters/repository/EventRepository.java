@@ -8,5 +8,5 @@ import com.EventCrafters.EventCrafters.model.Event;
 import java.util.Optional;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
-    Optional<Category> findByName(String name);
+    Optional<Event> findByName(String name);
 }

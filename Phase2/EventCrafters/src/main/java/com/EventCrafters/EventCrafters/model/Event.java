@@ -56,12 +56,7 @@ public class Event {
 	@JoinColumn(name = "creator_id")
 	private User creator;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "event_registered_users",
-			joinColumns = @JoinColumn(name = "event_id"),
-			inverseJoinColumns = @JoinColumn(name = "user_id")
-	)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<User> registeredUsers = new HashSet<>();
 
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -69,7 +64,6 @@ public class Event {
 
 
 	@ManyToOne
-	@JoinColumn(name = "category_id")
 	private Category category;
 	public Event() {}
 

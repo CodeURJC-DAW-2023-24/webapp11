@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import com.EventCrafters.EventCrafters.model.Event;
+import com.EventCrafters.EventCrafters.repository.CategoryRepository;
+import com.EventCrafters.EventCrafters.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +20,16 @@ import com.EventCrafters.EventCrafters.service.EventService;
 
 @Controller
 public class EventWebController {
-/*
+
     @Autowired
     private EventService service;
+
+    @GetMapping("/")
+    public String home(Model model) {
+        model.addAttribute("events", service.findAll());
+        return "index";
+    }
+/*
 
     @ModelAttribute
     public void addAttributes(Model model, HttpServletRequest request) {
