@@ -39,7 +39,9 @@
 
 ## 🧰Team organization
 
-To help organize the team and keep track of tasks, we use [Trello](https://trello.com/b/AJC8iT3W/daw)
+To help organize the team and keep track of tasks, we use [Trello](https://trello.com/invite/daw358/ATTIb7617ea77657d54f9a8a40ae8c00a941ADB6A0A5)
+
+It is important to note that through this link, access will be granted to the workspace. There are multiple boards available. The phases developed within them are indicated with their own titles.
 
 ## 💻Entities
 - Users
