@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,9 +35,12 @@ public class UserWebController {
 		return "login";
 	}
 
-	@GetMapping("/profile/{nickname}")
-	public String newReview(Model model, @PathVariable String nickname) {
+	@GetMapping("/profile")
+	public String newReview(Model model) {
 		// To-do: implement the whole thing
+		model.addAttribute("show", "hidden");
+		model.addAttribute("show", new ArrayList<>());
+		model.addAttribute("color", "white");
 		return "profile";
 	}
 
