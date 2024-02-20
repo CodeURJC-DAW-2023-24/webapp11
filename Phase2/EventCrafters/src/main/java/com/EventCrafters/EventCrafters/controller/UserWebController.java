@@ -1,8 +1,10 @@
 package com.EventCrafters.EventCrafters.controller;
 
 import com.EventCrafters.EventCrafters.model.Category;
+import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.repository.CategoryRepository;
 import com.EventCrafters.EventCrafters.service.CategoryService;
+import com.EventCrafters.EventCrafters.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.AccessType;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +23,8 @@ public class UserWebController {
 
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping("/login")
 	public String login() {
@@ -63,13 +67,19 @@ public class UserWebController {
 	@GetMapping("/register")
 	public String register(Model model) {
 		// To-do: implement the whole thing
+		model.addAttribute("user", new User());
 		return "register";
 	}
 
 	@PostMapping("/register")
-	public String createAccount(Model model) {
+	public String createAccount(Model model, User user) {
 		// To-do: implement the whole thing
-		return "profile"; // or previous screen
+		//if (!userService.findAll().contains(user))
+
+		//user.setEncodedPassword(encode(user.getEncodedPassword()));
+		userService.save(user);
+		//log them in somehow
+		return "redirect:/login"; // or previous screen
 	}
 
 	@GetMapping("/changePassword/{nickname}")

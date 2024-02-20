@@ -10,6 +10,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -29,13 +30,18 @@ public class User {
 
 
 	private String name;
+
+	@Column(unique = true, nullable = false)
 	private String nickname;
+
+	@Column(nullable = false)
 	private String email;
 
 	@Lob
 	private Blob photo;
 
 	@JsonIgnore
+	@Column(nullable = false)
 	private String encodedPassword;
 
 
