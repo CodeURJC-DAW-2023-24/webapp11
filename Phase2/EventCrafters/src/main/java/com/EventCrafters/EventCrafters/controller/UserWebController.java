@@ -38,9 +38,7 @@ public class UserWebController {
 	@GetMapping("/profile")
 	public String newReview(Model model) {
 		// To-do: implement the whole thing
-		model.addAttribute("show", "hidden");
-		model.addAttribute("show", new ArrayList<>());
-		model.addAttribute("color", "white");
+		model.addAttribute("show", "none");
 		return "profile";
 	}
 

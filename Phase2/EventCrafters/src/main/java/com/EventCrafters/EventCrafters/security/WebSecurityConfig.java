@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         https.authorizeRequests().antMatchers("/home").permitAll();
         https.authorizeRequests().antMatchers("/home/*").permitAll();
         https.authorizeRequests().antMatchers("/error").permitAll();
+        https.authorizeRequests().antMatchers("/newCategory").permitAll();
 
         // Private pages
         https.authorizeRequests().antMatchers("/profile").hasAnyRole("USER");
@@ -50,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         https.authorizeRequests().antMatchers("/newEvent").hasAnyRole("USER");
         https.authorizeRequests().antMatchers("/deleteEvent/*").hasAnyRole("USER");
         https.authorizeRequests().antMatchers("/newReview").hasAnyRole("USER");
-        https.authorizeRequests().antMatchers("/newCategory").hasAnyRole("ADMIN");
+
 
         //This line makes it so that, page not listed above are considered public
         //It's commented so that they give an error, just in case we forgot something

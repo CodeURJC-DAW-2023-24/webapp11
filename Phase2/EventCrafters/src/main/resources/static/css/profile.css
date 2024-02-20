@@ -47,7 +47,7 @@ body {
     font-weight: bold;
     margin-left: 10px;
     text-align: left;
-    border-radius: 5xp;
+    border-radius: 5px;
     margin-right: 10px;
 }
 
@@ -365,8 +365,8 @@ body {
 }
 
 /*
-cualquier valor mayor que 0 hara que el elemento con esta clase sea el
-último de todos idependientemente de su posicion en el html/mustache
+Any value higher than 0 will make it so that the element with this class
+becomes the last one in its parent element
  */
 .last {
     order: 1;

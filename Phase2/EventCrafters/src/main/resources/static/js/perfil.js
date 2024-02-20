@@ -34,7 +34,6 @@ for (var i = 0; i < openButtons.length; i++) {
 //para cerrar el popup de tags
 const closeWindow = () => {
     windowContainer.classList.add('close') // animación de cerrado
-
     setTimeout(() => {
         windowContainer.classList.remove('close')
         windowBackground.style.display = 'none'

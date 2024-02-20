@@ -114,11 +114,12 @@
             <h3 class="creados">Tags</h3>
             <div class="row flex-wrap" id="categories-container">
                 {{#category}}
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-4 mb-4 categories">
                         <div class="actividad d-flex flex-row align-items-center" name="tag">
                             <div class="etiquetas-container info etiqueta-admin-container">
-                                <span class="etiqueta-evento etiqueta-admin" style="background-color:{{color}}" name="tag-name">{{category}}</span>
+                                <span class="etiqueta-evento etiqueta-admin" style="background-color:{{color}}" name="tag-name">{{name}}</span>
                             </div>
+                            <a href="#" class="btn btn-block" name="open-button">Ver Detalles</a>
                         </div>
                     </div>
                 {{/category}}
@@ -134,7 +135,7 @@
                 </div>
             </div>
         </div>
-        <div class="container text-center mt-4">
+        <div class="container text-center mt-4" style="display: {{show}}">
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <button class="btn btn-primary" id="load-more">Cargar más tags</button>
