@@ -29,7 +29,10 @@
                     <a class="dropdown-item" href="#">Próximos eventos</a>
                     <a class="dropdown-item" href="#">Configuración</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                    <form action="/logout" method="post">
+                        <input type="hidden" name="_method" value="POST">
+                        <button type="submit" name="logout"  class="dropdown-item">Cerrar Sesión</button>
+                    </form>
                 </div>
             </li>
             <li class="nav-item dropdown">
