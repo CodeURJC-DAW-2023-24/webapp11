@@ -39,7 +39,7 @@ public class User {
 	private String encodedPassword;
 
 
-	@ElementCollection(fetch = FetchType.LAZY)
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
 
 	public User() {
