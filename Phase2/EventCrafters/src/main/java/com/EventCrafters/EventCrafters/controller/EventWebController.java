@@ -1,16 +1,28 @@
 package com.EventCrafters.EventCrafters.controller;
 
+import java.io.IOException;
+import java.sql.Blob;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import com.EventCrafters.EventCrafters.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.EventCrafters.EventCrafters.service.EventService;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class EventWebController {
@@ -62,97 +74,31 @@ public class EventWebController {
         }
     }
 
+    @PostMapping("/create_event")
+    public String createEvent(@RequestParam("name") String name,
+                              @RequestParam("photo") MultipartFile photo,
+                              @RequestParam("description") String description,
+                              @RequestParam("capacity") int maxCapacity,
+                              @RequestParam("price") double price,
+                              @RequestParam("location") String location,
+                              @RequestParam("coordinates") String coordinates,
+                              @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                              @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+                              @RequestParam(value = "additionalInfo", required = false) String additionalInfo,
+                              RedirectAttributes redirectAttributes) {
+        try {
+            Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photo.getBytes());
+            String[] latLong = coordinates.split(",");
+            Double latitude = Double.parseDouble(latLong[0].trim());
+            Double longitude = Double.parseDouble(latLong[1].trim());
+            Date start = Date.from(startDate.atZone(ZoneId.systemDefault()).toInstant());
+            Date end = Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant());
 
-/*
-    @ModelAttribute
-    public void addAttributes(Model model, HttpServletRequest request) {
-
-        Principal principal = request.getUserPrincipal();
-
-        if (principal != null) {
-
-            model.addAttribute("logged", true);
-            model.addAttribute("userName", principal.getName());
-            model.addAttribute("admin", request.isUserInRole("ADMIN"));
-
-        } else {
-            model.addAttribute("logged", false);
+            Event event = new Event(name, photoBlob, description, maxCapacity, price, location, latitude, longitude, start, end, additionalInfo);
+            service.save(event);
+        } catch (Exception e) {
         }
-    }
 
+        return "redirect:/";
     }
-    @GetMapping("/home/search")
-    public String search(Model model) {
-        //To-do: implement the whole thing.
-        return "index";
-    }
-    @GetMapping("/home/{tag}")
-    public String filter(Model model) {
-        //To-do: implement the whole thing.
-        return "index";
-    }
-
-    @GetMapping("/events/{id}")
-    public String showEvent(Model model, @PathVariable long id) {
-        //To-do: implement the whole thing. Maybe take inspiration from this
-        /*Optional<Event> book = service.findById(id);
-        if (book.isPresent()) {
-            model.addAttribute("book", book.get());
-            return "book";
-        } else {
-            return "books";
-        }*/
-/*        return "event_info";
-    }
-
-    @PostMapping("/removeEvent/{id}")
-    public String removeBook(Model model, @PathVariable long id) {
-        //To-do: implement the whole thing. Maybe take inspiration from this
-        /*
-        Optional<Event> book = service.findById(id);
-        if (book.isPresent()) {
-            service.delete(id);
-            model.addAttribute("book", book.get());
-        }*/
-/*        return "profile"; //or a dedicated page to tell the user the operation went through
-    }
-
-    @GetMapping("/newEvent")
-    public String newEvent(Model model) {
-        //To-do: Give model neccesary params
-        return "create_event";
-    }
-
-    @PostMapping("/newEvent")
-    public String newEventProcess(Model model, Event event) {
-        //To-do: save the event. Maybe take inspiration from this
-        /* service.save(event);
-        model.addAttribute("bookId", event.getId()); */
-/*        return "profile"; //or event_info for this event, or a dedicated page to tell the user the operation went through
-    }
-
-    @GetMapping("/editEvent/{id}")
-    public String editBook(Model model, @PathVariable long id) {
-        //To-do: implement the whole thing. Maybe take inspiration from this
-        /*
-        Optional<Event> book = service.findById(id);
-        if (book.isPresent()) {
-            model.addAttribute("book", book.get());
-            return "editBookPage";
-        } else {
-            return "books";
-        }
-        */
-/*        return "create_event"; //?
-    }
-
-    @PostMapping("/editEvent") //wouldn't we take the id as well?
-    public String editBookProcess(Model model, Event event) {
-        //To-do: implement the whole thing. Maybe take inspiration from this
-        /*service.save(event);
-        model.addAttribute("bookId", event.getId());*/
-
-/*        return "event_info"; //or profile for this event, or a dedicated page to tell the user the operation went through
-    }
-*/
 }

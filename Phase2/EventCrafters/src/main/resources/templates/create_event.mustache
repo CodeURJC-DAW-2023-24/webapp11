@@ -28,39 +28,39 @@
                     </div>
                     <!-- Body of the card containing the form fields -->
                     <div class="card-body">
-                        <form enctype="multipart/form-data">
+                        <form action="/create_event" method="post" enctype="multipart/form-data">
                             <!-- name -->
                             <div class="form-group">
                                 <label for="event-name">Introduce el nombre del evento</label>
-                                <input type="text" class="form-control" id="event-name" placeholder="Nombre del Evento"
+                                <input name="name" type="text" class="form-control" id="event-name" placeholder="Nombre del Evento"
                                     required>
                             </div>
                             <!-- description -->
                             <div class="form-group">
                                 <label for="event-description">Introduce la descripción del evento</label>
-                                <textarea class="form-control" id="event-description"
+                                <textarea name="description" class="form-control" id="event-description"
                                     placeholder="Descripción del Evento" rows="3" required></textarea>
                             </div>
                             <!-- (max) capacity-->
                             <div class="form-group">
                                 <label for="event-capacity">Introduce el aforo del evento</label>
-                                <input type="number" class="form-control" id="event-capacity" placeholder="Aforo"
+                                <input name="capacity" type="number" class="form-control" id="event-capacity" placeholder="Aforo"
                                     required>
                             </div>
                             <!-- price -->
                             <div class="form-group">
                                 <label for="event-price">Introduce el precio de la entrada del evento</label>
-                                <input type="number" class="form-control" id="event-price"
+                                <input name="price" type="number" class="form-control" id="event-price"
                                     placeholder="Precio de la entrada" required>
                             </div>
                             <!-- start and end dates -->
                             <div class="form-group">
                                 <label for="event-start">Fecha y hora de inicio del evento</label>
-                                <input type="datetime-local" class="form-control" id="event-start" required>
+                                <input name="startDate"type="datetime-local" class="form-control" id="event-start" required>
                             </div>
                             <div class="form-group">
                                 <label for="event-end">Fecha y hora de fin del evento</label>
-                                <input type="datetime-local" class="form-control" id="event-end" required>
+                                <input name="endDate" type="datetime-local" class="form-control" id="event-end" required>
                             </div>
                             <!-- category-->
                             <div class="form-group">
@@ -73,23 +73,23 @@
                             <!-- photo-->
                             <div class="form-group">
                                 <label for="event-photo">Introduce la foto del Evento</label>
-                                <input type="file" class="form-control-file" id="event-photo" required>
+                                <input name="photo" type="file" class="form-control-file" id="event-photo" required>
                             </div>
                             <!-- address-->
                             <div class="form-group">
                                 <label for="event-address">Introduce la direccion del evento</label>
-                                <input type="text" class="form-control" id="event-address" placeholder="Dirección"
+                                <input name="location" type="text" class="form-control" id="event-address" placeholder="Dirección"
                                     required>
                             </div>
                             <!-- coordinates -->
                             <div class="form-group">
                                 <label for="event-coordinates">Introduce las coordenadas donde se celebrará el evento</label>
-                                <input type="text" class="form-control" id="event-coordinates" placeholder="Coordenadas">
+                                <input name="coordinates" type="text" class="form-control" id="event-coordinates" placeholder="Coordenadas">
                             </div>
                             <!--Extra info-->
                             <div class="form-group">
                                 <label for="event-extras">Introduce información adicional sobre el evento</label>
-                                <textarea class="form-control" id="event-extras"
+                                <textarea name="additionalInfo" class="form-control" id="event-extras"
                                     placeholder="Informacion Extra del Evento" rows="3"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Crear Evento</button>
