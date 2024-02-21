@@ -58,10 +58,10 @@
             </svg>
         </a>
         <!-- Form for creating/editing tags -->
-        <form action="/newCategory" method="post" enctype="multipart/form-data">
+        <form action="/newCategory" method="post" enctype="multipart/form-data" id="tag-pop-up">
             <div class="form-group" id="first-part-tag-form">
                 <label for="tag-name-in">Nombre del tag</label>
-                <input type="text" class="form-control" id="tag-name-in" name="category" placeholder="Nombre del tag">
+                <input type="text" class="form-control" id="tag-name-in" name="name" placeholder="Nombre del tag">
             </div>
             <div class="form-group">
                 <label for="tag-color-in">Color del tag</label>
@@ -110,21 +110,20 @@
             <div class="row flex-wrap" id="categories-container">
                 {{#category}}
                     <div class="col-md-4 mb-4 categories">
-                        <div class="activity d-flex flex-row align-items-center" name="tag">
+                        <div class="activity d-flex flex-row align-items-center" name="tag" id="{{id}}">
                             <div class="categories-container info admin-category-container">
                                 <span class="event-category admin-category" style="background-color:{{color}}" name="tag-name">{{name}}</span>
                             </div>
-                            <button class="btn btn-block">Ver Detalles</button>
+                            <button class="btn btn-block" id="open-button">Ver Detalles</button>
                         </div>
                     </div>
                 {{/category}}
 
 
                 <div class="col-md-4 mb-4 last">
-                    <div class="activity d-flex flex-row align-items-center" style="justify-content: center"
-                         id="open-button">
-                        <div class="categories-container info">
-                            <span class="event-category category-add admin-category">+</span>
+                    <div class="activity d-flex flex-row align-items-center" style="justify-content: center" id="open-button">
+                        <div class="categories-container info" id="open-button">
+                            <span class="event-category category-add admin-category" id="open-button">+</span>
                         </div>
                     </div>
                 </div>

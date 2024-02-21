@@ -2,7 +2,8 @@ const windowBackground = document.getElementById('window-background'),
     windowContainer = document.getElementById('window-container'),
     closeButton = document.getElementById('close-button'),
     tagColorin = document.getElementById('tag-color-in'),
-    tagNamein = document.getElementById('tag-name-in');
+    tagNamein = document.getElementById('tag-name-in'),
+    tagPopup = document.getElementById('tag-pop-up');
 
 let currentpage = 0;
 
@@ -15,6 +16,10 @@ const newButton = (e) => {
     windowBackground.style.display = 'flex'
     let parent = e.target.parentElement;
     if (parent.getAttribute('name') == 'tag'){
+        let id = parent.getAttribute('id')
+        if (id != null){ // if it has id, it means that you want to update/delete it
+            tagPopup.action = `/editCategory/${id}`
+        }
         let nameholder = parent.getElementsByTagName('span')
         tagNamein.value = nameholder[0].textContent
         let color = window.getComputedStyle(nameholder[0]).getPropertyValue('background-color')
