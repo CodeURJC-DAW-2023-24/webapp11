@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -38,10 +39,20 @@ public class EventWebController {
 
     @GetMapping("/")
     public String home(Model model) {
+        nextEventIndex = eventsRefreshSize;
         this.allEvents = service.findAll();
-        model.addAttribute("events", allEvents.subList(0,nextEventIndex));
-        model.addAttribute("nextEventIndex", nextEventIndex);
-        model.addAttribute("eventsRefreshSize", eventsRefreshSize);
+
+        if (allEvents.isEmpty()){
+            model.addAttribute("events", new ArrayList<Event>());
+            nextEventIndex = allEvents.size();
+        }
+        else if (allEvents.size() <= nextEventIndex){
+            model.addAttribute("events", allEvents.subList(0,allEvents.size()));
+            nextEventIndex = allEvents.size();
+        }
+        else{
+            model.addAttribute("events", allEvents.subList(0,nextEventIndex));
+        }
         return "index";
     }
 

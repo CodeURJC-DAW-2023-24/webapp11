@@ -6,7 +6,3 @@ async function loadMore() {
     const eventContainerStructure = document.getElementById("eventsChart");  //Events structure from index.mustache
     eventContainerStructure.innerHTML += newEvent; //Add the new events after last one
 }
-
-function mensajeBorrado() {
-    cambiarVisibilidad(document.getElementById("noElementos"));
-}
