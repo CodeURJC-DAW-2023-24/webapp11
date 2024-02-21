@@ -1,6 +1,7 @@
 package com.EventCrafters.EventCrafters.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.EventCrafters.EventCrafters.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +47,18 @@ public class EventWebController {
     }
 
     @GetMapping("/event/{id}")
-    public String eventInfo(@PathVariable int id,  Model model) {
-        return "event_info";
+    public String showEvent(Model model, @PathVariable long id) {
+        Optional<Event> event = service.findById(id);
+        if (event.isPresent()) {
+            model.addAttribute("event", event.get());
+            return "eventInfo";
+        } else {
+            return "redirect:/";
+        }
     }
 
 
 /*
-
     @ModelAttribute
     public void addAttributes(Model model, HttpServletRequest request) {
 

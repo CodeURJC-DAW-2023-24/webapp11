@@ -37,11 +37,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         https.authorizeRequests().antMatchers("/loginerror").permitAll();
         https.authorizeRequests().antMatchers("/logout").permitAll();
         https.authorizeRequests().antMatchers("/register").permitAll();
-        https.authorizeRequests().antMatchers("/events/*").permitAll();
+        https.authorizeRequests().antMatchers("/event/*").permitAll(); //Placed here for tests, will be moved to private pages soon
         https.authorizeRequests().antMatchers("/moreEvents").permitAll();
         https.authorizeRequests().antMatchers("/home").permitAll();
         https.authorizeRequests().antMatchers("/home/*").permitAll();
         https.authorizeRequests().antMatchers("/error").permitAll();
+
 
 
         // Private pages
