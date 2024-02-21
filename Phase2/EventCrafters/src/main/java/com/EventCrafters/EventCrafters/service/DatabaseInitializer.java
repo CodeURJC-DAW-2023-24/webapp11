@@ -51,6 +51,8 @@ public class DatabaseInitializer {
 		eventRepository.save(new Event("Evento 7", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
 		eventRepository.save(new Event("Evento 8", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
 		eventRepository.save(new Event("Evento 9", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		eventRepository.save(new Event("Evento 10", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		eventRepository.save(new Event("Evento 11", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
 
 		/*Resource image1 = new ClassPathResource("../static/img/fotoPerfil.jpg");
 		Blob image = BlobProxy.generateProxy(image1.getInputStream(),image1.contentLength());
@@ -59,7 +61,6 @@ public class DatabaseInitializer {
 		eventRepository.save(new Event("Evento 1", image, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
 		eventRepository.save(new Event("Evento 1", image, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
 		*/
-		eventRepository.save(new Event("Evento 1", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
 
 		userRepository.save(new User("user","user1","", null, passwordEncoder.encode("pass"), "USER"));
 		userRepository.save(new User("admin","admin1","", null, passwordEncoder.encode("adminpass"), "ADMIN"));

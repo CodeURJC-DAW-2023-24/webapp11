@@ -1,9 +1,5 @@
 
-async function loadMore(index, refreshSize) {
-
-    const from = index;
-    const to = index + (refreshSize-1);
-
+async function loadMore() {
 
     const response = await fetch(`/newEvents`); //se "recogen" los nuevos eventos
     const newEvent = await response.text();

@@ -34,10 +34,14 @@ public class EventWebController {
 
     @GetMapping("/newEvents")
     public String newEvents(Model model) {
-        if (nextEventIndex < allEvents.size()){
-            model.addAttribute("additionalEvents", allEvents.subList(nextEventIndex,nextEventIndex+(eventsRefreshSize)));
-            nextEventIndex += nextEventIndex;
+        int remainingEvents = allEvents.size() - nextEventIndex;
+
+        if (remainingEvents > 0) {
+            int endIndex = nextEventIndex + Math.min(eventsRefreshSize, remainingEvents);
+            model.addAttribute("additionalEvents", allEvents.subList(nextEventIndex, endIndex));
+            nextEventIndex = endIndex;
         }
+
         return "moreEvents";
     }
 
