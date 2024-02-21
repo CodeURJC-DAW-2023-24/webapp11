@@ -7,10 +7,13 @@
                 <span class="event-category etiqueta-campo">Campo</span>
                 <span class="event-capacity etiqueta-aforoMucho">Aforo: {{registeredUsers}}/{{maxCapacity}}</span>
             </div>
-            <span class="icoest1">&#128205; {{location}}</span>
-            <p class="description">{{description}}</p>
-            <p> </p>
-            <p class="date"><strong>Fecha: </strong>{{startDate}}</p>
+            <div class="mt-1">
+                <span class="icoest1">&#128205; {{location}}</span>
+            </div>
+            <div class="mx-3 my-2">
+                <p class="description">{{description}}</p>
+                <p class="date"><strong>Fecha: </strong>{{startDate}}</p>
+            </div>
             <form action="/event/{{id}}" method="POST">
                 <button class="btn btn-primary" type="submit">Ver Detalles</button>
             </form>

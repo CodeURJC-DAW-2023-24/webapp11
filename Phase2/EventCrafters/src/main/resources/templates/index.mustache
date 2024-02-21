@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Event Crafters - Inicio</title>
-    <!-- Enlace a la hoja de estilos de Bootstrap -->
+    <!-- Links to Bootstrap stylesheets -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel='stylesheet' type='text/css' media='screen' href='../css/home.css'>
     <link rel="icon" href="../img/logo.jpeg" type="image/png">
 </head>
 <body>
-<!-- Barra de navegación -->
+
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="#">
         <img src="../img/logo.jpeg" width="30" height="30" class="d-inline-block align-top" alt="Imagen Logo Events Crafters"> Event Crafters
@@ -22,7 +23,7 @@
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    🧒 <!-- Emoji de usuario -->
+                    🧒 <!-- User emoji -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="perfilDropdown">
                     <a class="dropdown-item" href="/profile">Mis eventos</a>
@@ -43,7 +44,6 @@
                     <a class="dropdown-item" href="#">Campo</a>
                     <a class="dropdown-item" href="#">Deporte</a>
                     <a class="dropdown-item" href="#">Educación</a>
-                    <!-- Más opciones de filtro según sea necesario -->
                 </div>
             </li>
             <li class="nav-item">
@@ -55,10 +55,11 @@
         </ul>
     </div>
 </nav>
-<!-- Contenido principal -->
+
+<!-- Main content -->
 <div class="container mt-4">
     <h2 class="event-name">Próximos Eventos</h2>
-    <!-- Actividades -->
+    <!-- Activities -->
     <div class="row" id="eventsChart">
         {{#events}}
             <div class="col-md-4">
@@ -69,10 +70,13 @@
                         <span class="event-category etiqueta-campo">Campo</span>
                         <span class="event-capacity etiqueta-aforoMucho">Aforo: {{registeredUsers}}/{{maxCapacity}}</span>
                     </div>
-                    <span class="icoest1">&#128205; {{location}}</span>
-                    <p class="description">{{description}}</p>
-                    <p> </p>
-                    <p class="date"><strong>Fecha: </strong>{{startDate}}</p>
+                    <div class="mt-1">
+                        <span class="icoest1">&#128205; {{location}}</span>
+                    </div>
+                    <div class="mx-3 my-2">
+                        <p class="description">{{description}}</p>
+                        <p class="date"><strong>Fecha: </strong>{{startDate}}</p>
+                    </div>
                     <form action="/event/{{id}}" method="POST">
                         <button class="btn btn-primary" type="submit">Ver Detalles</button>
                     </form>
@@ -95,11 +99,11 @@
     </div>
 </div>
 <div></div>
-<!-- Scripts de Bootstrap -->
+<!-- Bootstrap Scripts-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="../js/events.js"></script> <!--Enlace a archivo JS-->
+<script src="../js/events.js"></script> <!--JS file link-->
 
 </body>
 </html>

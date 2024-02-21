@@ -69,11 +69,6 @@ public class EventWebController {
         }
     }
 
-    @GetMapping("/home")
-    public String home(Model model) {
-        //To-do: implement the whole thing. Maybe take inspiration from this
-        //model.addAttribute("books", service.findAll());
-        return "index";
     }
     @GetMapping("/home/search")
     public String search(Model model) {
