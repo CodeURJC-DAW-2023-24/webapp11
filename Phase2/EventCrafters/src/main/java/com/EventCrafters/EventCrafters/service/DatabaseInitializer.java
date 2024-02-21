@@ -15,11 +15,11 @@ import com.EventCrafters.EventCrafters.repository.UserRepository;
 
 import java.io.IOException;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Date;
 
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+import org.springframework.util.StreamUtils;
 
 
 @Service
@@ -40,27 +40,13 @@ public class DatabaseInitializer {
 
 
 	@PostConstruct
-	public void init() throws IOException {
+	public void init() throws IOException, SQLException {
 
-		eventRepository.save(new Event("Evento 1", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 2", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 3", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 4", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 5", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 6", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 7", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 8", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 9", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 10", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 11", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		ClassPathResource imgFile = new ClassPathResource("static/img/fotoPerfil.jpg");
+		byte[] photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+		Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photoBytes);
 
-		/*Resource image1 = new ClassPathResource("../static/img/fotoPerfil.jpg");
-		Blob image = BlobProxy.generateProxy(image1.getInputStream(),image1.contentLength());
-		eventRepository.save(new Event("Evento 1", image, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 1", image, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 1", image, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		eventRepository.save(new Event("Evento 1", image, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
-		*/
+		eventRepository.save(new Event("Evento 1", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
 
 		userRepository.save(new User("user","user1","", null, passwordEncoder.encode("pass"), "USER"));
 		userRepository.save(new User("admin","admin1","", null, passwordEncoder.encode("adminpass"), "ADMIN"));
