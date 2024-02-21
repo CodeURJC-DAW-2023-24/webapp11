@@ -140,7 +140,7 @@
         <!-- User-created events section -->
         <div class="user-events">
             <h3 class="created">Mis Eventos Creados</h3>
-            <div class="row flex-wrap"> <!-- Agrega las clases flex-wrap aquí -->
+            <div class="row flex-wrap">
                 <div class="col-md-4 mb-4">
                     <div class="activity d-flex flex-row align-items-center">
                         <div class="categories-container info">
@@ -177,6 +177,17 @@
                         <h5 class="info">Competición de batminton</h5>
                         <button class="btn btn-block">Ver Detalles</button>
                     </div>
+                </div>
+                <div class="col-md-4 mb-4 last">
+                    <form action="/create_event" method="get">
+                        <div class="activity d-flex flex-row align-items-center" style="justify-content: center" id="open-button">
+                            <div class="categories-container info">
+                                <button type="submit" style="background: none; border: none; padding: 0; margin: 0;">
+                                    <span class="event-category category-add admin-category">+</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

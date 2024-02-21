@@ -46,6 +46,11 @@ public class EventWebController {
         return "moreEvents";
     }
 
+    @GetMapping("/create_event")
+    public String createEvent(){
+        return "create_event";
+    }
+
     @GetMapping("/event/{id}")
     public String showEvent(Model model, @PathVariable long id) {
         Optional<Event> event = service.findById(id);
