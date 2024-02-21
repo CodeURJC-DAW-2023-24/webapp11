@@ -8,6 +8,7 @@ import com.EventCrafters.EventCrafters.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.AccessType;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,8 @@ import java.util.List;
 @Controller
 public class UserWebController {
 
-
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private CategoryService categoryService;
 	@Autowired
@@ -76,7 +78,8 @@ public class UserWebController {
 		// To-do: implement the whole thing
 		//if (!userService.findAll().contains(user))
 
-		//user.setEncodedPassword(encode(user.getEncodedPassword()));
+		String encodedPassword = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPassword);
 		userService.save(user);
 		//log them in somehow
 		return "redirect:/login"; // or previous screen

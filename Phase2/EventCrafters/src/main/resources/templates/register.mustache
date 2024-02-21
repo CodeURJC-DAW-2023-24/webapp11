@@ -10,18 +10,7 @@
   <link rel="icon" href="../img/logo.jpeg" type="image/png">
   <title>Registro</title>
 
-  <script>
-      function validateForm(){
-          var password = document.getElementById("password").value;
-          var confirmPassword = document.getElementById("confirmPassword").value;
 
-          if (password !== confirmPassword) {
-              alert("Passwords do not match");
-              return false;
-          }
-          return true;
-      }
-  </script>
 </head>
 <body>
 
@@ -54,7 +43,7 @@
           </form>
         </div>
         <div class="card-footer text-center">
-          ¿Ya tienes una cuenta? <a href="#">Inicia sesión</a>
+          ¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a>
         </div>
       </div>
       <div class="card mt-3">
@@ -72,6 +61,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<script src="../js/register.js"></script>
 </body>
 </html>

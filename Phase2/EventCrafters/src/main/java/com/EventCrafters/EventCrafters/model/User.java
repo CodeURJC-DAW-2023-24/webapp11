@@ -69,4 +69,12 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Review> reviews = new HashSet<>();
 
+
+	public String getPassword() {
+		return encodedPassword;
+	}
+
+	public void setPassword(String password) {
+		this.encodedPassword = password;
+	}
 }
