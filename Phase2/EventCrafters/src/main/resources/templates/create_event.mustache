@@ -65,9 +65,11 @@
                             <!-- category-->
                             <div class="form-group">
                                 <label for="event-category">Introduce la categoria del evento</label>
-                                <select class="form-control" id="event-category" required>
-                                    <option>Campo</option>
-                                    <option>Bosque</option>
+                                <select class="form-control" id="event-category" name="category" required>
+                                    <option value="">Selecciona una categoría</option>
+                                    {{#categories}}
+                                        <option value="{{id}}">{{name}}</option>
+                                    {{/categories}}
                                 </select>
                             </div>
                             <!-- photo-->

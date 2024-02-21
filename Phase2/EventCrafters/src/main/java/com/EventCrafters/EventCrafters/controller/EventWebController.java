@@ -10,7 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
+import com.EventCrafters.EventCrafters.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,9 @@ public class EventWebController {
 
     @Autowired
     private EventService service;
+
+    @Autowired
+    private CategoryService categoryService;
 
     private List<Event> allEvents;
 
@@ -66,9 +71,10 @@ public class EventWebController {
 
         return "moreEvents";
     }
-
     @GetMapping("/create_event")
-    public String createEvent(){
+    public String createEvent(Model model){
+        List<Category> categories = categoryService.findAll();
+        model.addAttribute("categories", categories);
         return "create_event";
     }
 
@@ -93,9 +99,13 @@ public class EventWebController {
                               @RequestParam("coordinates") String coordinates,
                               @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                               @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+                              @RequestParam("category") Long categoryId,
                               @RequestParam(value = "additionalInfo", required = false) String additionalInfo,
                               RedirectAttributes redirectAttributes) {
         try {
+            Category category = categoryService.findById(categoryId)
+                    .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+
             Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photo.getBytes());
             String[] latLong = coordinates.split(",");
             Double latitude = Double.parseDouble(latLong[0].trim());
@@ -104,6 +114,8 @@ public class EventWebController {
             Date end = Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant());
 
             Event event = new Event(name, photoBlob, description, maxCapacity, price, location, latitude, longitude, start, end, additionalInfo);
+            event.setCategory(category);
+            category.getEventsInCategories().add(event);
             service.save(event);
         } catch (Exception e) {
         }

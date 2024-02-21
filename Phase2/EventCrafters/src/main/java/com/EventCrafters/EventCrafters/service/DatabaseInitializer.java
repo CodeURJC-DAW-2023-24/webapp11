@@ -16,7 +16,9 @@ import com.EventCrafters.EventCrafters.repository.UserRepository;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;
@@ -46,15 +48,23 @@ public class DatabaseInitializer {
 		byte[] photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
 		Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photoBytes);
 
-		eventRepository.save(new Event("Evento 1", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		LocalDate startDate = LocalDate.of(2022, 1, 1);
+		LocalDate endDate = LocalDate.of(2022, 1, 1);
+		Date start = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date end = Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Event event = new Event("Evento 1", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, start, end, "blabla");
+		eventRepository.save(event);
 
 		userRepository.save(new User("user","user1","", null, passwordEncoder.encode("pass"), "USER"));
 		userRepository.save(new User("admin","admin1","", null, passwordEncoder.encode("adminpass"), "ADMIN"));
 
 		// categories
-		categoryRepository.save(new Category("campo", "#ffc107"));
-		categoryRepository.save(new Category("deporte", "#cc00ff"));
-		categoryRepository.save(new Category("educación", "#28a745"));
+		Category deporte = new Category("Deporte", "#cc00ff");
+		categoryRepository.save(deporte);
+		categoryRepository.save(new Category("Campo", "#ffc107"));
+		categoryRepository.save(new Category("Educación", "#28a745"));
+		event.setCategory(deporte); // Asocia el evento con la categoría "campo"
+		eventRepository.save(event);
 	}
 
 }
