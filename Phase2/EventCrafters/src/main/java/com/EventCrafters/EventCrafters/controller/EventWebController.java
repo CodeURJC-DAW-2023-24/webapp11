@@ -1,22 +1,15 @@
 package com.EventCrafters.EventCrafters.controller;
 
-import java.security.Principal;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import com.EventCrafters.EventCrafters.model.Event;
-import com.EventCrafters.EventCrafters.repository.CategoryRepository;
-import com.EventCrafters.EventCrafters.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import com.EventCrafters.EventCrafters.service.EventService;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class EventWebController {
@@ -24,11 +17,36 @@ public class EventWebController {
     @Autowired
     private EventService service;
 
+    private List<Event> allEvents;
+
+    private int nextEventIndex = 3;
+    private int eventsRefreshSize = 3;
+
+
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("events", service.findAll());
+        this.allEvents = service.findAll();
+        model.addAttribute("events", allEvents.subList(0,nextEventIndex));
+        model.addAttribute("nextEventIndex", nextEventIndex);
+        model.addAttribute("eventsRefreshSize", eventsRefreshSize);
         return "index";
     }
+
+    @GetMapping("/newEvents")
+    public String newEvents(Model model) {
+        if (nextEventIndex < allEvents.size()){
+            model.addAttribute("additionalEvents", allEvents.subList(nextEventIndex,nextEventIndex+(eventsRefreshSize)));
+            nextEventIndex += nextEventIndex;
+        }
+        return "moreEvents";
+    }
+
+    @GetMapping("/event/{id}")
+    public String eventInfo(@PathVariable int id,  Model model) {
+        return "event_info";
+    }
+
+
 /*
 
     @ModelAttribute

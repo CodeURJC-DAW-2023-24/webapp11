@@ -1,0 +1,19 @@
+{{#additionalEvents}}
+    <div class="col-md-4">
+        <div class="activity">
+            <img src="../img/campo.jpg" alt="Actividad 1" class="img-fluid">
+            <h5>{{name}}</h5>
+            <div class="categories-container">
+                <span class="event-category etiqueta-campo">Campo</span>
+                <span class="event-capacity etiqueta-aforoMucho">Aforo: {{registeredUsers}}/{{maxCapacity}}</span>
+            </div>
+            <span class="icoest1">&#128205; {{location}}</span>
+            <p class="description">{{description}}</p>
+            <p> </p>
+            <p class="date"><strong>Fecha: </strong>{{startDate}}</p>
+            <form action="/event/{{id}}" method="POST">
+                <button class="btn btn-primary" type="submit">Ver Detalles</button>
+            </form>
+        </div>
+    </div>
+{{/additionalEvents}}

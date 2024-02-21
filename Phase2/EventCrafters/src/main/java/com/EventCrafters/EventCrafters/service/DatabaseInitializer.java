@@ -42,6 +42,16 @@ public class DatabaseInitializer {
 	@PostConstruct
 	public void init() throws IOException {
 
+		eventRepository.save(new Event("Evento 1", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		eventRepository.save(new Event("Evento 2", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		eventRepository.save(new Event("Evento 3", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		eventRepository.save(new Event("Evento 4", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		eventRepository.save(new Event("Evento 5", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		eventRepository.save(new Event("Evento 6", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		eventRepository.save(new Event("Evento 7", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		eventRepository.save(new Event("Evento 8", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+		eventRepository.save(new Event("Evento 9", null, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
+
 		/*Resource image1 = new ClassPathResource("../static/img/fotoPerfil.jpg");
 		Blob image = BlobProxy.generateProxy(image1.getInputStream(),image1.contentLength());
 		eventRepository.save(new Event("Evento 1", image, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, new Date(2022, 0, 1), new Date(2022, 0, 1), "blabla"));
