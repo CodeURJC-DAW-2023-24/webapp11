@@ -3,7 +3,8 @@ const windowBackground = document.getElementById('window-background'),
     closeButton = document.getElementById('close-button'),
     tagColorin = document.getElementById('tag-color-in'),
     tagNamein = document.getElementById('tag-name-in'),
-    tagPopup = document.getElementById('tag-pop-up');
+    tagPopup = document.getElementById('tag-pop-up')
+    deleteTagBtn = document.getElementById("delete-tag-button");
 
 let currentpage = 0;
 
@@ -17,16 +18,18 @@ const newButton = (e) => {
     let parent = e.target.parentElement;
     if (parent.getAttribute('name') == 'tag'){
         let id = parent.getAttribute('id')
-        if (id != null){ // if it has id, it means that you want to update/delete it
-            tagPopup.action = `/editCategory/${id}`
-        }
         let nameholder = parent.getElementsByTagName('span')
+        tagPopup.action = `/editCategory/${id}`
+        deleteTagBtn.href = `/deleteCategory/${id}`
+        deleteTagBtn.style.display = 'flex'
         tagNamein.value = nameholder[0].textContent
         let color = window.getComputedStyle(nameholder[0]).getPropertyValue('background-color')
         let rgb = color.split('(')[1].split(')')[0].split(',').map(function(num) {
-            return parseInt(num.trim());// para pasar los string a integer
+            return parseInt(num.trim());// form String to integer
         });
         tagColorin.value = rgbToHex(rgb[0],rgb[1],rgb[2]);
+    } else {
+        deleteTagBtn.style.display = 'none'
     }
 }
 
@@ -54,9 +57,7 @@ const closeWindow = () => {
 closeButton.addEventListener('click', () => closeWindow())
 
 // if you click outside the popup it closes
-window.addEventListener('click', e => e.target == windowBackground && closeWindow())
-
-tagColorin.addEventListener('input', () => colorTrial.style.background = tagColorin.value)
+window.addEventListener('click', e => e.target === windowBackground && closeWindow())
 
 // AJAX (fetch)
 document.getElementById('load-more').addEventListener('click', function() {
