@@ -33,4 +33,13 @@ public class UserService {
 	public void delete(long id) {
 		repository.deleteById(id);
 	}
+
+	public Long findUserIdByUsername(String nickname) {
+		Optional<User> userOptional = repository.findByName(nickname);
+		User user = userOptional.orElse(null);
+		return user != null ? user.getId() : null;
+	}
+	public void deleteUserById(Long userId) {
+		repository.deleteById(userId);
+	}
 }

@@ -57,14 +57,6 @@
                 </path>
             </svg>
         </a>
-        <a class="close-button delete-button" id="delete-tag-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="icon-x">
-                <path
-                        d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm4 12H8v-9h2v9zm6 0h-2v-9h2v9zm.618-15L15 2H9L7.382 4H3v2h18V4z">
-
-                </path>
-            </svg>
-        </a>
         <!-- Form for creating/editing tags -->
         <form action="/newCategory" method="post" enctype="multipart/form-data" id="tag-pop-up">
             <div class="form-group" id="first-part-tag-form">
@@ -104,7 +96,9 @@
             <div class="container text-center">
                 <div class="row justify-content-center">
                     <div class="col col-lg-2 container-delete-account">
-                        <button class="btn btn-danger" id="delete-account-btn">Borrar cuenta</button>
+                        <form action="delete-account" method="post">
+                        <button type="submit">Eliminar Cuenta</button>
+                        </form>
                     </div>
                     <div class="col text-center btn-edit-account">
                         <button class="btn btn-secondary" >Editar perfil</button>

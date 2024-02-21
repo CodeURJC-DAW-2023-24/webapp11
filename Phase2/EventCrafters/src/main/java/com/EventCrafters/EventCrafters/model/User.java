@@ -10,7 +10,6 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -32,7 +31,7 @@ public class User {
 	private String name;
 
 	@Column(unique = true, nullable = false)
-	private String nickname;
+	private String username;
 
 	@Column(nullable = false)
 	private String email;
@@ -46,14 +45,16 @@ public class User {
 
 
 	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+	@Column(name = "role")
 	private List<String> roles;
 
 	public User() {
 	}
 
-	public User(String name,String nickname,String email, Blob photo,String encodedPassword, String... roles) {
+	public User(String name, String username, String email, Blob photo, String encodedPassword, String... roles) {
 		this.name = name;
-		this.nickname = nickname;
+		this.username = username;
 		this.email = email;
 		this.encodedPassword = encodedPassword;
 		this.roles = List.of(roles);
@@ -63,7 +64,7 @@ public class User {
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Event> createdEvents = new HashSet<>();
 
-	@ManyToMany(mappedBy = "registeredUsers")
+	@ManyToMany(mappedBy = "registeredUsers", cascade = CascadeType.ALL)
 	private Set<Event> registeredInEvents = new HashSet<>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

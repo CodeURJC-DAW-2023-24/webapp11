@@ -8,6 +8,8 @@ import com.EventCrafters.EventCrafters.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.AccessType;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -97,9 +99,13 @@ public class UserWebController {
 		return "profile"; // if user was signed in, login screen otherwise
 	}
 
-	@PostMapping("/deleteAccount/{nickname}")
-	public String deleteAccount(Model model, @PathVariable String nickname) {
-		// To-do: implement the whole thing
-		return "login"; // if user was signed in, login screen otherwise
+	@PostMapping("/delete-account")
+	public String deleteAccount() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		Long currentUserId = userService.findUserIdByUsername(currentPrincipalName);
+		userService.deleteUserById(currentUserId);
+		return "redirect:/logout";
+
 	}
 }
