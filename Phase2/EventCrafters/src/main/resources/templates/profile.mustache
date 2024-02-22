@@ -109,8 +109,14 @@
                         </form>
                     </div>
                     <div class="col text-center btn-edit-account">
-                        <button class="btn btn-secondary" >Editar perfil</button>
-                    </div>
+                        <form action="/updateProfile" method="post">
+                            <div class="user-data">
+                                <p><strong>Nombre:</strong> <input type="text" name="name" value="{{user.name}}"></p>
+                                <p><strong>Correo:</strong> <input type="email" name="email" value="{{user.email}}"></p>
+                                <p><strong>Nick:</strong> <input type="text" name="username" value="{{user.username}}"></p>
+                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            </div>
+                        </form>                    </div>
                 </div>
             </div>
         </div>

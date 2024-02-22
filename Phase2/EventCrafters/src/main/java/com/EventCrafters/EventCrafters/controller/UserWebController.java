@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -126,4 +127,26 @@ public class UserWebController {
 		return "redirect:/logout";
 
 	}
+
+
+	@PostMapping("/updateProfile")
+	public String updateProfile(Model model, @ModelAttribute User updatedUser, RedirectAttributes redirectAttributes) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUsername = authentication.getName();
+		Optional<User> userOptional = userService.findByUserName(currentUsername);
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			// Update user information
+			user.setName(updatedUser.getName());
+			user.setEmail(updatedUser.getEmail());
+			user.setUsername(updatedUser.getUsername());
+			userService.save(user);
+			redirectAttributes.addFlashAttribute("user", user);
+			return "redirect:/profile";
+		}
+		// Handle the case when the user is not found
+		return "error"; // Or any other appropriate action
+	}
+
+
 }
