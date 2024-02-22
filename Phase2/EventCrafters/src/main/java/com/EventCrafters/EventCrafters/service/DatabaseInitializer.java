@@ -55,8 +55,8 @@ public class DatabaseInitializer {
 		Event event = new Event("Evento 1", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, start, end, "blabla");
 		eventRepository.save(event);
 
-		userRepository.save(new User("user","user1","", null, passwordEncoder.encode("pass"), "USER"));
-		userRepository.save(new User("admin","admin1","", null, passwordEncoder.encode("adminpass"), "ADMIN"));
+		userRepository.save(new User("Juan Usuario","user","", null, passwordEncoder.encode("pass"), "USER"));
+		userRepository.save(new User("Pepe Admin","admin","", null, passwordEncoder.encode("adminpass"), "ADMIN"));
 
 		// categories
 		Category deporte = new Category("Deporte", "#cc00ff");

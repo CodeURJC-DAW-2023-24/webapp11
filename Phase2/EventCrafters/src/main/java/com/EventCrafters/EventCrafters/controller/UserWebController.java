@@ -46,13 +46,18 @@ public class UserWebController {
 
 	@GetMapping("/profile")
 	public String newReview(Model model, HttpServletRequest request) {
-		// To-do: implement the whole thing
 		if (request.isUserInRole("USER")) {
 			model.addAttribute("show", "none");
 		} else {
 			List<Category> c = categoryService.findAjax(0,1);
 			model.addAttribute("category",c);
 			model.addAttribute("show","block");
+		}
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUsername = authentication.getName();
+		Optional<User> user = userService.findByUserName(currentUsername);
+		if (user.isPresent()) {
+			model.addAttribute("user", user.get());
 		}
 		return "profile";
 	}
@@ -92,9 +97,6 @@ public class UserWebController {
 
 	@PostMapping("/IsUsernameTaken")
 	public ResponseEntity<String> isUserNameTaken(@RequestBody String body ) {
-		// TODO: implement the whole thing
-		//check the body
-        //with @RequestBody body as a parameter, but for some reason it ain't working
 		Optional<User> byName = userService.findByUserName(body);
 		if (byName.isPresent()){
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken");
@@ -112,7 +114,7 @@ public class UserWebController {
 	@PostMapping("/changePassword/{nickname}")
 	public String sendChangePassword(Model model, @PathVariable String nickname) {
 		// To-do: implement the whole thing
-		return "profile"; // if user was signed in, login screen otherwise
+		return "redirect:/profile"; // if user was signed in, login screen otherwise
 	}
 
 	@PostMapping("/delete-account")
