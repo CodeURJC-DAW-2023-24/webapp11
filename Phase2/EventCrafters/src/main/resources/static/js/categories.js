@@ -25,7 +25,7 @@ const newButton = (e) => {
         tagNamein.value = nameholder[0].textContent
         let color = window.getComputedStyle(nameholder[0]).getPropertyValue('background-color')
         let rgb = color.split('(')[1].split(')')[0].split(',').map(function(num) {
-            return parseInt(num.trim());// form String to integer
+            return parseInt(num.trim());// from String to integer
         });
         tagColorin.value = rgbToHex(rgb[0],rgb[1],rgb[2]);
     } else {

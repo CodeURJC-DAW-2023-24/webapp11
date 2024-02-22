@@ -34,4 +34,6 @@ public class EventService {
 	public void delete(long id) {
 		repository.deleteById(id);
 	}
+
+	public List<Event> findByCategory(long id) {return repository.findByCategory(id);}
 }

@@ -40,10 +40,13 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Filtrar Eventos
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Campo</a>
-                    <a class="dropdown-item" href="#">Deporte</a>
-                    <a class="dropdown-item" href="#">Educación</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="filtering-dropdown-menu">
+                    {{#categories}}
+                        <option href="#" class="dropdown-item" value="{{id}}">{{name}}</option>
+                    {{/categories}}
+                    {{^categories}}
+                        <option class="dropdown-item">No hay categorias disponibles</option>
+                    {{/categories}}
                 </div>
             </li>
             <li class="nav-item">

@@ -52,9 +52,13 @@ public class EventWebController {
     public String home(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isLoggedIn = isAuthenticated(authentication);
+        List<Category> c = categoryService.findAll();
 
         nextEventIndex = eventsRefreshSize;
         this.allEvents = eventService.findAll();
+
+        // for the filters dropdown-menu
+        model.addAttribute("categories", c);
 
         if (allEvents.isEmpty()){
             model.addAttribute("events", new ArrayList<Event>());
@@ -184,5 +188,14 @@ public class EventWebController {
         if (date == null) return null;
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
         return sdf.format(date);
+    }
+
+    @GetMapping("/search")
+    public String filterByTag(Model model, @RequestParam("id") long id){
+        List<Event> cL = eventService.findByCategory(id);
+
+        model.addAttribute("additionalEvents", cL);
+
+        return "moreEvents";
     }
 }
