@@ -10,5 +10,5 @@ const askForConfirmation = () => {
         alert("Has cancelado la acción.");
     }
 }
-deleteAccountBtn.addEventListener('click', () => askForConfirmation())
+deleteAccountBtn.addEventListener('click', () => askForConfirmation());
 
