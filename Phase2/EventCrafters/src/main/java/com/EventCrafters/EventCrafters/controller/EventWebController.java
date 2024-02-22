@@ -12,9 +12,13 @@ import java.util.Optional;
 
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
+import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.service.CategoryService;
+import com.EventCrafters.EventCrafters.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +27,14 @@ import com.EventCrafters.EventCrafters.service.EventService;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
 public class EventWebController {
 
     @Autowired
-    private EventService service;
+    private EventService eventService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private CategoryService categoryService;
@@ -43,7 +48,7 @@ public class EventWebController {
     @GetMapping("/")
     public String home(Model model) {
         nextEventIndex = eventsRefreshSize;
-        this.allEvents = service.findAll();
+        this.allEvents = eventService.findAll();
 
         if (allEvents.isEmpty()){
             model.addAttribute("events", new ArrayList<Event>());
@@ -80,7 +85,7 @@ public class EventWebController {
 
     @GetMapping("/event/{id}")
     public String showEvent(Model model, @PathVariable long id) {
-        Optional<Event> event = service.findById(id);
+        Optional<Event> event = eventService.findById(id);
         if (event.isPresent()) {
             model.addAttribute("event", event.get());
             return "eventInfo";
@@ -116,7 +121,18 @@ public class EventWebController {
             Event event = new Event(name, photoBlob, description, maxCapacity, price, location, latitude, longitude, start, end, additionalInfo);
             event.setCategory(category);
             category.getEventsInCategories().add(event);
-            service.save(event);
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String currentUsername = authentication.getName();
+            Optional<User> userOpt = userService.findByUserName(currentUsername);
+
+            userOpt.ifPresent(user -> {
+                event.setCreator(user);
+            });
+            
+            eventService.save(event);
+
+
         } catch (Exception e) {
         }
 
@@ -125,7 +141,7 @@ public class EventWebController {
     @GetMapping("/event/image/{id}")
     @ResponseBody
     public byte[] showEventImage(@PathVariable long id) throws SQLException, IOException {
-        Optional<Event> eventOptional = service.findById(id);
+        Optional<Event> eventOptional = eventService.findById(id);
         if (eventOptional.isPresent()) {
             Blob photoBlob = eventOptional.get().getPhoto();
             int blobLength = (int) photoBlob.length();
