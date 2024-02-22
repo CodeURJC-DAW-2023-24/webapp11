@@ -2,23 +2,21 @@ package com.EventCrafters.EventCrafters.controller;
 
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.User;
-import com.EventCrafters.EventCrafters.repository.CategoryRepository;
 import com.EventCrafters.EventCrafters.service.CategoryService;
 import com.EventCrafters.EventCrafters.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.AccessType;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.print.Pageable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserWebController {
@@ -90,6 +88,19 @@ public class UserWebController {
 		userService.save(user);
 		//log them in somehow
 		return "redirect:/login"; // or previous screen
+	}
+
+	@PostMapping("/IsUsernameTaken")
+	public ResponseEntity<String> isUserNameTaken(@RequestBody String body ) {
+		// TODO: implement the whole thing
+		//check the body
+        //with @RequestBody body as a parameter, but for some reason it ain't working
+		Optional<User> byName = userService.findByUserName(body);
+		if (byName.isPresent()){
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken");
+		} else {
+			return ResponseEntity.ok("Username is available");
+		}
 	}
 
 	@GetMapping("/changePassword/{nickname}")

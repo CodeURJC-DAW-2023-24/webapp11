@@ -28,7 +28,7 @@
               <input type="text" class="form-control" name="name" id="fullname" placeholder="Nombre completo" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="username" id="username" placeholder="Nombre de usuario" required>
+              <input type="text" class="form-control" name="username" onblur="userNameTaken()" id="username" placeholder="Nombre de usuario" required>
             </div>
             <div class="form-group">
               <input type="email" class="form-control" name="email" id="email" placeholder="Correo electrónico" required>
@@ -39,7 +39,7 @@
             <div class="form-group">
               <input type="password" class="form-control" id="confirmPassword" placeholder="Confirmar Contraseña" required>
             </div>
-            <button type="submit" onclick="return validateForm();" class="btn btn-primary btn-block">Registrarse</button>
+            <button type="submit" id="submit" onclick="return validateForm();" class="btn btn-primary btn-block">Registrarse</button>
           </form>
         </div>
         <div class="card-footer text-center">
