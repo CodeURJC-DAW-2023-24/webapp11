@@ -17,6 +17,7 @@ import com.EventCrafters.EventCrafters.service.CategoryService;
 import com.EventCrafters.EventCrafters.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,9 @@ public class EventWebController {
 
     @GetMapping("/")
     public String home(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isLoggedIn = isAuthenticated(authentication);
+
         nextEventIndex = eventsRefreshSize;
         this.allEvents = eventService.findAll();
 
@@ -61,7 +65,11 @@ public class EventWebController {
         else{
             model.addAttribute("events", allEvents.subList(0,nextEventIndex));
         }
+        model.addAttribute("logged", isLoggedIn);
         return "index";
+    }
+    private boolean isAuthenticated(Authentication authentication) {
+        return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 
     @GetMapping("/newEvents")
