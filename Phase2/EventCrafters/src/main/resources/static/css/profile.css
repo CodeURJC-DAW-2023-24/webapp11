@@ -226,8 +226,8 @@ body {
     }
 }
 
-.close {
-    transition: transform 0.5s cubic-bezier(0, -0.42, 1, -0.41);
+.close-window {
+    transition: transform 0.4s cubic-bezier(0, -0.42, 1, -0.41);
     transform: translateY(60vh);
 }
 

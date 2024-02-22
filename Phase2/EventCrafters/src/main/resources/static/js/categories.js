@@ -19,9 +19,9 @@ const newButton = (e) => {
     if (parent.getAttribute('name') == 'tag'){
         let id = parent.getAttribute('id')
         let nameholder = parent.getElementsByTagName('span')
-        tagPopup.action = `/editCategory/${id}`
-        deleteTagBtn.href = `/deleteCategory/${id}`
-        deleteTagBtn.style.display = 'flex'
+        tagPopup.action = `/editCategory/${id}` // so that if you click in the save button the changes are saved
+        deleteTagBtn.href = `/deleteCategory/${id}` // so that if you click in the trash can icon the category is deleted
+        deleteTagBtn.style.display = 'flex' // it needs to be flex so that the trash can symbol id displayed in the center
         tagNamein.value = nameholder[0].textContent
         let color = window.getComputedStyle(nameholder[0]).getPropertyValue('background-color')
         let rgb = color.split('(')[1].split(')')[0].split(',').map(function(num) {
@@ -42,16 +42,30 @@ document.getElementById('categories-container').addEventListener('click', (e) =>
 
 //to close the tag popup
 const closeWindow = () => {
-    windowContainer.classList.add('close')// closing animation
+    windowContainer.classList.add('close-window')// closing animation
 
     // so that it doesn´t set the values to null until the transition has finished
-    setTimeout(() => {tagColorin.value = null;tagNamein.value = null;}, 500)
+    //setTimeout(() => {}, 500)
 
     setTimeout(() => {
-        windowContainer.classList.remove('close')
+
+        windowContainer.classList.remove('close-window')
         windowBackground.style.display = 'none'
-    }, 1000);
+        tagColorin.value = null;
+        tagNamein.value = null;
+    }, 450);
 }
+
+deleteTagBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    // Show the confirmation dialog
+    let confirmation = confirm("Are you sure you want to delete the category");
+
+    // If the user clicks "OK", proceed with the category removal from the database
+    if (confirmation) {
+        window.location.href = this.href;
+    }
+})
 
 // if you click the x simbol the popup closes
 closeButton.addEventListener('click', () => closeWindow())
