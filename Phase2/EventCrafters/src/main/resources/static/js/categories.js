@@ -63,7 +63,7 @@ deleteTagBtn.addEventListener("click", (e) => {
 
     // If the user clicks "OK", proceed with the category removal from the database
     if (confirmation) {
-        window.location.href = this.href;
+        window.location.href = deleteTagBtn.href;
     }
 })
 
