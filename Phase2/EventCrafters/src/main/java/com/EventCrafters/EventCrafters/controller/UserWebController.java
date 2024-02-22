@@ -71,7 +71,11 @@ public class UserWebController {
 	@GetMapping("/register")
 	public String register(Model model) {
 		// To-do: implement the whole thing
+
 		model.addAttribute("user", new User());
+
+
+
 		return "register";
 	}
 
@@ -82,6 +86,7 @@ public class UserWebController {
 
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
+		user.setRole("USER");
 		userService.save(user);
 		//log them in somehow
 		return "redirect:/login"; // or previous screen

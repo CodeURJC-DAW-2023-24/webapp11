@@ -1,6 +1,7 @@
 package com.EventCrafters.EventCrafters.model;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -77,5 +78,13 @@ public class User {
 
 	public void setPassword(String password) {
 		this.encodedPassword = password;
+	}
+
+	public void setRole(String roleUser) {
+
+		if (this.roles == null){
+			this.roles =  new ArrayList<>();
+		}
+		this.roles.add(roleUser);
 	}
 }
