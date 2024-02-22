@@ -1,7 +1,7 @@
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    let dropdownItems = document.querySelectorAll('.dropdown-item');
+    let dropdownItems = document.querySelectorAll('.dropdown-filter');
 
     dropdownItems.forEach( (i) => {
         i.addEventListener('click', (e) => {
