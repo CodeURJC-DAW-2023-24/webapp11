@@ -45,13 +45,13 @@
                             <div class="form-group">
                                 <label for="event-capacity">Introduce el aforo del evento</label>
                                 <input name="capacity" type="number" class="form-control" id="event-capacity" placeholder="Aforo"
-                                    required>
+                                       min="1" required>
                             </div>
                             <!-- price -->
                             <div class="form-group">
                                 <label for="event-price">Introduce el precio de la entrada del evento</label>
                                 <input name="price" type="number" class="form-control" id="event-price"
-                                    placeholder="Precio de la entrada" required>
+                                    placeholder="Precio de la entrada" min="0" required>
                             </div>
                             <!-- start and end dates -->
                             <div class="form-group">
@@ -86,7 +86,9 @@
                             <!-- coordinates -->
                             <div class="form-group">
                                 <label for="event-coordinates">Introduce las coordenadas donde se celebrará el evento</label>
-                                <input name="coordinates" type="text" class="form-control" id="event-coordinates" placeholder="Coordenadas">
+                                <input name="coordinates" type="text" class="form-control" id="event-coordinates" placeholder="Coordenadas"
+                                       pattern="^\-?\d+(\.\d+)?,\s*\-?\d+(\.\d+)?$" title="Debe ser un formato válido de coordenadas: latitud,longitud"
+                                required>
                             </div>
                             <!--Extra info-->
                             <div class="form-group">
@@ -105,6 +107,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../js/validateEvent.js"></script>
 
 </body>
 
