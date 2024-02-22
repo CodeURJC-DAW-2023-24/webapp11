@@ -52,10 +52,10 @@ public class DatabaseInitializer {
 		LocalDate endDate = LocalDate.of(2022, 1, 1);
 		Date start = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		Date end = Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		Event event = new Event("Evento 1", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234, 345678.34, start, end, "blabla");
-		eventRepository.save(event);
+		Event event = new Event("Evento 1", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
 
-		userRepository.save(new User("Juan Usuario","user","", null, passwordEncoder.encode("pass"), "USER"));
+		User user = new User("Juan Usuario","user","user@gmail.com", null, passwordEncoder.encode("pass"), "USER");
+		userRepository.save(user);
 		userRepository.save(new User("Pepe Admin","admin","", null, passwordEncoder.encode("adminpass"), "ADMIN"));
 
 		// categories
@@ -64,6 +64,7 @@ public class DatabaseInitializer {
 		categoryRepository.save(new Category("Campo", "#ffc107"));
 		categoryRepository.save(new Category("Educación", "#28a745"));
 		event.setCategory(deporte); // Asocia el evento con la categoría "campo"
+		event.setCreator(user);
 		eventRepository.save(event);
 	}
 

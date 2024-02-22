@@ -3,6 +3,8 @@ package com.EventCrafters.EventCrafters.controller;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -93,9 +95,26 @@ public class EventWebController {
 
     @GetMapping("/event/{id}")
     public String showEvent(Model model, @PathVariable long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isLoggedIn = isAuthenticated(authentication);
         Optional<Event> event = eventService.findById(id);
+
         if (event.isPresent()) {
-            model.addAttribute("event", event.get());
+            Event event1 = event.get();
+            String priceDisplay = event1.getPrice() == 0.0 ? "Gratis" : String.format("%.2f €", event1.getPrice());
+            String startDateFormatted = formatDate(event1.getStartDate());
+            String endDateFormatted = formatDate(event1.getEndDate());
+            Duration duration = Duration.between(event1.getStartDate().toInstant(), event1.getEndDate().toInstant());
+            long hours = duration.toHours();
+            long minutes = duration.minusHours(hours).toMinutes();
+            String durationFormatted = String.format("%d horas y %d minutos", hours, minutes);
+
+            model.addAttribute("event", event1);
+            model.addAttribute("priceDisplay", priceDisplay);
+            model.addAttribute("startDateFormatted", startDateFormatted);
+            model.addAttribute("endDateFormatted", endDateFormatted);
+            model.addAttribute("logged", isLoggedIn);
+            model.addAttribute("duration", durationFormatted);
             return "eventInfo";
         } else {
             return "redirect:/";
@@ -159,5 +178,11 @@ public class EventWebController {
         } else {
             return new byte[0];
         }
+    }
+
+    public static String formatDate(Date date) {
+        if (date == null) return null;
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+        return sdf.format(date);
     }
 }

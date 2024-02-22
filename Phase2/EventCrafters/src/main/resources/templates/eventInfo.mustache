@@ -4,219 +4,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>¡Juegos de mesa! - Event Crafters</title>
+    <title>{{event.name}} - Event Crafters</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel='stylesheet' type='text/css' media='screen' href='../css/event_info.css'>
     <link rel="icon" href="../img/logo.jpeg" type="image/png">
 </head>
 
-
 <body>
+<!-- nav bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="../img/logo.jpeg" width="30" height="30" class="d-inline-block align-top"
+             alt="Imagen Logo Events Crafters"> Event Crafters
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggled"
+            aria-controls="navbarToggled" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <!-- Barra de navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="#">
-            <img src="../img/logo.jpeg" width="30" height="30" class="d-inline-block align-top" alt="Imagen Logo Events Crafters"> Event Crafters
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggled" aria-controls="navbarToggled" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" id="navbarToggled">
-            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+    <div class="collapse navbar-collapse" id="navbarToggled">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Inicio</a>
+            </li>
+            {{#logged}}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        🧒 <!-- Emoji de usuario -->
+                    <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        🧒 <!-- User emoji -->
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="perfilDropdown">
-                        <a class="dropdown-item" href="#">Perfil</a>
-
+                        <a class="dropdown-item" href="/profile">Perfil</a>
                         <div class="dropdown-divider"></div>
                         <form action="/logout" method="post">
                             <input type="hidden" name="_method" value="POST">
-                            <button type="submit" name="logout"  class="dropdown-item">Cerrar Sesión</button>
+                            <button type="submit" name="logout" class="dropdown-item">Cerrar Sesión</button>
                         </form>
                     </div>
                 </li>
+            {{/logged}}
+            {{^logged}}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Filtrar Eventos
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Campo</a>
-                        <a class="dropdown-item" href="#">Deporte</a>
-                        <a class="dropdown-item" href="#">Educación</a>
-                        <!-- Más opciones de filtro según sea necesario -->
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar eventos" aria-label="Buscar">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                    <form action="/register" method="get" class="form-inline my-2 my-lg-0 mr-2">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Registrarse</button>
                     </form>
                 </li>
-            </ul>
+                <li class="nav-item dropdown">
+                    <form action="/login" method="get" class="form-inline my-2 my-lg-0">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Iniciar Sesión</button>
+                    </form>
+                </li>
+            {{/logged}}
+        </ul>
+    </div>
+</nav>
+
+<!-- Contenido principal -->
+<div class="container mt-3">
+    <div class="profile-container">
+        <h2 class="event-title">{{event.name}}</h2>
+        <img src="/event/image/{{event.id}}" class="d-block w-100" id="event-photo" alt="imagen {{event.name}}"><br>
+        <div class="categories-container info d-flex justify-content-between">
+                <span class="event-category"
+                      style="background-color: {{event.category.color}};">{{event.category.name}}</span>
+            <span class="event-capacity etiqueta-aforoMucho">Aforo:
+                {{event.registeredUsers}}/{{event.maxCapacity}}</span>
         </div>
-    </nav>
 
-    <!-- Contenido principal -->
-    <div class="container mt-3">
-        <div class="profile-container">
-            <h2 class="event-title">¡Juegos de mesa!</h2>
-            <img src="../img/juegosMesa.png" class="d-block w-100" id="event-photo" alt="..."><br>
-            <div class="categories-container info d-flex justify-content-between">
-                <span class="event-category etiqueta-deporte">Deporte</span>
-                <span class="event-category etiqueta-aforo">Plazas disponibles: 10/300</span>
+        <!--Sección Información-->
+        <div class="user-events">
+            <h3 class="next">Información</h3>
+            <p><strong>Descripción: </strong> {{event.description}}</p>
+            <div class="row flex-wrap p-3">
+                <div>
+                    <p><strong>Aforo máximo: </strong> {{event.maxCapacity}} personas </p>
+                    <p><strong>Lugar: </strong> <a href="#map">Ver mapa</a></p>
+                    <p><strong>Precio: </strong> {{priceDisplay}} </p>
+                    <p><strong>Fecha de inicio: </strong> {{startDateFormatted}} </p>
+                    <p><strong>Fecha de fin: </strong> {{endDateFormatted}} </p>
+                    <p><strong>Duracion: </strong> {{duration}}</p> <!-- Include in DB -->
+                    <p><strong>Información adicional: </strong> {{event.additionalInfo}}</p>
+                </div>
             </div>
+        </div>
 
-            <!--Sección Información-->
-            <div class="user-events">
-                <h3 class="next">Información</h3>
-                <div class="row flex-wrap p-3">
-                    <p>¡Prepárate para sumergirte en un mundo lleno de estrategia, emoción y diversión en nuestro evento
-                        de
-                        juegos de mesa en la Universidad Rey Juan Carlos (URJC)!</p>
+        <!--Sección Disponibilidad
+        <div class="user-events">
+            <h3 class="next">Disponibilidad</h3>
+            <p>No quedan muchas plazas libres. Reserva ahora. </p>
+            <div class="row flex-wrap p-4">
+                <div class="row">
+                    <div class="mx-50">
+                        <img class="w-100" src="../img/entradasPorTiempo.png" alt="Foto de Perfil">
+                    </div>
+                    <div class="w-100">
+                        <h4 class="fs-5 mt-4 pb-1">Reservar ahora</h4>
+                        <section class="border-top border-bottom"></section>
+                        <section class="text-dark w-100 p-1">
+                            <div class="categories-container justify-content-between w-100 align-items-center p-1">
+                                <h6 class="pt-1">Entrada regular ({{priceDisplay}})</h6>
+                                <button class="btn btn-primary px-2">Reservar</button>
+                            </div>
+                        </section>
+                        <section class="border-top border-bottom"></section>
+                    </div>
 
-                    <p>¿Te consideras un estratega maestro, un arquitecto de imperios, o un aventurero valiente?
-                        ¡Entonces
-                        este evento es para ti! Únete a nosotros en una jornada llena de emocionantes partidas, donde
-                        podrás
-                        explorar nuevos mundos, desafiar a tus amigos y poner a prueba tu ingenio.</p>
+                </div>
+            </div>
+            -->
+        <!--Location section-->
+        <div class="user-events" id="map">
+            <h3 class="created">Localización</h3>
+            Este evento tiene lugar en: {{event.location}}.<br><br>
+            <div class="container map-container">
+                <div class="row flex-wrap">
+                    <div class="map">
+                        <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3041.3111720853813!2d-3.8799724234960618!3d40.33544266058204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418e7adf68f543%3A0x841755428455a90b!2sUniversidad%20Rey%20Juan%20Carlos%20Campus%20M%C3%B3stoles!5e0!3m2!1ses!2ses!4v1707238497489!5m2!1ses!2ses"
+                                width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+            </div>
+        </div>
 
-                    <p>Desde clásicos atemporales hasta los juegos de mesa más innovadores, nuestro evento ofrece una
-                        amplia variedad para satisfacer todos los gustos. Sumérgete en intrigantes partidas de juegos de
-                        tablero modernos, conquista territorios en emocionantes juegos de estrategia, y disfruta de la
-                        camaradería única que solo los juegos de mesa pueden ofrecer.</p>
 
-                    <p>¡Prepárate para tirar los dados, moverte por el tablero y sumergirte en una experiencia única que
-                        recordarás mucho después de que las fichas hayan caído! ¡Te esperamos para una jornada llena de
-                        diversión, risas y grandes momentos en nuestro evento de juegos de mesa en la URJC!</p>
-
+        <!--Sección Anfitrión-->
+        <div class="user-events">
+            <h3 class="next">Anfitrión</h3>
+            <div class="row flex-wrap p-5">
+                <div class="row">
+                    <div class="mx-auto">
+                        <img class="profile-photo" src="../img/fotoPerfil.jpg" alt="Foto de Perfil">
+                    </div>
                     <div>
-                        <br>
-                        <p><strong> Aforo máximo: </strong> 300 personas </p>
-                        <p><strong>Lugar: </strong> <a href="#map">Ver mapa</a></p>
-                        <p><strong>Precio: </strong> Gratuito </p>
-                        <p><strong>Fecha de inicio: </strong> 21 de febrero a las 11:00</p>
-                        <p><strong>Fecha de fin: </strong> 21 de febrero a las 13:00</p>
-                        <p><strong>Duracion: </strong> 2 horas</p>
-                        <p><strong>Información adicional: </strong> Es recomendable traer juegos de mesa propios para
-                            que haya una mayor variedad y se reduzca el tiempo de espera entre partidas.</p>
+                        <h4 class="fs-5 mt-4 px-4 pb-1">{{event.creator.name}} (registrado como
+                            {{event.creator.userName}})</h4>
+                        <p class="px-4">Soy {{event.creator.name}}, tu organizador de confianza. Escribeme a mi
+                            correo {{event.creator.email}}</p>
                     </div>
 
                 </div>
             </div>
+        </div>
 
-            <!--Sección Disponibilidad-->
-            <div class="user-events">
-                <h3 class="next">Disponibilidad</h3>
-                <p>No quedan muchas plazas libres. Reserva ahora. </p>
-                <div class="row flex-wrap p-4">
-                    <div class="row">
-                        <div class="mx-50">
-                            <img class="w-100" src="../img/entradasPorTiempo.png" alt="Foto de Perfil">
-                        </div>
-                        <div class="w-100">
-                            <h4 class="fs-5 mt-4 pb-1">Reservar ahora</h4>
-                            <section class="border-top border-bottom"></section>
-                            <section class="text-dark w-100 p-1">
-                                <div class="categories-container justify-content-between w-100 align-items-center p-1">
-                                    <h6 class="pt-1">Entrada regular (0€)</h6>
-                                    <button class="btn btn-primary px-2">Reservar</button>
-                                </div>
-                            </section>
-                            <section class="border-top border-bottom"></section>
-                        </div>
 
+        <div class="user-events">
+            <h3 class="next">Eventos a los que me he apuntado
+            </h3>
+            <div class="row flex-wrap">
+                <div class="col-md-4 mb-4">
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container info">
+                            <span class="event-category etiqueta-deporte">Deporte</span>
+                        </div>
+                        <h5 class="info">Partido voley-playa</h5>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
-
-                <!--Sección Localización-->
-                <div class="user-events" id="map">
-                    <h3 class="created">Localización</h3>
-                    Este evento tiene lugar en: C. Tulipán, s/n, 28933 Móstoles, Madrid.<br><br>
-                    <div class="container map-container">
-                        <div class="row flex-wrap">
-                            <div class="map">
-                                <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3041.3111720853813!2d-3.8799724234960618!3d40.33544266058204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418e7adf68f543%3A0x841755428455a90b!2sUniversidad%20Rey%20Juan%20Carlos%20Campus%20M%C3%B3stoles!5e0!3m2!1ses!2ses!4v1707238497489!5m2!1ses!2ses"
-                                    width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-                            </div>
+                <div class="col-md-4 mb-4">
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container">
+                            <span class="event-category etiqueta-educacion">Educación</span>
                         </div>
+                        <h5 class="info">Cibernet: delincuentes en las redes</h5>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
-
-                <!--Sección Anfitrión-->
-                <div class="user-events">
-                    <h3 class="next">Anfitrión</h3>
-                    <div class="row flex-wrap p-5">
-                        <div class="row">
-                            <div class="mx-auto">
-                                <img class="profile-photo" src="../img/fotoPerfil.jpg" alt="Foto de Perfil">
-                            </div>
-                            <div>
-                                <h4 class="fs-5 mt-4 px-4 pb-1">Pepe Ramírez (registrado como PeRa87)</h4>
-                                <p class="px-4">Soy Pepe Ramírez, tu organizador de confianza.</p>
-                                <div class="px-4">
-                                    <button class="btn btn-primary px-2">Ver perfil</button>
-                                </div>
-                            </div>
-
+                <div class="col-md-4 mb-4">
+                    <div class="activity d-flex flex-row align-items-center">
+                        <div class="categories-container info">
+                            <span class="event-category etiqueta-campo">Campo</span>
                         </div>
+                        <h5 class="info">Ruta de las flores</h5>
+                        <button class="btn btn-block">Ver Detalles</button>
                     </div>
                 </div>
+            </div>
+        </div>
 
-
-                <div class="user-events">
-                    <h3 class="next">Eventos a los que me he apuntado
-                    </h3>
-                    <div class="row flex-wrap">
-                        <div class="col-md-4 mb-4">
-                            <div class="activity d-flex flex-row align-items-center">
-                                <div class="categories-container info">
-                                    <span class="event-category etiqueta-deporte">Deporte</span>
-                                </div>
-                                <h5 class="info">Partido voley-playa</h5>
-                                <button class="btn btn-block">Ver Detalles</button>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="activity d-flex flex-row align-items-center">
-                                <div class="categories-container">
-                                    <span class="event-category etiqueta-educacion">Educación</span>
-                                </div>
-                                <h5 class="info">Cibernet: delincuentes en las redes</h5>
-                                <button class="btn btn-block">Ver Detalles</button>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="activity d-flex flex-row align-items-center">
-                                <div class="categories-container info">
-                                    <span class="event-category etiqueta-campo">Campo</span>
-                                </div>
-                                <h5 class="info">Ruta de las flores</h5>
-                                <button class="btn btn-block">Ver Detalles</button>
-                            </div>
-                        </div>
-                    </div>
+        <div class="container text-center mt-4">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <button class="btn btn-primary">Cargar más eventos</button>
                 </div>
-
-                <div class="container text-center mt-4">
-                    <div class="row justify-content-center">
-                        <div class="col-auto">
-                            <button class="btn btn-primary">Cargar más eventos</button>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
-        <!-- Scripts de Bootstrap -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</div>
+</div>
+<!-- Scripts de Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>
