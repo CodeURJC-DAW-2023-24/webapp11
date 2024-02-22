@@ -90,39 +90,12 @@ public class EventWebController {
 
         return "moreEvents";
     }
+
     @GetMapping("/create_event")
     public String createEvent(Model model){
         List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
         return "create_event";
-    }
-
-    @GetMapping("/event/{id}")
-    public String showEvent(Model model, @PathVariable long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isLoggedIn = isAuthenticated(authentication);
-        Optional<Event> event = eventService.findById(id);
-
-        if (event.isPresent()) {
-            Event event1 = event.get();
-            String priceDisplay = event1.getPrice() == 0.0 ? "Gratis" : String.format("%.2f €", event1.getPrice());
-            String startDateFormatted = formatDate(event1.getStartDate());
-            String endDateFormatted = formatDate(event1.getEndDate());
-            Duration duration = Duration.between(event1.getStartDate().toInstant(), event1.getEndDate().toInstant());
-            long hours = duration.toHours();
-            long minutes = duration.minusHours(hours).toMinutes();
-            String durationFormatted = String.format("%d horas y %d minutos", hours, minutes);
-
-            model.addAttribute("event", event1);
-            model.addAttribute("priceDisplay", priceDisplay);
-            model.addAttribute("startDateFormatted", startDateFormatted);
-            model.addAttribute("endDateFormatted", endDateFormatted);
-            model.addAttribute("logged", isLoggedIn);
-            model.addAttribute("duration", durationFormatted);
-            return "eventInfo";
-        } else {
-            return "redirect:/";
-        }
     }
 
     @PostMapping("/create_event")
@@ -136,8 +109,7 @@ public class EventWebController {
                               @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                               @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
                               @RequestParam("category") Long categoryId,
-                              @RequestParam(value = "additionalInfo", required = false) String additionalInfo,
-                              RedirectAttributes redirectAttributes) {
+                              @RequestParam(value = "additionalInfo", required = false) String additionalInfo) {
         try {
             Category category = categoryService.findById(categoryId)
                     .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
@@ -160,7 +132,7 @@ public class EventWebController {
             userOpt.ifPresent(user -> {
                 event.setCreator(user);
             });
-            
+
             eventService.save(event);
 
 
@@ -169,6 +141,120 @@ public class EventWebController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/event/{id}")
+    public String showEvent(Model model, @PathVariable long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isLoggedIn = isAuthenticated(authentication);
+        Optional<Event> eventOptional = eventService.findById(id);
+
+        if (eventOptional.isPresent()) {
+            Event event = eventOptional.get();
+
+            boolean isUserCreatorOrAdmin = false;
+            boolean isUserRegistered = false;
+
+            if (isLoggedIn) {
+                String currentUsername = authentication.getName();
+                Optional<User> currentUser = userService.findByUserName(currentUsername);
+                if (currentUser.isPresent()) {
+                    if (event.getCreator().equals(currentUser.get())) {
+                        isUserCreatorOrAdmin = true;
+                    }
+                    isUserRegistered = event.getRegisteredUsers().contains(currentUser.get());
+                }
+
+                if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                    isUserCreatorOrAdmin = true;
+                }
+            }
+
+
+            int numRegisteredUsers = event.getRegisteredUsers().size();
+
+            String priceDisplay = event.getPrice() == 0.0 ? "Gratis" : String.format("%.2f €", event.getPrice());
+            String startDateFormatted = formatDate(event.getStartDate());
+            String endDateFormatted = formatDate(event.getEndDate());
+            Duration duration = Duration.between(event.getStartDate().toInstant(), event.getEndDate().toInstant());
+            long hours = duration.toHours();
+            long minutes = duration.minusHours(hours).toMinutes();
+            String durationFormatted = String.format("%d horas y %d minutos", hours, minutes);
+
+            model.addAttribute("event", event);
+            model.addAttribute("priceDisplay", priceDisplay);
+            model.addAttribute("startDateFormatted", startDateFormatted);
+            model.addAttribute("endDateFormatted", endDateFormatted);
+            model.addAttribute("duration", durationFormatted);
+            model.addAttribute("logged", isLoggedIn);
+            model.addAttribute("isUserCreatorOrAdmin", isUserCreatorOrAdmin);
+            model.addAttribute("isUserRegistered", isUserRegistered);
+            model.addAttribute("numRegisteredUsers", numRegisteredUsers);
+
+            return "eventInfo";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/event/register/{eventId}")
+    public String registerToEvent(@PathVariable("eventId") Long eventId, Authentication authentication) {
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            Optional<User> userOpt = userService.findByUserName(username);
+            Optional<Event> eventOpt = eventService.findById(eventId);
+
+            if (userOpt.isPresent() && eventOpt.isPresent()) {
+                User user = userOpt.get();
+                Event event = eventOpt.get();
+
+                if (event.getRegisteredUsers().contains(user)) {
+                    return "redirect:/event/" + eventId;
+                }
+
+                if (event.getCreator().equals(user)) {
+                    return "redirect:/event/" + eventId;
+                }
+
+                if (event.getRegisteredUsers().size() >= event.getMaxCapacity()) {
+                    return "redirect:/event/" + eventId;
+                }
+
+                event.getRegisteredUsers().add(user);
+                eventService.save(event);
+
+            }
+        } else {
+            return "redirect:/login";
+        }
+        return "redirect:/event/" + eventId;
+    }
+
+    @PostMapping("/event/desapuntarte/{eventId}")
+    public String desapuntarteDelEvento(@PathVariable("eventId") Long eventId, Authentication authentication, Model model) {
+        // Check if the user is authenticated
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            Optional<User> currentUser = userService.findByUserName(username);
+            Optional<Event> eventOpt = eventService.findById(eventId);
+
+            if (currentUser.isPresent() && eventOpt.isPresent()) {
+                Event event = eventOpt.get();
+                User user = currentUser.get();
+
+                // Check if the currently authenticated user is registered for the event
+                if (event.getRegisteredUsers().contains(user)) {
+                    // Unregister the user from the event
+                    event.getRegisteredUsers().remove(user);
+                    // Save the changes to the event
+                    eventService.save(event);
+                }
+            }
+        }
+
+        return "redirect:/event/" + eventId;
+    }
+
+
     @GetMapping("/event/image/{id}")
     @ResponseBody
     public byte[] showEventImage(@PathVariable long id) throws SQLException, IOException {
@@ -198,4 +284,6 @@ public class EventWebController {
 
         return "moreEvents";
     }
+
+
 }
