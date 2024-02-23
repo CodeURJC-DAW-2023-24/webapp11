@@ -109,7 +109,7 @@
                         </form>
                     </div>
                     <div class="col text-center btn-edit-account">
-                        <button id="edit-profile-btn" class="btn btn-primary" onclick = warn()>Editar Perfil</button>
+                        <button id="edit-profile-btn" class="btn btn-primary" >Editar Perfil</button>
 
                         <!-- Hidden div for the pop-up -->
                         <div id="edit-profile-popup" style="display: none;">
@@ -126,7 +126,8 @@
                                     <label for="edit-username">Nick:</label>
                                     <input type="text" class="form-control" id="edit-username" name="username" value="{{user.username}}">
                                 </div>
-                                <button type="submit" class="btn btn-primary" >Guardar Cambios</button>
+                                <button type="submit" onclick ="return warn()" class="btn btn-primary" >Guardar Cambios</button>
+                                <button type="submit" onclick ="return cancel()" class="btn btn-danger" >Cancelar</button>
                             </form>
                         </div>
                     </div>

@@ -10,8 +10,10 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function warn() {
-    var confirmation = window.confirm('Si guarda los datos, se le obligará a iniciar sesión con las nuevas credenciales');
-    if (!confirmation) {
-        window.location.href = 'profile';
-    }
+    return window.confirm('Si guarda los datos, se le obligará a iniciar sesión con las nuevas credenciales');
+}
+
+function cancel() {
+    window.location.href = 'profile';
+    return false;
 }
