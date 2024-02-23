@@ -36,5 +36,10 @@ body {
   }
 
   .error-container a:hover {
-    background-color: #0056b3;
+      background-color: #0056b3;
   }
+.error-container h1.m{
+    font-size: 4rem;
+    color: #7cd97c;
+}
+
