@@ -4,7 +4,9 @@ import javax.annotation.PostConstruct;
 
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
+import com.EventCrafters.EventCrafters.model.Review;
 import com.EventCrafters.EventCrafters.repository.CategoryRepository;
+import com.EventCrafters.EventCrafters.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,9 @@ public class DatabaseInitializer {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private ReviewRepository reviewRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -89,6 +94,10 @@ public class DatabaseInitializer {
 		eventRepository.save(event5);
 		eventRepository.save(event6);
 
+		Review review1 = new Review(user, event, 5, "Muy bien");
+		Review review2 = new Review(user, event, 2, "Estupendo");
+		reviewRepository.save(review1);
+		reviewRepository.save(review2);
 	}
 
 }
