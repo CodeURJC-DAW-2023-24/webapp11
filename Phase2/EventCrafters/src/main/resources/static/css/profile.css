@@ -264,21 +264,15 @@ body {
 .event-title {
     text-align: center;
     background-color: #78d1ef;
-    /* Color de fondo */
     color: #000000;
-    /* Color del texto */
     padding: 10px 20px;
-    /* Espaciado interno */
     border-radius: 20px;
-    /* Bordes redondeados */
     margin-top: 3%;
     margin-bottom: 3%;
     margin-left: 15%;
     margin-right: 15%;
     font-size: 24px;
-    /* Tamaño del texto */
     font-weight: bold;
-    /* Negrita */
 }
 
 .load-events {
@@ -345,7 +339,7 @@ body {
     border-color: #004094;
 }
 
-/* Efecto de sombra para los contenedores de eventos */
+/* shadow effect for the event containers */
 .activity:hover {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.3s ease-in-out;
@@ -381,4 +375,25 @@ becomes the last one in its parent element
 /* Estilos para el botón de borrar cuenta al pasar el cursor por encima */
 .btn-delete-account:hover {
     background-color: #c82333; /* Color de fondo rojo más oscuro */
+}
+
+.event-container-text{
+    width: 60%;
+    margin: 0px 0px 8px 0px;
+}
+
+.event-container-btn{
+    width: 20%;
+    margin: 0px 0px 0px 10px;
+}
+
+@media (min-width: 779px ){
+    .event-container-btn{
+        margin: 0px 0px 0px 0px;
+    }
+}
+
+.event-container-tag-div {
+    width: auto;
+    margin: 0px 0px;
 }
