@@ -20,3 +20,9 @@
         </div>
     </div>
 {{/additionalEvents}}
+{{#lastEvents}}
+    <div class="no-events-message" style="display: none"></div>
+{{/lastEvents}}
+{{^additionalEvents}}
+    <h5 class="no-events-message">No hay eventos disponibles</h5>
+{{/additionalEvents}}

@@ -224,3 +224,9 @@ body {
     background-color: #004094;
     border-color: #004094;
 }
+
+.no-events-message{
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}

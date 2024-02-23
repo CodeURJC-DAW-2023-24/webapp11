@@ -63,16 +63,14 @@ public class EventWebController {
         // for the filters dropdown-menu
         model.addAttribute("categories", c);
 
-        if (allEvents.isEmpty()){
-            model.addAttribute("events", new ArrayList<Event>());
-            nextEventIndex = allEvents.size();
-        }
-        else if (allEvents.size() <= nextEventIndex){
+        if (allEvents.size() <= nextEventIndex){
             model.addAttribute("events", allEvents.subList(0,allEvents.size()));
             nextEventIndex = allEvents.size();
+            model.addAttribute("moreEvents", "none");
         }
         else{
             model.addAttribute("events", allEvents.subList(0,nextEventIndex));
+            model.addAttribute("moreEvents", "block");
         }
         model.addAttribute("logged", isLoggedIn);
         return "index";
@@ -89,9 +87,15 @@ public class EventWebController {
             int endIndex = nextEventIndex + Math.min(eventsRefreshSize, remainingEvents);
             model.addAttribute("additionalEvents", allEvents.subList(nextEventIndex, endIndex));
             nextEventIndex = endIndex;
+            System.out.println("hola");
+            System.out.println(nextEventIndex);
+            if (allEvents.size() == nextEventIndex){
+                model.addAttribute("lastEvents", "");
+            }
+            return "moreEvents";
         }
 
-        return "moreEvents";
+        return "empty";
     }
 
     @GetMapping("/create_event")
@@ -349,6 +353,9 @@ public class EventWebController {
         AbstractMap.SimpleEntry<List<Event>, Integer> additionalEvents = eventService.getAdditionalEvents(allEvents, nextEventIndex, eventsRefreshSize);
         model.addAttribute("additionalEvents", additionalEvents.getKey());
         nextEventIndex = additionalEvents.getValue();
+        if (allEvents.size() == nextEventIndex){
+            model.addAttribute("lastEvents", "");
+        }
         return "moreEvents";
     }
 
@@ -359,6 +366,9 @@ public class EventWebController {
         AbstractMap.SimpleEntry<List<Event>, Integer> additionalEvents = eventService.getAdditionalEvents(allEvents, nextEventIndex, eventsRefreshSize);
         model.addAttribute("additionalEvents", additionalEvents.getKey());
         nextEventIndex = additionalEvents.getValue();
+        if (allEvents.size() == nextEventIndex){
+            model.addAttribute("lastEvents", "");
+        }
         return "moreEvents";
     }
 

@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 const searchBarBtn = document.getElementById('search-bar-btn');
+const homeLoadMoreBtnDiv = document.getElementById('home-load-more-btn-div');
+const eventChart = document.getElementById('eventsChart');
 
 searchBarBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -28,7 +30,24 @@ searchBarBtn.addEventListener('click', (e) => {
 })
 
 const doFetch = (url) => {
+    homeLoadMoreBtnDiv.style.display = "block";
     fetch(url)
         .then(r => r.text())
         .then(html => document.getElementById("eventsChart").innerHTML = html)
 }
+
+// it checks each time we add events to eventChart
+// if we had added an element with the no-events-message
+// in which case the loadmore button is hidden
+const observer = new MutationObserver( m => {
+    m.forEach(m => {
+        m.addedNodes.forEach(n => {
+            if (n.nodeType === Node.ELEMENT_NODE && n.classList.contains('no-events-message')){
+                homeLoadMoreBtnDiv.style.display = "none";
+            }
+        })
+    })
+})
+
+// this is so that it check when child nodes are added
+observer.observe(eventChart, {childList: true});

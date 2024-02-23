@@ -42,13 +42,13 @@
         {{/events}}
         {{^events}}
             <div>
-                <h5>No events available.</h5>
+                <h5 class="no-events-message">No events available.</h5>
             </div>
         {{/events}}
     </div>
 </div>
 
-<div class="container text-center mt-4">
+<div class="container text-center mt-4" style="display: {{moreEvents}}" id="home-load-more-btn-div">
     <div class="row justify-content-center">
         <div class="col-auto">
             <button class="btn btn-primary" data-type="/newEvents" id="home-load-more-btn">Cargar más eventos</button>
