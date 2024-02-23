@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         https.authorizeRequests().antMatchers("/home").permitAll();
         https.authorizeRequests().antMatchers("/home/*").permitAll();
         https.authorizeRequests().antMatchers("/error").permitAll();
+        https.authorizeRequests().antMatchers("/ticket").permitAll();
 
 
 

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Ticket - Event Crafters</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/ticket.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/event_info.css'>
+    <link rel="icon" href="../img/logo.jpeg" type="image/png">
+</head>
+
+<body>
+
+<!-- nav bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="../img/logo.jpeg" width="30" height="30" class="d-inline-block align-top"
+             alt="Imagen Logo Events Crafters"> Event Crafters
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggled"
+            aria-controls="navbarToggled" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarToggled">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Inicio</a>
+            </li>
+            {{#logged}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        🧒 <!-- User emoji -->
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="perfilDropdown">
+                        <a class="dropdown-item" href="/profile">Perfil</a>
+                        <div class="dropdown-divider"></div>
+                        <form action="/logout" method="post">
+                            <input type="hidden" name="_method" value="POST">
+                            <button type="submit" name="logout" class="dropdown-item">Cerrar Sesión</button>
+                        </form>
+                    </div>
+                </li>
+            {{/logged}}
+            {{^logged}}
+                <li class="nav-item dropdown">
+                    <form action="/register" method="get" class="form-inline my-2 my-lg-0 mr-2">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Registrarse</button>
+                    </form>
+                </li>
+                <li class="nav-item dropdown">
+                    <form action="/login" method="get" class="form-inline my-2 my-lg-0">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Iniciar Sesión</button>
+                    </form>
+                </li>
+            {{/logged}}
+        </ul>
+    </div>
+</nav>
+
+<!-- Contenido principal -->
+<section>
+    <div class="contentinput">
+        <div class="invoice-box">
+            <table>
+                <tr class="heading">
+                    <td><img alt="FotoLogo" src="../img/logo.jpeg" type="image/png" style="width: 50px; max-width: 50px"> Event Crafters </td>
+                </tr>
+                <tr class="top">
+                    <td colspan="2">
+                        <table>
+                            <tr class="item">
+                                <td><br><h2>{{event.name}}</h2></td>
+                            </tr>
+                            <tr>
+                                <td class="title">
+                                    <br>
+                                    <img alt="FotoLogo" src="/event/image/{{event.id}}" type="image/png" style="width: 100%; max-width: 500px">
+                                </td>
+
+                                <td>
+                                    <br>
+                                    {{userName}}<br />
+                                    {{userNick}}<br />
+                                    {{userEmail}}<br />
+                                    Entrada {{numRegisteredUsers}} de {{event.maxCapacity}} disponibles
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="information">
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td>
+                                    <strong>Organiza:</strong><br><br>
+                                    {{event.creator.name}}<br />
+                                    {{event.creator.username}}<br />
+                                    {{event.creator.email}}
+                                </td>
+
+                                <td>
+                                    <strong>Valoraciones:</strong><br><br>
+                                    Este evento tiene {{reviewsQuantity}} reseñas,<br>
+                                    con una valoración media de {{averageRating}} estrellas
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="heading">
+                    <td>Información del evento</td>
+
+                    <td>Check #</td>
+                </tr>
+
+                <tr class="item">
+                    <td>Aforo máximo:</td>
+                    <td>{{event.maxCapacity}} personas</td>
+                </tr>
+                <tr class="item">
+                    <td>Lugar:</td>
+                    <td>{{event.location}}</td>
+                </tr>
+                <tr class="item">
+                    <td>Fecha de inicio:</td>
+                    <td>{{startDateFormatted}}</td>
+                </tr>
+                <tr class="item">
+                    <td>Fecha de finalización:</td>
+                    <td>{{endDateFormatted}}</td>
+                </tr>
+                <tr class="item">
+                    <td>Duración:</td>
+                    <td>{{duration}}</td>
+                </tr>
+
+                <tr class="item">
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr class="heading">
+                    <td>Información adicional</td>
+                </tr>
+                <tr class="item">
+                    <td>{{event.additionalInfo}}</td>
+                </tr>
+
+                <tr class="item">
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr class="heading">
+                    <td>Método de pago</td>
+                </tr>
+
+                <tr class="item last">
+                    <td>Entrada regular</td>
+                    <td>{{priceDisplay}}</td>
+                </tr>
+
+                <tr class="total">
+                    <td></td>
+
+                    <td>Total: {{priceDisplay}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <p>
+            <button class="butn" id="myguionpdf">Ver PDF</button>
+            <br>
+        </p>
+    </div>
+</section>
+
+<!-- Scripts de Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="../js/ticket.js"></script>
+</body>
+
+</html>

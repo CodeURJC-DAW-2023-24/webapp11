@@ -106,6 +106,10 @@
                             <form action="/event/leave/{{event.id}}" method="post">
                                 <button type="submit" class="btn btn-warning">Desapuntarte de {{event.name}}</button>
                             </form>
+                            <br>
+                            <form action="/ticket/{{event.id}}" method="get">
+                                <button type="submit" class="btn btn-primary">Ver entrada a {{event.name}}</button>
+                            </form>
                         </div>
                     {{/isUserRegistered}}
                     {{^isUserCreatorOrAdmin}}
