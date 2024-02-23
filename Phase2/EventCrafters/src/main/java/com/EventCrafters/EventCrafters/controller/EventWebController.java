@@ -44,6 +44,8 @@ public class EventWebController {
 
     private List<Event> allEvents;
 
+    private List<Event> categoryFilteredEvents;
+
     private int nextEventIndex = 3;
     private int eventsRefreshSize = 3;
 
@@ -71,6 +73,7 @@ public class EventWebController {
         else{
             model.addAttribute("events", allEvents.subList(0,nextEventIndex));
         }
+        model.addAttribute("loadmoretype", "/newEvents" );
         model.addAttribute("logged", isLoggedIn);
         return "index";
     }
@@ -277,13 +280,35 @@ public class EventWebController {
     }
 
     @GetMapping("/search")
-    public String filterByTag(Model model, @RequestParam("id") long id){
-        List<Event> cL = eventService.findByCategory(id);
+    public String filterByTag(Model model, @RequestParam("categoryId") long id){
+        nextEventIndex = eventsRefreshSize;
+        this.categoryFilteredEvents = eventService.findByCategory(id);
 
-        model.addAttribute("additionalEvents", cL);
+        if (categoryFilteredEvents.size() <= nextEventIndex){
+            model.addAttribute("additionalEvents", categoryFilteredEvents.subList(0,categoryFilteredEvents.size()));
+            nextEventIndex = categoryFilteredEvents.size();
+        }
+        else{
+            model.addAttribute("additionalEvents", categoryFilteredEvents.subList(0,nextEventIndex));
+        }
+        //model.addAttribute("additionalEvents", cL);
 
         return "moreEvents";
     }
+
+    @GetMapping("/newFilteredEvents")
+    public String newFilteredEvents(Model model) {
+        int remainingEvents = categoryFilteredEvents.size() - nextEventIndex;
+
+        if (remainingEvents > 0) {
+            int endIndex = nextEventIndex + Math.min(eventsRefreshSize, remainingEvents);
+            model.addAttribute("additionalEvents", categoryFilteredEvents.subList(nextEventIndex, endIndex));
+            nextEventIndex = endIndex;
+        }
+
+        return "moreEvents";
+    }
+
 
 
 }

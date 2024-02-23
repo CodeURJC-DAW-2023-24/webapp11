@@ -55,6 +55,10 @@ public class DatabaseInitializer {
 		Event event = new Event("Evento 1", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
 		Event event2 = new Event("Evento 2", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
 		Event event3 = new Event("Evento 3", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
+		Event event4 = new Event("Evento 4", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
+		Event event5 = new Event("Evento 5", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
+		Event event6 = new Event("Evento 6", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
+
 
 		User user = new User("Juan Usuario","user","user@gmail.com", null, passwordEncoder.encode("pass"), "USER");
 		userRepository.save(user);
@@ -70,12 +74,19 @@ public class DatabaseInitializer {
 		event.setCategory(deporte); // Asocia el evento con la categoría "campo"
 		event2.setCategory(campo);
 		event3.setCategory(educación);
+		event4.setCategory(educación);
+		event5.setCategory(educación);
+		event6.setCategory(educación);
 		//event.setCreator(user);
 		//event2.setCreator(user);
 		//event3.setCreator(user);
 		eventRepository.save(event);
 		eventRepository.save(event2);
 		eventRepository.save(event3);
+		eventRepository.save(event4);
+		eventRepository.save(event5);
+		eventRepository.save(event6);
+
 	}
 
 }

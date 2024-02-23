@@ -29,7 +29,7 @@ public class ReviewController {
         System.out.println("hola");
         System.out.println(r.getText());
         System.out.println(r.getRating());
-        return "index";
+        return "redirect:/";
     }
 
 }

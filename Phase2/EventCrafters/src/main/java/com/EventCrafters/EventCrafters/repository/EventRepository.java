@@ -16,4 +16,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             nativeQuery = true)
     List<Event> findByCategory(long categoryId);
 
+    
+
 }

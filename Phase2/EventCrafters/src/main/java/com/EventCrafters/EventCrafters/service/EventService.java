@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.EventCrafters.EventCrafters.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.EventCrafters.EventCrafters.repository.EventRepository;
@@ -36,4 +37,5 @@ public class EventService {
 	}
 
 	public List<Event> findByCategory(long id) {return repository.findByCategory(id);}
+
 }
