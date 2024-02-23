@@ -174,7 +174,6 @@ public class UserWebController {
 		Long currentUserId = user.getId();
 		userService.deleteUserById(currentUserId);
 		return "redirect:/logout";
-
 	}
 
 
@@ -185,16 +184,15 @@ public class UserWebController {
 		Optional<User> userOptional = userService.findByUserName(currentUsername);
 		if (userOptional.isPresent()) {
 			User user = userOptional.get();
-			// Update user information
 			user.setName(updatedUser.getName());
 			user.setEmail(updatedUser.getEmail());
 			user.setUsername(updatedUser.getUsername());
 			userService.save(user);
-			redirectAttributes.addFlashAttribute("user", user);
-			return "redirect:/profile";
+			SecurityContextHolder.clearContext();
+			return "redirect:/login";
 		}
-		// Handle the case when the user is not found
-		return "error"; // Or any other appropriate action
+
+		return "error";
 	}
 
 

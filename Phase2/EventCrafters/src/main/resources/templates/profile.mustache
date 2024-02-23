@@ -109,14 +109,27 @@
                         </form>
                     </div>
                     <div class="col text-center btn-edit-account">
-                        <form action="/updateProfile" method="post">
-                            <div class="user-data">
-                                <p><strong>Nombre:</strong> <input type="text" name="name" value="{{user.name}}"></p>
-                                <p><strong>Correo:</strong> <input type="email" name="email" value="{{user.email}}"></p>
-                                <p><strong>Nick:</strong> <input type="text" name="username" value="{{user.username}}"></p>
-                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                            </div>
-                        </form>                    </div>
+                        <button id="edit-profile-btn" class="btn btn-primary" onclick = warn()>Editar Perfil</button>
+
+                        <!-- Hidden div for the pop-up -->
+                        <div id="edit-profile-popup" style="display: none;">
+                            <form id="edit-profile-form" action="/updateProfile" method="post">
+                                <div class="form-group">
+                                    <label for="edit-name">Nombre:</label>
+                                    <input type="text" class="form-control" id="edit-name" name="name" value="{{user.name}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="edit-email">Correo:</label>
+                                    <input type="email" class="form-control" id="edit-email" name="email" value="{{user.email}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="edit-username">Nick:</label>
+                                    <input type="text" class="form-control" id="edit-username" name="username" value="{{user.username}}">
+                                </div>
+                                <button type="submit" class="btn btn-primary" >Guardar Cambios</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -338,6 +351,8 @@
 <!-- Custom JavaScript file -->
 <script src="../js/perfil.js"></script>
 <script src="../js/categories.js"></script>
+<script src="../js/editProfile.js"></script>
+
 </body>
 
 </html>

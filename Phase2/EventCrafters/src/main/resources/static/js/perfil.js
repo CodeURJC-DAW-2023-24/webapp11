@@ -12,3 +12,4 @@ const askForConfirmation = () => {
 }
 deleteAccountBtn.addEventListener('click', () => askForConfirmation());
 
+
