@@ -8,13 +8,27 @@ document.addEventListener('DOMContentLoaded', () => {
             let id = e.target.getAttribute('value');
             if (id) {
                 let newURL = `/search?categoryId=${id}`
-                history.pushState({path: newURL}, '', newURL)
-                fetch(newURL)
-                    .then(r => r.text())
-                    .then(html => document.getElementById("eventsChart").innerHTML = html)
+                //history.pushState({path: newURL}, '', newURL)
+                doFetch(newURL)
             }
-            // so that when the load more button is used the events loaded are from the categoryFilteredEvents List
-            document.getElementById('home-load-more-btn').setAttribute("data-type", "/newFilteredEvents")
+
         })
     })
 })
+
+const searchBarBtn = document.getElementById('search-bar-btn');
+
+searchBarBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    let input = document.getElementById('search-bar-input').value;
+    if (input){
+        let newURL = `/navbarSearch?input=${input}`
+        doFetch(newURL)
+    }
+})
+
+const doFetch = (url) => {
+    fetch(url)
+        .then(r => r.text())
+        .then(html => document.getElementById("eventsChart").innerHTML = html)
+}

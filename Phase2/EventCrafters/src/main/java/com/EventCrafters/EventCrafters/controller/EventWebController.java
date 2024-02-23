@@ -7,10 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
@@ -50,8 +47,6 @@ public class EventWebController {
 
     private List<Event> allEvents;
 
-    private List<Event> categoryFilteredEvents;
-
     private int nextEventIndex = 3;
     private int eventsRefreshSize = 3;
 
@@ -79,7 +74,6 @@ public class EventWebController {
         else{
             model.addAttribute("events", allEvents.subList(0,nextEventIndex));
         }
-        model.addAttribute("loadmoretype", "/newEvents" );
         model.addAttribute("logged", isLoggedIn);
         return "index";
     }
@@ -351,32 +345,24 @@ public class EventWebController {
     @GetMapping("/search")
     public String filterByTag(Model model, @RequestParam("categoryId") long id){
         nextEventIndex = eventsRefreshSize;
-        this.categoryFilteredEvents = eventService.findByCategory(id);
-
-        if (categoryFilteredEvents.size() <= nextEventIndex){
-            model.addAttribute("additionalEvents", categoryFilteredEvents.subList(0,categoryFilteredEvents.size()));
-            nextEventIndex = categoryFilteredEvents.size();
-        }
-        else{
-            model.addAttribute("additionalEvents", categoryFilteredEvents.subList(0,nextEventIndex));
-        }
-        //model.addAttribute("additionalEvents", cL);
-
+        this.allEvents = eventService.findByCategory(id);
+        AbstractMap.SimpleEntry<List<Event>, Integer> additionalEvents = eventService.getAdditionalEvents(allEvents, nextEventIndex, eventsRefreshSize);
+        model.addAttribute("additionalEvents", additionalEvents.getKey());
+        nextEventIndex = additionalEvents.getValue();
         return "moreEvents";
     }
 
-    @GetMapping("/newFilteredEvents")
-    public String newFilteredEvents(Model model) {
-        int remainingEvents = categoryFilteredEvents.size() - nextEventIndex;
-
-        if (remainingEvents > 0) {
-            int endIndex = nextEventIndex + Math.min(eventsRefreshSize, remainingEvents);
-            model.addAttribute("additionalEvents", categoryFilteredEvents.subList(nextEventIndex, endIndex));
-            nextEventIndex = endIndex;
-        }
-
+    @GetMapping("/navbarSearch")
+    public String navbarSearch(Model model, @RequestParam("input") String input){
+        nextEventIndex = eventsRefreshSize;
+        this.allEvents = eventService.findBySearchBar(input);
+        AbstractMap.SimpleEntry<List<Event>, Integer> additionalEvents = eventService.getAdditionalEvents(allEvents, nextEventIndex, eventsRefreshSize);
+        model.addAttribute("additionalEvents", additionalEvents.getKey());
+        nextEventIndex = additionalEvents.getValue();
         return "moreEvents";
     }
+
+
 
 
 

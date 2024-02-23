@@ -16,6 +16,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             nativeQuery = true)
     List<Event> findByCategory(long categoryId);
 
-    
+    @Query("SELECT e FROM Event e WHERE e.name LIKE %?1%")
+    List<Event> findBySearchBar(String input);
 
 }
