@@ -3,6 +3,7 @@ package com.EventCrafters.EventCrafters.controller;
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.service.CategoryService;
+import com.EventCrafters.EventCrafters.service.TokenService;
 import com.EventCrafters.EventCrafters.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Optional;
+import java.security.SecureRandom;
+import java.util.*;
 
 @Controller
 public class UserWebController {
@@ -28,6 +29,7 @@ public class UserWebController {
 	private CategoryService categoryService;
 	@Autowired
 	private UserService userService;
+	private Map<String, TokenService> tokens = new HashMap<>();
 
 	@RequestMapping("/login")
 	public String login() {
@@ -110,6 +112,51 @@ public class UserWebController {
 	public String changePassword(Model model, @PathVariable String nickname) {
 		// To-do: implement the whole thing
 		return "change_password";
+	}
+
+	@GetMapping("/recoverPassword/{user}")
+	public String recoverPassword(Model model, @PathVariable String user) {
+		Optional<User> userOptional = userService.findByUserName(user);
+        if (userOptional.isPresent()) {
+            TokenService tokenService = new TokenService(userOptional.get());
+			tokens.put(userOptional.get().getUsername(), tokenService);
+			String link = "https://localhost:8443/recoverPassword/" + userOptional.get().getUsername() +"/randomToken?token=" + tokenService.getToken();
+			// sendEmail(link)
+			System.out.println(link);
+        }
+		return "emailSent";
+	}
+	@GetMapping("/recoverPassword/{user}/randomToken")
+	public String recoverPasswordWithToken(Model model, @PathVariable String user, @RequestParam("token") String token) {
+		Optional<User> userOptional = userService.findByUserName(user);
+		if (userOptional.isPresent()) {
+			TokenService tokenService = tokens.get(userOptional.get().getUsername());
+			if (!tokenService.isValid() || !tokenService.getToken().equals(token)){
+				model.addAttribute("valid", false);
+				return "recoverPassword";
+			}
+			model.addAttribute("token", tokenService.getToken());
+			model.addAttribute("username",userOptional.get().getUsername());
+		}
+		model.addAttribute("valid", true);
+		return "recoverPassword";
+	}
+
+	@PostMapping("/recoverPassword/{user}/randomToken")
+	public String sendRecoverPasswordWithToken(Model model, @PathVariable String user,
+											   @RequestParam("token") String token, @RequestParam("password") String password) {
+		Optional<User> userOptional = userService.findByUserName(user);
+		if (userOptional.isPresent()) {
+			TokenService tokenService = tokens.get(userOptional.get().getUsername());
+			if (!tokenService.isValid() || !tokenService.getToken().equals(token)){
+				model.addAttribute("valid", false);
+				return "recoverPassword";
+			}
+			userOptional.get().setEncodedPassword(passwordEncoder.encode(password));
+			//tell the user the operation was successful
+			userService.save(userOptional.get());
+		}
+		return "redirect:/login";
 	}
 
 	@PostMapping("/changePassword/{nickname}")
