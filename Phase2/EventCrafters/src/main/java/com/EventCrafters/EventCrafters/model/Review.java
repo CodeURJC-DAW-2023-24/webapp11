@@ -31,8 +31,9 @@ public class Review {
 
     public Review() {}
 
-    public Review(User user, int rating, String textValoration) {
+    public Review(User user, Event event, int rating, String textValoration) {
         this.user = user;
+        this.event = event;
         this.rating = rating;
         this.text = textValoration;
     }

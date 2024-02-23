@@ -14,9 +14,12 @@ import java.util.Optional;
 
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
+import com.EventCrafters.EventCrafters.model.Review;
 import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.service.CategoryService;
+import com.EventCrafters.EventCrafters.service.ReviewService;
 import com.EventCrafters.EventCrafters.service.UserService;
+import org.apache.catalina.filters.RemoteIpFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -41,6 +44,9 @@ public class EventWebController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     private List<Event> allEvents;
 
@@ -194,6 +200,71 @@ public class EventWebController {
             model.addAttribute("numRegisteredUsers", numRegisteredUsers);
 
             return "eventInfo";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @GetMapping("/ticket/{id}")
+    public String showTicket(Model model, @PathVariable long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isLoggedIn = isAuthenticated(authentication);
+        Optional<Event> eventOptional = eventService.findById(id);
+
+        String currentUsername = authentication.getName();
+        Optional<User> currentUser = userService.findByUserName(currentUsername);
+        if (eventOptional.isPresent()) {
+            Event event = eventOptional.get();
+
+            boolean isUserCreatorOrAdmin = false;
+            boolean isUserRegistered = false;
+
+            if (isLoggedIn) {
+                if (currentUser.isPresent()) {
+                    if (event.getCreator().equals(currentUser.get())) {
+                        isUserCreatorOrAdmin = true;
+                    }
+                    isUserRegistered = event.getRegisteredUsers().contains(currentUser.get());
+                }
+
+                if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                    isUserCreatorOrAdmin = true;
+                }
+            }
+
+            int numRegisteredUsers = event.getRegisteredUsers().size()+1;
+
+            String priceDisplay = event.getPrice() == 0.0 ? "Gratis" : String.format("%.2f €", event.getPrice());
+            String startDateFormatted = formatDate(event.getStartDate());
+            String endDateFormatted = formatDate(event.getEndDate());
+            Duration duration = Duration.between(event.getStartDate().toInstant(), event.getEndDate().toInstant());
+            long hours = duration.toHours();
+            long minutes = duration.minusHours(hours).toMinutes();
+            String durationFormatted = String.format("%d horas y %d minutos", hours, minutes);
+
+            List<Review> reviews =reviewService.findAll();
+            float averageRating = 0.0f;
+            for (Review r : reviews){
+                averageRating += r.getRating();
+            }
+            averageRating = averageRating / reviews.size();
+
+            model.addAttribute("event", event);
+            model.addAttribute("priceDisplay", priceDisplay);
+            model.addAttribute("startDateFormatted", startDateFormatted);
+            model.addAttribute("endDateFormatted", endDateFormatted);
+            model.addAttribute("duration", durationFormatted);
+            model.addAttribute("logged", isLoggedIn);
+            model.addAttribute("isUserCreatorOrAdmin", isUserCreatorOrAdmin);
+            model.addAttribute("isUserRegistered", isUserRegistered);
+            model.addAttribute("numRegisteredUsers", numRegisteredUsers);
+            model.addAttribute("reviewsQuantity", reviews.size());
+            model.addAttribute("averageRating", averageRating);
+            model.addAttribute("userName", currentUser.get().getName());
+            model.addAttribute("userNick", currentUser.get().getUsername());
+            model.addAttribute("userEmail", currentUser.get().getEmail());
+
+            return "ticket";
         } else {
             return "redirect:/";
         }
