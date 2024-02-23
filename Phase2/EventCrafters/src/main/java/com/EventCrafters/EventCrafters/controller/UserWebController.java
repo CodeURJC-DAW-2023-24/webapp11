@@ -19,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.security.SecureRandom;
 import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserWebController {
@@ -79,8 +81,6 @@ public class UserWebController {
 		// To-do: implement the whole thing
 
 		model.addAttribute("user", new User());
-
-
 
 		return "register";
 	}
