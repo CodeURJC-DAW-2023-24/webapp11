@@ -4,8 +4,8 @@ import javax.persistence.*;
 import lombok.Data;
 /**
  *
- * @author Lucia and Tarek
- */
+
+ @author Lucia and Tarek*/
 
 
 @Data
@@ -31,16 +31,9 @@ public class Review {
 
     public Review() {}
 
-    public Review(User user, Event event, int rating, String textValoration) {
-        this.user = user;
-        this.event = event;
+    public Review(int rating, String textValoration) {
         this.rating = rating;
         this.text = textValoration;
     }
 
 }
-
-
-
-
-

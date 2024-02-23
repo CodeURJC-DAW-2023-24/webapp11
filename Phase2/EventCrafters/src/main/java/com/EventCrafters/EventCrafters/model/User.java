@@ -69,9 +69,6 @@ public class User {
 	@ManyToMany(mappedBy = "registeredUsers", cascade = CascadeType.ALL)
 	private Set<Event> registeredInEvents = new HashSet<>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Review> reviews = new HashSet<>();
-
 
 	public String getPassword() {
 		return encodedPassword;
