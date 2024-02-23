@@ -37,8 +37,8 @@ public class UserService {
 		repository.deleteById(id);
 	}
 
-	public Long findUserIdByUsername(String nickname) {
-		Optional<User> userOptional = repository.findByName(nickname);
+	public Long findUserIdByUsername(String name) {
+		Optional<User> userOptional = repository.findByUsername(name);
 		User user = userOptional.orElse(null);
 		return user != null ? user.getId() : null;
 	}

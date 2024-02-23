@@ -31,6 +31,7 @@ public class User {
 
 	private String name;
 
+	@Getter
 	@Column(unique = true, nullable = false)
 	private String username;
 
@@ -86,5 +87,9 @@ public class User {
 			this.roles =  new ArrayList<>();
 		}
 		this.roles.add(roleUser);
+	}
+
+	public Long getId() {
+		return id;
 	}
 }

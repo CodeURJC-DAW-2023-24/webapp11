@@ -70,9 +70,9 @@ public class DatabaseInitializer {
 		event.setCategory(deporte); // Asocia el evento con la categoría "campo"
 		event2.setCategory(campo);
 		event3.setCategory(educación);
-		event.setCreator(user);
-		event2.setCreator(user);
-		event3.setCreator(user);
+		//event.setCreator(user);
+		//event2.setCreator(user);
+		//event3.setCreator(user);
 		eventRepository.save(event);
 		eventRepository.save(event2);
 		eventRepository.save(event3);

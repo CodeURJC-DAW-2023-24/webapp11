@@ -168,8 +168,10 @@ public class UserWebController {
 	@PostMapping("/delete-account")
 	public String deleteAccount() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		Long currentUserId = userService.findUserIdByUsername(currentPrincipalName);
+		String currentUsername = authentication.getName();
+		Optional<User> userOptional = userService.findByUserName(currentUsername);
+		User user = userOptional.get();
+		Long currentUserId = user.getId();
 		userService.deleteUserById(currentUserId);
 		return "redirect:/logout";
 
