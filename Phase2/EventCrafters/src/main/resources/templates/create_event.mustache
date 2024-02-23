@@ -11,7 +11,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../css/forms.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/create_event.css'>
     <link rel="icon" href="../img/logo.jpeg" type="image/png">
-    <title>Events Crafters: Crear Evento</title>
+    <title>{{#event.id}}Editar Evento: {{event.name}}{{/event.id}}{{^event.id}}Crear Evento{{/event.id}}</title>
 </head>
 
 <body>
@@ -22,45 +22,45 @@
                 <!-- Card element where the form is located -->
                 <div class="card">
                     <!-- Header of the card with logo and title -->
-                    <div class="card-header text-center">
+                    <div class="card-header text-center d-flex flex-column align-items-center">
                         <img src="../img/logo.jpeg" alt="Logo" class="img-fluid small-logo">
-                        <h1>Crear Evento</h1>
+                        <h1>{{#event.id}}Editar Evento: {{event.name}}{{/event.id}}{{^event.id}}Crear evento{{/event.id}}</h1>
                     </div>
                     <!-- Body of the card containing the form fields -->
                     <div class="card-body">
-                        <form action="/create_event" method="post" enctype="multipart/form-data">
+                        <form action="{{#event.id}}/event/edit/{{event.id}}{{/event.id}}{{^event.id}}/create_event{{/event.id}}" method="post" enctype="multipart/form-data">
                             <!-- name -->
                             <div class="form-group">
                                 <label for="event-name">Introduce el nombre del evento</label>
                                 <input name="name" type="text" class="form-control" id="event-name" placeholder="Nombre del Evento"
-                                    required>
+                                    value="{{#event.id}}{{event.name}}{{/event.id}}" required>
                             </div>
                             <!-- description -->
                             <div class="form-group">
                                 <label for="event-description">Introduce la descripción del evento</label>
                                 <textarea name="description" class="form-control" id="event-description"
-                                    placeholder="Descripción del Evento" rows="3" required></textarea>
+                                    placeholder="Descripción del Evento" rows="3" required>{{#event.id}}{{event.description}}{{/event.id}}</textarea>
                             </div>
                             <!-- (max) capacity-->
                             <div class="form-group">
                                 <label for="event-capacity">Introduce el aforo del evento</label>
                                 <input name="capacity" type="number" class="form-control" id="event-capacity" placeholder="Aforo"
-                                       min="1" required>
+                                       min="1" value="{{#event.id}}{{event.maxCapacity}}{{/event.id}}" required>
                             </div>
                             <!-- price -->
                             <div class="form-group">
                                 <label for="event-price">Introduce el precio de la entrada del evento</label>
                                 <input name="price" type="number" class="form-control" id="event-price"
-                                    placeholder="Precio de la entrada" min="0" required>
+                                    placeholder="Precio de la entrada" value="{{#event.id}}{{event.price}}{{/event.id}}" min="0" required>
                             </div>
                             <!-- start and end dates -->
                             <div class="form-group">
                                 <label for="event-start">Fecha y hora de inicio del evento</label>
-                                <input name="startDate"type="datetime-local" class="form-control" id="event-start" required>
+                                <input name="startDate"type="datetime-local" class="form-control" id="event-start" value="{{#event.id}}{{event.startDate}}{{/event.id}}" required>
                             </div>
                             <div class="form-group">
                                 <label for="event-end">Fecha y hora de fin del evento</label>
-                                <input name="endDate" type="datetime-local" class="form-control" id="event-end" required>
+                                <input name="endDate" type="datetime-local" class="form-control" id="event-end" value="{{#event.id}}{{event.endDate}}{{/event.id}}" required>
                             </div>
                             <!-- category-->
                             <div class="form-group">
@@ -68,26 +68,26 @@
                                 <select class="form-control" id="event-category" name="category" required>
                                     <option value="">Selecciona una categoría</option>
                                     {{#categories}}
-                                        <option value="{{id}}">{{name}}</option>
+                                        <option value="{{id}}" {{id}}>{{name}}</option>
                                     {{/categories}}
                                 </select>
                             </div>
                             <!-- photo-->
                             <div class="form-group">
                                 <label for="event-photo">Introduce la foto del Evento</label>
-                                <input name="photo" type="file" class="form-control-file" id="event-photo" required>
+                                <input name="photo" type="file" class="form-control-file" id="event-photo" value="{{#event.id}}{{/event.id}}" required>
                             </div>
                             <!-- address-->
                             <div class="form-group">
                                 <label for="event-address">Introduce la direccion del evento</label>
                                 <input name="location" type="text" class="form-control" id="event-address" placeholder="Dirección"
-                                    required>
+                                       value="{{#event.id}}{{event.location}}{{/event.id}}" required>
                             </div>
                             <!-- map -->
                             <div class="form-group">
                                 <label for="event-map">Introduce el mapa del evento</label>
                                 <input name="map" type="text" class="form-control" id="event-map" placeholder="Mapa"
-                                required>
+                                       value="{{#event.id}}{{event.map}}{{/event.id}}" required>
                                 <small id="mapHelp" class="form-text text-muted">
                                     Ve a Google Maps, busca tu ubicación, haz clic en "Compartir" y luego en "Insertar un mapa" para obtener el código HTML del mapa. Copia y pega ese código aquí.
                                 </small>
@@ -96,9 +96,9 @@
                             <div class="form-group">
                                 <label for="event-extras">Introduce información adicional sobre el evento</label>
                                 <textarea name="additionalInfo" class="form-control" id="event-extras"
-                                    placeholder="Informacion Extra del Evento" rows="3"></textarea>
+                                    placeholder="Informacion Extra del Evento" rows="3" required>{{#event.id}}{{event.additionalInfo}}{{/event.id}}</textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Crear Evento</button>
+                            <button type="submit" class="btn btn-primary btn-block">{{#event.id}}Actualizar Evento{{/event.id}}{{^event.id}}Crear Evento{{/event.id}}</button>
                         </form>
                     </div>
                 </div>
@@ -110,6 +110,17 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../js/validateEvent.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var selectedCategoryId = "{{#event.id}}{{event.category.id}}{{/event.id}}";
+
+            if(selectedCategoryId) {
+                var selectElement = document.getElementById('event-category');
+                selectElement.value = selectedCategoryId;
+            }
+
+        });
+    </script>
 
 </body>
 

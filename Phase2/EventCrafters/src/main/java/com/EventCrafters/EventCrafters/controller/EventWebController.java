@@ -372,6 +372,60 @@ public class EventWebController {
         return "moreEvents";
     }
 
+    @PostMapping("/event/delete/{id}")
+    public String deleteEvent(@PathVariable Long id) {
+        eventService.delete(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/event/edit/{id}")
+    public String showEditEventForm(@PathVariable Long id, Model model) {
+        Event event = eventService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Evento no encontrado para id :: " + id));
+
+        List<Category> categories = categoryService.findAll();
+        model.addAttribute("event", event);
+        model.addAttribute("categories", categories);
+        return "create_event";
+    }
+
+    @PostMapping("/event/edit/{id}")
+    public String editEvent(@PathVariable Long id,
+                            @RequestParam("name") String name,
+                            @RequestParam("photo") MultipartFile photo,
+                            @RequestParam("description") String description,
+                            @RequestParam("capacity") int maxCapacity,
+                            @RequestParam("price") double price,
+                            @RequestParam("location") String location,
+                            @RequestParam("map") String map,
+                            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+                            @RequestParam("category") Long categoryId,
+                            @RequestParam(value = "additionalInfo", required = false) String additionalInfo) throws IOException, SQLException {
+
+        Event event = eventService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Evento no encontrado para id :: " + id));
+
+        Category category = categoryService.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+
+        Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photo.getBytes());
+
+        event.setName(name);
+        event.setPhoto(photoBlob);
+        event.setDescription(description);
+        event.setMaxCapacity(maxCapacity);
+        event.setPrice(price);
+        event.setLocation(location);
+        event.setMap(map);
+        event.setStartDate(Date.from(startDate.atZone(ZoneId.systemDefault()).toInstant()));
+        event.setEndDate(Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant()));
+        event.setAdditionalInfo(additionalInfo);
+        event.setCategory(category);
+
+        eventService.save(event);
+        return "redirect:/event/" + id;
+    }
 
 
 
