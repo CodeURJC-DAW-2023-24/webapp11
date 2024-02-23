@@ -114,7 +114,7 @@ public class EventWebController {
                               @RequestParam("capacity") int maxCapacity,
                               @RequestParam("price") double price,
                               @RequestParam("location") String location,
-                              @RequestParam("coordinates") String coordinates,
+                              @RequestParam("map") String map,
                               @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                               @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
                               @RequestParam("category") Long categoryId,
@@ -124,13 +124,10 @@ public class EventWebController {
                     .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
 
             Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photo.getBytes());
-            String[] latLong = coordinates.split(",");
-            Double latitude = Double.parseDouble(latLong[0].trim());
-            Double longitude = Double.parseDouble(latLong[1].trim());
             Date start = Date.from(startDate.atZone(ZoneId.systemDefault()).toInstant());
             Date end = Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant());
 
-            Event event = new Event(name, photoBlob, description, maxCapacity, price, location, latitude, longitude, start, end, additionalInfo);
+            Event event = new Event(name, photoBlob, description, maxCapacity, price, location, map, start, end, additionalInfo);
             event.setCategory(category);
             category.getEventsInCategories().add(event);
 
@@ -146,6 +143,7 @@ public class EventWebController {
 
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return "redirect:/";

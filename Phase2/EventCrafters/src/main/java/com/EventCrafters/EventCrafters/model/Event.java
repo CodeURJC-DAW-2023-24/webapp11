@@ -39,9 +39,8 @@ public class Event {
 
 	private String location;
 
-	private Double latitude;
-
-	private Double longitude;
+	@Column (length = 5000)
+	private String map;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDate;
@@ -67,15 +66,14 @@ public class Event {
 	public Event() {}
 
 	public Event(String name, Blob photo, String description, int maxCapacity, double price, String location,
-				 Double latitude, Double longitude, Date startDate, Date endDate, String additionalInfo) {
+				 String map, Date startDate, Date endDate, String additionalInfo) {
 		this.name = name;
 		this.photo = photo;
 		this.description = description;
 		this.maxCapacity = maxCapacity;
 		this.price = price;
 		this.location = location;
-		this.latitude = latitude;
-		this.longitude = longitude;
+		this.map = map;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.additionalInfo = additionalInfo;

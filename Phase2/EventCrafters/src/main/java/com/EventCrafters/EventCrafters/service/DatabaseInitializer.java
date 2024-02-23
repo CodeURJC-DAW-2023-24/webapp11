@@ -57,13 +57,12 @@ public class DatabaseInitializer {
 		LocalDate endDate = LocalDate.of(2022, 1, 1);
 		Date start = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		Date end = Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		Event event = new Event("Evento 1", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
-		Event event2 = new Event("Evento 2", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
-		Event event3 = new Event("Evento 3", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
-		Event event4 = new Event("Evento 4", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
-		Event event5 = new Event("Evento 5", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
-		Event event6 = new Event("Evento 6", photoBlob, "prueba", 100, 0.00, "Mostoles", 145.234,345678.34, start, end, "blabla");
-
+		Event event = new Event("Evento 1", photoBlob, "prueba", 100, 0.00, "Leganes", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
+		Event event2 = new Event("Evento 2", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
+		Event event3 = new Event("Evento 3", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
+		Event event4 = new Event("Evento 4", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
+		Event event5 = new Event("Evento 5", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
+		Event event6 = new Event("Evento 6", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
 
 		User user = new User("Juan Usuario","user","user@gmail.com", null, passwordEncoder.encode("pass"), "USER");
 		userRepository.save(user);
@@ -76,15 +75,18 @@ public class DatabaseInitializer {
 		categoryRepository.save(campo);
 		Category educación = new Category("Educación", "#28a745");
 		categoryRepository.save(educación);
-		event.setCategory(deporte); // Asocia el evento con la categoría "campo"
+		event.setCategory(deporte);
 		event2.setCategory(campo);
 		event3.setCategory(educación);
 		event4.setCategory(educación);
 		event5.setCategory(educación);
 		event6.setCategory(educación);
-		//event.setCreator(user);
-		//event2.setCreator(user);
-		//event3.setCreator(user);
+		event.setCreator(user);
+		event2.setCreator(user);
+		event3.setCreator(user);
+		event4.setCreator(user);
+		event5.setCreator(user);
+		event6.setCreator(user);
 		eventRepository.save(event);
 		eventRepository.save(event2);
 		eventRepository.save(event3);

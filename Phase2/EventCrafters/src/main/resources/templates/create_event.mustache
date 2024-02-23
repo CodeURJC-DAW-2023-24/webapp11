@@ -83,12 +83,14 @@
                                 <input name="location" type="text" class="form-control" id="event-address" placeholder="Dirección"
                                     required>
                             </div>
-                            <!-- coordinates -->
+                            <!-- map -->
                             <div class="form-group">
-                                <label for="event-coordinates">Introduce las coordenadas donde se celebrará el evento</label>
-                                <input name="coordinates" type="text" class="form-control" id="event-coordinates" placeholder="Coordenadas"
-                                       pattern="^\-?\d+(\.\d+)?,\s*\-?\d+(\.\d+)?$" title="Debe ser un formato válido de coordenadas: latitud,longitud"
+                                <label for="event-map">Introduce el mapa del evento</label>
+                                <input name="map" type="text" class="form-control" id="event-map" placeholder="Mapa"
                                 required>
+                                <small id="mapHelp" class="form-text text-muted">
+                                    Ve a Google Maps, busca tu ubicación, haz clic en "Compartir" y luego en "Insertar un mapa" para obtener el código HTML del mapa. Copia y pega ese código aquí.
+                                </small>
                             </div>
                             <!--Extra info-->
                             <div class="form-group">

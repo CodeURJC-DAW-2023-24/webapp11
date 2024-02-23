@@ -19,11 +19,6 @@ document.getElementById('event-end').addEventListener('change', function() {
     }
 });
 
-document.getElementById('event-coordinates').addEventListener('input', function() {
-    var pattern = new RegExp(/^\-?\d+(\.\d+)?,\s*\-?\d+(\.\d+)?$/);
-    if (!pattern.test(this.value)) {
-        this.classList.add('is-invalid');
-    } else {
-        this.classList.remove('is-invalid');
-    }
-});
+
+
+
