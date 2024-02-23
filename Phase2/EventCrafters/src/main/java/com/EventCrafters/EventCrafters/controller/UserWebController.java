@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.SecureRandom;
 import java.util.*;
 import java.util.List;
 import java.util.Optional;
@@ -121,25 +120,24 @@ public class UserWebController {
             TokenService tokenService = new TokenService(userOptional.get());
 			tokens.put(userOptional.get().getUsername(), tokenService);
 			String link = "https://localhost:8443/recoverPassword/" + userOptional.get().getUsername() +"/randomToken?token=" + tokenService.getToken();
-			// sendEmail(link)
-			System.out.println(link);
+			sendEmail(link);
         }
 		return "emailSent";
 	}
+
 	@GetMapping("/recoverPassword/{user}/randomToken")
 	public String recoverPasswordWithToken(Model model, @PathVariable String user, @RequestParam("token") String token) {
 		Optional<User> userOptional = userService.findByUserName(user);
 		if (userOptional.isPresent()) {
 			TokenService tokenService = tokens.get(userOptional.get().getUsername());
 			if (!tokenService.isValid() || !tokenService.getToken().equals(token)){
-				model.addAttribute("valid", false);
-				return "recoverPassword";
+				return "invalidLink";
 			}
+			model.addAttribute("recover", true);
 			model.addAttribute("token", tokenService.getToken());
 			model.addAttribute("username",userOptional.get().getUsername());
 		}
-		model.addAttribute("valid", true);
-		return "recoverPassword";
+		return "change_password";
 	}
 
 	@PostMapping("/recoverPassword/{user}/randomToken")
@@ -148,10 +146,11 @@ public class UserWebController {
 		Optional<User> userOptional = userService.findByUserName(user);
 		if (userOptional.isPresent()) {
 			TokenService tokenService = tokens.get(userOptional.get().getUsername());
-			if (!tokenService.isValid() || !tokenService.getToken().equals(token)){
+			if (!tokenService.isValid() || !token.equals(tokenService.getToken())){
 				model.addAttribute("valid", false);
-				return "recoverPassword";
+				return "invalidLink";
 			}
+			tokens.remove(user);
 			userOptional.get().setEncodedPassword(passwordEncoder.encode(password));
 			//tell the user the operation was successful
 			userService.save(userOptional.get());
@@ -193,6 +192,12 @@ public class UserWebController {
 		}
 
 		return "error";
+	}
+
+
+	private void sendEmail(String link){
+		//this should send an email
+		System.out.println(link);
 	}
 
 

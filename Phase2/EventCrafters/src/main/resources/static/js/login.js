@@ -3,6 +3,9 @@ function recoverPassword(event) {
 
     // Prompt the user for input
     var userInput = window.prompt('Please enter your username');
+    if (userInput===null){
+        return;
+    }
 
     // Check if the user exists
     userExists(userInput).then(exists => {
