@@ -44,6 +44,7 @@ function sendProfileImage(){
             alert("Error: " + error.message);
         });
     }
+    showReloadWarning();
 }
 function isValidInput(pfp){
     if (pfp.files.length > 0) {
@@ -115,6 +116,11 @@ document.getElementById('load-more-created-events').addEventListener('click', ()
 document.addEventListener('DOMContentLoaded', () => {
     Ajax(spinnerC,chartsContainer,"/chart-page")
 });
+
+function showReloadWarning() {
+    alert("Por favor, recarga la página para ver tu nueva foto de perfil.");
+}
+
 
 
 

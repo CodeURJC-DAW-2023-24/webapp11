@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Event Crafters - Perfil</title>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/profile.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <link rel="icon" href="../img/logo.jpeg" type="image/png">
     <!-- Links to Bootstrap's stylesheet for styling and layout -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -101,16 +103,20 @@
                     <p><strong>Nombre:</strong> {{user.name}}</p>
                     <p><strong>Correo:</strong> {{user.email}}</p>
                     <p><strong>Nick:</strong> {{user.username}}</p>
+
                 </div>
+
+
             </div>
             <!-- Buttons for account management -->
             <div class="container text-center">
                 <div class="row justify-content-center">
                     <div class="col col-lg-2 container-delete-account">
-                        <input type="file" accept="image/png, image/jpeg" id="pfp" onchange="sendProfileImage()" class="btn btn-primary" placeholder="Editar foto de perfil"></input>
-                        <form action="delete-account" method="post">
-                            <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
-                        </form>
+                        <label for="pfp" class="custom-file-upload" >
+                            <i class="fas fa-camera"></i>
+                        </label>
+
+                        <input type="file" accept="image/png, image/jpeg, image/jpg" id="pfp" onchange="sendProfileImage()" class="btn btn-primary" placeholder="Editar foto de perfil">
                     </div>
                     <div class="col text-center btn-edit-account">
                         <button id="edit-profile-btn" class="btn btn-primary" >Editar Perfil</button>
@@ -134,6 +140,11 @@
                                 <button type="submit" onclick ="return cancel()" class="btn btn-danger" >Cancelar</button>
                             </form>
                         </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <form action="delete-account" method="post">
+                            <button type="submit" class="btn  btn-sm btn-danger btn-block">Eliminar Cuenta</button>
+                        </form>
                     </div>
                 </div>
             </div>
