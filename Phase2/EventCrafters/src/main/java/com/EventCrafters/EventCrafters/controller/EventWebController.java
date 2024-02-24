@@ -425,6 +425,26 @@ public class EventWebController {
         return "redirect:/event/" + id;
     }
 
+    @GetMapping("/moreEventsProfile")
+    public String moreEventsProfile(Model model){
+        List<Event> allEvents = eventService.getAllEvents();
+        int EventRefreshSize = eventService.getEventsRefreshSize();
+        int nextEventIndex = eventService.getNextEventIndex();
+        int remainingEvents = allEvents.size() - nextEventIndex;
+
+        if (remainingEvents > 0) {
+            int endIndex = nextEventIndex + Math.min(EventRefreshSize, remainingEvents);
+            model.addAttribute("events", allEvents.subList(nextEventIndex, endIndex));
+            eventService.setNextEventIndex(endIndex);
+            if (allEvents.size() == endIndex){
+                model.addAttribute("lastEvents", "");
+            }
+            return "profileEvents";
+        }
+
+        return "empty";
+    }
+
 
 
 

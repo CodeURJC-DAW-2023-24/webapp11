@@ -4,6 +4,7 @@ import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.service.CategoryService;
+import com.EventCrafters.EventCrafters.service.EventService;
 import com.EventCrafters.EventCrafters.service.TokenService;
 import com.EventCrafters.EventCrafters.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,8 @@ public class UserWebController {
 	private CategoryService categoryService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private EventService eventService;
 	private Map<String, TokenService> tokens = new HashMap<>();
 
 	@RequestMapping("/login")
@@ -62,10 +65,16 @@ public class UserWebController {
 	public String newReview(Model model, HttpServletRequest request) {
 		if (request.isUserInRole("USER")) {
 			model.addAttribute("showWhenAdmin", "none");
+			model.addAttribute("showWhenUser", "block");
+			model.addAttribute("eventsText", "Mis Eventos Creados");
 		} else {
 			List<Category> c = categoryService.findAjax();
+			List<Event> e = eventService.findAjax();
 			model.addAttribute("category",c);
+			model.addAttribute("events",e);
 			model.addAttribute("showWhenAdmin","block");
+			model.addAttribute("showWhenUser", "none");
+			model.addAttribute("eventsText", "Todos los eventos");
 		}
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUsername = authentication.getName();

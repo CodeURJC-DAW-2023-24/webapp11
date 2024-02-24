@@ -158,7 +158,7 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center" id="spinner-profile" style="display: none">
+            <div class="text-center" id="spinner-profile-tags" style="display: none">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
@@ -174,46 +174,24 @@
         </div>
         <!-- User-created events section -->
         <div class="user-events">
-            <h3 class="created">Mis Eventos Creados</h3>
-            <div class="row flex-wrap">
-                <div class="col-md-4 mb-4">
-                    <div class="activity d-flex flex-row align-items-center">
-                        <div class="categories-container info event-container-tag-div">
-                            <span class="event-category etiqueta-campo">Campo</span>
-                        </div>
-                        <h5 class="info event-container-text">Excursión al Valle del Jerte</h5>
-                        <button class="btn btn-block event-container-btn">Ver Detalles</button>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="activity d-flex flex-row align-items-center">
-                        <div class="categories-container info event-container-tag-div">
-                            <span class="event-category etiqueta-deporte">Deporte</span>
-                        </div>
-                        <h5 class="info event-container-text">Competición de batminton</h5>
-                        <button class="btn btn-block event-container-btn">Ver Detalles</button>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="activity d-flex flex-row align-items-center">
-                        <div class="categories-container info event-container-tag-div">
-                            <span class="event-category etiqueta-educacion">Educación</span>
-                        </div>
-                        <h5 class="info event-container-text">JobDays ETSII</h5>
-                        <button class="btn btn-block event-container-btn">Ver Detalles</button>
-                    </div>
-                </div>
+            <h3 class="created">{{eventsText}}</h3>
+            <div class="row flex-wrap" id="created-events-container">
 
-                <div class="col-md-4 mb-4">
-                    <div class="activity d-flex flex-row align-items-center">
-                        <div class="categories-container info  event-container-tag-div">
-                            <span class="event-category etiqueta-deporte">Deporte</span>
+                {{#events}}
+                    <div class="col-md-4 mb-4">
+                        <div class="activity d-flex flex-row align-items-center">
+                            <div class="categories-container info event-container-tag-div">
+                                <span class="event-category" style="background-color: {{category.color}};">{{category.name}}</span>
+                            </div>
+                            <h5 class="info event-container-text">{{name}}</h5>
+                            <form action="/event/{{id}}" method="GET">
+                                <button class="btn btn-primary" type="submit">Ver Detalles</button>
+                            </form>
                         </div>
-                        <h5 class="info event-container-text">Competición de batminton</h5>
-                        <button class="btn btn-block event-container-btn">Ver Detalles</button>
                     </div>
-                </div>
-                <div class="col-md-4 mb-4 last">
+                {{/events}}
+
+                <div class="col-md-4 mb-4 last" style="display: {{showWhenUser}}">
                     <form action="/create_event" method="get">
                         <div class="activity d-flex flex-row align-items-center" style="justify-content: center" id="open-button">
                             <div class="categories-container info">
@@ -225,16 +203,21 @@
                     </form>
                 </div>
             </div>
+            <div class="text-center" id="spinner-profile-created-events" style="display: none">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
         </div>
-        <div class="container text-center mt-4">
+        <div class="container text-center mt-4" id="more-created-events-btn-div">
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <button class="btn btn-primary">Cargar más eventos</button>
+                    <button class="btn btn-primary" id="load-more-created-events">Cargar más eventos</button>
                 </div>
             </div>
         </div>
         <!-- User-created events that have already ended section -->
-        <div class="user-events">
+        <div class="user-events" style="display: {{showWhenUser}}">
             <h3 class="next">Eventos pasados que he creado </h3>
             <div class="row flex-wrap">
                 <div class="col-md-4 mb-4">
@@ -257,7 +240,7 @@
                 </div>
             </div>
         </div>
-        <div class="container text-center mt-4">
+        <div class="container text-center mt-4" style="display: {{showWhenUser}}">
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <button class="btn btn-primary">Cargar más eventos</button>
@@ -265,7 +248,7 @@
             </div>
         </div>
         <!-- Events user has signed up for -->
-        <div class="user-events">
+        <div class="user-events" style="display: {{showWhenUser}}">
             <h3 class="next">Eventos a los que me he apuntado
             </h3>
             <div class="row flex-wrap">
@@ -298,7 +281,7 @@
                 </div>
             </div>
         </div>
-        <div class="container text-center mt-4">
+        <div class="container text-center mt-4" style="display: {{showWhenUser}}">
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <button class="btn btn-primary">Cargar más eventos</button>
@@ -306,7 +289,7 @@
             </div>
         </div>
         <!-- Past events user has signed up for -->
-        <div class="user-events">
+        <div class="user-events" style="display: {{showWhenUser}}">
             <h3 class="next">Eventos pasados a los que me he apuntado
             </h3>
             <div class="row flex-wrap">
@@ -340,7 +323,7 @@
                 </div>
             </div>
         </div>
-        <div class="container text-center mt-4">
+        <div class="container text-center mt-4" style="display: {{showWhenUser}}">
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <button class="btn btn-primary">Cargar más eventos</button>

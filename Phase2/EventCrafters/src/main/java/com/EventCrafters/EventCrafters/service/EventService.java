@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +16,9 @@ import com.EventCrafters.EventCrafters.repository.EventRepository;
 @Service
 public class EventService {
 
-	private int nextEventIndex = 3;
+
+	private List<Event> allEvents;
+	private int nextEventIndex;
 	private int eventsRefreshSize = 3;
 
 	@Autowired
@@ -57,4 +60,28 @@ public class EventService {
 		return new AbstractMap.SimpleEntry<List<Event>, Integer>(additionalEvents, nextEventIndex);
 	}
 
+	public List<Event> findAjax(){
+		this.allEvents = repository.findAll();
+		this.nextEventIndex = this.eventsRefreshSize;
+		if (allEvents.isEmpty()){
+			return new ArrayList<>();
+		}
+		return allEvents.subList(0,this.eventsRefreshSize);
+	}
+
+	public int getNextEventIndex() {
+		return nextEventIndex;
+	}
+
+	public int getEventsRefreshSize() {
+		return eventsRefreshSize;
+	}
+
+	public List<Event> getAllEvents() {
+		return allEvents;
+	}
+
+	public void setNextEventIndex(int nextEventIndex) {
+		this.nextEventIndex = nextEventIndex;
+	}
 }

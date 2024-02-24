@@ -4,8 +4,7 @@ const windowBackground = document.getElementById('window-background'),
     tagColorin = document.getElementById('tag-color-in'),
     tagNamein = document.getElementById('tag-name-in'),
     tagPopup = document.getElementById('tag-pop-up'),
-    deleteTagBtn = document.getElementById("delete-tag-button"),
-    spinnerP = document.getElementById('spinner-profile');
+    deleteTagBtn = document.getElementById("delete-tag-button");
 
 // to transition to rgb from hex
 function rgbToHex(r,g,b){
@@ -72,14 +71,5 @@ closeButton.addEventListener('click', () => closeWindow())
 // if you click outside the popup it closes
 window.addEventListener('click', e => e.target === windowBackground && closeWindow())
 
-// AJAX (fetch)
-document.getElementById('load-more-tags').addEventListener('click', function() {
-    spinnerP.style.display = "block"
-    fetch(`/categories`)
-        .then(response => response.text())
-        .then(html => {
-            spinnerP.style.display = "none"
-            document.getElementById('categories-container').insertAdjacentHTML('beforeend', html);
-        });
-});
+
 

@@ -57,10 +57,10 @@ public class CategoryWebController {
 		List<Category> allCategories = categoryService.getAllCategories();
 		int categoryRefreshSize = categoryService.getCategoryRefreshSize();
 		int nextCategoryIndex = categoryService.getNextCategoryIndex();
-		int remainingEvents = allCategories.size() - nextCategoryIndex;
+		int remainingCategories = allCategories.size() - nextCategoryIndex;
 
-		if (remainingEvents > 0) {
-			int endIndex = nextCategoryIndex + Math.min(categoryRefreshSize, remainingEvents);
+		if (remainingCategories > 0) {
+			int endIndex = nextCategoryIndex + Math.min(categoryRefreshSize, remainingCategories);
 			model.addAttribute("category", allCategories.subList(nextCategoryIndex, endIndex));
 			categoryService.setNextCategoryIndex(endIndex);
 			if (allCategories.size() == endIndex){

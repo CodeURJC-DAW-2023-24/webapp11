@@ -1,6 +1,10 @@
 const deleteAccountBtn = document.getElementById('delete-account-btn'),
     categoriesContainer = document.getElementById('categories-container'),
-    moreTagsBtnDiv = document.getElementById('more-tags-btn-div');
+    createdEventsContainer = document.getElementById('created-events-container'),
+    moreTagsBtnDiv = document.getElementById('more-tags-btn-div'),
+    moreCreatedEventsBtnDiv = document.getElementById('more-created-events-btn-div'),
+    spinnerPT = document.getElementById('spinner-profile-tags'),
+    spinnerPCE = document.getElementById('spinner-profile-created-events');
 
 
 
@@ -81,5 +85,30 @@ const repeatableObserver = (btn) => {
 // this is so that it check when child nodes are added
 let tagsObserver = repeatableObserver(moreTagsBtnDiv);
 tagsObserver.observe(categoriesContainer, {childList: true});
+
+let createdEventsObserver = repeatableObserver(moreCreatedEventsBtnDiv);
+createdEventsObserver.observe(createdEventsContainer, {childList: true});
+
+
+
+// AJAX (fetch)
+const Ajax = (spinner, container, url) =>{
+    spinner.style.display = "block"
+    fetch(`${url}`)
+        .then(response => response.text())
+        .then(html => {
+            spinner.style.display = "none"
+            container.insertAdjacentHTML('beforeend', html);
+        });
+}
+
+document.getElementById('load-more-tags').addEventListener('click', () => {
+    Ajax(spinnerPT,document.getElementById('categories-container'), "/categories")
+})
+
+document.getElementById('load-more-created-events').addEventListener('click', () => {
+    Ajax(spinnerPCE, document.getElementById('created-events-container'), "/moreEventsProfile")
+})
+
 
 
