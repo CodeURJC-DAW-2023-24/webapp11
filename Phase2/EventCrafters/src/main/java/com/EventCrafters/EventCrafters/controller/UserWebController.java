@@ -244,12 +244,10 @@ public class UserWebController {
 		return ResponseEntity.status(500).body("Username not found");
 	}
 
-	@GetMapping("/profile/img")
+	@GetMapping("/profile/img/{username}")
 	@ResponseBody
-	public byte[] showPFP() throws SQLException, IOException {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentUsername = authentication.getName();
-		Optional<User> userOptional = userService.findByUserName(currentUsername);
+	public byte[] showPFP(@PathVariable String username) throws SQLException, IOException {
+		Optional<User> userOptional = userService.findByUserName(username);
 
 		if (userOptional.isPresent()) {
 			Blob photoBlob = userOptional.get().getPhoto();
