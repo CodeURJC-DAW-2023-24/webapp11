@@ -104,8 +104,9 @@
             <div class="container text-center">
                 <div class="row justify-content-center">
                     <div class="col col-lg-2 container-delete-account">
+                        <input type="file" accept="image/png, image/jpeg" id="pfp" onchange="sendProfileImage()" class="btn btn-primary" placeholder="Editar foto de perfil"></input>
                         <form action="delete-account" method="post">
-                        <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+                            <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
                         </form>
                     </div>
                     <div class="col text-center btn-edit-account">
@@ -350,7 +351,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!-- Custom JavaScript file -->
-<script src="../js/perfil.js"></script>
+<script src="../js/profile.js"></script>
 <script src="../js/categories.js"></script>
 <script src="../js/editProfile.js"></script>
 
