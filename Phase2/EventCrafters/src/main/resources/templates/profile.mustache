@@ -82,7 +82,7 @@
 </div>
 
 <!-- Main content area -->
-<div class="container mt-4">
+<div class="container mt-4" id="main-container-profile">
 
     <!-- Profile section -->
     <div class="profile-container">
@@ -135,7 +135,7 @@
             </div>
         </div>
         <!-- Tags section -->
-        <div class="user-events"  style="display:{{show}}">
+        <div class="user-events"  style="display:{{showWhenAdmin}}">
             <h3 class="created">Tags</h3>
             <div class="row flex-wrap" id="categories-container">
                 {{#category}}
@@ -149,7 +149,6 @@
                     </div>
                 {{/category}}
 
-
                 <div class="col-md-4 mb-4 last">
                     <div class="activity d-flex flex-row align-items-center" style="justify-content: center" id="open-button">
                         <div class="categories-container info" id="open-button">
@@ -158,11 +157,17 @@
                     </div>
                 </div>
             </div>
+            <div class="text-center" id="spinner-profile" style="display: none">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
         </div>
-        <div class="container text-center mt-4" style="display: {{show}}">
+
+        <div class="container text-center mt-4" style="display: {{showWhenAdmin}}" id="more-tags-btn-div">
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <button class="btn btn-primary" id="load-more">Cargar más tags</button>
+                    <button class="btn btn-primary" id="load-more-tags">Cargar más tags</button>
                 </div>
             </div>
         </div>
@@ -350,7 +355,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!-- Custom JavaScript file -->
-<script src="../js/perfil.js"></script>
+<script src="../js/profile.js"></script>
 <script src="../js/categories.js"></script>
 <script src="../js/editProfile.js"></script>
 

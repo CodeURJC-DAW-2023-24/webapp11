@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -46,5 +47,17 @@ public class CategoryWebController {
 	public String deleteCategory(@PathVariable Long id){
 		categoryService.delete(id);
 		return "redirect:/profile";
+	}
+
+	@GetMapping("categories")
+	public String loadCategories(Model model, @RequestParam("page") int page) {
+		int pageSize = 1; // Define cuántos elementos quieres por página
+		List<Category> c =categoryService.findAjax(page,pageSize);
+		if (c.isEmpty()){
+			return "empty";
+		} else {
+			model.addAttribute("category", c);
+		}
+		return "categories";
 	}
 }

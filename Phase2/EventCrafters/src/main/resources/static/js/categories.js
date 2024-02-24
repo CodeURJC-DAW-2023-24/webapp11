@@ -3,12 +3,13 @@ const windowBackground = document.getElementById('window-background'),
     closeButton = document.getElementById('close-button'),
     tagColorin = document.getElementById('tag-color-in'),
     tagNamein = document.getElementById('tag-name-in'),
-    tagPopup = document.getElementById('tag-pop-up')
-    deleteTagBtn = document.getElementById("delete-tag-button");
+    tagPopup = document.getElementById('tag-pop-up'),
+    deleteTagBtn = document.getElementById("delete-tag-button"),
+    spinnerP = document.getElementById('spinner-profile');
 
 let currentpage = 0;
 
-// to trasition to rgb from hex
+// to transition to rgb from hex
 function rgbToHex(r,g,b){
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
@@ -74,15 +75,17 @@ closeButton.addEventListener('click', () => closeWindow())
 window.addEventListener('click', e => e.target === windowBackground && closeWindow())
 
 // AJAX (fetch)
-document.getElementById('load-more').addEventListener('click', function() {
+document.getElementById('load-more-tags').addEventListener('click', function() {
     currentpage++;
     loadCategories(currentpage);
 });
 
 function loadCategories(page) {
+    spinnerP.style.display = "block"
     fetch(`/categories?page=${page}`)
         .then(response => response.text())
         .then(html => {
+            spinnerP.style.display = "none"
             document.getElementById('categories-container').insertAdjacentHTML('beforeend', html);
         });
 

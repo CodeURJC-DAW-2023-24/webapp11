@@ -51,11 +51,11 @@ public class UserWebController {
 	@GetMapping("/profile")
 	public String newReview(Model model, HttpServletRequest request) {
 		if (request.isUserInRole("USER")) {
-			model.addAttribute("show", "none");
+			model.addAttribute("showWhenAdmin", "none");
 		} else {
 			List<Category> c = categoryService.findAjax(0,1);
 			model.addAttribute("category",c);
-			model.addAttribute("show","block");
+			model.addAttribute("showWhenAdmin","block");
 		}
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUsername = authentication.getName();
@@ -64,15 +64,6 @@ public class UserWebController {
 			model.addAttribute("user", user.get());
 		}
 		return "profile";
-	}
-
-
-	@GetMapping("categories")
-	public String loadCategories(Model model, @RequestParam("page") int page) {
-		int pageSize = 1; // Define cuántos elementos quieres por página
-		List<Category> c =categoryService.findAjax(page,pageSize);
-		model.addAttribute("category", c);
-		return "categories";
 	}
 
 	@GetMapping("/register")
