@@ -3,7 +3,6 @@ package com.EventCrafters.EventCrafters.service;
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,6 +32,8 @@ public class CategoryService {
 	public List<Category> findAll() {
 		return repository.findAll();
 	}
+
+	public List<String> findAllNames() {return repository.findAllNames();}
 
 	public List<Category> findAjax(){
 		this.allCategories = repository.findAll();
@@ -65,5 +66,23 @@ public class CategoryService {
 
 	public void setNextCategoryIndex(int nextCategoryIndex) {
 		this.nextCategoryIndex = nextCategoryIndex;
+	}
+
+
+
+	public List<Integer> categoriesNumbers(){
+		List<Integer> count = repository.findAllCategoriesUsedCount();
+		List<Integer> allCategoriesUsedId = repository.findAllCategoriesUsedId();
+		List<Integer> finalList= new ArrayList<>();
+		int size = count.size();
+		int i;
+		for (i = 0; i<this.findAll().size();i++){
+			finalList.add(0);
+		}
+		for (i = 0; i<size;i++) {
+			finalList.set(allCategoriesUsedId.get(i) - 1,count.get(i));
+		}
+
+		return finalList;
 	}
 }

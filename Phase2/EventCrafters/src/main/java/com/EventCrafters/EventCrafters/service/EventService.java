@@ -84,4 +84,5 @@ public class EventService {
 	public void setNextEventIndex(int nextEventIndex) {
 		this.nextEventIndex = nextEventIndex;
 	}
+
 }

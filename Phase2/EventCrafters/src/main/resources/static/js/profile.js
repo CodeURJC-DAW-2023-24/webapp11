@@ -1,9 +1,11 @@
 const deleteAccountBtn = document.getElementById('delete-account-btn'),
     categoriesContainer = document.getElementById('categories-container'),
+    chartsContainer = document.getElementById('charts-container'),
     createdEventsContainer = document.getElementById('created-events-container'),
     moreTagsBtnDiv = document.getElementById('more-tags-btn-div'),
     moreCreatedEventsBtnDiv = document.getElementById('more-created-events-btn-div'),
     spinnerPT = document.getElementById('spinner-profile-tags'),
+    spinnerC = document.getElementById('spinner-charts'),
     spinnerPCE = document.getElementById('spinner-profile-created-events');
 
 
@@ -103,12 +105,16 @@ const Ajax = (spinner, container, url) =>{
 }
 
 document.getElementById('load-more-tags').addEventListener('click', () => {
-    Ajax(spinnerPT,document.getElementById('categories-container'), "/categories")
+    Ajax(spinnerPT,categoriesContainer, "/categories")
 })
 
 document.getElementById('load-more-created-events').addEventListener('click', () => {
-    Ajax(spinnerPCE, document.getElementById('created-events-container'), "/moreEventsProfile")
+    Ajax(spinnerPCE, createdEventsContainer, "/moreEventsProfile")
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+    Ajax(spinnerC,chartsContainer,"/chart-page")
+});
 
 
 

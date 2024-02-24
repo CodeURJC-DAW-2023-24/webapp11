@@ -9,6 +9,9 @@
     <link rel="icon" href="../img/logo.jpeg" type="image/png">
     <!-- Links to Bootstrap's stylesheet for styling and layout -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!--library for chart creation-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
@@ -216,6 +219,14 @@
                 </div>
             </div>
         </div>
+        <!--Charts-->
+        <div id="charts-container" style="display: {{showWhenAdmin}}">
+            <div class="text-center" id="spinner-charts" style="display: none">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
         <!-- User-created events that have already ended section -->
         <div class="user-events" style="display: {{showWhenUser}}">
             <h3 class="next">Eventos pasados que he creado </h3>
@@ -342,6 +353,7 @@
 <script src="../js/profile.js"></script>
 <script src="../js/categories.js"></script>
 <script src="../js/editProfile.js"></script>
+<script src="../js/charts.js"></script>
 
 </body>
 

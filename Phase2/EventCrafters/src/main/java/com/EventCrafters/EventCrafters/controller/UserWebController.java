@@ -7,6 +7,8 @@ import com.EventCrafters.EventCrafters.service.CategoryService;
 import com.EventCrafters.EventCrafters.service.EventService;
 import com.EventCrafters.EventCrafters.service.TokenService;
 import com.EventCrafters.EventCrafters.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,6 +45,13 @@ public class UserWebController {
 	private UserService userService;
 	@Autowired
 	private EventService eventService;
+
+	private ObjectMapper objectMapper;
+
+	@Autowired
+	private void ChartController(ObjectMapper objectMapper) {
+		this.objectMapper = objectMapper;
+	}
 	private Map<String, TokenService> tokens = new HashMap<>();
 
 	@RequestMapping("/login")
@@ -268,6 +277,18 @@ public class UserWebController {
 	private void sendEmail(String link){
 		//this should send an email
 		System.out.println(link);
+	}
+
+	@GetMapping("/chart-page")
+	public String chart(Model model) throws JsonProcessingException {
+
+		List<String> labels = categoryService.findAllNames();
+		List<Integer> data = categoryService.categoriesNumbers();
+
+		model.addAttribute("labels", objectMapper.writeValueAsString(labels));
+		model.addAttribute("data", objectMapper.writeValueAsString(data));
+
+		return "chart-page";
 	}
 
 
