@@ -67,6 +67,8 @@ public class EventService {
 		this.nextEventIndex = this.eventsRefreshSize;
 		if (allEvents.isEmpty()){
 			return new ArrayList<>();
+		}else if (allEvents.size() <= nextEventIndex){
+			return allEvents.subList(0,allEvents.size());
 		}
 		return allEvents.subList(0,this.eventsRefreshSize);
 	}
