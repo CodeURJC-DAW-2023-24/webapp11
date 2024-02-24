@@ -124,3 +124,26 @@ function showReloadWarning() {
 
 
 
+function warnBan() {
+    alert("Procede a banear usuario.");
+}
+
+// Obtener referencia al botón de banear
+const banUserBtn = document.getElementById('ban-user-btn');
+
+// Obtener referencia al formulario de banear
+const banUserPopup = document.getElementById('ban-user-popup');
+
+
+banUserBtn.addEventListener('click', () => {
+    if (banUserPopup.style.display === 'block') {
+        banUserPopup.style.display = 'none';
+    } else {
+        banUserPopup.style.display = 'block';
+    }
+});
+
+
+
+
+

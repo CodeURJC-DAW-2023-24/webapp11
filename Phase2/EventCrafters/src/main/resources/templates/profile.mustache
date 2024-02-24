@@ -118,7 +118,7 @@
 
                         <input type="file" accept="image/png, image/jpeg, image/jpg" id="pfp" onchange="sendProfileImage()" class="btn btn-primary" placeholder="Editar foto de perfil">
                     </div>
-                    <div class="col text-center btn-edit-account">
+                    <div class="col text-center btn-edit-account" style="display: {{showWhenUser}}">
                         <button id="edit-profile-btn" class="btn btn-primary" >Editar Perfil</button>
 
                         <!-- Hidden div for the pop-up -->
@@ -141,11 +141,28 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-2">
+
+                    <div class="col text-center profile" style="display: {{showWhenAdmin}}">
+                        <button id="ban-user-btn" class="btn btn-warning">Banear</button>
+
+                        <!-- Hidden div for the ban pop-up -->
+                        <div id="ban-user-popup" style="display: none;">
+                            <form id="ban-user-form" action="/ban" method="post">
+                                <div class="form-group">
+                                    <label for="username">Nombre de Usuario:</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <button type="submit" onclick ="return warnBan()" class="btn btn-primary" >Banear Usuario</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Option visible only for regular users (to delete account) -->
+                    <div class="col-lg-2" style="display:{{showWhenUser}}">
                         <form action="delete-account" method="post">
-                            <button type="submit" class="btn  btn-sm btn-danger btn-block">Eliminar Cuenta</button>
+                            <button type="submit" class="btn btn-sm btn-danger btn-block">Eliminar Cuenta</button>
                         </form>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

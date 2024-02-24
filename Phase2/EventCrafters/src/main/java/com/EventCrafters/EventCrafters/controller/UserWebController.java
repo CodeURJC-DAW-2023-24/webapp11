@@ -291,5 +291,11 @@ public class UserWebController {
 		return "chart-page";
 	}
 
+	@PostMapping("/ban")
+	public String banUser(@RequestParam("username") String username) {
+		userService.banUserByUsername(username);
+		return "redirect:/profile";
+	}
+
 
 }

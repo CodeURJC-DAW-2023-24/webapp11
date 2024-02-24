@@ -51,6 +51,8 @@ public class User {
 	@Column(name = "role")
 	private List<String> roles;
 
+	private boolean banned;
+
 	public User() {
 	}
 
@@ -61,6 +63,7 @@ public class User {
 		this.encodedPassword = encodedPassword;
 		this.roles = List.of(roles);
 		this.photo = photo;
+		this.banned = false;
 	}
 
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)

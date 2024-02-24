@@ -430,3 +430,11 @@ becomes the last one in its parent element
     width: 30%;
     margin: 20px auto 20px;
 }
+#ban-user-form {
+    text-align: center;
+}
+
+#ban-user-form input[type="text"] {
+    width: 200px;
+    margin: 0 auto;
+}
