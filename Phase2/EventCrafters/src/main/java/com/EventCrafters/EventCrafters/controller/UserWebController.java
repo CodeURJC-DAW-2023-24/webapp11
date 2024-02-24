@@ -1,6 +1,7 @@
 package com.EventCrafters.EventCrafters.controller;
 
 import com.EventCrafters.EventCrafters.model.Category;
+import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.service.CategoryService;
 import com.EventCrafters.EventCrafters.service.TokenService;
@@ -22,6 +23,8 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.*;
@@ -221,6 +224,35 @@ public class UserWebController {
 			//SecurityContextHolder.clearContext();
 		}
 		return ResponseEntity.status(500).body("Username not found");
+	}
+
+	@GetMapping("/profile/img")
+	@ResponseBody
+	public byte[] showPFP() throws SQLException, IOException {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUsername = authentication.getName();
+		Optional<User> userOptional = userService.findByUserName(currentUsername);
+
+		if (userOptional.isPresent()) {
+			Blob photoBlob = userOptional.get().getPhoto();
+			if (photoBlob==null) {
+				Path imagePath = Path.of("src/main/resources/static/img/fotoPerfil.jpg");
+				try {
+					byte[] fileContent = Files.readAllBytes(imagePath);
+					photoBlob = new SerialBlob(fileContent);
+				} catch (IOException | SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+            int blobLength = (int) photoBlob.length();
+			byte[] blobAsBytes = photoBlob.getBytes(1, blobLength);
+			photoBlob.free();
+			return blobAsBytes;
+
+		} else {
+			return new byte[0];
+		}
 	}
 
 
