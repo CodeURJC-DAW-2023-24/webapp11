@@ -49,6 +49,9 @@ public class DatabaseInitializer {
 	@PostConstruct
 	public void init() throws IOException, SQLException {
 
+		Category defaultCategory = new Category("Sin Categoría", "#28a745");
+		categoryRepository.save(defaultCategory);
+
 		ClassPathResource imgFile = new ClassPathResource("static/img/fotoPerfil.jpg");
 		byte[] photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
 		Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photoBytes);

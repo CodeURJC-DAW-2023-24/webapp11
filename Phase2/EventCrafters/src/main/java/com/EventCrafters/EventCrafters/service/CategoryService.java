@@ -53,6 +53,15 @@ public class CategoryService {
 	}
 
 	public void delete(long id) {
+		Category defaultCategory = repository.findById(1L).orElseThrow(() -> new RuntimeException("Categoría predeterminada no encontrada"));
+
+		Category categoryToDelete = repository.findById(id).orElseThrow(() -> new RuntimeException("Categoría a eliminar no encontrada"));
+
+		categoryToDelete.getEventsInCategories().forEach(event -> {
+			event.setCategory(defaultCategory);
+			eventRepository.save(event);
+		});
+
 		repository.deleteById(id);
 	}
 
