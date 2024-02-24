@@ -398,23 +398,23 @@ becomes the last one in its parent element
     margin: 0px 0px;
 }
 
-/* Estilos personalizados para el botón de carga de imagen */
+
 .custom-file-upload {
     border: 2px solid #ccc;
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
-    background-color: #007bff; /* Color de fondo */
-    color: #fff; /* Color de texto */
-    border-radius: 5px; /* Bordes redondeados */
-    transition: background-color 0.3s ease; /* Transición suave */
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .custom-file-upload:hover {
-    background-color: #0056b3; /* Cambia el color de fondo al pasar el ratón */
+    background-color: #0056b3;
 }
 
-/* Ocultar el input de archivo */
+
 #pfp {
     display: none;
 }
@@ -424,4 +424,9 @@ becomes the last one in its parent element
     font-size: 0.875rem;
     line-height: 1.5;
     border-radius: 0.2rem;
+}
+
+#charts-container {
+    width: 30%;
+    margin: 20px auto 20px;
 }
