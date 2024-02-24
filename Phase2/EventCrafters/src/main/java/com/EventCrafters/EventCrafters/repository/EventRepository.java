@@ -4,7 +4,9 @@ import com.EventCrafters.EventCrafters.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.EventCrafters.EventCrafters.model.Event;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +20,21 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query("SELECT e FROM Event e WHERE e.name LIKE %?1%")
     List<Event> findBySearchBar(String input);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM review WHERE event_id = ?1", nativeQuery = true)
+    void deleteReviewsByEventId(Long eventId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM events_registered_users WHERE registered_in_events_id = ?1", nativeQuery = true)
+    void deleteEventUserByEventId(Long eventId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM events WHERE id = ?1", nativeQuery = true)
+    void deleteEventByIdCustom(Long eventId);
 
 
 }

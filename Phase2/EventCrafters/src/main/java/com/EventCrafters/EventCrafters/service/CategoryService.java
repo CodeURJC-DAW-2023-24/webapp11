@@ -2,6 +2,7 @@ package com.EventCrafters.EventCrafters.service;
 
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.repository.CategoryRepository;
+import com.EventCrafters.EventCrafters.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ public class CategoryService {
 
 	@Autowired
 	private CategoryRepository repository;
+
+	@Autowired
+	private EventRepository eventRepository;
 
 	private List<Category> allCategories;
 

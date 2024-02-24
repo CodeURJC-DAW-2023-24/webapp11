@@ -40,8 +40,10 @@ public class EventService {
 		repository.save(event);
 	}
 
-	public void delete(long id) {
-		repository.deleteById(id);
+	public void delete(Long eventId) {
+		repository.deleteReviewsByEventId(eventId);
+		repository.deleteEventUserByEventId(eventId);
+		repository.deleteEventByIdCustom(eventId);
 	}
 
 	public List<Event> findByCategory(long id) {return repository.findByCategory(id);}

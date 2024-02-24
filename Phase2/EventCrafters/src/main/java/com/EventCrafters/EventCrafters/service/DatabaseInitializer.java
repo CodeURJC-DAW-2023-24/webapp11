@@ -98,6 +98,12 @@ public class DatabaseInitializer {
 		review.setUser(user);
 		review.setEvent(event);
 		reviewRepository.save(review);
+
+		Review review2 = new Review(3, "genial");
+		review2.setUser(user);
+		review2.setEvent(event);
+		reviewRepository.save(review2);
+
 	}
 
 }
