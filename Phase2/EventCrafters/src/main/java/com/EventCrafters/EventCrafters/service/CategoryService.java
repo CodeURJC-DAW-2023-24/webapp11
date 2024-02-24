@@ -41,11 +41,13 @@ public class CategoryService {
 
 	public List<Category> findAjax(){
 		this.allCategories = repository.findAll();
-		this.nextCategoryIndex = this.categoryRefreshSize;
-		if (allCategories.isEmpty()){
+		this.nextCategoryIndex = this.categoryRefreshSize + 1;
+		if (allCategories.isEmpty() || allCategories.size() == 1){
 			return new ArrayList<>();
+		} else if (allCategories.size() <= nextCategoryIndex){
+			return allCategories.subList(1,allCategories.size());
 		}
-		return allCategories.subList(0,this.categoryRefreshSize);
+		return allCategories.subList(1,this.nextCategoryIndex);
 	}
 
 	public void save(Category category) {
