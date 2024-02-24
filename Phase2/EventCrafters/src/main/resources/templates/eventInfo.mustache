@@ -126,7 +126,7 @@
 
                 {{^logged}}
                     <div class="m-2">
-                        <p>Para registrarte en el evento, por favor<a href="/login" class="btn btn-link">inicia sesión</a>.</p>
+                        <p>Para registrarte en el evento, por favor <a href="/login">inicia sesión</a>.</p>
                     </div>
                 {{/logged}}
             </div>
@@ -176,7 +176,7 @@
                 <div class="row flex-wrap p-5">
                     <div class="row">
                         <div class="mx-auto">
-                            <img class="profile-photo" src="../img/fotoPerfil.jpg" alt="Foto de Perfil">
+                            <img class="profile-photo" src="/profile/img" alt="Foto de Perfil de {{event.creator.username}}">
                         </div>
                         <div>
                             <h4 class="fs-5 mt-4 px-4 pb-1">{{event.creator.name}} (registrado como
