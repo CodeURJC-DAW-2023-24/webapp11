@@ -7,8 +7,6 @@ const windowBackground = document.getElementById('window-background'),
     deleteTagBtn = document.getElementById("delete-tag-button"),
     spinnerP = document.getElementById('spinner-profile');
 
-let currentpage = 0;
-
 // to transition to rgb from hex
 function rgbToHex(r,g,b){
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
@@ -76,17 +74,12 @@ window.addEventListener('click', e => e.target === windowBackground && closeWind
 
 // AJAX (fetch)
 document.getElementById('load-more-tags').addEventListener('click', function() {
-    currentpage++;
-    loadCategories(currentpage);
-});
-
-function loadCategories(page) {
     spinnerP.style.display = "block"
-    fetch(`/categories?page=${page}`)
+    fetch(`/categories`)
         .then(response => response.text())
         .then(html => {
             spinnerP.style.display = "none"
             document.getElementById('categories-container').insertAdjacentHTML('beforeend', html);
         });
+});
 
-}

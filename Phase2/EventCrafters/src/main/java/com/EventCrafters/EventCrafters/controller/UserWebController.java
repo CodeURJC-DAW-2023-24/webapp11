@@ -63,7 +63,7 @@ public class UserWebController {
 		if (request.isUserInRole("USER")) {
 			model.addAttribute("showWhenAdmin", "none");
 		} else {
-			List<Category> c = categoryService.findAjax(0,1);
+			List<Category> c = categoryService.findAjax();
 			model.addAttribute("category",c);
 			model.addAttribute("showWhenAdmin","block");
 		}

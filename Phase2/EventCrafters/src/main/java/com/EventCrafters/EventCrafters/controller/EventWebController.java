@@ -87,8 +87,6 @@ public class EventWebController {
             int endIndex = nextEventIndex + Math.min(eventsRefreshSize, remainingEvents);
             model.addAttribute("additionalEvents", allEvents.subList(nextEventIndex, endIndex));
             nextEventIndex = endIndex;
-            System.out.println("hola");
-            System.out.println(nextEventIndex);
             if (allEvents.size() == nextEventIndex){
                 model.addAttribute("lastEvents", "");
             }

@@ -1,6 +1,7 @@
 package com.EventCrafters.EventCrafters.controller;
 
 import com.EventCrafters.EventCrafters.model.Category;
+import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.repository.CategoryRepository;
 import com.EventCrafters.EventCrafters.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class CategoryWebController {
 
 	@Autowired
 	private CategoryService categoryService;
+
+
 	@PostMapping("/newCategory")
 	public String newCategory(Model model, @RequestParam String name, @RequestParam String color)  {
 		categoryService.save(new Category(name, color));
@@ -50,14 +53,22 @@ public class CategoryWebController {
 	}
 
 	@GetMapping("categories")
-	public String loadCategories(Model model, @RequestParam("page") int page) {
-		int pageSize = 1; // Define cuántos elementos quieres por página
-		List<Category> c =categoryService.findAjax(page,pageSize);
-		if (c.isEmpty()){
-			return "empty";
-		} else {
-			model.addAttribute("category", c);
+	public String loadCategories(Model model) {
+		List<Category> allCategories = categoryService.getAllCategories();
+		int categoryRefreshSize = categoryService.getCategoryRefreshSize();
+		int nextCategoryIndex = categoryService.getNextCategoryIndex();
+		int remainingEvents = allCategories.size() - nextCategoryIndex;
+
+		if (remainingEvents > 0) {
+			int endIndex = nextCategoryIndex + Math.min(categoryRefreshSize, remainingEvents);
+			model.addAttribute("category", allCategories.subList(nextCategoryIndex, endIndex));
+			categoryService.setNextCategoryIndex(endIndex);
+			if (allCategories.size() == endIndex){
+				model.addAttribute("lastCategories", "");
+			}
+			return "categories";
 		}
-		return "categories";
+
+		return "empty";
 	}
 }
