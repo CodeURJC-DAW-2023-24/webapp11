@@ -118,12 +118,21 @@ public class UserWebController {
 
 	@PostMapping("/IsUsernameTaken")
 	public ResponseEntity<String> isUserNameTaken(@RequestBody String body ) {
-		Optional<User> byName = userService.findByUserName(body);
-		if (byName.isPresent()){
+		Optional<User> userOptional = userService.findByUserName(body);
+		if (userOptional.isPresent()){
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken");
 		} else {
 			return ResponseEntity.ok("Username is available");
 		}
+	}
+
+	@PostMapping("/IsUserBanned")
+	public ResponseEntity<Boolean> isUserBanned(@RequestBody String body ) {
+		Optional<User> userOptional = userService.findByUserName(body);
+		if (userOptional.isPresent()) {
+			return ResponseEntity.ok(userOptional.get().isBanned());
+		}
+		return ResponseEntity.ok(false);
 	}
 
 	@GetMapping("/changePassword/{nickname}")

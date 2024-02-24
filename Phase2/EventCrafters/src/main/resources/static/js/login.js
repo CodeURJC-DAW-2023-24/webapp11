@@ -24,13 +24,33 @@ function userExists(input){
         body : input,
     })
         .then(response => {
-            console.log("Inside the then.")
             if (!response.ok) {
                 //username exists
                 return true;
             } else {
                 //username does not exist
                 return false;
+            }
+        })
+}
+
+function checkUserBanned(){
+    var username = document.getElementById("username").value;
+    if (username===""){
+        document.getElementById("submit").onclick = null;
+        return;
+    }
+    fetch("/IsUserBanned", {
+        method : "POST",
+        body : username,
+    })
+        .then(response => response.json())
+        .then(isBanned => {
+            if (isBanned) {
+                alert("Este usuario está baneado")
+                document.getElementById("submit").onclick = function() {return false};
+            } else {
+                document.getElementById("submit").onclick = null;
             }
         })
 }
