@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const searchBarBtn = document.getElementById('search-bar-btn');
 const homeLoadMoreBtnDiv = document.getElementById('home-load-more-btn-div');
 const eventChart = document.getElementById('eventsChart');
+const spinner = document.getElementById('spinner');
 
 searchBarBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -31,9 +32,11 @@ searchBarBtn.addEventListener('click', (e) => {
 
 const doFetch = (url) => {
     homeLoadMoreBtnDiv.style.display = "block";
+    spinner.style.display = "block";
     fetch(url)
         .then(r => r.text())
         .then(html => document.getElementById("eventsChart").innerHTML = html)
+    spinner.style.display = "none";
 }
 
 // it checks each time we add events to eventChart
