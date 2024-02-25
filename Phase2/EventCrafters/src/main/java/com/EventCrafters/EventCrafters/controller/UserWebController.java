@@ -85,7 +85,7 @@ public class UserWebController {
 				List<Event> currentCreatedE = eventService.findAjax(id, 1);
 				List<Event> pastCreatedE = eventService.findAjax(id, 2);
 				int i;
-				for (i = 0; i < 2; i++){
+				for (i = 1; i < 3; i++){
 					if (eventService.getAllEvents(i).size() < eventService.getEventsRefreshSize()){
 						String aux = "thereAreNoMore" + i;
 						model.addAttribute(aux, "");
@@ -95,15 +95,21 @@ public class UserWebController {
 				model.addAttribute("events",currentCreatedE);
 				model.addAttribute("pastEvents",pastCreatedE);
 				model.addAttribute("showWhenAdmin", "d-none");
-				model.addAttribute("showWhenUser", "d-block");
+				model.addAttribute("showWhenUser", "");
 				model.addAttribute("eventsText", "Mis Eventos Creados");
 				model.addAttribute("createdEvents",1);
 			} else {
 				List<Category> c = categoryService.findAjax();
 				List<Event> e = eventService.findAjax();
+				if (eventService.getAllEvents(0).size()  < eventService.getEventsRefreshSize()){
+					model.addAttribute("thereAreNoMore1", "");
+				}
+				if (categoryService.findAll().size() - 1 < categoryService.getCategoryRefreshSize()){
+					model.addAttribute("thereAreNoMore0", "");
+				}
 				model.addAttribute("category",c);
 				model.addAttribute("events",e);
-				model.addAttribute("showWhenAdmin","d-block");
+				model.addAttribute("showWhenAdmin","");
 				model.addAttribute("showWhenUser", "d-none");
 				model.addAttribute("eventsText", "Todos los eventos");
 				model.addAttribute("createdEvents",0);

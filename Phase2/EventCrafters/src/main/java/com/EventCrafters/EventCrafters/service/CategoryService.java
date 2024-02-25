@@ -87,15 +87,16 @@ public class CategoryService {
 
 	public List<Integer> categoriesNumbers(){
 		List<Integer> count = repository.findAllCategoriesUsedCount();
-		List<Integer> allCategoriesUsedId = repository.findAllCategoriesUsedId();
 		List<Integer> finalList= new ArrayList<>();
 		int size = count.size();
+		int aux = this.findAll().size();
 		int i;
-		for (i = 0; i<this.findAll().size();i++){
+		for (i = 0; i< aux;i++){
+			System.out.println(aux);
 			finalList.add(0);
 		}
 		for (i = 0; i<size;i++) {
-			finalList.set(allCategoriesUsedId.get(i) - 1,count.get(i));
+			finalList.set(i,count.get(i));
 		}
 
 		return finalList;

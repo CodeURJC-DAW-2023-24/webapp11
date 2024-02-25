@@ -211,7 +211,7 @@
             </div>
         </div>
 
-        <div class="container text-center mt-4 {{showWhenAdmin}}"  id="more-tags-btn-div">
+        <div class="container text-center mt-4 {{showWhenAdmin}}"  style="{{#thereAreNoMore0}}display:none{{/thereAreNoMore0}}"  id="more-tags-btn-div">
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <button class="btn btn-primary" id="load-more-tags">Cargar más tags</button>
@@ -237,6 +237,7 @@
                     </div>
                 {{/events}}
 
+
                 <div class="col-md-4 mb-4 last {{showWhenUser}}">
                     <form action="/create_event" method="get">
                         <div class="activity d-flex flex-row align-items-center" style="justify-content: center" id="open-button">
@@ -255,6 +256,11 @@
                 </div>
             </div>
         </div>
+        {{^events}}
+            <div class="{{showWhenAdmin}} text-center">
+                <h5 class="no-events-message">No hay eventos.</h5>
+            </div>
+        {{/events}}
         <div class="container text-center mt-4" id="more-events-btn-div-1" style="{{#thereAreNoMore1}}display:none{{/thereAreNoMore1}}">
             <div class="row justify-content-center">
                 <div class="col-auto">
@@ -298,7 +304,12 @@
                 </div>
             </div>
         </div>
-        <div class="container text-center mt-4 d-none {{showWhenUser}}" style="{{#thereAreNoMore2}}display:none{{/thereAreNoMore2}}" id="more-events-btn-div-2">
+        {{^pastEvents}}
+            <div class="{{showWhenUser}} text-center">
+                <h5 class="no-events-message">No hay eventos.</h5>
+            </div>
+        {{/pastEvents}}
+        <div class="container text-center mt-4 {{showWhenUser}}" style="{{#thereAreNoMore2}}display:none{{/thereAreNoMore2}}" id="more-events-btn-div-2">
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <button class="btn btn-primary" id="load-more-past-created-events" data-i="2">Cargar más eventos</button>
@@ -307,8 +318,7 @@
         </div>
         <!-- Events user has signed up for -->
         <div class="user-events {{showWhenUser}}">
-            <h3 class="next">Eventos a los que me he apuntado
-            </h3>
+            <h3 class="next">Eventos a los que me he apuntado</h3>
             <div class="row flex-wrap">
                 <div class="col-md-4 mb-4">
                     <div class="activity d-flex flex-row align-items-center">
