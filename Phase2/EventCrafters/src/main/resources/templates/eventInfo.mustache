@@ -218,7 +218,6 @@
                 </div>
             </div>
 
-
             <!--Creator secction-->
             <div class="user-events">
                 <h3 class="next">Anfitrión</h3>
@@ -238,37 +237,31 @@
                 </div>
             </div>
 
-
+            <!-- Other events section-->
             <div class="user-events">
                 <h3 class="next">Eventos a los que me he apuntado
                 </h3>
-                <div class="row flex-wrap">
-                    <div class="col-md-4 mb-4">
-                        <div class="activity d-flex flex-row align-items-center">
-                            <div class="categories-container info">
-                                <span class="event-category etiqueta-deporte">Deporte</span>
+                <div class="row flex-wrap" id="eventsChart">
+                    {{#otherEvents}}
+                        <div class="col-md-4 mb-4">
+                            <div class="activity d-flex flex-row align-items-center">
+                                <div class="categories-container info">
+                                    <span class="event-category etiqueta-deporte">Deporte</span>
+                                </div>
+                                <h5 class="info">Partido voley-playa</h5>
+                                <button class="btn btn-block">Ver Detalles</button>
                             </div>
-                            <h5 class="info">Partido voley-playa</h5>
-                            <button class="btn btn-block">Ver Detalles</button>
                         </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="activity d-flex flex-row align-items-center">
-                            <div class="categories-container">
-                                <span class="event-category etiqueta-educacion">Educación</span>
-                            </div>
-                            <h5 class="info">Cibernet: delincuentes en las redes</h5>
-                            <button class="btn btn-block">Ver Detalles</button>
+                    {{/otherEvents}}
+                    {{^otherEvents}}
+                        <div>
+                            <h5 class="no-events-message">No events available.</h5>
                         </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="activity d-flex flex-row align-items-center">
-                            <div class="categories-container info">
-                                <span class="event-category etiqueta-campo">Campo</span>
-                            </div>
-                            <h5 class="info">Ruta de las flores</h5>
-                            <button class="btn btn-block">Ver Detalles</button>
-                        </div>
+                    {{/otherEvents}}
+                </div>
+                <div class="text-center" id="spinner" style="display: none">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
                     </div>
                 </div>
             </div>
@@ -276,7 +269,7 @@
             <div class="container text-center mt-4">
                 <div class="row justify-content-center">
                     <div class="col-auto">
-                        <button class="btn btn-primary">Cargar más eventos</button>
+                        <button class="btn btn-primary" data-type="/otherEvents" id="home-load-more-btn">Cargar más eventos</button>
                     </div>
                 </div>
             </div>
@@ -287,6 +280,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="../js/events.js"></script> <!--JS file link-->
 </body>
 
 </html>

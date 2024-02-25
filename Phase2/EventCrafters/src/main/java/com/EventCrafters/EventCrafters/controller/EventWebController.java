@@ -151,16 +151,21 @@ public class EventWebController {
         boolean isLoggedIn = isAuthenticated(authentication);
         Optional<Event> eventOptional = eventService.findById(id);
 
+        List <Event> eventsRegistered = new ArrayList<>();
+
         if (eventOptional.isPresent()) {
             Event event = eventOptional.get();
 
             boolean isUserCreatorOrAdmin = false;
             boolean isUserRegistered = false;
-            Boolean hasUserReviewed = false;
+            boolean hasUserReviewed = false;
             if (isLoggedIn) {
                 String currentUsername = authentication.getName();
                 Optional<User> currentUser = userService.findByUserName(currentUsername);
                 if (currentUser.isPresent()) {
+                    Set<Event> aux = currentUser.get().getRegisteredInEvents();
+                    eventsRegistered.addAll(aux);
+
                     if (event.getCreator().equals(currentUser.get())) {
                         isUserCreatorOrAdmin = true;
                     }
@@ -172,7 +177,6 @@ public class EventWebController {
                     isUserCreatorOrAdmin = true;
                 }
             }
-
 
             int numRegisteredUsers = event.getRegisteredUsers().size();
 
@@ -191,7 +195,6 @@ public class EventWebController {
 
             double averageRating = reviewService.calculateAverageRatingForEvent(id);
 
-
             model.addAttribute("hasUserReviewed", hasUserReviewed);
             model.addAttribute("averageRating", averageRating);
             model.addAttribute("attendeesCountSet", attendeesCountSet);
@@ -206,10 +209,46 @@ public class EventWebController {
             model.addAttribute("isUserRegistered", isUserRegistered);
             model.addAttribute("numRegisteredUsers", numRegisteredUsers);
 
+            nextEventIndex = eventsRefreshSize;
+
+            if (eventsRegistered.size() <= nextEventIndex){
+                model.addAttribute("otherEvents", eventsRegistered);
+                nextEventIndex = eventsRegistered.size();
+            }
+            else{
+                model.addAttribute("otherEvents", eventsRegistered.subList(0,nextEventIndex));
+            }
             return "eventInfo";
         } else {
             return "redirect:/";
         }
+    }
+
+    @GetMapping("/otherEvents")
+    public String showOtherEvents(Model model) {
+        List <Event> eventsRegistered = new ArrayList<>();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isLoggedIn = isAuthenticated(authentication);
+        if (isLoggedIn) {
+            String currentUsername = authentication.getName();
+            Optional <User> userOptional = userService.findByUserName(currentUsername);
+            if (userOptional.isPresent()){
+                User currentUser = userOptional.get();
+                eventsRegistered.addAll(currentUser.getRegisteredInEvents());
+            }
+        }
+
+        int remainingEvents = eventsRegistered.size() - nextEventIndex;
+        if (remainingEvents > 0) {
+            int endIndex = nextEventIndex + Math.min(eventsRefreshSize, remainingEvents);
+            model.addAttribute("additionalEvents", eventsRegistered.subList(nextEventIndex, endIndex));
+            nextEventIndex = endIndex;
+            if (eventsRegistered.size() == nextEventIndex){
+                model.addAttribute("lastEvents", "");
+            }
+            return "otherEvents";
+        }
+        return "empty";
     }
 
     @GetMapping("/ticket/{id}")
