@@ -73,6 +73,10 @@ public class DatabaseInitializer {
 
 		User user2 = new User("Juan Usuario","user2","user@gmail.com", null, passwordEncoder.encode("pass"), "USER");
 		userRepository.save(user2);
+		User user3 = new User("Juan Usuario","user3","user@gmail.com", null, passwordEncoder.encode("pass"), "USER");
+		userRepository.save(user3);
+		User user4 = new User("Juan Usuario","user4","user@gmail.com", null, passwordEncoder.encode("pass"), "USER");
+		userRepository.save(user4);
 
 		User user = new User("Juan Usuario","user","user@gmail.com", null, passwordEncoder.encode("pass"), "USER");
 		userRepository.save(user);
@@ -110,6 +114,8 @@ public class DatabaseInitializer {
 		reviewRepository.save(review);
 
 		event.getRegisteredUsers().add(user2);
+		event.getRegisteredUsers().add(user3);
+		event.getRegisteredUsers().add(user4);
 		event2.getRegisteredUsers().add(user2);
 		eventRepository.save(event);
 		eventRepository.save(event2);

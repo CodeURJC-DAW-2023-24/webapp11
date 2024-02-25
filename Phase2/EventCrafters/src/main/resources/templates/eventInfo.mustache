@@ -9,6 +9,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='../css/event_info.css'>
     <link rel="icon" href="../img/logo.jpeg" type="image/png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -171,16 +172,17 @@
                                 <form action="/event/setAttendance/{{event.id}}" method="post" class="form-inline">
                                     <div class="form-group mb-2">
                                         <label for="attendeesCount" class="sr-only">Número de asistentes</label>
-                                        <input type="number" class="form-control" name="attendeesCount" placeholder="Número de asistentes" required>
+                                        <input type="number" class="form-control" name="attendeesCount" placeholder="Número de asistentes" min="0" max="{{numRegisteredUsers}}" required>
                                     </div>
                                     <button type="submit" class="btn btn-info mb-2 ml-2"><i class="fas fa-save"></i> Guardar</button>
                                 </form>
                             {{/attendeesCountSet}}
                         </div>
                         <div class="event-attendance-chart-section mt-3">
-                            <h4><i class="fas fa-chart-pie"></i> Gráfica de Asistencia</h4>
-                            <!-- Placeholder para la gráfica; reemplaza con tu implementación específica -->
-                            <div id="attendanceChart"></div>
+                            {{#attendeesCountSet}}
+                                <h4><i class="fas fa-chart-pie"></i> Gráfica de Asistencia</h4>
+                                <canvas id="attendanceChart"></canvas>
+                            {{/attendeesCountSet}}
                         </div>
                     {{/isUserCreatorOrAdmin}}
                 </div>
@@ -190,30 +192,6 @@
             {{/eventFinished}}
         {{/logged}}
 
-        <!--Sección Disponibilidad
-        <div class="user-events">
-            <h3 class="next">Disponibilidad</h3>
-            <p>No quedan muchas plazas libres. Reserva ahora. </p>
-            <div class="row flex-wrap p-4">
-                <div class="row">
-                    <div class="mx-50">
-                        <img class="w-100" src="../img/entradasPorTiempo.png" alt="Foto de Perfil">
-                    </div>
-                    <div class="w-100">
-                        <h4 class="fs-5 mt-4 pb-1">Reservar ahora</h4>
-                        <section class="border-top border-bottom"></section>
-                        <section class="text-dark w-100 p-1">
-                            <div class="categories-container justify-content-between w-100 align-items-center p-1">
-                                <h6 class="pt-1">Entrada regular ({{priceDisplay}})</h6>
-                                <button class="btn btn-primary px-2">Reservar</button>
-                            </div>
-                        </section>
-                        <section class="border-top border-bottom"></section>
-                    </div>
-
-                </div>
-            </div>
-            -->
         <!--Location section-->
         <div class="user-events" id="map">
             <h3 class="created">Localización</h3>
@@ -291,6 +269,48 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="../js/events.js"></script> <!--JS file link-->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        {{#attendeesCountSet}}
+
+        var ctx = document.getElementById('attendanceChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Asistentes', 'No asistentes'],
+                datasets: [{
+                    label: 'Asistencia al evento',
+                    data: [{{event.attendeesCount}}, {{numRegisteredUsers}} - {{event.attendeesCount}}],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 99, 132, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Porcentaje de Asistencia'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        });
+        {{/attendeesCountSet}}
+    });
+</script>
+
 </body>
 
 </html>

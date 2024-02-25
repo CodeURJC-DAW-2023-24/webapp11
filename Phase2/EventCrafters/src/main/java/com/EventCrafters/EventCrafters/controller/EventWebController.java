@@ -490,7 +490,12 @@ public class EventWebController {
         return "empty";
     }
 
-
-
+    @PostMapping("/event/setAttendance/{eventId}")
+    public String setEventAttendance(@PathVariable Long eventId, @RequestParam("attendeesCount") Integer attendeesCount) {
+        if (attendeesCount != null && attendeesCount >= 0) {
+            eventService.updateAttendeesCount(eventId, attendeesCount);
+        }
+        return "redirect:/event/" + eventId;
+    }
 
 }

@@ -126,4 +126,11 @@ public class EventService {
 		this.nextEventIndex.set(i, nextEventIndex);
 	}
 
+	@Transactional
+	public void updateAttendeesCount(Long eventId, int attendeesCount) {
+		Event event = repository.findById(eventId)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid event Id:" + eventId));
+		event.setAttendeesCount(attendeesCount);
+		repository.save(event);
+	}
 }
