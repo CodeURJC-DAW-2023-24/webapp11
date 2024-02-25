@@ -1,6 +1,7 @@
 package com.EventCrafters.EventCrafters.service;
 
 import com.EventCrafters.EventCrafters.model.User;
+import org.springframework.stereotype.Service;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -8,6 +9,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Collection;
 import java.util.Properties;
 
+@Service
 public class MailService {
     private final String username;
     private final String password;
