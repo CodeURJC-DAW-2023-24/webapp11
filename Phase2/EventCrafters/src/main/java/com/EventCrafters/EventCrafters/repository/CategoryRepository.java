@@ -8,7 +8,9 @@ import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
@@ -25,5 +27,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Integer> findAllCategoriesUsedId();
 
 
-
+    @Modifying
+    @Transactional
+    @Query("update Event e set e.category.id = 1 where e.category.id = :categoryId")
+    void reassignEventsToDefaultCategory(Long categoryId);
 }

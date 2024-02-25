@@ -5,6 +5,7 @@ import com.EventCrafters.EventCrafters.repository.CategoryRepository;
 import com.EventCrafters.EventCrafters.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,18 +55,16 @@ public class CategoryService {
 		repository.save(category);
 	}
 
+	@Transactional
 	public void delete(long id) {
-		Category defaultCategory = repository.findById(1L).orElseThrow(() -> new RuntimeException("Categoría predeterminada no encontrada"));
+		if (id == 1) {
+			throw new RuntimeException("No se puede eliminar la categoría predeterminada");
+		}
 
-		Category categoryToDelete = repository.findById(id).orElseThrow(() -> new RuntimeException("Categoría a eliminar no encontrada"));
-
-		categoryToDelete.getEventsInCategories().forEach(event -> {
-			event.setCategory(defaultCategory);
-			eventRepository.save(event);
-		});
-
+		repository.reassignEventsToDefaultCategory(id);
 		repository.deleteById(id);
 	}
+
 
 	public List<Category> getAllCategories() {
 		return allCategories;
