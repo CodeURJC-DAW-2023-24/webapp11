@@ -33,7 +33,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/"><i class="fas fa-home"></i>Inicio</a>
+                <a class="nav-link" href="/"><i class="fas fa-home"></i></a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -154,6 +154,20 @@
                                     <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
                                 <button type="submit" onclick ="return warnBan()" class="btn btn-primary" >Banear Usuario</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col text-right profile" style="display: {{showWhenAdmin}}">
+                        <button id="unban-user-btn" class="btn btn-success">Desbanear</button>
+
+                        <!-- Hidden div for the unban pop-up -->
+                        <div id="unban-user-popup" style="display: none;">
+                            <form id="unban-user-form" action="/unban" method="post">
+                                <div class="form-group">
+                                    <label for="username">Nombre de Usuario:</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <button type="submit" onclick="return warnUnBan()" class="btn btn-primary">Desbanear Usuario</button>
                             </form>
                         </div>
                     </div>

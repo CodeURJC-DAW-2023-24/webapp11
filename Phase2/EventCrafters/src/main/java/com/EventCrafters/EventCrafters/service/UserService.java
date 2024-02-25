@@ -83,4 +83,13 @@ public class UserService {
 
 		return user;
 	}
+
+	public void unbanUserByUsername(String username) {
+		Optional<User> userOptional = repository.findByUsername(username);
+		User user = userOptional.orElse(null);
+		if (user != null) {
+			user.setBanned(false);
+			repository.save(user);
+		}
+	}
 }

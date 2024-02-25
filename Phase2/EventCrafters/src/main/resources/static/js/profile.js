@@ -125,7 +125,10 @@ function showReloadWarning() {
 
 
 function warnBan() {
-    alert("Procede a banear usuario.");
+    alert("Ha baneado al usuario.");
+}
+function warnUnBan() {
+    alert("Ha desbaneado al usuario.");
 }
 
 // Obtener referencia al botón de banear
@@ -142,6 +145,18 @@ banUserBtn.addEventListener('click', () => {
         banUserPopup.style.display = 'block';
     }
 });
+
+const unbanUserBtn = document.getElementById('unban-user-btn');
+const unbanUserPopup = document.getElementById('unban-user-popup');
+
+unbanUserBtn.addEventListener('click', () => {
+    if (unbanUserPopup.style.display === 'block') {
+        unbanUserPopup.style.display = 'none';
+    } else {
+        unbanUserPopup.style.display = 'block';
+    }
+});
+
 
 
 

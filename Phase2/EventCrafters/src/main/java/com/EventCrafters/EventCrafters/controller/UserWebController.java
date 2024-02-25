@@ -304,5 +304,10 @@ public class UserWebController {
 		return "redirect:/profile";
 	}
 
+	@PostMapping("/unban")
+	public String unbanUser(@RequestParam("username") String username) {
+		userService.unbanUserByUsername(username);
+		return "redirect:/profile";
+	}
 
 }
