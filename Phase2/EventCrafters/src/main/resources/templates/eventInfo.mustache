@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel='stylesheet' type='text/css' media='screen' href='../css/event_info.css'>
     <link rel="icon" href="../img/logo.jpeg" type="image/png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
 </head>
 
 <body>
@@ -25,7 +27,7 @@
     <div class="collapse navbar-collapse" id="navbarToggled">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Inicio</a>
+                <a class="nav-link" href="/"><i class="fas fa-home"></i>Inicio</a>
             </li>
             {{#logged}}
                 <li class="nav-item dropdown">
@@ -76,62 +78,109 @@
             <p><strong>Descripción: </strong> {{event.description}}</p>
             <div class="row flex-wrap p-3">
                 <div>
-                    <p><strong>Aforo máximo: </strong> {{event.maxCapacity}} personas</p>
-                    <p><strong>Lugar: </strong> <a href="#map">Ver mapa</a></p>
-                    <p><strong>Precio: </strong> {{priceDisplay}}</p>
-                    <p><strong>Fecha de inicio: </strong> {{startDateFormatted}}</p>
-                    <p><strong>Fecha de fin: </strong> {{endDateFormatted}}</p>
-                    <p><strong>Duración: </strong> {{duration}}</p>
-                    <p><strong>Información adicional: </strong> {{event.additionalInfo}}</p>
+                    <p><strong><i class="fas fa-users"></i> Aforo máximo: </strong> {{event.maxCapacity}} personas</p>
+                    <p><strong><i class="fas fa-map-marker-alt"></i> Lugar: </strong> <a href="#map">Ver mapa</a></p>
+                    <p><strong><i class="fas fa-euro-sign"></i> Precio: </strong> {{priceDisplay}}</p>
+                    <p><strong><i class="fas fa-clock"></i> Fecha de inicio: </strong> {{startDateFormatted}}</p>
+                    <p><strong><i class="fas fa-clock"></i> Fecha de fin: </strong> {{endDateFormatted}}</p>
+                    <p><strong><i class="fas fa-hourglass-half"></i> Duración: </strong> {{duration}}</p>
+                    <p><strong><i class="fas fa-info-circle"></i> Información adicional: </strong> {{event.additionalInfo}}</p>
                 </div>
             </div>
         </div>
 
+        {{^eventFinished}}
         <div class="user-events actions-section mt-4">
             <h3 class="next">Acciones</h3>
             <div class="d-flex justify-content-center flex-wrap">
-                {{#isUserCreatorOrAdmin}}
-                    <div class="m-2">
-                        <form action="/event/delete/{{event.id}}" method="post">
-                            <button type="submit" class="btn btn-danger">Borrar Evento</button>
-                        </form>
-                    </div>
-                    <div class="m-2">
-                        <a href="/event/edit/{{event.id}}" class="btn btn-info">Editar Evento</a>
-                    </div>
-                {{/isUserCreatorOrAdmin}}
+                    <div class="user-events actions-section mt-4">
+                        {{#isUserCreatorOrAdmin}}
+                            <div class="m-2">
+                                <form action="/event/delete/{{event.id}}" method="post">
+                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i>Borrar Evento</button>
+                                </form>
+                            </div>
+                            <div class="m-2">
+                                <a href="/event/edit/{{event.id}}" class="btn btn-info"><i class="fas fa-edit"></i>Editar Evento</a>
+                            </div>
+                        {{/isUserCreatorOrAdmin}}
 
-                {{#logged}}
-                    {{#isUserRegistered}}
-                        <div class="m-2">
-                            <form action="/event/leave/{{event.id}}" method="post">
-                                <button type="submit" class="btn btn-warning">Desapuntarte de {{event.name}}</button>
-                            </form>
-                            <br>
-                            <form action="/ticket/{{event.id}}" method="get">
-                                <button type="submit" class="btn btn-primary">Ver entrada a {{event.name}}</button>
-                            </form>
-                        </div>
-                    {{/isUserRegistered}}
-                    {{^isUserCreatorOrAdmin}}
-                        {{^isUserRegistered}}
+                        {{#logged}}
+                            {{#isUserRegistered}}
+                                <div class="m-2">
+                                    <form action="/event/leave/{{event.id}}" method="post">
+                                        <button type="submit" class="btn btn-warning">Desapuntarte de {{event.name}}</button>
+                                    </form>
+                                    <br>
+                                    <form action="/ticket/{{event.id}}" method="get">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-ticket-alt"></i>Ver entrada a {{event.name}}</button>
+                                    </form>
+                                </div>
+                            {{/isUserRegistered}}
+                            {{^isUserCreatorOrAdmin}}
+                                {{^isUserRegistered}}
+                                    <div class="m-2">
+                                        <form action="/event/register/{{event.id}}" method="post">
+                                            <button type="submit" class="btn btn-primary">Apuntarte a {{event.name}}</button>
+                                        </form>
+                                    </div>
+                                {{/isUserRegistered}}
+                            {{/isUserCreatorOrAdmin}}
+                        {{/logged}}
+
+                        {{^logged}}
                             <div class="m-2">
                                 <form action="/event/register/{{event.id}}" method="post">
                                     <button type="submit" class="btn btn-primary">Apuntarte a {{event.name}}</button>
                                 </form>
                             </div>
-                        {{/isUserRegistered}}
-                    {{/isUserCreatorOrAdmin}}
-                {{/logged}}
-
-                {{^logged}}
-                    <div class="m-2">
-                        <p>Para registrarte en el evento, por favor <a href="/login">inicia sesión</a>.</p>
+                        {{/logged}}
                     </div>
-                {{/logged}}
             </div>
         </div>
+        {{/eventFinished}}
 
+        {{#logged}}
+            {{#eventFinished}}
+                <div class="user-events actions-section mt-4">
+                    <h3 class="next"><i class="fas fa-clipboard-list"></i> Retroalimentación</h3>
+                    {{#isUserRegistered}}
+                        {{^hasUserReviewed}}
+                            <div class="review-section mt-3">
+                                <a href="/review/event/{{event.id}}" class="btn btn-primary"><i class="fas fa-star"></i> Dejar una review</a>
+                            </div>
+                        {{/hasUserReviewed}}
+                        {{#hasUserReviewed}}
+                            <div class="alert alert-info" role="alert">
+                                Ya has valorado este evento. Gracias por tu feedback.
+                            </div>
+                        {{/hasUserReviewed}}
+                    {{/isUserRegistered}}
+
+                    {{#isUserCreatorOrAdmin}}
+                        <div class="event-attendance-input-section mt-3">
+                            {{^attendeesCountSet}}
+                                <form action="/event/setAttendance/{{event.id}}" method="post" class="form-inline">
+                                    <div class="form-group mb-2">
+                                        <label for="attendeesCount" class="sr-only">Número de asistentes</label>
+                                        <input type="number" class="form-control" name="attendeesCount" placeholder="Número de asistentes" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-info mb-2 ml-2"><i class="fas fa-save"></i> Guardar</button>
+                                </form>
+                            {{/attendeesCountSet}}
+                        </div>
+                        <div class="event-attendance-chart-section mt-3">
+                            <h4><i class="fas fa-chart-pie"></i> Gráfica de Asistencia</h4>
+                            <!-- Placeholder para la gráfica; reemplaza con tu implementación específica -->
+                            <div id="attendanceChart"></div>
+                        </div>
+                    {{/isUserCreatorOrAdmin}}
+                </div>
+                <div class="event-average-rating-section mt-4">
+                    <h4><i class="fas fa-star-half-alt"></i> Valoración Media del Evento: {{averageRating}}</h4>
+                </div>
+            {{/eventFinished}}
+        {{/logged}}
 
         <!--Sección Disponibilidad
         <div class="user-events">

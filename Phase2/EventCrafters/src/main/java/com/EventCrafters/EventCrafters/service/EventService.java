@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.EventCrafters.EventCrafters.repository.EventRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EventService {
@@ -40,6 +41,7 @@ public class EventService {
 		repository.save(event);
 	}
 
+	@Transactional
 	public void delete(Long eventId) {
 		repository.deleteReviewsByEventId(eventId);
 		repository.deleteEventUserByEventId(eventId);

@@ -156,7 +156,7 @@ public class EventWebController {
 
             boolean isUserCreatorOrAdmin = false;
             boolean isUserRegistered = false;
-
+            Boolean hasUserReviewed = false;
             if (isLoggedIn) {
                 String currentUsername = authentication.getName();
                 Optional<User> currentUser = userService.findByUserName(currentUsername);
@@ -165,6 +165,7 @@ public class EventWebController {
                         isUserCreatorOrAdmin = true;
                     }
                     isUserRegistered = event.getRegisteredUsers().contains(currentUser.get());
+                    hasUserReviewed = reviewService.hasUserReviewedEvent(id, currentUser.get().getId());
                 }
 
                 if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
@@ -183,6 +184,18 @@ public class EventWebController {
             long minutes = duration.minusHours(hours).toMinutes();
             String durationFormatted = String.format("%d horas y %d minutos", hours, minutes);
 
+            LocalDateTime now = LocalDateTime.now();
+            boolean eventFinished = now.isAfter(event.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+
+            boolean attendeesCountSet = event.getAttendeesCount() >= 0;
+
+            double averageRating = reviewService.calculateAverageRatingForEvent(id);
+
+
+            model.addAttribute("hasUserReviewed", hasUserReviewed);
+            model.addAttribute("averageRating", averageRating);
+            model.addAttribute("attendeesCountSet", attendeesCountSet);
+            model.addAttribute("eventFinished", eventFinished);
             model.addAttribute("event", event);
             model.addAttribute("priceDisplay", priceDisplay);
             model.addAttribute("startDateFormatted", startDateFormatted);

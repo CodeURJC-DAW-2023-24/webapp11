@@ -69,7 +69,7 @@ public class User {
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Event> createdEvents = new HashSet<>();
 
-	@ManyToMany(mappedBy = "registeredUsers", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "registeredUsers")
 	private Set<Event> registeredInEvents = new HashSet<>();
 
 

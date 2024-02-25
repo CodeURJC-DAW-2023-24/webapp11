@@ -27,6 +27,8 @@ public class Event {
 
 	private String name;
 
+	private int attendeesCount = -1;
+
 	@Lob
 	private Blob photo;
 

@@ -34,4 +34,16 @@ public class ReviewService {
 	public void delete(long id) {
 		repository.deleteById(id);
 	}
+
+	public double calculateAverageRatingForEvent(Long eventId) {
+		return repository.findAverageRatingByEvent(eventId)
+				.orElse(0.0);
+	}
+
+	public boolean hasUserReviewedEvent(Long eventId, Long Id) {
+		Optional<Review> review = repository.findByEventIdAndUserId(eventId, Id);
+		return review.isPresent();
+	}
+
+
 }

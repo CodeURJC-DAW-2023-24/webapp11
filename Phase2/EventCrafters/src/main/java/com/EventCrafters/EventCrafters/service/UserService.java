@@ -1,11 +1,13 @@
 package com.EventCrafters.EventCrafters.service;
 
 import com.EventCrafters.EventCrafters.model.User;
+import com.EventCrafters.EventCrafters.repository.ReviewRepository;
 import com.EventCrafters.EventCrafters.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,10 @@ public class UserService {
 
 	@Autowired
 	private UserRepository repository;
+
+	@Autowired
+	private ReviewRepository reviewRepository;
+
 
 	public Optional<User> findById(long id) {
 		return repository.findById(id);
@@ -44,8 +50,12 @@ public class UserService {
 		User user = userOptional.orElse(null);
 		return user != null ? user.getId() : null;
 	}
+	@Transactional
 	public void deleteUserById(Long userId) {
+		repository.deleteRegistrationsByUserId(userId);
+		reviewRepository.deleteReviewsByUserId(userId);
 		repository.deleteById(userId);
+
 	}
 
 	public void banUserByUsername(String username) {

@@ -55,6 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         https.authorizeRequests().antMatchers("/deleteEvent/*").hasAnyRole("USER");
         https.authorizeRequests().antMatchers("/newReview").hasAnyRole("USER");
         https.authorizeRequests().antMatchers("/newCategory").hasAnyRole("ADMIN");
+        https.authorizeRequests().antMatchers("//event/register/*").hasAnyRole("USER");
+
 
 
         //This line makes it so that, page not listed above are considered public
