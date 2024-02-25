@@ -5,6 +5,7 @@ import com.EventCrafters.EventCrafters.model.User;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Collection;
 import java.util.Properties;
 
 public class MailService {
@@ -57,4 +58,33 @@ public class MailService {
         }
     }
 
+    public String sendEmail(Collection<User> recipients, String subject, String content, boolean isHtml){
+        StringBuilder emailsBuilder = new StringBuilder();
+        for (User recipient : recipients) {
+            emailsBuilder.append(", ").append(recipient.getEmail());
+        }
+        String emails = emailsBuilder.substring(2);
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(emails)
+            );
+            message.setSubject(subject);
+            if (!isHtml){
+                message.setText(content);
+            } else {
+                message.setContent(content, "text/html");
+            }
+
+            Transport.send(message);
+            System.out.println(content);
+
+            return "emailSent";
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
 }
