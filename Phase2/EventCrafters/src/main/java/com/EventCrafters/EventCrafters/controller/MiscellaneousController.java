@@ -19,4 +19,5 @@ public class MiscellaneousController {
 		// To-do: implement the whole thing
 		return "other";
 	}
+
 }
