@@ -33,18 +33,30 @@ public class ReviewController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/newReview")
-    public String newReview(Model model) {
-        // To-do: load relevant info into the model
-        return "review";
+    @PostMapping("/review/event/{eventId}")
+    public String saveReview(@PathVariable long eventId, @RequestParam("rating") int rating, @RequestParam("text") String text, Authentication authentication) {
+        Optional<Event> eventOptional = eventService.findById(eventId);
+        String currentUsername = authentication.getName();
+        Optional<User> currentUser = userService.findByUserName(currentUsername);
+
+        if (eventOptional.isPresent() && currentUser.isPresent()) {
+            Event event = eventOptional.get();
+            User user = currentUser.get();
+
+            Review review = new Review();
+            review.setEvent(event);
+            review.setUser(user);
+            review.setRating(rating);
+            review.setText(text);
+
+            service.save(review);
+
+            return "redirect:/event/" + eventId;
+        } else {
+            return "redirect:/";
+        }
     }
-    @PostMapping("/newReview")
-    public String reviewCreated(Review r) {
-        System.out.println("hola");
-        System.out.println(r.getText());
-        System.out.println(r.getRating());
-        return "redirect:/";
-    }
+
 
     @GetMapping("/review/event/{id}")
     public String showReviewForm(@PathVariable long id, Model model, Authentication authentication) {
@@ -57,7 +69,9 @@ public class ReviewController {
             String currentUsername = authentication.getName();
             Optional<User> currentUser = userService.findByUserName(currentUsername);
             boolean isUserRegistered = currentUser.isPresent() && event.getRegisteredUsers().contains(currentUser.get());
-            if (eventFinished && isUserRegistered) {
+            boolean hasReviewed = currentUser.isPresent() && service.findByUserAndEvent(currentUser.get(), event).isPresent();
+
+            if (eventFinished && isUserRegistered && !hasReviewed) {
                 model.addAttribute("event", event);
                 return "review";
             }

@@ -2,6 +2,7 @@ package com.EventCrafters.EventCrafters.service;
 
 import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.Review;
+import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,10 @@ public class ReviewService {
 	public boolean hasUserReviewedEvent(Long eventId, Long Id) {
 		Optional<Review> review = repository.findByEventIdAndUserId(eventId, Id);
 		return review.isPresent();
+	}
+
+	public Optional<Review> findByUserAndEvent(User user, Event event) {
+		return repository.findByEventIdAndUserId(user.getId(), event.getId());
 	}
 
 
