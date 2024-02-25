@@ -214,9 +214,11 @@ public class EventWebController {
             if (eventsRegistered.size() <= nextEventIndex){
                 model.addAttribute("otherEvents", eventsRegistered);
                 nextEventIndex = eventsRegistered.size();
+                model.addAttribute("moreEvents", "none");
             }
             else{
                 model.addAttribute("otherEvents", eventsRegistered.subList(0,nextEventIndex));
+                model.addAttribute("moreEvents", "block");
             }
             return "eventInfo";
         } else {

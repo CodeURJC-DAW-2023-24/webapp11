@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.sql.Blob;
+
+import lombok.AccessLevel;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import lombok.Getter;
@@ -59,6 +61,10 @@ public class Event {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<User> registeredUsers = new HashSet<>();
 
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	private int numRegisteredUsers;
+
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Review> reviews = new HashSet<>();
 
@@ -79,5 +85,11 @@ public class Event {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.additionalInfo = additionalInfo;
+		this.numRegisteredUsers = 0;
+	}
+
+	public int getNumRegisteredUsers() {
+		this.numRegisteredUsers = this.getRegisteredUsers().size();
+		return numRegisteredUsers;
 	}
 }
