@@ -9,7 +9,7 @@ const newChart = () => {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Categories in use',
+                label: 'Eventos en los que se usan las categorias',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
                 data: data,

@@ -72,26 +72,46 @@ public class UserWebController {
 
 	@GetMapping("/profile")
 	public String newReview(Model model, HttpServletRequest request) {
-		if (request.isUserInRole("USER")) {
-			model.addAttribute("showWhenAdmin", "none");
-			model.addAttribute("showWhenUser", "block");
-			model.addAttribute("eventsText", "Mis Eventos Creados");
-		} else {
-			List<Category> c = categoryService.findAjax();
-			List<Event> e = eventService.findAjax();
-			model.addAttribute("category",c);
-			model.addAttribute("events",e);
-			model.addAttribute("showWhenAdmin","block");
-			model.addAttribute("showWhenUser", "none");
-			model.addAttribute("eventsText", "Todos los eventos");
-		}
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUsername = authentication.getName();
 		Optional<User> user = userService.findByUserName(currentUsername);
+		Long id;
 		if (user.isPresent()) {
 			model.addAttribute("user", user.get());
+			id = user.get().getId();
+
+			if (request.isUserInRole("USER")) {
+				System.out.println(user.get().getId());
+				List<Event> currentCreatedE = eventService.findAjax(id, 1);
+				List<Event> pastCreatedE = eventService.findAjax(id, 2);
+				int i;
+				for (i = 0; i < 2; i++){
+					if (eventService.getAllEvents(i).size() < eventService.getEventsRefreshSize()){
+						String aux = "thereAreNoMore" + i;
+						model.addAttribute(aux, "");
+					}
+				}
+
+				model.addAttribute("events",currentCreatedE);
+				model.addAttribute("pastEvents",pastCreatedE);
+				model.addAttribute("showWhenAdmin", "d-none");
+				model.addAttribute("showWhenUser", "d-block");
+				model.addAttribute("eventsText", "Mis Eventos Creados");
+				model.addAttribute("createdEvents",1);
+			} else {
+				List<Category> c = categoryService.findAjax();
+				List<Event> e = eventService.findAjax();
+				model.addAttribute("category",c);
+				model.addAttribute("events",e);
+				model.addAttribute("showWhenAdmin","d-block");
+				model.addAttribute("showWhenUser", "d-none");
+				model.addAttribute("eventsText", "Todos los eventos");
+				model.addAttribute("createdEvents",0);
+			}
+
+			return "profile";
 		}
-		return "profile";
+		return "error";
 	}
 
 	@GetMapping("/register")

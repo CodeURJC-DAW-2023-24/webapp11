@@ -2,11 +2,16 @@ const deleteAccountBtn = document.getElementById('delete-account-btn'),
     categoriesContainer = document.getElementById('categories-container'),
     chartsContainer = document.getElementById('charts-container'),
     createdEventsContainer = document.getElementById('created-events-container'),
+    pastCreatedEventsContainer = document.getElementById('past-created-events-container'),
     moreTagsBtnDiv = document.getElementById('more-tags-btn-div'),
-    moreCreatedEventsBtnDiv = document.getElementById('more-created-events-btn-div'),
+    moreCreatedEventsBtnDiv = document.getElementById('more-events-btn-div-1'),
+    morePastCreatedEventsBtnDiv = document.getElementById('more-events-btn-div-2'),
     spinnerPT = document.getElementById('spinner-profile-tags'),
     spinnerC = document.getElementById('spinner-charts'),
-    spinnerPCE = document.getElementById('spinner-profile-created-events');
+    spinnerPCE = document.getElementById('spinner-profile-created-events'),
+    spinnerPPCE = document.getElementById('spinner-profile-past-created-events'),
+    loadMoreCreatedEventsBtn = document.getElementById('load-more-created-events'),
+    loadMorePastCreatedEventsBtn = document.getElementById('load-more-past-created-events');
 
 
 
@@ -78,6 +83,9 @@ const repeatableObserver = (btn) => {
         m.forEach(m => {
             m.addedNodes.forEach(n => {
                 if (n.nodeType === Node.ELEMENT_NODE && n.classList.contains('no-events-message')){
+                    if (btn.classList.contains("d-block")){
+                        btn.classList.remove("d-block");
+                    }
                     btn.style.display = "none";
                 }
             })
@@ -91,6 +99,9 @@ tagsObserver.observe(categoriesContainer, {childList: true});
 
 let createdEventsObserver = repeatableObserver(moreCreatedEventsBtnDiv);
 createdEventsObserver.observe(createdEventsContainer, {childList: true});
+
+let pastCreatedEventsObserver = repeatableObserver(morePastCreatedEventsBtnDiv);
+pastCreatedEventsObserver.observe(pastCreatedEventsContainer, {childList: true});
 
 
 
@@ -109,8 +120,14 @@ document.getElementById('load-more-tags').addEventListener('click', () => {
     Ajax(spinnerPT,categoriesContainer, "/categories")
 })
 
-document.getElementById('load-more-created-events').addEventListener('click', () => {
-    Ajax(spinnerPCE, createdEventsContainer, "/moreEventsProfile")
+loadMoreCreatedEventsBtn.addEventListener('click', () => {
+    let i = loadMoreCreatedEventsBtn.getAttribute("data-i")
+    Ajax(spinnerPCE, createdEventsContainer, `/moreEventsProfile/${i}`)
+})
+
+loadMorePastCreatedEventsBtn.addEventListener('click', () => {
+    let i = loadMorePastCreatedEventsBtn.getAttribute("data-i")
+    Ajax(spinnerPPCE, pastCreatedEventsContainer, `/moreEventsProfile/${i}`)
 })
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -468,17 +468,17 @@ public class EventWebController {
         return "redirect:/event/" + id;
     }
 
-    @GetMapping("/moreEventsProfile")
-    public String moreEventsProfile(Model model){
-        List<Event> allEvents = eventService.getAllEvents();
+    @GetMapping("/moreEventsProfile/{i}")
+    public String moreEventsProfile(Model model, @PathVariable int i){
+        List<Event> allEvents = eventService.getAllEvents(i);
         int EventRefreshSize = eventService.getEventsRefreshSize();
-        int nextEventIndex = eventService.getNextEventIndex();
+        int nextEventIndex = eventService.getNextEventIndex(i);
         int remainingEvents = allEvents.size() - nextEventIndex;
 
         if (remainingEvents > 0) {
             int endIndex = nextEventIndex + Math.min(EventRefreshSize, remainingEvents);
-            model.addAttribute("events", allEvents.subList(nextEventIndex, endIndex));
-            eventService.setNextEventIndex(endIndex);
+            model.addAttribute( "events", allEvents.subList(nextEventIndex, endIndex));
+            eventService.setNextEventIndex(i, endIndex);
             if (allEvents.size() == endIndex){
                 model.addAttribute("lastEvents", "");
             }

@@ -20,6 +20,17 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query("SELECT e FROM Event e WHERE e.name LIKE %?1%")
     List<Event> findBySearchBar(String input);
+    @Query(value = "SELECT * FROM eventcrafters.events e where e.creator_id = ?1",
+            nativeQuery = true)
+    List<Event> findByCreatorId(long id);
+
+    @Query(value = "SELECT * FROM eventcrafters.events where eventcrafters.events.end_date < curdate() and eventcrafters.events.creator_id = ?1",
+            nativeQuery = true)
+    List<Event> findByCreatorIdPastCreatedEvents(long id);
+
+    @Query(value = "SELECT * FROM eventcrafters.events where eventcrafters.events.end_date > curdate() and eventcrafters.events.creator_id = ?1",
+            nativeQuery = true)
+    List<Event> findByCreatorIdCurrentCreatedEvents(long id);
 
     @Modifying
     @Transactional

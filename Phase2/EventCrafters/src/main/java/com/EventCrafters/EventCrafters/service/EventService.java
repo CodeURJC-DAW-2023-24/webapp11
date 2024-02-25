@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class EventService {
 
 
-	private List<Event> allEvents;
-	private int nextEventIndex;
+	private List<List<Event>> allEvents;
+	private List<Integer> nextEventIndex;
 	private int eventsRefreshSize = 3;
 
 	@Autowired
@@ -40,6 +40,21 @@ public class EventService {
 	public void save(Event event) {
 		repository.save(event);
 	}
+
+
+
+
+	public EventService() {
+		this.allEvents = new ArrayList<>();
+		this.nextEventIndex = new ArrayList<>();
+		int i;
+		int max = 3;
+		for (i = 0; i<max; i++){
+			this.allEvents.add(new ArrayList<>());
+			this.nextEventIndex.add(0);
+		}
+	}
+
 
 	@Transactional
 	public void delete(Long eventId) {
@@ -65,30 +80,45 @@ public class EventService {
 	}
 
 	public List<Event> findAjax(){
-		this.allEvents = repository.findAll();
-		this.nextEventIndex = this.eventsRefreshSize;
-		if (allEvents.isEmpty()){
-			return new ArrayList<>();
-		}else if (allEvents.size() <= nextEventIndex){
-			return allEvents.subList(0,allEvents.size());
-		}
-		return allEvents.subList(0,this.eventsRefreshSize);
+		return findAjax(-1L,0);
 	}
 
-	public int getNextEventIndex() {
-		return nextEventIndex;
+	public List<Event> findAjax(Long id, int i){
+		switch (i){
+			case 0 :
+				this.allEvents.set(i, repository.findAll());
+				break;
+			case 1 :
+				this.allEvents.set(i, repository.findByCreatorIdCurrentCreatedEvents(id));
+				break;
+			case 2 :
+				this.allEvents.set(i, repository.findByCreatorIdPastCreatedEvents(id));
+				break;
+		}
+		this.nextEventIndex.set(i, this.eventsRefreshSize);
+		if (allEvents.get(i).isEmpty()){
+			return new ArrayList<>();
+		}else if (allEvents.get(i).size() <= nextEventIndex.get(i)){
+			return allEvents.get(i).subList(0,allEvents.get(i).size());
+		}
+		return allEvents.get(i).subList(0,this.eventsRefreshSize);
+	}
+
+	public int getNextEventIndex(int i) {
+		return nextEventIndex.get(i);
 	}
 
 	public int getEventsRefreshSize() {
 		return eventsRefreshSize;
 	}
 
-	public List<Event> getAllEvents() {
-		return allEvents;
+	public List<Event> getAllEvents(int i) {
+		return allEvents.get(i);
 	}
 
-	public void setNextEventIndex(int nextEventIndex) {
-		this.nextEventIndex = nextEventIndex;
+
+	public void setNextEventIndex(int i, int nextEventIndex) {
+		this.nextEventIndex.set(i, nextEventIndex);
 	}
 
 }

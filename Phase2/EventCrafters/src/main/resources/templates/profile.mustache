@@ -119,7 +119,7 @@
 
                         <input type="file" accept="image/png, image/jpeg, image/jpg" id="pfp" onchange="sendProfileImage()" class="btn btn-primary" placeholder="Editar foto de perfil">
                     </div>
-                    <div class="col text-center btn-edit-account" style="display: {{showWhenUser}}">
+                    <div class="col text-center btn-edit-account {{showWhenUser}}">
                         <button id="edit-profile-btn" class="btn btn-primary" >Editar Perfil</button>
 
                         <!-- Hidden div for the pop-up -->
@@ -143,7 +143,7 @@
                         </div>
                     </div>
 
-                    <div class="col text-center profile" style="display: {{showWhenAdmin}}">
+                    <div class="col text-center profile {{showWhenAdmin}}">
                         <button id="ban-user-btn" class="btn btn-warning">Banear</button>
 
                         <!-- Hidden div for the ban pop-up -->
@@ -157,7 +157,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col text-right profile" style="display: {{showWhenAdmin}}">
+                    <div class="col text-right profile {{showWhenAdmin}}">
                         <button id="unban-user-btn" class="btn btn-success">Desbanear</button>
 
                         <!-- Hidden div for the unban pop-up -->
@@ -172,7 +172,7 @@
                         </div>
                     </div>
                     <!-- Option visible only for regular users (to delete account) -->
-                    <div class="col-lg-2" style="display:{{showWhenUser}}">
+                    <div class="col-lg-2 {{showWhenUser}}">
                         <form action="delete-account" method="post">
                             <button type="submit" class="btn btn-sm btn-danger btn-block">Eliminar Cuenta</button>
                         </form>
@@ -182,7 +182,7 @@
             </div>
         </div>
         <!-- Tags section -->
-        <div class="user-events"  style="display:{{showWhenAdmin}}">
+        <div class="user-events {{showWhenAdmin}}">
             <h3 class="created">Tags</h3>
             <div class="row flex-wrap" id="categories-container">
                 {{#category}}
@@ -211,7 +211,7 @@
             </div>
         </div>
 
-        <div class="container text-center mt-4" style="display: {{showWhenAdmin}}" id="more-tags-btn-div">
+        <div class="container text-center mt-4 {{showWhenAdmin}}"  id="more-tags-btn-div">
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <button class="btn btn-primary" id="load-more-tags">Cargar más tags</button>
@@ -237,7 +237,7 @@
                     </div>
                 {{/events}}
 
-                <div class="col-md-4 mb-4 last" style="display: {{showWhenUser}}">
+                <div class="col-md-4 mb-4 last {{showWhenUser}}">
                     <form action="/create_event" method="get">
                         <div class="activity d-flex flex-row align-items-center" style="justify-content: center" id="open-button">
                             <div class="categories-container info">
@@ -255,56 +255,58 @@
                 </div>
             </div>
         </div>
-        <div class="container text-center mt-4" id="more-created-events-btn-div">
+        <div class="container text-center mt-4" id="more-events-btn-div-1" style="{{#thereAreNoMore1}}display:none{{/thereAreNoMore1}}">
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <button class="btn btn-primary" id="load-more-created-events">Cargar más eventos</button>
+                    <button class="btn btn-primary" id="load-more-created-events" data-i="{{createdEvents}}">Cargar más eventos</button>
                 </div>
             </div>
         </div>
         <!--Charts-->
-        <h3 class="created">Gráficas</h3>
-        <div id="charts-container" style="display: {{showWhenAdmin}}">
+        <div class="Charts {{showWhenAdmin}}">
+            <h3 class="created">Gráficas</h3>
+            <div id="charts-container" >
 
-            <div class="text-center" id="spinner-charts" style="display: none">
+                <div class="text-center" id="spinner-charts" style="display: none">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- User-created events that have already ended section -->
+        <div class="user-events {{showWhenUser}}">
+            <h3 class="next">Eventos pasados que he creado </h3>
+            <div class="row flex-wrap" id="past-created-events-container">
+                {{#pastEvents}}
+                    <div class="col-md-4 mb-4">
+                        <div class="activity d-flex flex-row align-items-center">
+                            <div class="categories-container info event-container-tag-div">
+                                <span class="event-category" style="background-color: {{category.color}};">{{category.name}}</span>
+                            </div>
+                            <h5 class="info event-container-text">{{name}}</h5>
+                            <form action="/event/{{id}}" method="GET">
+                                <button class="btn btn-primary" type="submit">Ver Detalles</button>
+                            </form>
+                        </div>
+                    </div>
+                {{/pastEvents}}
+            </div>
+            <div class="text-center" id="spinner-profile-past-created-events" style="display: none">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
         </div>
-        <!-- User-created events that have already ended section -->
-        <div class="user-events" style="display: {{showWhenUser}}">
-            <h3 class="next">Eventos pasados que he creado </h3>
-            <div class="row flex-wrap">
-                <div class="col-md-4 mb-4">
-                    <div class="activity d-flex flex-row align-items-center">
-                        <div class="categories-container info  event-container-tag-div">
-                            <span class="event-category etiqueta-pasado">Pasado</span>
-                        </div>
-                        <h5 class="info event-container-text">Competición de judo</h5>
-                        <button class="btn btn-block event-container-btn">Ver Detalles</button>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="activity d-flex flex-row align-items-center">
-                        <div class="categories-container  event-container-tag-div">
-                            <span class="event-category etiqueta-pasado">Pasado</span>
-                        </div>
-                        <h5 class="info event-container-text">Huertos urbanos</h5>
-                        <button class="btn btn-block event-container-btn">Ver Detalles</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container text-center mt-4" style="display: {{showWhenUser}}">
+        <div class="container text-center mt-4 d-none {{showWhenUser}}" style="{{#thereAreNoMore2}}display:none{{/thereAreNoMore2}}" id="more-events-btn-div-2">
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <button class="btn btn-primary">Cargar más eventos</button>
+                    <button class="btn btn-primary" id="load-more-past-created-events" data-i="2">Cargar más eventos</button>
                 </div>
             </div>
         </div>
         <!-- Events user has signed up for -->
-        <div class="user-events" style="display: {{showWhenUser}}">
+        <div class="user-events {{showWhenUser}}">
             <h3 class="next">Eventos a los que me he apuntado
             </h3>
             <div class="row flex-wrap">
@@ -337,7 +339,7 @@
                 </div>
             </div>
         </div>
-        <div class="container text-center mt-4" style="display: {{showWhenUser}}">
+        <div class="container text-center mt-4 {{showWhenUser}}">
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <button class="btn btn-primary">Cargar más eventos</button>
@@ -345,7 +347,7 @@
             </div>
         </div>
         <!-- Past events user has signed up for -->
-        <div class="user-events" style="display: {{showWhenUser}}">
+        <div class="user-events {{showWhenUser}}">
             <h3 class="next">Eventos pasados a los que me he apuntado
             </h3>
             <div class="row flex-wrap">
@@ -379,7 +381,7 @@
                 </div>
             </div>
         </div>
-        <div class="container text-center mt-4" style="display: {{showWhenUser}}">
+        <div class="container text-center mt-4 {{showWhenUser}}">
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <button class="btn btn-primary">Cargar más eventos</button>
