@@ -3,10 +3,7 @@ package com.EventCrafters.EventCrafters.controller;
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.User;
-import com.EventCrafters.EventCrafters.service.CategoryService;
-import com.EventCrafters.EventCrafters.service.EventService;
-import com.EventCrafters.EventCrafters.service.TokenService;
-import com.EventCrafters.EventCrafters.service.UserService;
+import com.EventCrafters.EventCrafters.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,7 +177,12 @@ public class UserWebController {
             TokenService tokenService = new TokenService(userOptional.get());
 			tokens.put(userOptional.get().getUsername(), tokenService);
 			String link = "https://localhost:8443/recoverPassword/" + userOptional.get().getUsername() +"/randomToken?token=" + tokenService.getToken();
-			return sendEmail(userOptional.get(), link);
+			return new MailService().sendEmail(
+					userOptional.get(),
+					"Recuperación de contraseña de Event Crafters",
+					"He aquí un enlace de un solo uso para que restablezcas tu contraseña" + "\n\n" + link,
+					false
+			);
         }
 		return "error";
 	}
@@ -309,50 +311,6 @@ public class UserWebController {
 
 		} else {
 			return new byte[0];
-		}
-	}
-
-
-	private String sendEmail(User recipient, String link){
-		//this should send an email
-
-		final String username = "marquesgarciaangel@gmail.com";
-		final String password = "zdag mpol eeyf bbnf";
-		//marquesgarciaangel zdag mpol eeyf bbnf
-		//eventcraftersurjc gcun zfgb fdds uuqe
-
-		Properties prop = new Properties();
-		prop.put("mail.smtp.host", "smtp.gmail.com");
-		prop.put("mail.smtp.port", "587");
-		prop.put("mail.smtp.auth", "true");
-		prop.put("mail.smtp.starttls.enable", "true"); //TLS
-
-		Session session = Session.getInstance(prop,
-				new javax.mail.Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(username, password);
-					}
-				});
-
-		try {
-
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(username));
-			message.setRecipients(
-					Message.RecipientType.TO,
-					InternetAddress.parse(recipient.getEmail())
-			);
-			message.setSubject("Recuperación de contraseña de Event Crafters");
-			message.setText("He aquí un enlace de un solo uso para que restablezcas tu contraseña"
-					+ "\n\n" + link);
-
-			Transport.send(message);
-
-			System.out.println(link);
-			return "emailSent";
-		} catch (MessagingException e) {
-			e.printStackTrace();
-			return "error";
 		}
 	}
 
