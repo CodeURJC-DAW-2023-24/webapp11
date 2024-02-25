@@ -225,7 +225,7 @@ public class EventWebController {
     }
 
     @GetMapping("/otherEvents")
-    public String showOtherEvents(Model model) {
+    public String otherEvents(Model model) {
         List <Event> eventsRegistered = new ArrayList<>();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isLoggedIn = isAuthenticated(authentication);
@@ -241,12 +241,12 @@ public class EventWebController {
         int remainingEvents = eventsRegistered.size() - nextEventIndex;
         if (remainingEvents > 0) {
             int endIndex = nextEventIndex + Math.min(eventsRefreshSize, remainingEvents);
-            model.addAttribute("additionalEvents", eventsRegistered.subList(nextEventIndex, endIndex));
+            model.addAttribute("events", eventsRegistered.subList(nextEventIndex, endIndex));
             nextEventIndex = endIndex;
             if (eventsRegistered.size() == nextEventIndex){
                 model.addAttribute("lastEvents", "");
             }
-            return "otherEvents";
+            return "profileEvents";
         }
         return "empty";
     }
@@ -288,13 +288,6 @@ public class EventWebController {
             long minutes = duration.minusHours(hours).toMinutes();
             String durationFormatted = String.format("%d horas y %d minutos", hours, minutes);
 
-            List<Review> reviews =reviewService.findAll();
-            float averageRating = 0.0f;
-            for (Review r : reviews){
-                averageRating += r.getRating();
-            }
-            averageRating = averageRating / reviews.size();
-
             model.addAttribute("event", event);
             model.addAttribute("priceDisplay", priceDisplay);
             model.addAttribute("startDateFormatted", startDateFormatted);
@@ -304,8 +297,6 @@ public class EventWebController {
             model.addAttribute("isUserCreatorOrAdmin", isUserCreatorOrAdmin);
             model.addAttribute("isUserRegistered", isUserRegistered);
             model.addAttribute("numRegisteredUsers", numRegisteredUsers);
-            model.addAttribute("reviewsQuantity", reviews.size());
-            model.addAttribute("averageRating", averageRating);
             model.addAttribute("userName", currentUser.get().getName());
             model.addAttribute("userNick", currentUser.get().getUsername());
             model.addAttribute("userEmail", currentUser.get().getEmail());
