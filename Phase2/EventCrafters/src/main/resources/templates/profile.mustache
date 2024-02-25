@@ -319,47 +319,42 @@
         <!-- Events user has signed up for -->
         <div class="user-events {{showWhenUser}}">
             <h3 class="next">Eventos a los que me he apuntado</h3>
-            <div class="row flex-wrap">
-                <div class="col-md-4 mb-4">
-                    <div class="activity d-flex flex-row align-items-center">
-                        <div class="categories-container info event-container-tag-div">
-                            <span class="event-category etiqueta-deporte">Deporte</span>
+            <div class="row flex-wrap" id="registered-events-container">
+                {{#registeredEvents}}
+                    <div class="col-md-4 mb-4">
+                        <div class="activity d-flex flex-row align-items-center">
+                            <div class="categories-container info event-container-tag-div">
+                                <span class="event-category" style="background-color: {{category.color}};">{{category.name}}</span>
+                            </div>
+                            <h5 class="info event-container-text">{{name}}</h5>
+                            <form action="/event/{{id}}" method="GET">
+                                <button class="btn btn-primary" type="submit">Ver Detalles</button>
+                            </form>
                         </div>
-                        <h5 class="info event-container-text">Partido voley-playa</h5>
-                        <button class="btn btn-block event-container-btn">Ver Detalles</button>
                     </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="activity d-flex flex-row align-items-center">
-                        <div class="categories-container event-container-tag-div">
-                            <span class="event-category etiqueta-educacion">Educación</span>
-                        </div>
-                        <h5 class="info event-container-text">Cibernet: delincuentes en las redes</h5>
-                        <button class="btn btn-block event-container-btn">Ver Detalles</button>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="activity d-flex flex-row align-items-center">
-                        <div class="categories-container info event-container-tag-div">
-                            <span class="event-category etiqueta-campo">Campo</span>
-                        </div>
-                        <h5 class="info event-container-text">Ruta de las flores</h5>
-                        <button class="btn btn-block event-container-btn">Ver Detalles</button>
-                    </div>
+                {{/registeredEvents}}
+            </div>
+            <div class="text-center" id="spinner-profile-registered-events" style="display: none">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
                 </div>
             </div>
         </div>
-        <div class="container text-center mt-4 {{showWhenUser}}">
+        {{^registeredEvents}}
+            <div class="{{showWhenUser}} text-center">
+                <h5 class="no-events-message">No hay eventos.</h5>
+            </div>
+        {{/registeredEvents}}
+    <div class="container text-center mt-4 {{showWhenUser}}" style="{{#thereAreNoMore3}}display:none{{/thereAreNoMore3}}" id="more-events-btn-div-3">
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <button class="btn btn-primary">Cargar más eventos</button>
+                    <button class="btn btn-primary" id="load-more-registered-events" data-i="3">Cargar más eventos</button>
                 </div>
             </div>
         </div>
         <!-- Past events user has signed up for -->
         <div class="user-events {{showWhenUser}}">
-            <h3 class="next">Eventos pasados a los que me he apuntado
-            </h3>
+            <h3 class="next">Eventos pasados a los que me he apuntado</h3>
             <div class="row flex-wrap">
                 <div class="col-md-4 mb-4">
                     <div class="activity d-flex flex-row align-items-center">

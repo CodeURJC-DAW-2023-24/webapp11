@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
     Optional<Event> findByName(String name);
@@ -31,6 +32,10 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query(value = "SELECT * FROM eventcrafters.events where eventcrafters.events.end_date > curdate() and eventcrafters.events.creator_id = ?1",
             nativeQuery = true)
     List<Event> findByCreatorIdCurrentCreatedEvents(long id);
+
+    @Query(value = "SELECT eventcrafters.events_registered_users.registered_in_events_id FROM eventcrafters.events_registered_users where eventcrafters.events_registered_users.registered_users_id = ?1",
+            nativeQuery = true)
+    Set<Event> findByRegisteredUserId(long id);
 
     @Modifying
     @Transactional

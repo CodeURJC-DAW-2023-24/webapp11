@@ -3,15 +3,19 @@ const deleteAccountBtn = document.getElementById('delete-account-btn'),
     chartsContainer = document.getElementById('charts-container'),
     createdEventsContainer = document.getElementById('created-events-container'),
     pastCreatedEventsContainer = document.getElementById('past-created-events-container'),
+    registeredEventsContainer = document.getElementById('registered-events-container'),
     moreTagsBtnDiv = document.getElementById('more-tags-btn-div'),
     moreCreatedEventsBtnDiv = document.getElementById('more-events-btn-div-1'),
     morePastCreatedEventsBtnDiv = document.getElementById('more-events-btn-div-2'),
+    moreRegisteredEventsBtnDiv = document.getElementById('more-events-btn-div-3'),
     spinnerPT = document.getElementById('spinner-profile-tags'),
     spinnerC = document.getElementById('spinner-charts'),
     spinnerPCE = document.getElementById('spinner-profile-created-events'),
     spinnerPPCE = document.getElementById('spinner-profile-past-created-events'),
+    spinnerPRE = document.getElementById('spinner-profile-registered-events'),
     loadMoreCreatedEventsBtn = document.getElementById('load-more-created-events'),
-    loadMorePastCreatedEventsBtn = document.getElementById('load-more-past-created-events');
+    loadMorePastCreatedEventsBtn = document.getElementById('load-more-past-created-events'),
+    loadMoreRegisteredEventsBtn = document.getElementById('load-more-registered-events');
 
 
 
@@ -103,6 +107,9 @@ createdEventsObserver.observe(createdEventsContainer, {childList: true});
 let pastCreatedEventsObserver = repeatableObserver(morePastCreatedEventsBtnDiv);
 pastCreatedEventsObserver.observe(pastCreatedEventsContainer, {childList: true});
 
+let registeredEventsObserver = repeatableObserver(moreRegisteredEventsBtnDiv);
+registeredEventsObserver.observe(registeredEventsContainer, {childList: true});
+
 
 
 // AJAX (fetch)
@@ -128,6 +135,11 @@ loadMoreCreatedEventsBtn.addEventListener('click', () => {
 loadMorePastCreatedEventsBtn.addEventListener('click', () => {
     let i = loadMorePastCreatedEventsBtn.getAttribute("data-i")
     Ajax(spinnerPPCE, pastCreatedEventsContainer, `/moreEventsProfile/${i}`)
+})
+
+loadMoreRegisteredEventsBtn.addEventListener('click', () => {
+    let i = loadMoreRegisteredEventsBtn.getAttribute("data-i")
+    Ajax(spinnerPRE, registeredEventsContainer, `moreEventsProfile/${i}`)
 })
 
 document.addEventListener('DOMContentLoaded', () => {

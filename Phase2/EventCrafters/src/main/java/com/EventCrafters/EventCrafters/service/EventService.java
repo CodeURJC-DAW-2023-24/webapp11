@@ -1,9 +1,6 @@
 package com.EventCrafters.EventCrafters.service;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
@@ -48,7 +45,7 @@ public class EventService {
 		this.allEvents = new ArrayList<>();
 		this.nextEventIndex = new ArrayList<>();
 		int i;
-		int max = 3;
+		int max = 4;
 		for (i = 0; i<max; i++){
 			this.allEvents.add(new ArrayList<>());
 			this.nextEventIndex.add(0);
@@ -84,6 +81,10 @@ public class EventService {
 	}
 
 	public List<Event> findAjax(Long id, int i){
+		return findAjax(id, i, new HashSet<>());
+	}
+
+	public List<Event> findAjax(Long id, int i, Set<Event> s){
 		switch (i){
 			case 0 :
 				this.allEvents.set(i, repository.findAll());
@@ -93,6 +94,10 @@ public class EventService {
 				break;
 			case 2 :
 				this.allEvents.set(i, repository.findByCreatorIdPastCreatedEvents(id));
+				break;
+			case 3:
+
+				this.allEvents.set(i, new ArrayList<>(s));
 				break;
 		}
 		this.nextEventIndex.set(i, this.eventsRefreshSize);
