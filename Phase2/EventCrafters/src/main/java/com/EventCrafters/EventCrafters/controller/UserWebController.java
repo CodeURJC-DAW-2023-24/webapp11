@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
@@ -177,9 +180,9 @@ public class UserWebController {
             TokenService tokenService = new TokenService(userOptional.get());
 			tokens.put(userOptional.get().getUsername(), tokenService);
 			String link = "https://localhost:8443/recoverPassword/" + userOptional.get().getUsername() +"/randomToken?token=" + tokenService.getToken();
-			sendEmail(link);
+			return sendEmail(userOptional.get(), link);
         }
-		return "emailSent";
+		return "error";
 	}
 
 	@GetMapping("/recoverPassword/{user}/randomToken")
@@ -310,9 +313,47 @@ public class UserWebController {
 	}
 
 
-	private void sendEmail(String link){
+	private String sendEmail(User recipient, String link){
 		//this should send an email
-		System.out.println(link);
+
+		final String username = "marquesgarciaangel@gmail.com";
+		final String password = "zdag mpol eeyf bbnf";
+		//marquesgarciaangel zdag mpol eeyf bbnf
+		//eventcraftersurjc gcun zfgb fdds uuqe
+
+		Properties prop = new Properties();
+		prop.put("mail.smtp.host", "smtp.gmail.com");
+		prop.put("mail.smtp.port", "587");
+		prop.put("mail.smtp.auth", "true");
+		prop.put("mail.smtp.starttls.enable", "true"); //TLS
+
+		Session session = Session.getInstance(prop,
+				new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(username, password);
+					}
+				});
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(username));
+			message.setRecipients(
+					Message.RecipientType.TO,
+					InternetAddress.parse(recipient.getEmail())
+			);
+			message.setSubject("Recuperación de contraseña de Event Crafters");
+			message.setText("He aquí un enlace de un solo uso para que restablezcas tu contraseña"
+					+ "\n\n" + link);
+
+			Transport.send(message);
+
+			System.out.println(link);
+			return "emailSent";
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			return "error";
+		}
 	}
 
 	@GetMapping("/chart-page")
