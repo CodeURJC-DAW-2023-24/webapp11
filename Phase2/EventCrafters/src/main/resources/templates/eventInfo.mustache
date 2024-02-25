@@ -75,13 +75,14 @@
         <h2 class="event-title">{{event.name}}</h2>
         <img src="/event/image/{{event.id}}" class="d-block w-100" id="event-photo" alt="imagen {{event.name}}"><br>
         <div class="categories-container info d-flex justify-content-between">
-                <span class="event-category"
-                      style="background-color: {{event.category.color}};">{{event.category.name}}</span>
-            <span class="event-capacity etiqueta-aforoMucho">Aforo:
+            <div style="max-height: 15px; padding-top:10px;">
+                <span class="event-category" style="background-color: {{event.category.color}};">{{event.category.name}}</span>
+            </div>
+            <span class="event-capacity etiqueta-aforo">Aforo:
                 {{numRegisteredUsers}}/{{event.maxCapacity}}</span>
         </div>
 
-        <!--Info secction-->
+        <!--Info section-->
         <div class="user-events">
             <h3 class="next">Información</h3>
             <p><strong>Descripción: </strong> {{event.description}}</p>
@@ -213,10 +214,8 @@
                             <img class="profile-photo" src="/profile/img/{{event.creator.username}}" alt="Foto de Perfil de {{event.creator.username}}">
                         </div>
                         <div>
-                            <h4 class="fs-5 mt-4 px-4 pb-1">{{event.creator.name}} (registrado como
-                                {{event.creator.username}})</h4>
-                            <p class="px-4">Soy {{event.creator.name}}, tu organizador de confianza. Escribeme a mi
-                                correo {{event.creator.email}}</p>
+                            <h4 class="fs-5 mt-4 px-4 pb-1">{{event.creator.name}} (registrado como {{event.creator.username}})</h4>
+                            <p class="px-4">Soy {{event.creator.name}}, tu organizador de confianza. Para contactar conmigo, escríbeme a mi correo {{event.creator.email}}</p>
                         </div>
 
                     </div>
@@ -242,8 +241,8 @@
                         </div>
                     {{/otherEvents}}
                     {{^otherEvents}}
-                        <div>
-                            <h5 class="no-events-message">No events available.</h5>
+                        <div style="padding-left: 15px;">
+                            <h5 class="no-events-message">No hay eventos.</h5>
                         </div>
                     {{/otherEvents}}
                 </div>
