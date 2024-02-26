@@ -114,8 +114,8 @@ pastCreatedEventsObserver.observe(pastCreatedEventsContainer, {childList: true})
 let registeredEventsObserver = repeatableObserver(moreRegisteredEventsBtnDiv);
 registeredEventsObserver.observe(registeredEventsContainer, {childList: true});
 
-let registeredPastEventsObserver = repeatableObserver(moreRegisteredPastEventsBtnDiv);
-registeredPastEventsObserver.observe(registeredPastEventsContainer, {childList: true});
+//let registeredPastEventsObserver = repeatableObserver(moreRegisteredPastEventsBtnDiv);
+//registeredPastEventsObserver.observe(registeredPastEventsContainer, {childList: true});
 
 
 
