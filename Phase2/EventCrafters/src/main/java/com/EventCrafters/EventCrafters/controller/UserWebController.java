@@ -85,9 +85,10 @@ public class UserWebController {
 			if (request.isUserInRole("USER")) {
 				List<Event> currentCreatedE = eventService.findAjax(id, 1);
 				List<Event> pastCreatedE = eventService.findAjax(id, 2);
-				List<Event> userRegisteredEvents = eventService.findAjax(id, 3, user.get().getRegisteredInEvents());
+				List<Event> userRegisteredCurrentEvents = eventService.findAjax(id, 3);
+				List<Event> userRegisteredPastEvents = eventService.findAjax(id, 4);
 				int i;
-				for (i = 1; i < 4; i++){
+				for (i = 1; i < 5; i++){
 					if (eventService.getAllEvents(i).size() < eventService.getEventsRefreshSize()){
 						String aux = "thereAreNoMore" + i;
 						model.addAttribute(aux, "");
@@ -96,7 +97,8 @@ public class UserWebController {
 
 				model.addAttribute("events",currentCreatedE);
 				model.addAttribute("pastEvents",pastCreatedE);
-				model.addAttribute("registeredEvents", userRegisteredEvents);
+				model.addAttribute("registeredCurrentEvents", userRegisteredCurrentEvents);
+				model.addAttribute("registeredPastEvents", userRegisteredPastEvents);
 				model.addAttribute("showWhenAdmin", "d-none");
 				model.addAttribute("showWhenUser", "");
 				model.addAttribute("eventsText", "Mis Eventos Creados");

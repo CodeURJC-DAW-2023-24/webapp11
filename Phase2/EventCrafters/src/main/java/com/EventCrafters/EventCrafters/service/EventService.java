@@ -45,7 +45,7 @@ public class EventService {
 		this.allEvents = new ArrayList<>();
 		this.nextEventIndex = new ArrayList<>();
 		int i;
-		int max = 4;
+		int max = 5;
 		for (i = 0; i<max; i++){
 			this.allEvents.add(new ArrayList<>());
 			this.nextEventIndex.add(0);
@@ -81,10 +81,6 @@ public class EventService {
 	}
 
 	public List<Event> findAjax(Long id, int i){
-		return findAjax(id, i, new HashSet<>());
-	}
-
-	public List<Event> findAjax(Long id, int i, Set<Event> s){
 		switch (i){
 			case 0 :
 				this.allEvents.set(i, repository.findAll());
@@ -93,11 +89,13 @@ public class EventService {
 				this.allEvents.set(i, repository.findByCreatorIdCurrentCreatedEvents(id));
 				break;
 			case 2 :
-				this.allEvents.set(i, repository.findByCreatorIdPastCreatedEvents(id));
+				this.allEvents.set(i, repository.findByCreatorIdCurrentCreatedEvents(id));
 				break;
 			case 3:
-
-				this.allEvents.set(i, new ArrayList<>(s));
+				this.allEvents.set(i, repository.findByRegisteredUserIdCurrentEvents(id));
+				break;
+			case 4:
+				this.allEvents.set(i, repository.findByRegisteredUserIdPastEvents(id));
 				break;
 		}
 		this.nextEventIndex.set(i, this.eventsRefreshSize);
