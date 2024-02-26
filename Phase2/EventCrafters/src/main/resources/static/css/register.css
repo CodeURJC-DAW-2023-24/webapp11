@@ -8,3 +8,9 @@
   background-color: #fff;
   border-top: 1px solid #d1d1d1;
 }
+
+body {
+  margin: 0; /* Eliminar el margen predeterminado */
+  margin-top: 6%;
+  margin-bottom: 6%;
+}
