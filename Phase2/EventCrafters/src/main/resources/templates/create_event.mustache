@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Font Awesome for icons -->    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel='stylesheet' type='text/css' media='screen' href='../css/forms.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../css/create_event.css'>
-    <link rel="icon" href="../img/logo.jpeg" type="image/png">
+    <link rel='stylesheet' type='text/css' media='screen' href='/css/forms.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/css/create_event.css'>
+    <link rel="icon" href="/img/logo.jpeg" type="image/png">
     <title>{{#event.id}}Editar Evento: {{event.name}}{{/event.id}}{{^event.id}}Crear Evento{{/event.id}}</title>
 </head>
 
@@ -23,7 +23,7 @@
                 <div class="card">
                     <!-- Header of the card with logo and title -->
                     <div class="card-header text-center d-flex flex-column align-items-center">
-                        <img src="../img/logo.jpeg" alt="Logo" class="img-fluid small-logo">
+                        <img src="/img/logo.jpeg" alt="Logo" class="img-fluid small-logo">
                         <h1>{{#event.id}}Editar Evento: {{event.name}}{{/event.id}}{{^event.id}}Crear evento{{/event.id}}</h1>
                     </div>
                     <!-- Body of the card containing the form fields -->
@@ -109,7 +109,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="../js/validateEvent.js"></script>
+    <script src="/js/validateEvent.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var selectedCategoryId = "{{#event.id}}{{event.category.id}}{{/event.id}}";
