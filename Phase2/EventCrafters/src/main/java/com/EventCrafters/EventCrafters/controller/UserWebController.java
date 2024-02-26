@@ -164,12 +164,6 @@ public class UserWebController {
 		return ResponseEntity.ok(false);
 	}
 
-	@GetMapping("/changePassword/{nickname}")
-	public String changePassword(Model model, @PathVariable String nickname) {
-		// To-do: implement the whole thing
-		return "change_password";
-	}
-
 	@GetMapping("/recoverPassword/{user}")
 	public String recoverPassword(Model model, @PathVariable String user) {
 		Optional<User> userOptional = userService.findByUserName(user);
@@ -220,11 +214,6 @@ public class UserWebController {
 		return "redirect:/login";
 	}
 
-	@PostMapping("/changePassword/{nickname}")
-	public String sendChangePassword(Model model, @PathVariable String nickname) {
-		// To-do: implement the whole thing
-		return "redirect:/profile"; // if user was signed in, login screen otherwise
-	}
 
 	@PostMapping("/delete-account")
 	public String deleteAccount() {
