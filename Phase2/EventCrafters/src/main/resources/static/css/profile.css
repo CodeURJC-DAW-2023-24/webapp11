@@ -438,3 +438,8 @@ becomes the last one in its parent element
     width: 200px;
     margin: 0 auto;
 }
+
+#main-container-profile {
+    height: 100vh; 
+}
+
