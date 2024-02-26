@@ -290,6 +290,9 @@ public class UserWebController {
 				try {
 					byte[] fileContent = Files.readAllBytes(imagePath);
 					photoBlob = new SerialBlob(fileContent);
+					User user = userOptional.get();
+					user.setPhoto(photoBlob);
+					userService.save(user);
 				} catch (IOException | SQLException e) {
 					e.printStackTrace();
 					return null;
