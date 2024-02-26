@@ -318,13 +318,13 @@ public class UserWebController {
 	}
 
 	@PostMapping("/ban")
-	public String banUser(@RequestParam("username") String username) {
+	public String banUser(@RequestParam("usernameBan") String username) {
 		userService.banUserByUsername(username);
 		return "redirect:/profile";
 	}
 
 	@PostMapping("/unban")
-	public String unbanUser(@RequestParam("username") String username) {
+	public String unbanUser(@RequestParam("usernameUnBan") String username) {
 		userService.unbanUserByUsername(username);
 		return "redirect:/profile";
 	}

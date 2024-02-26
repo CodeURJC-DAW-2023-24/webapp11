@@ -166,10 +166,42 @@ function showReloadWarning() {
 
 
 function warnBan() {
-    alert("Ha baneado al usuario.");
+    var userName = document.getElementById("usernameBan").value;
+    if (userName==="admin") {
+        alert("No se puede banear al administrador del sistema.")
+        return false;
+    }
+    fetch("/IsUsernameTaken",{
+        method : "POST",
+        body : userName,
+    })
+        .then(response => {
+            if (!response.ok) {
+                alert("Ha baneado al usuario.");
+                return true;
+            } else {
+                alert("El usuario no existe.");
+                return false;
+            }
+        })
 }
 function warnUnBan() {
-    alert("Ha desbaneado al usuario.");
+    var userName = document.getElementById("usernameUnBan").value;
+
+    fetch("/IsUserBanned",{
+        method : "POST",
+        body : userName,
+    })
+        .then(response => response.json())
+        .then(isBanned => {
+            if (isBanned) {
+                alert("Usuario desbaneado")
+                return true;
+            } else {
+                alert("El usuario no estaba baneado");
+                return false;
+            }
+        })
 }
 
 // Obtener referencia al botón de banear

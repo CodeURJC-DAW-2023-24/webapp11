@@ -151,7 +151,7 @@
                             <form id="ban-user-form" action="/ban" method="post">
                                 <div class="form-group">
                                     <label for="username">Nombre de Usuario:</label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
+                                    <input type="text" class="form-control" id="usernameBan" name="usernameBan" required>
                                 </div>
                                 <button type="submit" onclick ="return warnBan()" class="btn btn-primary" >Banear Usuario</button>
                             </form>
@@ -165,7 +165,7 @@
                             <form id="unban-user-form" action="/unban" method="post">
                                 <div class="form-group">
                                     <label for="username">Nombre de Usuario:</label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
+                                    <input type="text" class="form-control" id="usernameUnBan" name="usernameUnBan" required>
                                 </div>
                                 <button type="submit" onclick="return warnUnBan()" class="btn btn-primary">Desbanear Usuario</button>
                             </form>
