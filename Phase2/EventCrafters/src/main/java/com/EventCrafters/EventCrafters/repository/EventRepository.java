@@ -33,9 +33,14 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             nativeQuery = true)
     List<Event> findByCreatorIdCurrentCreatedEvents(long id);
 
-    @Query(value = "SELECT eventcrafters.events_registered_users.registered_in_events_id FROM eventcrafters.events_registered_users where eventcrafters.events_registered_users.registered_users_id = ?1",
+    // this gets the id not the events
+    @Query(value = "SELECT e.id,e.additional_info, e.attendees_count, e.description, e.end_date, e.location, e.map, e.max_capacity, e.name, e.num_registered_users, e.photo, e.price, e.start_date, e.category_id, e.creator_id FROM eventcrafters.events_registered_users eru JOIN eventcrafters.events e ON eru.registered_in_events_id = e.id where eru.registered_users_id = ?1 and e.end_date < curdate();",
             nativeQuery = true)
-    Set<Event> findByRegisteredUserId(long id);
+    List<Event> findByRegisteredUserIdPastEvents(long id);
+
+    @Query(value = "SELECT e.id,e.additional_info, e.attendees_count, e.description, e.end_date, e.location, e.map, e.max_capacity, e.name, e.num_registered_users, e.photo, e.price, e.start_date, e.category_id, e.creator_id FROM eventcrafters.events_registered_users eru JOIN eventcrafters.events e ON eru.registered_in_events_id = e.id where eru.registered_users_id = ?1 and e.end_date > curdate();",
+            nativeQuery = true)
+    List<Event> findByRegisteredUserIdCurrentEvents(long id);
 
     @Modifying
     @Transactional
