@@ -43,19 +43,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         https.authorizeRequests().antMatchers("/ticket").permitAll();
         https.authorizeRequests().antMatchers("/recoverPassword/*").permitAll();
         https.authorizeRequests().antMatchers("/recoverPassword/*/randomToken").permitAll();
+        https.authorizeRequests().antMatchers("/profile/img/*").permitAll();
 
 
 
         // Private pages
         https.authorizeRequests().antMatchers("/delete-account").hasAnyRole("USER");
         https.authorizeRequests().antMatchers("/chart-page").hasAnyRole("ADMIN");
-        https.authorizeRequests().antMatchers("/ban").hasAnyRole("USER");
-        https.authorizeRequests().antMatchers("/unban").hasAnyRole("USER");
-        https.authorizeRequests().antMatchers("/logout").hasAnyRole("USER");
+        https.authorizeRequests().antMatchers("/ban").hasAnyRole("ADMIN");
+        https.authorizeRequests().antMatchers("/unban").hasAnyRole("ADMIN");
+        https.authorizeRequests().antMatchers("/logout").hasAnyRole("USER", "ADMIN");
         https.authorizeRequests().antMatchers("/profile").hasAnyRole("USER","ADMIN");
         https.authorizeRequests().antMatchers("/updateProfile").hasAnyRole("USER");
         https.authorizeRequests().antMatchers("/setProfilePicture").hasAnyRole("USER", "ADMIN");
-        https.authorizeRequests().antMatchers("/profile/img/*").hasAnyRole("USER");
         //https.authorizeRequests().antMatchers("/deleteAccount").hasAnyRole("USER");
         //https.authorizeRequests().antMatchers("/newEvent").hasAnyRole("USER");
         //https.authorizeRequests().antMatchers("/deleteEvent/*").hasAnyRole("USER");
