@@ -142,7 +142,7 @@
                     </div>
 
                     <div class="col text-center profile {{showWhenAdmin}}">
-                        <button id="ban-user-btn" class="btn btn-warning">Banear</button>
+                        <button id="ban-user-btn" class="btn btn-warning"><i class="fas fa-user-slash"></i>Banear</button>
 
                         <!-- Hidden div for the ban pop-up -->
                         <div id="ban-user-popup" style="display: none;">
@@ -151,12 +151,12 @@
                                     <label for="username">Nombre de Usuario:</label>
                                     <input type="text" class="form-control" id="usernameBan" name="usernameBan" required>
                                 </div>
-                                <button type="submit" onclick ="return warnBan()" class="btn btn-primary" >Banear Usuario</button>
+                                <button type="submit" onclick ="return warnBan()" class="btn btn-primary"><i class="fas fa-user-slash"></i>Banear Usuario</button>
                             </form>
                         </div>
                     </div>
                     <div class="col text-right profile {{showWhenAdmin}}">
-                        <button id="unban-user-btn" class="btn btn-success">Desbanear</button>
+                        <button id="unban-user-btn" class="btn btn-success"><i class="fas fa-user"></i>Desbanear</button>
 
                         <!-- Hidden div for the unban pop-up -->
                         <div id="unban-user-popup" style="display: none;">
@@ -165,7 +165,8 @@
                                     <label for="username">Nombre de Usuario:</label>
                                     <input type="text" class="form-control" id="usernameUnBan" name="usernameUnBan" required>
                                 </div>
-                                <button type="submit" onclick="return warnUnBan()" class="btn btn-primary">Desbanear Usuario</button>
+                                <button type="submit" onclick="return warnUnBan()" class="btn btn-primary"><i class="fas fa-user"></i>
+                                    Desbanear Usuario</button>
                             </form>
                         </div>
                     </div>
