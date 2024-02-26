@@ -4,7 +4,7 @@ const deleteAccountBtn = document.getElementById('delete-account-btn'),
     createdEventsContainer = document.getElementById('created-events-container'),
     pastCreatedEventsContainer = document.getElementById('past-created-events-container'),
     registeredEventsContainer = document.getElementById('registered-events-container'),
-    registeredPastEventsContainer = document.getElementById('registered-events-past-container'),
+    registeredPastEventsContainer = document.getElementById('past-registered-events-container'),
     moreTagsBtnDiv = document.getElementById('more-tags-btn-div'),
     moreCreatedEventsBtnDiv = document.getElementById('more-events-btn-div-1'),
     morePastCreatedEventsBtnDiv = document.getElementById('more-events-btn-div-2'),
@@ -114,8 +114,8 @@ pastCreatedEventsObserver.observe(pastCreatedEventsContainer, {childList: true})
 let registeredEventsObserver = repeatableObserver(moreRegisteredEventsBtnDiv);
 registeredEventsObserver.observe(registeredEventsContainer, {childList: true});
 
-//let registeredPastEventsObserver = repeatableObserver(moreRegisteredPastEventsBtnDiv);
-//registeredPastEventsObserver.observe(registeredPastEventsContainer, {childList: true});
+let registeredPastEventsObserver = repeatableObserver(moreRegisteredPastEventsBtnDiv);
+registeredPastEventsObserver.observe(registeredPastEventsContainer, {childList: true});
 
 
 

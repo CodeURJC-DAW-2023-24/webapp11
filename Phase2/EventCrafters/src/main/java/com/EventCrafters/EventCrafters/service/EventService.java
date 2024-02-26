@@ -89,7 +89,7 @@ public class EventService {
 				this.allEvents.set(i, repository.findByCreatorIdCurrentCreatedEvents(id));
 				break;
 			case 2 :
-				this.allEvents.set(i, repository.findByCreatorIdCurrentCreatedEvents(id));
+				this.allEvents.set(i, repository.findByCreatorIdPastCreatedEvents(id));
 				break;
 			case 3:
 				this.allEvents.set(i, repository.findByRegisteredUserIdCurrentEvents(id));
