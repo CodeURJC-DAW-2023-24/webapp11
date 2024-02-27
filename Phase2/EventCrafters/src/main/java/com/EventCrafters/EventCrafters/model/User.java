@@ -1,17 +1,22 @@
 package com.EventCrafters.EventCrafters.model;
 
+import java.io.IOException;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.sql.rowset.serial.SerialBlob;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StreamUtils;
 
 /**
  *
@@ -63,8 +68,12 @@ public class User {
 		this.email = email;
 		this.encodedPassword = encodedPassword;
 		this.roles = List.of(roles);
-		this.photo = photo;
 		this.banned = false;
+		if (photo!=null){
+			this.photo = photo;
+		} else {
+			this.setDefaultPhoto();
+		}
 	}
 
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -92,5 +101,16 @@ public class User {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setDefaultPhoto() {
+		try {
+			ClassPathResource imgFile = new ClassPathResource("static/img/fotoPerfil.jpg");
+			byte[] photoBytes = new byte[0];
+			photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+			this.photo = new SerialBlob(photoBytes);
+		} catch (IOException | SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

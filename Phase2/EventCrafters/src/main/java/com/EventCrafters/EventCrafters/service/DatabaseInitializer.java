@@ -1,6 +1,7 @@
 package com.EventCrafters.EventCrafters.service;
 
 import javax.annotation.PostConstruct;
+import javax.sql.rowset.serial.SerialBlob;
 
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
@@ -54,11 +55,11 @@ public class DatabaseInitializer {
 
 		ClassPathResource imgFile = new ClassPathResource("static/img/fotoPerfil.jpg");
 		byte[] photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
-		Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photoBytes);
+		Blob photoBlob = new SerialBlob(photoBytes);
 
 		ClassPathResource imgFile2 = new ClassPathResource("static/img/fotoPerfil.jpg");
 		byte[] photoBytes2 = StreamUtils.copyToByteArray(imgFile2.getInputStream());
-		Blob photoBlobuser = new javax.sql.rowset.serial.SerialBlob(photoBytes2);
+		Blob photoBlobuser = new SerialBlob(photoBytes);
 
 
 		LocalDate startDate = LocalDate.of(2022, 1, 1);

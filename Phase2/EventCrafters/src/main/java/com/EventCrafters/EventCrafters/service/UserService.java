@@ -38,6 +38,7 @@ public class UserService {
 	}
 
 	public void save(User user) {
+		if (user.getPhoto()==null) user.setDefaultPhoto();
 		repository.save(user);
 	}
 

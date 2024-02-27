@@ -7,6 +7,7 @@ import com.EventCrafters.EventCrafters.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -127,24 +129,21 @@ public class UserWebController {
 
 	@GetMapping("/register")
 	public String register(Model model) {
-		// To-do: implement the whole thing
-
 		model.addAttribute("user", new User());
-
 		return "register";
 	}
 
 	@PostMapping("/register")
 	public String createAccount(Model model, User user) {
-		// To-do: implement the whole thing
-		//if (!userService.findAll().contains(user))
-
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 		user.setRole("USER");
+
+		if (user.getPhoto()==null){
+			user.setDefaultPhoto();
+		}
 		userService.save(user);
-		//log them in somehow
-		return "redirect:/login"; // or previous screen
+		return "redirect:/login";
 	}
 
 	@PostMapping("/IsUsernameTaken")
