@@ -77,7 +77,7 @@ public class ReviewController {
                             "</div>" +
                             "</body>" +
                             "</html>",
-                    event.getName(), rating, user.getUsername(), review.getText().replace("\n", "<br>"));
+                    event.getName(), user.getUsername(), rating, review.getText().replace("\n", "<br>"));
 
             mailService.sendEmail(eventCreator, subject, content, true);
 
