@@ -13,9 +13,7 @@ import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.Review;
 import com.EventCrafters.EventCrafters.model.User;
-import com.EventCrafters.EventCrafters.service.CategoryService;
-import com.EventCrafters.EventCrafters.service.ReviewService;
-import com.EventCrafters.EventCrafters.service.UserService;
+import com.EventCrafters.EventCrafters.service.*;
 import org.apache.catalina.filters.RemoteIpFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.EventCrafters.EventCrafters.service.EventService;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,6 +32,9 @@ public class EventWebController {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private UserService userService;
@@ -462,8 +462,38 @@ public class EventWebController {
         event.setCategory(category);
 
         eventService.save(event);
+
+        Set<User> registeredUsers = event.getRegisteredUsers();
+        String subject = "Actualización del Evento: " + name;
+        for (User user : registeredUsers) {
+            String content = generateUpdateEmailContent(name);
+            mailService.sendEmail(user, subject, content, true);
+        }
+
         return "redirect:/event/" + id;
     }
+
+    private String generateUpdateEmailContent(String eventName) {
+        return String.format(
+                "<html>" +
+                        "<head>" +
+                        "<style>" +
+                        "body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #333; }" +
+                        ".container { background-color: #f8f8f8; border-radius: 10px; padding: 20px; text-align: center; }" +
+                        "h2 { color: #4CAF50; }" +
+                        "p { margin: 10px 0; }" +
+                        "</style>" +
+                        "</head>" +
+                        "<body>" +
+                        "<div class='container'>" +
+                        "<h2>Uno de los eventos en los que estás inscrito ha sido modificado</h2>" +
+                        "<p>El evento '%s' ha recibido importantes actualizaciones.</p>" +
+                        "<p>Te invitamos a iniciar sesión en tu cuenta para descubrir todas las novedades.</p>" +
+                        "</div>" +
+                        "</body>" +
+                        "</html>", eventName);
+    }
+
 
     @GetMapping("/moreEventsProfile/{i}")
     public String moreEventsProfile(Model model, @PathVariable int i){
