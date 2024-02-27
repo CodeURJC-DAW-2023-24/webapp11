@@ -1,6 +1,7 @@
 package com.EventCrafters.EventCrafters.model;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -65,6 +66,9 @@ public class Event {
 	@Setter(AccessLevel.NONE)
 	private int numRegisteredUsers;
 
+	private String formattedStartDate;
+	private String formattedEndDate;
+
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Review> reviews = new HashSet<>();
 
@@ -86,10 +90,18 @@ public class Event {
 		this.endDate = endDate;
 		this.additionalInfo = additionalInfo;
 		this.numRegisteredUsers = 0;
+		this.formattedStartDate = formatDate(startDate);
+		this.formattedEndDate = formatDate(endDate);
 	}
 
 	public int getNumRegisteredUsers() {
 		this.numRegisteredUsers = this.getRegisteredUsers().size();
 		return numRegisteredUsers;
+	}
+
+	public String formatDate(Date date) {
+		if (date == null) return null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		return sdf.format(date);
 	}
 }

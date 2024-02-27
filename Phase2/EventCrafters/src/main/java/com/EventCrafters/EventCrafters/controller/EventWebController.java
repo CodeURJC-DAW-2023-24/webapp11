@@ -181,8 +181,8 @@ public class EventWebController {
             int numRegisteredUsers = event.getRegisteredUsers().size();
 
             String priceDisplay = event.getPrice() == 0.0 ? "Gratis" : String.format("%.2f €", event.getPrice());
-            String startDateFormatted = formatDate(event.getStartDate());
-            String endDateFormatted = formatDate(event.getEndDate());
+            String startDateFormatted = event.getFormattedStartDate();
+            String endDateFormatted = event.getFormattedEndDate();
             Duration duration = Duration.between(event.getStartDate().toInstant(), event.getEndDate().toInstant());
             long hours = duration.toHours();
             long minutes = duration.minusHours(hours).toMinutes();
@@ -283,8 +283,8 @@ public class EventWebController {
             int numRegisteredUsers = event.getRegisteredUsers().size()+1;
 
             String priceDisplay = event.getPrice() == 0.0 ? "Gratis" : String.format("%.2f €", event.getPrice());
-            String startDateFormatted = formatDate(event.getStartDate());
-            String endDateFormatted = formatDate(event.getEndDate());
+            String startDateFormatted = event.getFormattedStartDate();
+            String endDateFormatted = event.getFormattedEndDate();
             Duration duration = Duration.between(event.getStartDate().toInstant(), event.getEndDate().toInstant());
             long hours = duration.toHours();
             long minutes = duration.minusHours(hours).toMinutes();
@@ -298,7 +298,7 @@ public class EventWebController {
             model.addAttribute("logged", isLoggedIn);
             model.addAttribute("isUserCreatorOrAdmin", isUserCreatorOrAdmin);
             model.addAttribute("isUserRegistered", isUserRegistered);
-            model.addAttribute("numRegisteredUsers", numRegisteredUsers);
+            model.addAttribute("numRegisteredUsers", numRegisteredUsers-1);
             model.addAttribute("userName", currentUser.get().getName());
             model.addAttribute("userNick", currentUser.get().getUsername());
             model.addAttribute("userEmail", currentUser.get().getEmail());
@@ -383,11 +383,6 @@ public class EventWebController {
         }
     }
 
-    public static String formatDate(Date date) {
-        if (date == null) return null;
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
-        return sdf.format(date);
-    }
 
     @GetMapping("/search")
     public String filterByTag(Model model, @RequestParam("categoryId") long id){
