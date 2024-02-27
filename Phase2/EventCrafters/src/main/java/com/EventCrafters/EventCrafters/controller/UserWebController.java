@@ -285,19 +285,6 @@ public class UserWebController {
 
 		if (userOptional.isPresent()) {
 			Blob photoBlob = userOptional.get().getPhoto();
-			if (photoBlob==null) {
-				Path imagePath = Path.of("src/main/resources/static/img/fotoPerfil.jpg");
-				try {
-					byte[] fileContent = Files.readAllBytes(imagePath);
-					photoBlob = new SerialBlob(fileContent);
-					User user = userOptional.get();
-					user.setPhoto(photoBlob);
-					userService.save(user);
-				} catch (IOException | SQLException e) {
-					e.printStackTrace();
-					return null;
-				}
-			}
             int blobLength = (int) photoBlob.length();
 			byte[] blobAsBytes = photoBlob.getBytes(1, blobLength);
 			photoBlob.free();

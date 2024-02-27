@@ -39,6 +39,7 @@ public class User {
 	private String email;
 
 	@Lob
+	@Column(nullable = false)
 	private Blob photo;
 
 	@JsonIgnore
