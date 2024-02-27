@@ -179,12 +179,20 @@
                                 </form>
                             {{/attendeesCountSet}}
                         </div>
+                    <div class = "graphicContainer">
                         <div class="event-attendance-chart-section mt-3">
                             {{#attendeesCountSet}}
                                 <h4><i class="fas fa-chart-pie"></i> Gráfica de Asistencia</h4>
-                                <canvas id="attendanceChart"></canvas>
+                                <div class="container map-container">
+                                    <div class="row flex-wrap">
+                                        <div class="map">
+                                            <canvas id="attendanceChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
                             {{/attendeesCountSet}}
                         </div>
+                    </div>
                     {{/isUserCreatorOrAdmin}}
                 </div>
                 <div class="event-average-rating-section mt-4">
@@ -292,8 +300,8 @@
                 }]
             },
             options: {
-                responsive: true,
-                legend: {
+                responsive: true, // Desactiva la respuesta al tamaño del contenedor
+               legend: {
                     position: 'top',
                 },
                 title: {
