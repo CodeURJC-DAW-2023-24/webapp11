@@ -57,8 +57,8 @@ public class DatabaseInitializer {
 		Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photoBytes);
 
 		ClassPathResource imgFile2 = new ClassPathResource("static/img/fotoPerfil.jpg");
-		byte[] photoBytes2 = StreamUtils.copyToByteArray(imgFile.getInputStream());
-		Blob photoBlobuser = new javax.sql.rowset.serial.SerialBlob(photoBytes);
+		byte[] photoBytes2 = StreamUtils.copyToByteArray(imgFile2.getInputStream());
+		Blob photoBlobuser = new javax.sql.rowset.serial.SerialBlob(photoBytes2);
 
 
 		LocalDate startDate = LocalDate.of(2022, 1, 1);
