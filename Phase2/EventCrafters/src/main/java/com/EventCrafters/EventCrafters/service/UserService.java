@@ -78,6 +78,11 @@ public class UserService {
 		Optional<User> userOptional = repository.findByUsername(username);
 		User user = userOptional.orElse(null);
 		if (user != null) {
+			repository.deleteRegistrationsByUserId(user.getId());
+			reviewRepository.deleteReviewsByUserId(user.getId());
+			for (Event event : eventRepository.findByCreatorId(user.getId())) {
+				eventService.delete(event.getId());
+			}
 			user.setBanned(true);
 			repository.save(user);
 		}
