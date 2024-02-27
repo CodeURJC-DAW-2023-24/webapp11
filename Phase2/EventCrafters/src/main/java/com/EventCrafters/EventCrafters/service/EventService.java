@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
+import com.EventCrafters.EventCrafters.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class EventService {
 
+	@Autowired
+	private MailService mailService;
 
 	private List<List<Event>> allEvents;
 	private List<Integer> nextEventIndex;
@@ -52,12 +55,47 @@ public class EventService {
 		}
 	}
 
-
 	@Transactional
 	public void delete(Long eventId) {
+		Optional<Event> eventOptional = repository.findById(eventId);
+		Date now = new Date();
+		if(eventOptional.isPresent()) {
+			Event event = eventOptional.get();
+			if(event.getStartDate().after(now)) {
+				for (User notifiedUser : event.getRegisteredUsers()) {
+					String subject = "Información Importante Sobre Tu Evento Inscrito";
+					String content = generateEmailContent(event.getName());
+					mailService.sendEmail(notifiedUser, subject, content, true);
+				}
+			}
+		}
 		repository.deleteReviewsByEventId(eventId);
 		repository.deleteEventUserByEventId(eventId);
 		repository.deleteEventByIdCustom(eventId);
+
+	}
+
+	private String generateEmailContent(String eventName) {
+		return String.format(
+				"<html>" +
+						"<head>" +
+						"<style>" +
+						"body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #333; }" +
+						".container { background-color: #f8f8f8; border: 1px solid #ddd; padding: 20px; }" +
+						"h2 { color: #f40; }" +
+						"p { margin: 10px 0; }" +
+						"</style>" +
+						"</head>" +
+						"<body>" +
+						"<div class='container'>" +
+						"<h2>Evento Cancelado: '%s'</h2>" +
+						"<p>Querido participante,</p>" +
+						"<p>Lamentamos informarte que el evento '%s', en el cual estabas inscrito, ha sido cancelado.</p>" +
+						"<p>Entendemos que esto puede ser decepcionante y agradecemos tu comprensión. Estamos comprometidos a ofrecerte la mejor experiencia y te invitamos a explorar otros eventos emocionantes en nuestra plataforma.</p>" +
+						"<p>Gracias por tu apoyo continuo.</p>" +
+						"</div>" +
+						"</body>" +
+						"</html>", eventName, eventName);
 	}
 
 	public List<Event> findByCategory(long id) {return repository.findByCategory(id);}

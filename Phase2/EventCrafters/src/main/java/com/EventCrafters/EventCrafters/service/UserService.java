@@ -1,6 +1,8 @@
 package com.EventCrafters.EventCrafters.service;
 
+import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.User;
+import com.EventCrafters.EventCrafters.repository.EventRepository;
 import com.EventCrafters.EventCrafters.repository.ReviewRepository;
 import com.EventCrafters.EventCrafters.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,12 @@ public class UserService {
 
 	@Autowired
 	private ReviewRepository reviewRepository;
+
+	@Autowired
+	private EventRepository eventRepository;
+
+	@Autowired
+	private EventService eventService;
 
 
 	public Optional<User> findById(long id) {
@@ -51,12 +59,19 @@ public class UserService {
 		User user = userOptional.orElse(null);
 		return user != null ? user.getId() : null;
 	}
+
 	@Transactional
 	public void deleteUserById(Long userId) {
-		repository.deleteRegistrationsByUserId(userId);
-		reviewRepository.deleteReviewsByUserId(userId);
-		repository.deleteById(userId);
-
+		Optional<User> userOptional = repository.findById(userId);
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			repository.deleteRegistrationsByUserId(userId);
+			reviewRepository.deleteReviewsByUserId(userId);
+			for (Event event : eventRepository.findByCreatorId(user.getId())) {
+				eventService.delete(event.getId());
+			}
+			repository.deleteById(userId);
+		}
 	}
 
 	public void banUserByUsername(String username) {

@@ -56,5 +56,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query(value = "DELETE FROM events WHERE id = ?1", nativeQuery = true)
     void deleteEventByIdCustom(Long eventId);
 
-
+    List<Event> findByCreatorId(Long creatorId);
 }
