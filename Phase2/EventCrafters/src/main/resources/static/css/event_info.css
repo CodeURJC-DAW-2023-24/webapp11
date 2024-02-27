@@ -175,7 +175,7 @@ body {
     border-radius: 10px;
 }
 
-.map-container{
+.map-container, .charts-container{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -270,4 +270,5 @@ iframe {
     background-color: #004094;
     border-color: #004094;
 }
+
 

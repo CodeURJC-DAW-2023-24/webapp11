@@ -183,9 +183,9 @@
                         <div class="event-attendance-chart-section mt-3">
                             {{#attendeesCountSet}}
                                 <h4><i class="fas fa-chart-pie"></i> Gráfica de Asistencia</h4>
-                                <div class="container map-container">
+                                <div class="container charts-container">
                                     <div class="row flex-wrap">
-                                        <div class="map">
+                                        <div class="chart">
                                             <canvas id="attendanceChart"></canvas>
                                         </div>
                                     </div>
@@ -300,7 +300,8 @@
                 }]
             },
             options: {
-                responsive: true, // Desactiva la respuesta al tamaño del contenedor
+                responsive: false,
+                maintainAspectRatio: false,
                legend: {
                     position: 'top',
                 },
