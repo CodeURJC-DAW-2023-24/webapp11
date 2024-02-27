@@ -56,6 +56,11 @@ public class DatabaseInitializer {
 		byte[] photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
 		Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photoBytes);
 
+		ClassPathResource imgFile2 = new ClassPathResource("static/img/fotoPerfil.jpg");
+		byte[] photoBytes2 = StreamUtils.copyToByteArray(imgFile.getInputStream());
+		Blob photoBlobuser = new javax.sql.rowset.serial.SerialBlob(photoBytes);
+
+
 		LocalDate startDate = LocalDate.of(2022, 1, 1);
 		LocalDate endDate = LocalDate.of(2022, 1, 1);
 		LocalDate endDate2 = LocalDate.of(2025, 1, 1);
@@ -71,16 +76,16 @@ public class DatabaseInitializer {
 		Event event5 = new Event("martillo", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
 		Event event6 = new Event("esternocleidomatoideo", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
 
-		User user2 = new User("Juan Usuario","user2","user@gmail.com", photoBlob , passwordEncoder.encode("pass"), "USER" );
+		User user2 = new User("Juan Usuario","user2","user@gmail.com", photoBlobuser , passwordEncoder.encode("pass"), "USER" );
 		userRepository.save(user2);
-		User user3 = new User("Juan Usuario","user3","user@gmail.com", photoBlob , passwordEncoder.encode("pass"), "USER");
+		User user3 = new User("Juan Usuario","user3","user@gmail.com", photoBlobuser , passwordEncoder.encode("pass"), "USER");
 		userRepository.save(user3);
-		User user4 = new User("Juan Usuario","user4","user@gmail.com", photoBlob , passwordEncoder.encode("pass"), "USER");
+		User user4 = new User("Juan Usuario","user4","user@gmail.com", photoBlobuser , passwordEncoder.encode("pass"), "USER");
 		userRepository.save(user4);
 
-		User user = new User("Juan Usuario","user","user@gmail.com", photoBlob , passwordEncoder.encode("pass"), "USER");
+		User user = new User("Juan Usuario","user","user@gmail.com", photoBlobuser , passwordEncoder.encode("pass"), "USER");
 		userRepository.save(user);
-		userRepository.save(new User("Pepe Admin","admin","", photoBlob , passwordEncoder.encode("adminpass"), "ADMIN"));
+		userRepository.save(new User("Pepe Admin","admin","", photoBlobuser , passwordEncoder.encode("adminpass"), "ADMIN"));
 
 		// categories
 		Category deporte = new Category("Deporte", "#cc00ff");
