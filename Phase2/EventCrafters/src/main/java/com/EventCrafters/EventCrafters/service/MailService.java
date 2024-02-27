@@ -18,8 +18,11 @@ public class MailService {
     public MailService(){
         username = "marquesgarciaangel@gmail.com";
         password = "zdag mpol eeyf bbnf";
+        // eventcrafterurjc@hotmail.es ebcgbkjxlainuswd event_crafters_pass
+        //@gmail
         //marquesgarciaangel zdag mpol eeyf bbnf
         //eventcraftersurjc gcun zfgb fdds uuqe
+        //eventcrafter.info rryb lkgl snus ockz
 
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
