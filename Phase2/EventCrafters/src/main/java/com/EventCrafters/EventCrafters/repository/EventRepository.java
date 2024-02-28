@@ -33,13 +33,18 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             nativeQuery = true)
     List<Event> findByCreatorIdCurrentCreatedEvents(long id);
 
-    @Query(value = "SELECT e.id,e.additional_info, e.attendees_count, e.description, e.end_date, e.location, e.map, e.max_capacity, e.name, e.num_registered_users, e.photo, e.price, e.start_date, e.category_id, e.creator_id FROM eventcrafters.events_registered_users eru JOIN eventcrafters.events e ON eru.registered_in_events_id = e.id where eru.registered_users_id = ?1 and e.end_date < curdate();",
+    @Query(value = "SELECT e.id,e.additional_info, e.attendees_count, e.description, e.end_date, e.formatted_end_date, e.formatted_start_date, e.location, e.map, e.max_capacity, e.name, e.num_registered_users, e.photo, e.price, e.start_date, e.category_id, e.creator_id FROM eventcrafters.events_registered_users eru JOIN eventcrafters.events e ON eru.registered_in_events_id = e.id where eru.registered_users_id = ?1 and e.end_date < curdate();",
             nativeQuery = true)
     List<Event> findByRegisteredUserIdPastEvents(long id);
 
-    @Query(value = "SELECT e.id,e.additional_info, e.attendees_count, e.description, e.end_date, e.location, e.map, e.max_capacity, e.name, e.num_registered_users, e.photo, e.price, e.start_date, e.category_id, e.creator_id FROM eventcrafters.events_registered_users eru JOIN eventcrafters.events e ON eru.registered_in_events_id = e.id where eru.registered_users_id = ?1 and e.end_date > curdate();",
+    @Query(value = "SELECT e.id,e.additional_info, e.attendees_count, e.description, e.end_date, e.formatted_end_date, e.formatted_start_date, e.location, e.map, e.max_capacity, e.name, e.num_registered_users, e.photo, e.price, e.start_date, e.category_id, e.creator_id FROM eventcrafters.events_registered_users eru JOIN eventcrafters.events e ON eru.registered_in_events_id = e.id where eru.registered_users_id = ?1 and e.end_date > curdate();",
             nativeQuery = true)
     List<Event> findByRegisteredUserIdCurrentEvents(long id);
+
+    @Query(value = "SELECT eru.registered_in_events_id, count(eru.registered_users_id) as re_count FROM eventcrafters.events_registered_users eru group by eru.registered_in_events_id order by re_count desc;",
+            nativeQuery = true)
+    List<Object[]> findByRegisteredUsersCount();
+
 
     @Modifying
     @Transactional

@@ -31,4 +31,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Transactional
     @Query("update Event e set e.category.id = 1 where e.category.id = :categoryId")
     void reassignEventsToDefaultCategory(Long categoryId);
+
+
 }

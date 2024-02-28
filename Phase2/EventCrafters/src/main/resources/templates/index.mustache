@@ -53,10 +53,10 @@
     </div>
 </div>
 
-<div class="container text-center mt-4" style="display: {{moreEvents}}" id="home-load-more-btn-div">
+<div class="container text-center mt-4" {{#moreEvents}}style="display: none"{{/moreEvents}} id="home-load-more-btn-div">
     <div class="row justify-content-center">
         <div class="col-auto">
-            <button class="btn btn-primary" data-type="/newEvents" id="home-load-more-btn">Cargar más eventos</button>
+            <button class="btn btn-primary" data-type="{{i}}" id="home-load-more-btn">Cargar más eventos</button>
         </div>
     </div>
 </div>

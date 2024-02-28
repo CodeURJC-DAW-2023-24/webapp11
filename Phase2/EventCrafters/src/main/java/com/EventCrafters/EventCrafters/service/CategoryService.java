@@ -91,7 +91,6 @@ public class CategoryService {
 		int aux = this.findAll().size();
 		int i;
 		for (i = 0; i< aux;i++){
-			System.out.println(aux);
 			finalList.add(0);
 		}
 		for (i = 0; i<size;i++) {

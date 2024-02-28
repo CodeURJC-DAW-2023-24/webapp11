@@ -1,5 +1,6 @@
 package com.EventCrafters.EventCrafters.service;
 
+import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.repository.EventRepository;
@@ -11,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +31,9 @@ public class UserService {
 
 	@Autowired
 	private EventService eventService;
+
+	@Autowired
+	private CategoryService categoryService;
 
 
 	public Optional<User> findById(long id) {
@@ -112,5 +118,26 @@ public class UserService {
 			user.setBanned(false);
 			repository.save(user);
 		}
+	}
+
+	public List<Event> getUserCategoryPreferences(Long id){
+		List<Object[]> l = repository.getUserCategoryPreferences(id);
+		List<Category> auxList = new ArrayList<>();
+		List<Event> result = new ArrayList<>();
+		for (Object[] element : l){
+			BigInteger aux = (BigInteger) element[0];
+			Optional<Category> e = categoryService.findById(aux.longValue());
+			List<Event> byCategory = eventService.findByCategory(aux.longValue());
+
+			auxList.add(e.get());
+			result.addAll(byCategory);
+		}
+		for (Category c: categoryService.findAll()){
+			if (!auxList.contains(c)){
+				List<Event> byCategory = eventService.findByCategory(c.getId());
+				result.addAll(byCategory);
+			}
+		}
+		return result;
 	}
 }

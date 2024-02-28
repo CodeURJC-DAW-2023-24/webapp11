@@ -47,6 +47,8 @@ public class UserWebController {
 	private UserService userService;
 	@Autowired
 	private EventService eventService;
+	@Autowired
+	private AjaxService ajaxService;
 
 	private ObjectMapper objectMapper;
 
@@ -81,17 +83,15 @@ public class UserWebController {
 		if (user.isPresent()) {
 			model.addAttribute("user", user.get());
 			id = user.get().getId();
-			System.out.println("hola");
-			System.out.println(id);
 
 			if (request.isUserInRole("USER")) {
-				List<Event> currentCreatedE = eventService.findAjax(id, 1);
-				List<Event> pastCreatedE = eventService.findAjax(id, 2);
-				List<Event> userRegisteredCurrentEvents = eventService.findAjax(id, 3);
-				List<Event> userRegisteredPastEvents = eventService.findAjax(id, 4);
+				List<Event> currentCreatedE = ajaxService.findAjax(id, 1);
+				List<Event> pastCreatedE = ajaxService.findAjax(id, 2);
+				List<Event> userRegisteredCurrentEvents = ajaxService.findAjax(id, 3);
+				List<Event> userRegisteredPastEvents = ajaxService.findAjax(id, 4);
 				int i;
 				for (i = 1; i < 5; i++){
-					if (eventService.getAllEvents(i).size() < eventService.getEventsRefreshSize()){
+					if (ajaxService.getAllEvents(i).size() < ajaxService.getEventsRefreshSize()){
 						String aux = "thereAreNoMore" + i;
 						model.addAttribute(aux, "");
 					}
@@ -107,8 +107,8 @@ public class UserWebController {
 				model.addAttribute("createdEvents",1);
 			} else {
 				List<Category> c = categoryService.findAjax();
-				List<Event> e = eventService.findAjax();
-				if (eventService.getAllEvents(0).size()  < eventService.getEventsRefreshSize()){
+				List<Event> e = ajaxService.findAjax(0);
+				if (ajaxService.getAllEvents(0).size()  < ajaxService.getEventsRefreshSize()){
 					model.addAttribute("thereAreNoMore1", "");
 				}
 				if (categoryService.findAll().size() - 1 < categoryService.getCategoryRefreshSize()){

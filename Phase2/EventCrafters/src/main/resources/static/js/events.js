@@ -3,7 +3,7 @@ const homeLoadMoreBtn = document.getElementById('home-load-more-btn');
 //const spinner = document.getElementById('spinner'); // this const is in index.js
 async function loadMore(e) {
     spinner.style.display = "block"
-    let url = e.target.getAttribute('data-type')
+    let url = "/newEvents" + e.target.getAttribute('data-type')
     console.log(url);
     const response = await fetch(`${url}`);
     const newEvent = await response.text(); //Pick new events template structure

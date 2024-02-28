@@ -45,10 +45,8 @@ public class EventWebController {
     @Autowired
     private ReviewService reviewService;
 
-    private List<Event> allEvents;
-
-    private int nextEventIndex = 3;
-    private int eventsRefreshSize = 3;
+    @Autowired
+    private AjaxService ajaxService;
 
 
     @GetMapping("/")
@@ -57,20 +55,25 @@ public class EventWebController {
         boolean isLoggedIn = isAuthenticated(authentication);
         List<Category> c = categoryService.findAll();
 
-        nextEventIndex = eventsRefreshSize;
-        this.allEvents = eventService.findAll();
-
         // for the filters dropdown-menu
         model.addAttribute("categories", c);
 
-        if (allEvents.size() <= nextEventIndex){
-            model.addAttribute("events", allEvents.subList(0,allEvents.size()));
-            nextEventIndex = allEvents.size();
-            model.addAttribute("moreEvents", "none");
-        }
-        else{
-            model.addAttribute("events", allEvents.subList(0,nextEventIndex));
-            model.addAttribute("moreEvents", "block");
+        if (isLoggedIn){
+            String currentUsername = authentication.getName();
+            Optional<User> user = userService.findByUserName(currentUsername);
+            user.ifPresent(value -> model.addAttribute("events", ajaxService.findAjax(value.getId(), 6)));
+            model.addAttribute("i",6);
+            if (ajaxService.getAllEvents(6).size() < ajaxService.getEventsRefreshSize()){
+                String aux = "moreEvents";
+                model.addAttribute(aux, "");
+            }
+        } else {
+            model.addAttribute("events", ajaxService.findAjax(5));
+            model.addAttribute("i",5);
+            if (ajaxService.getAllEvents(5).size() < ajaxService.getEventsRefreshSize()){
+                String aux = "moreEvents";
+                model.addAttribute(aux, "");
+            }
         }
         model.addAttribute("logged", isLoggedIn);
         return "index";
@@ -79,15 +82,18 @@ public class EventWebController {
         return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 
-    @GetMapping("/newEvents")
-    public String newEvents(Model model) {
+    @GetMapping("/newEvents{i}")
+    public String newEvents(Model model, @PathVariable int i) {
+        List<Event> allEvents = ajaxService.getAllEvents(i);
+        int EventRefreshSize = ajaxService.getEventsRefreshSize();
+        int nextEventIndex = ajaxService.getNextEventIndex(i);
         int remainingEvents = allEvents.size() - nextEventIndex;
 
         if (remainingEvents > 0) {
-            int endIndex = nextEventIndex + Math.min(eventsRefreshSize, remainingEvents);
-            model.addAttribute("additionalEvents", allEvents.subList(nextEventIndex, endIndex));
-            nextEventIndex = endIndex;
-            if (allEvents.size() == nextEventIndex){
+            int endIndex = nextEventIndex + Math.min(EventRefreshSize, remainingEvents);
+            model.addAttribute( "additionalEvents", allEvents.subList(nextEventIndex, endIndex));
+            ajaxService.setNextEventIndex(i, endIndex);
+            if (allEvents.size() == endIndex){
                 model.addAttribute("lastEvents", "");
             }
             return "moreEvents";
@@ -163,8 +169,7 @@ public class EventWebController {
                 String currentUsername = authentication.getName();
                 Optional<User> currentUser = userService.findByUserName(currentUsername);
                 if (currentUser.isPresent()) {
-                    Set<Event> aux = currentUser.get().getRegisteredInEvents();
-                    eventsRegistered.addAll(aux);
+                    eventsRegistered = ajaxService.findAjax(currentUser.get().getId(), 3);
 
                     if (event.getCreator().equals(currentUser.get())) {
                         isUserCreatorOrAdmin = true;
@@ -209,15 +214,10 @@ public class EventWebController {
             model.addAttribute("isUserRegistered", isUserRegistered);
             model.addAttribute("numRegisteredUsers", numRegisteredUsers);
 
-            nextEventIndex = eventsRefreshSize;
-
-            if (eventsRegistered.size() <= nextEventIndex){
-                model.addAttribute("otherEvents", eventsRegistered);
-                nextEventIndex = eventsRegistered.size();
+            model.addAttribute("otherEvents", eventsRegistered);
+            if (ajaxService.getAllEvents(3).size() < ajaxService.getEventsRefreshSize()){
                 model.addAttribute("moreEvents", "none");
-            }
-            else{
-                model.addAttribute("otherEvents", eventsRegistered.subList(0,nextEventIndex));
+            } else {
                 model.addAttribute("moreEvents", "block");
             }
             return "eventInfo";
@@ -228,28 +228,21 @@ public class EventWebController {
 
     @GetMapping("/otherEvents")
     public String otherEvents(Model model) {
-        List <Event> eventsRegistered = new ArrayList<>();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isLoggedIn = isAuthenticated(authentication);
-        if (isLoggedIn) {
-            String currentUsername = authentication.getName();
-            Optional <User> userOptional = userService.findByUserName(currentUsername);
-            if (userOptional.isPresent()){
-                User currentUser = userOptional.get();
-                eventsRegistered.addAll(currentUser.getRegisteredInEvents());
-            }
-        }
+        List<Event> allEvents = ajaxService.getAllEvents(3);
+        int EventRefreshSize = ajaxService.getEventsRefreshSize();
+        int nextEventIndex = ajaxService.getNextEventIndex(3);
+        int remainingEvents = allEvents.size() - nextEventIndex;
 
-        int remainingEvents = eventsRegistered.size() - nextEventIndex;
         if (remainingEvents > 0) {
-            int endIndex = nextEventIndex + Math.min(eventsRefreshSize, remainingEvents);
-            model.addAttribute("events", eventsRegistered.subList(nextEventIndex, endIndex));
-            nextEventIndex = endIndex;
-            if (eventsRegistered.size() == nextEventIndex){
+            int endIndex = nextEventIndex + Math.min(EventRefreshSize, remainingEvents);
+            model.addAttribute( "events", allEvents.subList(nextEventIndex, endIndex));
+            ajaxService.setNextEventIndex(3, endIndex);
+            if (allEvents.size() == endIndex){
                 model.addAttribute("lastEvents", "");
             }
             return "profileEvents";
         }
+
         return "empty";
     }
 
@@ -384,29 +377,29 @@ public class EventWebController {
     }
 
 
-    @GetMapping("/search")
-    public String filterByTag(Model model, @RequestParam("categoryId") long id){
-        nextEventIndex = eventsRefreshSize;
-        this.allEvents = eventService.findByCategory(id);
-        AbstractMap.SimpleEntry<List<Event>, Integer> additionalEvents = eventService.getAdditionalEvents(allEvents, nextEventIndex, eventsRefreshSize);
-        model.addAttribute("additionalEvents", additionalEvents.getKey());
-        nextEventIndex = additionalEvents.getValue();
-        if (allEvents.size() == nextEventIndex){
-            model.addAttribute("lastEvents", "");
+    @GetMapping("/search{i}")
+    public String filterByTag(Model model, @RequestParam("categoryId") long id, @PathVariable int i){
+        List<Event> allEvents = ajaxService.findAjax(id , 7, i);
+        model.addAttribute("additionalEvents", allEvents);
+
+        if (ajaxService.getAllEvents(i).size() < ajaxService.getEventsRefreshSize()){
+            String aux = "lastEvents";
+            model.addAttribute(aux, "");
         }
+
         return "moreEvents";
     }
 
-    @GetMapping("/navbarSearch")
-    public String navbarSearch(Model model, @RequestParam("input") String input){
-        nextEventIndex = eventsRefreshSize;
-        this.allEvents = eventService.findBySearchBar(input);
-        AbstractMap.SimpleEntry<List<Event>, Integer> additionalEvents = eventService.getAdditionalEvents(allEvents, nextEventIndex, eventsRefreshSize);
-        model.addAttribute("additionalEvents", additionalEvents.getKey());
-        nextEventIndex = additionalEvents.getValue();
-        if (allEvents.size() == nextEventIndex){
-            model.addAttribute("lastEvents", "");
+    @GetMapping("/navbarSearch{i}")
+    public String navbarSearch(Model model, @RequestParam("input") String input, @PathVariable int i){
+        List<Event> allEvents = ajaxService.findAjax(8, input, i);
+        model.addAttribute("additionalEvents", allEvents);
+
+        if (ajaxService.getAllEvents(i).size() < ajaxService.getEventsRefreshSize()){
+            String aux = "lastEvents";
+            model.addAttribute(aux, "");
         }
+
         return "moreEvents";
     }
 
@@ -497,15 +490,15 @@ public class EventWebController {
 
     @GetMapping("/moreEventsProfile/{i}")
     public String moreEventsProfile(Model model, @PathVariable int i){
-        List<Event> allEvents = eventService.getAllEvents(i);
-        int EventRefreshSize = eventService.getEventsRefreshSize();
-        int nextEventIndex = eventService.getNextEventIndex(i);
+        List<Event> allEvents = ajaxService.getAllEvents(i);
+        int EventRefreshSize = ajaxService.getEventsRefreshSize();
+        int nextEventIndex = ajaxService.getNextEventIndex(i);
         int remainingEvents = allEvents.size() - nextEventIndex;
 
         if (remainingEvents > 0) {
             int endIndex = nextEventIndex + Math.min(EventRefreshSize, remainingEvents);
             model.addAttribute( "events", allEvents.subList(nextEventIndex, endIndex));
-            eventService.setNextEventIndex(i, endIndex);
+            ajaxService.setNextEventIndex(i, endIndex);
             if (allEvents.size() == endIndex){
                 model.addAttribute("lastEvents", "");
             }

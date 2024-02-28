@@ -5,9 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     dropdownItems.forEach( (i) => {
         i.addEventListener('click', (e) => {
             e.preventDefault();
+            let i = document.getElementById('home-load-more-btn').getAttribute("data-type")
             let id = e.target.getAttribute('value');
             if (id) {
-                let newURL = `/search?categoryId=${id}`
+                let newURL = `/search${i}?categoryId=${id}`
                 //history.pushState({path: newURL}, '', newURL)
                 doFetch(newURL)
             }
@@ -23,9 +24,11 @@ const spinner = document.getElementById('spinner');
 
 searchBarBtn.addEventListener('click', (e) => {
     e.preventDefault();
+    let i = document.getElementById('home-load-more-btn').getAttribute("data-type")
     let input = document.getElementById('search-bar-input').value;
     if (input){
-        let newURL = `/navbarSearch?input=${input}`
+        let newURL = `/navbarSearch${i}?input=${input}`
+        console.log(newURL);
         doFetch(newURL)
     }
 })
