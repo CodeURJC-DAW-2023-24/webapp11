@@ -255,7 +255,7 @@ Upon entering the application, all users are presented with the Home screen.
 *Figure x - DataBase Diagram*
 
 ### 🏠  Clases and templates diagram
-![diagram]()
+![diagram](Phase2/diagrams/classTemplates.svg)
 *Figure x - Clases and templates Diagram*
 
 ## 🧭 Possible actions to perform in the application
