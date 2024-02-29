@@ -57,6 +57,8 @@ public class MailService {
             System.out.println(content);
 
             return "emailSent";
+        } catch (SendFailedException e) {
+            return "sendEmailError";
         } catch (MessagingException e) {
             e.printStackTrace();
             return "error";
