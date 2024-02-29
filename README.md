@@ -2,7 +2,7 @@
 
 # <p align="center"> Events Crafters </p>
 ## 📑Index
-- [Phase 0](#phase-0)
+- [Phase 0](phase-0)
    - [Team members](#team-members)
    - [Team organization](#team-organization)
    - [Entities](#entities)
@@ -12,17 +12,25 @@
    - [Advanced Algorithms](#advanced-algorithms)
    - [Optional features](#optional-features)
 
-- [Phase 1](#phase-1)
-   - [Screens](#screens)
-      - [Home Screen](#home-screen)
-      - [Login Screen](#login-screen)
-      - [Profile Screen](#profile-screen)
-      - [Event Info Screen](#event-info-screen)
-      - [Change Password Screen](#change-password-screen)
-      - [Create Account Screen](#create-account-screen)
-      - [Create Review Screen](#create-review-screen)
-      - [Create Event Screen](#create-event-screen)
-   - [Screens Flow](#screens-flow)
+- [Phase 1](phase-1)
+   - [Screens](screens)
+      - [Home Screen](home-screen)
+      - [Login Screen](login-screen)
+      - [Profile Screen](profile-screen)
+      - [Event Info Screen](event-info-screen)
+      - [Change Password Screen](change-password-screen)
+      - [Create Account Screen](create-account-screen)
+      - [Create Review Screen](create-review-screen)
+      - [Create Event Screen](create-event-screen)
+   - [Screens Flow](screens-flow)
+
+  - [Phase 2](phase-2)
+      - [Execution instructions](execution-instructions)
+      - [Diagrams](diagrams)
+      - [Possible actions to perform in the application](possible-actions-to-perform-in-the-application)
+      - [Recommendation algorithm](recommendation-algorithm)
+      - [Members Participation](members-participation)
+      - [Sample users](sample-users)
 ***   
 ### ♨️Phase 0
 ***
@@ -205,3 +213,162 @@ Upon entering the application, all users are presented with the Home screen.
 
 ##### img: Screens flow
 ![*Login Screen*](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase1/layout%20design/readmeimg/screenflow.png)
+
+***   
+### ♨️Phase 2  - Web with server-generated HTML and AJAX
+***
+
+## 🔣Execution instructions
+
+### 👟 Steps 
+1. Download this repository
+2. Check Requirements 
+3. Configure DataBase
+4. Configure IDE
+5. Run Application in the IDE
+6. Go to https://localhost/8443/
+
+### 📋 Requirements
+- Java: JDK 17 --> https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+- MySQL: v.8.0.36.0 (Explained in DataBase Configuration)
+- Maven: 4.0.0
+- Spring Boot 2.4.2
+- IDE (explained in IDE Configuration)
+
+### 💾 DataBase Config
+- Download MySQL v.8.0.36.0
+- Select default port (port 3306)
+- Create a user with name root and password "password" with DB admin as user role
+- Configure MySQL Server as Windows Service
+- Grant full access to the user
+- Create a new Schema named EventCrafters in the server using MySQL Workbench
+
+### 🕹️ IDE Config
+- We have used IntelliJ IDEA, bt it can be possible to use other IDE´S
+- Install Maven and Spring for your IDE
+
+## 🗃️ Diagrams
+
+### 💽 DataBase diagram
+
+![diagram]()
+*Figure x - DataBase Diagram*
+
+### 🏠  Clases and templates diagram
+![diagram]()
+*Figure x - Clases and templates Diagram*
+
+## 🧭 Possible actions to perform in the application
+### Login
+ To log in, access the screen that displays the corresponding form (/login). Enter the username and password, and you will be redirected to the personalized home page (since the session has been added).
+
+### Recover password 
+In the login form, there is an option to recover the password. You click on the link, and an email will be sent to the email associated with your username.
+
+### Register
+Through the login screen (via the "Sign Up" link) or the registration button on the default home screen, access will be provided to a user creation form. It's worth noting that all users will have the role of "user," with only one admin (created by the implementers themselves).
+
+### Change profile photo
+On the profile page, users are given the option to change their profile picture using a button identified by a camera icon. It should be noted that the page needs to be reloaded for the new profile picture to be updated.
+
+### Update profile info
+On the profile page, you can change the information by clicking on the "Editar Perfil" button. A form will appear where the user can update their data. It's worth noting that if any of the necessary login information has been changed, the user will be redirected to the login page to access with the new credentials. It should be noted that the admin will not be given the option to change their data.
+
+### Ban/Unban
+Similarly, the administrator will have access to these functions on the profile screen. It should be noted that these options will be exclusive to the administrator.
+
+### Create event
+This function will be accessible on the profile screen. In the "Mis eventos creados" section, the user should click on the button with the "+" symbol, which will redirect them to a form where they can enter event details.
+
+### Edit/Delete Event
+When accessing the event information screen, in the "Detalles del evento" section, if the user is the creator or an admin, they will be given the option to edit/delete the event through the "Editar evento"/ "Borrar evento" button.
+
+### Make a Review
+Once you have signed up for an event and it has ended, if you enter it, you will see the option to leave a review in "Retroalimentación" section.
+
+### Join/ Unregister an Event 
+If you enter an event that is not finished and you're not already signed up, you click on the "Apuntarse" button to register for the event. In the same way, if ypu have joined an event, you can unregistered by clicking on "Desapuntarse", in the same section that "Apuntarse" button.
+
+### Ticket
+If you want to generate your event ticket, you should go to the event information page for the event you've signed up for, and click on "Ticket"
+
+### Attendance chart
+Once the event is concluded, if the user is the creator or an administrator, they should enter the number of attendees in the event information screen. After providing this information, a chart representing the percentage of attendance to the event will be displayed.
+
+## 🚀 Recommendation algorithm
+An event recommendation algorithm has been implemented. It consists of two main parts:
+
+ - **Unregistered user**: On the main screen, they will see the most popular events (popular being defined as those with the highest number of sign-ups).
+
+ - **Registered user**: On the main screen, they will receive event recommendations based on their favorite category (the category to which the majority of events they have signed up for belong).
+
+## ⚙️Members Participation
+
+### 👩‍🔧Lucía Domínguez Rodrigo
+
+| Commit | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+### 👨‍🔧 Ángel Marqués García
+
+| Commit | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+### 👨‍🔧 Tarek ELshami Ahmed
+
+| Commit | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | | 
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+### 👨‍🔧 Álvaro Serrano Rodrigo
+
+| Commit | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+### 👨‍🔧 Marcos Jiménez Pulido
+
+| Commit | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+
+## ⚔️ Sample users
+### 🔑 @admin
+- username: admin
+- password: adminpass
+  
+### 🛡️ @user
+- username: user
+- password: pass
+
+### 🛡️ @user
+- username: user2
+- password: pass
+
+### 🛡️ @user
+- username: user3
+- password: pass
+
