@@ -53,41 +53,61 @@ public class DatabaseInitializer {
 		Category defaultCategory = new Category("Sin Categoría", "#6c757d");
 		categoryRepository.save(defaultCategory);
 
-		ClassPathResource imgFile = new ClassPathResource("static/img/fotoPerfil.jpg");
+		ClassPathResource imgFile = new ClassPathResource("static/img/campo.jpg");
 		byte[] photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
-		Blob photoBlob = new SerialBlob(photoBytes);
+		Blob photoBlob1 = new SerialBlob(photoBytes);
 
-		ClassPathResource imgFile2 = new ClassPathResource("static/img/fotoPerfil.jpg");
-		byte[] photoBytes2 = StreamUtils.copyToByteArray(imgFile2.getInputStream());
+		imgFile = new ClassPathResource("static/img/juegosMesa.png");
+		photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+		Blob photoBlob2 = new SerialBlob(photoBytes);
+
+		imgFile = new ClassPathResource("static/img/conferencia.jpg");
+		photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+		Blob photoBlob3 = new SerialBlob(photoBytes);
+
+		imgFile = new ClassPathResource("static/img/kayak.jpg");
+		photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+		Blob photoBlob4 = new SerialBlob(photoBytes);
+
+		imgFile = new ClassPathResource("static/img/torneo.jpg");
+		photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+		Blob photoBlob5 = new SerialBlob(photoBytes);
+
+		imgFile = new ClassPathResource("static/img/estrellas.jpg");
+		photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+		Blob photoBlob6 = new SerialBlob(photoBytes);
+
+		imgFile = new ClassPathResource("static/img/fotoPerfil.jpg");
+		photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
 		Blob photoBlobuser = new SerialBlob(photoBytes);
 
 
-		LocalDate startDate = LocalDate.of(2022, 1, 1);
-		LocalDate endDate = LocalDate.of(2022, 1, 1);
-		LocalDate endDate2 = LocalDate.of(2025, 1, 1);
+		LocalDate startDate = LocalDate.of(2022, 3, 14);
+		LocalDate endDate = LocalDate.of(2022, 3, 14);
+		LocalDate endDate2 = LocalDate.of(2025, 10, 3);
 
 		Date start = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		Date end = Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		Date end2 = Date.from(endDate2.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-		Event event = new Event("Evento 1", photoBlob, "prueba", 100, 0.00, "Leganes", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
-		Event event2 = new Event("hola", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", end2, end2, "blabla");
-		Event event3 = new Event("Evento 3", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
-		Event event4 = new Event("Evento 4", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
-		Event event5 = new Event("martillo", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
-		Event event6 = new Event("esternocleidomatoideo", photoBlob, "prueba", 100, 0.00, "Mostoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "blabla");
+		Event event = new Event("Paseo por el campo", photoBlob1, "Vive una experiencia sensorial única mientras exploramos la majestuosidad del campo, donde el perfume de las flores se mezcla con risas contagiosas y la serenidad de la naturaleza te envuelve en un abrazo inolvidable.", 150, 0.00, "Leganés", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "Es recomendable llevar calzado cómodo.");
+		Event event2 = new Event("¡Juegos de mesa!", photoBlob2, "Sumérgete en la emoción estratégica y la camaradería mientras desencadenamos una ola de diversión en nuestro evento de juegos de mesa, donde las risas resuenan entre cartas y dados, creando recuerdos inolvidables en cada movimiento táctico.", 120, 0.00, "Móstoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", end2, end2, "Es recomendable traer juegos de mesa adicionales.");
+		Event event3 = new Event("Conferencia sobre usabilidad", photoBlob3, "Sumérgete en el fascinante mundo de la usabilidad en nuestro evento de conferencia, donde expertos líderes compartirán insights vanguardistas y estrategias prácticas, desatando la innovación para crear experiencias digitales memorables y eficientes.", 100, 0.00, "Móstoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "Ninguna.");
+		Event event4 = new Event("Ruta en kayak", photoBlob4, "Embárcate en una aventura única en nuestro evento de ruta en kayak, explorando panoramas impresionantes y desafiando tus límites mientras navegas por aguas serenas, creando recuerdos emocionantes en cada remada.", 50, 0.00, "Aranjuez", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "Es imprescindible llevar ropa de baño.");
+		Event event5 = new Event("Torneo de Call of Duty", photoBlob5, "¡Prepárate para la batalla definitiva en nuestro torneo de Call of Duty, donde la emoción se desata y la destreza se enfrenta en un campo de juego virtual, elevando la competencia a un nivel épico que te dejará sin aliento!", 60, 0.00, "Móstoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "Se recomienda entrenar antes de ir al torneo.");
+		Event event6 = new Event("Observación de estrellas", photoBlob6, "Pasa una noche celestial de asombro y descubrimiento en nuestro evento de observación de estrellas, donde el cosmos se despliega ante tus ojos, guiados por astrónomos apasionados que revelarán los secretos del universo bajo el manto estrellado.", 100, 0.00, "Móstoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>", start, end, "Pueden llevarse prismáticos o telescopio propios.");
 
 		String mail = "";
-		User user2 = new User("Juan Usuario","user2", mail, photoBlobuser , passwordEncoder.encode("pass"), "USER" );
+		User user2 = new User("Juan Pérez","user2", mail, photoBlobuser, passwordEncoder.encode("pass"), "USER" );
 		userRepository.save(user2);
-		User user3 = new User("Juan Usuario","user3", mail, photoBlobuser , passwordEncoder.encode("pass"), "USER");
+		User user3 = new User("Ana Gómez","user3", mail, photoBlobuser, passwordEncoder.encode("pass"), "USER");
 		userRepository.save(user3);
-		User user4 = new User("Juan Usuario","user4", mail, photoBlobuser , passwordEncoder.encode("pass"), "USER");
+		User user4 = new User("José Ramírez","user4", mail, photoBlobuser, passwordEncoder.encode("pass"), "USER");
 		userRepository.save(user4);
 
-		User user = new User("Juan Usuario","user", mail, photoBlobuser , passwordEncoder.encode("pass"), "USER");
+		User user = new User("Pedro García","user", mail, photoBlobuser, passwordEncoder.encode("pass"), "USER");
 		userRepository.save(user);
-		userRepository.save(new User("Pepe Admin","admin","", photoBlobuser , passwordEncoder.encode("adminpass"), "ADMIN"));
+		userRepository.save(new User("Pepe Admin","admin","", photoBlobuser, passwordEncoder.encode("adminpass"), "ADMIN"));
 
 		// categories
 		Category deporte = new Category("Deporte", "#cc00ff");
@@ -96,18 +116,18 @@ public class DatabaseInitializer {
 		categoryRepository.save(campo);
 		Category educacion = new Category("Educación", "#28a745");
 		categoryRepository.save(educacion);
-		event.setCategory(deporte);
-		event2.setCategory(campo);
+		event.setCategory(campo);
+		event2.setCategory(deporte);
 		event3.setCategory(educacion);
-		event4.setCategory(educacion);
-		event5.setCategory(educacion);
-		event6.setCategory(educacion);
+		event4.setCategory(campo);
+		event5.setCategory(deporte);
+		event6.setCategory(campo);
 		event.setCreator(user);
 		event2.setCreator(user);
-		event3.setCreator(user);
-		event4.setCreator(user);
-		event5.setCreator(user);
-		event6.setCreator(user);
+		event3.setCreator(user2);
+		event4.setCreator(user3);
+		event5.setCreator(user3);
+		event6.setCreator(user3);
 		eventRepository.save(event);
 		eventRepository.save(event2);
 		eventRepository.save(event3);

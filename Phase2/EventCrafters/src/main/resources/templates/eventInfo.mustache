@@ -238,12 +238,12 @@
                     {{#otherEvents}}
                         <div class="col-md-4 mb-4">
                             <div class="activity d-flex flex-row align-items-center">
-                                <div class="categories-container info">
+                                <div class="categories-container info event-container-tag-div">
                                     <span class="event-category" style="background-color: {{category.color}};">{{category.name}}</span>
                                 </div>
-                                <h5 class="info">{{name}}</h5>
+                                <h5 class="info event-container-text">{{name}}</h5>
                                 <form action="/event/{{id}}" method="GET">
-                                    <button class="btn btn-block" type="submit">Ver Detalles</button>
+                                    <button class="btn btn-primary" type="submit">Ver Detalles</button>
                                 </form>
                             </div>
                         </div>
