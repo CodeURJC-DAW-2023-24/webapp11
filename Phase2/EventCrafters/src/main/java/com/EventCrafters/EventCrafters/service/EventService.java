@@ -9,6 +9,7 @@ import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.EventCrafters.EventCrafters.repository.EventRepository;
@@ -31,8 +32,9 @@ public class EventService {
 		return repository.existsById(id);
 	}
 
-	public List<Event> findAll() {
-		return repository.findAll();
+	public List<Event> findAll() { return repository.findAll(); }
+	public List<Event> findAll(int page,int pageSize) {
+		return repository.findAll(PageRequest.of(page, pageSize)).getContent();
 	}
 
 	public void save(Event event) {
@@ -85,25 +87,46 @@ public class EventService {
 
 	public List<Event> findByCategory(long id) {return repository.findByCategory(id);}
 
-	public List<Event> findBySearchBar(String input) {return repository.findBySearchBar(input);}
-
-	public AbstractMap.SimpleEntry<List<Event>, Integer> getAdditionalEvents(List<Event> list, int nextEventIndex, int eventsRefreshSize) {
-		List<Event> additionalEvents = new ArrayList<>();
-		if (list.size() <= nextEventIndex){
-			additionalEvents = list.subList(0,list.size());
-			nextEventIndex = list.size();
-		}
-		else{
-			additionalEvents = list.subList(0,nextEventIndex);
-		}
-		return new AbstractMap.SimpleEntry<List<Event>, Integer>(additionalEvents, nextEventIndex);
+	public List<Event> findByCategory(long id, int page, int pageSize) {
+		Pageable pageable = PageRequest.of(page, pageSize);
+		return repository.findByCategory(id, pageable).getContent();
 	}
 
-	public List<Event> findByCreatorIdCurrentCreatedEvents(Long id) {return repository.findByCreatorIdCurrentCreatedEvents(id);}
+	public List<Event> findBySearchBar(String input) {return repository.findBySearchBar(input);}
+
+	public List<Event> findBySearchBar(String input, int page, int pageSize) {
+		Pageable pageable = PageRequest.of(page, pageSize);
+		return repository.findBySearchBar(input, pageable).getContent();
+	}
+
+	public List<Event> findByCreatorIdCurrentCreatedEvents(Long id){return repository.findByCreatorIdCurrentCreatedEvents(id);}
+
+	public List<Event> findByCreatorIdCurrentCreatedEvents(Long id, int page, int  pageSize) {
+		Pageable pageable = PageRequest.of(page, pageSize);
+		return repository.findByCreatorIdCurrentCreatedEvents(id, pageable).getContent();
+	}
 	public List<Event> findByCreatorIdPastCreatedEvents(Long id) {return repository.findByCreatorIdPastCreatedEvents(id);}
+
+	public List<Event> findByCreatorIdPastCreatedEvents(Long id, int page, int  pageSize) {
+		Pageable pageable = PageRequest.of(page, pageSize);
+		return repository.findByCreatorIdPastCreatedEvents(id, pageable).getContent();
+	}
+
 	public List<Event> findByRegisteredUserIdCurrentEvents(Long id) {return repository.findByRegisteredUserIdCurrentEvents(id);}
+
+	public List<Event> findByRegisteredUserIdCurrentEvents(Long id, int page, int  pageSize) {
+		System.out.println("hola");
+		System.out.println(page);
+		Pageable pageable = PageRequest.of(page, pageSize);
+		return repository.findByRegisteredUserIdCurrentEvents(id, pageable).getContent();
+	}
+
 	public List<Event> findByRegisteredUserIdPastEvents(Long id) {return repository.findByRegisteredUserIdPastEvents(id);}
 
+	public List<Event> findByRegisteredUserIdPastEvents(Long id, int page, int  pageSize) {
+		Pageable pageable = PageRequest.of(page, pageSize);
+		return repository.findByRegisteredUserIdPastEvents(id, pageable).getContent();
+	}
 
 	@Transactional
 	public void updateAttendeesCount(Long eventId, int attendeesCount) {
@@ -114,22 +137,12 @@ public class EventService {
 	}
 
 	public List<Event> eventsOrderedByPopularity(){
-		List<Object[]> l = repository.findByRegisteredUsersCount();
-		List<Event> result = new ArrayList<>();
-		for (Object[] element : l){
-			BigInteger aux = (BigInteger) element[0];
-			Optional<Event> e = this.findById(aux.longValue());
+		return repository.findByRegisteredUsersCount();
+	}
 
-			// if e is present then add it to de list
-            e.ifPresent(result::add);
-		}
-		for (Event e : this.findAll()){
-			if (!result.contains(e)){
-				result.add(e);
-			}
-		}
-
-		return result;
+	public List<Event> eventsOrderedByPopularity(int page, int pageSize){
+		Pageable pageable = PageRequest.of(page, pageSize);
+		return repository.findByRegisteredUsersCount(pageable).getContent();
 	}
 
 	public String getShortDescription(String desc) {

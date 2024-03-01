@@ -7,6 +7,8 @@ import com.EventCrafters.EventCrafters.repository.EventRepository;
 import com.EventCrafters.EventCrafters.repository.ReviewRepository;
 import com.EventCrafters.EventCrafters.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -120,23 +122,14 @@ public class UserService {
 		}
 	}
 
-	public List<Event> getUserCategoryPreferences(Long id){
-		List<Object[]> l = repository.getUserCategoryPreferences(id);
-		List<Category> auxList = new ArrayList<>();
-		List<Event> result = new ArrayList<>();
-		for (Object[] element : l){
-			BigInteger aux = (BigInteger) element[0];
-			Optional<Category> e = categoryService.findById(aux.longValue());
-			List<Event> byCategory = eventService.findByCategory(aux.longValue());
+	public int getUserCategoryPreferencesNum(Long id){return repository.getUserCategoryPreferences(id).size();}
 
-			auxList.add(e.get());
-			result.addAll(byCategory);
-		}
-		for (Category c: categoryService.findAll()){
-			if (!auxList.contains(c)){
-				List<Event> byCategory = eventService.findByCategory(c.getId());
-				result.addAll(byCategory);
-			}
+	public List<Event> getUserCategoryPreferences(Long id, int page, int pageSize){
+		Pageable pageable = PageRequest.of(page, pageSize);
+		List<BigInteger> ids = repository.getUserCategoryPreferences(id, pageable).getContent();
+		List<Event> result = new ArrayList<>();
+		for(BigInteger aux : ids){
+			result.add(eventService.findById(aux.longValue()).get());
 		}
 		return result;
 	}

@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
         i.addEventListener('click', (e) => {
             e.preventDefault();
             let i = document.getElementById('home-load-more-btn').getAttribute("data-type")
+            document.getElementById('home-load-more-btn').setAttribute("data-nextPage", 1)
+            document.getElementById('home-load-more-btn').setAttribute("data-type", 7)
             let id = e.target.getAttribute('value');
             if (id) {
                 let newURL = `/search${i}?categoryId=${id}`
@@ -25,6 +27,8 @@ const spinner = document.getElementById('spinner');
 searchBarBtn.addEventListener('click', (e) => {
     e.preventDefault();
     let i = document.getElementById('home-load-more-btn').getAttribute("data-type")
+    document.getElementById('home-load-more-btn').setAttribute("data-nextPage", 1)
+    document.getElementById('home-load-more-btn').setAttribute("data-type", 8)
     let input = document.getElementById('search-bar-input').value;
     if (input){
         let newURL = `/navbarSearch${i}?input=${input}`

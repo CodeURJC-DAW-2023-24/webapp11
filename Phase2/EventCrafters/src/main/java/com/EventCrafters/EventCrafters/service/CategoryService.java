@@ -4,6 +4,7 @@ import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.repository.CategoryRepository;
 import com.EventCrafters.EventCrafters.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,15 +21,14 @@ public class CategoryService {
 	@Autowired
 	private EventRepository eventRepository;
 
-	private List<Category> allCategories;
-
-	private int categoryRefreshSize = 1;
-
-	private int nextCategoryIndex;
+	private int pageSize = 1;
+	private int maxPageNum;
 
 	public Optional<Category> findById(long id) {
 		return repository.findById(id);
 	}
+
+	public List<Category> findAll(int page) {return repository.findAll(PageRequest.of(page, pageSize)).getContent();}
 
 	public boolean exist(long id) {
 		return repository.existsById(id);
@@ -41,14 +41,10 @@ public class CategoryService {
 	public List<String> findAllNames() {return repository.findAllNames();}
 
 	public List<Category> findAjax(){
-		this.allCategories = repository.findAll();
-		this.nextCategoryIndex = this.categoryRefreshSize + 1;
-		if (allCategories.isEmpty() || allCategories.size() == 1){
-			return new ArrayList<>();
-		} else if (allCategories.size() <= nextCategoryIndex){
-			return allCategories.subList(1,allCategories.size());
-		}
-		return allCategories.subList(1,this.nextCategoryIndex);
+		// this is so that the result is rounded up
+		this.maxPageNum = (repository.findAll().size() + pageSize - 1) / pageSize;
+		return repository.findAll(PageRequest.of(1,pageSize)).getContent();
+
 	}
 
 	public void save(Category category) {
@@ -66,21 +62,8 @@ public class CategoryService {
 	}
 
 
-	public List<Category> getAllCategories() {
-		return allCategories;
-	}
+	public int getMaxPageNum() { return this.maxPageNum; }
 
-	public int getCategoryRefreshSize() {
-		return categoryRefreshSize;
-	}
-
-	public int getNextCategoryIndex() {
-		return nextCategoryIndex;
-	}
-
-	public void setNextCategoryIndex(int nextCategoryIndex) {
-		this.nextCategoryIndex = nextCategoryIndex;
-	}
 
 
 

@@ -91,7 +91,7 @@ public class UserWebController {
 				List<Event> userRegisteredPastEvents = ajaxService.findAjax(id, 4);
 				int i;
 				for (i = 1; i < 5; i++){
-					if (ajaxService.getAllEvents(i).size() < ajaxService.getEventsRefreshSize()){
+					if (ajaxService.getMaxPageNum(i) <= 1){
 						String aux = "thereAreNoMore" + i;
 						model.addAttribute(aux, "");
 					}
@@ -108,10 +108,10 @@ public class UserWebController {
 			} else {
 				List<Category> c = categoryService.findAjax();
 				List<Event> e = ajaxService.findAjax(0);
-				if (ajaxService.getAllEvents(0).size()  < ajaxService.getEventsRefreshSize()){
+				if (ajaxService.getMaxPageNum(0)  <= 1){
 					model.addAttribute("thereAreNoMore1", "");
 				}
-				if (categoryService.findAll().size() - 1 < categoryService.getCategoryRefreshSize()){
+				if (categoryService.getMaxPageNum() <= 2){
 					model.addAttribute("thereAreNoMore0", "");
 				}
 				model.addAttribute("category",c);

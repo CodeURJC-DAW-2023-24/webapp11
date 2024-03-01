@@ -248,12 +248,12 @@
                             </div>
                         </div>
                     {{/otherEvents}}
-                    {{^otherEvents}}
-                        <div style="padding-left: 15px;">
-                            <h5 class="no-events-message">No hay eventos.</h5>
-                        </div>
-                    {{/otherEvents}}
                 </div>
+                {{^otherEvents}}
+                    <div class="text-center">
+                        <h5 class="no-events-message">No hay eventos.</h5>
+                    </div>
+                {{/otherEvents}}
                 <div class="text-center" id="spinner" style="display: none">
                     <div class="spinner-border" role="status">
                         <span class="sr-only">Loading...</span>
@@ -264,7 +264,7 @@
             <div class="container text-center mt-4">
                 <div class="row justify-content-center">
                     <div class="col-auto">
-                        <button class="btn btn-primary" data-type="/otherEvents" id="home-load-more-btn" style="display: {{moreEvents}}">Cargar más eventos</button>
+                        <button class="btn btn-primary" data-type="/otherEvents" data-nextPage="1" id="home-load-more-btn" style="display: {{moreEvents}}">Cargar más eventos</button>
                     </div>
                 </div>
             </div>

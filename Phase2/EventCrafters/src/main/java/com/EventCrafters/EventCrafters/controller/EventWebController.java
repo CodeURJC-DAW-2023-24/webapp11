@@ -69,9 +69,8 @@ public class EventWebController {
                 model.addAttribute("events", events);
             }
             model.addAttribute("i",6);
-            if (ajaxService.getAllEvents(6).size() < ajaxService.getEventsRefreshSize()){
-                String aux = "moreEvents";
-                model.addAttribute(aux, "");
+            if (ajaxService.getMaxPageNum(6) <= 1){
+                model.addAttribute("moreEvents", "");
             }
         } else {
             List<Event> events = ajaxService.findAjax(5);
@@ -80,9 +79,8 @@ public class EventWebController {
             }
             model.addAttribute("events", events);
             model.addAttribute("i",5);
-            if (ajaxService.getAllEvents(5).size() < ajaxService.getEventsRefreshSize()){
-                String aux = "moreEvents";
-                model.addAttribute(aux, "");
+            if (ajaxService.getMaxPageNum(5) <= 1){
+                model.addAttribute("moreEvents", "");
             }
         }
         model.addAttribute("logged", isLoggedIn);
@@ -93,27 +91,14 @@ public class EventWebController {
     }
 
     @GetMapping("/newEvents{i}")
-    public String newEvents(Model model, @PathVariable int i) {
-        List<Event> allEvents = ajaxService.getAllEvents(i);
-        int EventRefreshSize = ajaxService.getEventsRefreshSize();
-        int nextEventIndex = ajaxService.getNextEventIndex(i);
-        int remainingEvents = allEvents.size() - nextEventIndex;
+    public String newEvents(Model model, @PathVariable int i, @RequestParam("page") int page) {
+        model.addAttribute("additionalEvents",ajaxService.loadMore(i,page));
 
-        if (remainingEvents > 0) {
-            int endIndex = nextEventIndex + Math.min(EventRefreshSize, remainingEvents);
-            List<Event> additionalEvents = allEvents.subList(nextEventIndex, endIndex);
-            for (Event e : additionalEvents) {
-                e.setDescription(eventService.getShortDescription(e.getDescription()));
-            }
-            model.addAttribute( "additionalEvents", additionalEvents);
-            ajaxService.setNextEventIndex(i, endIndex);
-            if (allEvents.size() == endIndex){
-                model.addAttribute("lastEvents", "");
-            }
-            return "moreEvents";
+        if (ajaxService.getMaxPageNum(i) - 1 <= page) {
+            model.addAttribute("lastEvents", "");
         }
 
-        return "empty";
+        return "moreEvents";
     }
 
     @GetMapping("/create_event")
@@ -229,7 +214,7 @@ public class EventWebController {
             model.addAttribute("numRegisteredUsers", numRegisteredUsers);
 
             model.addAttribute("otherEvents", eventsRegistered);
-            if (ajaxService.getAllEvents(3).size() < ajaxService.getEventsRefreshSize()){
+            if (ajaxService.getMaxPageNum(3) <= 1){
                 model.addAttribute("moreEvents", "none");
             } else {
                 model.addAttribute("moreEvents", "block");
@@ -241,23 +226,14 @@ public class EventWebController {
     }
 
     @GetMapping("/otherEvents")
-    public String otherEvents(Model model) {
-        List<Event> allEvents = ajaxService.getAllEvents(3);
-        int EventRefreshSize = ajaxService.getEventsRefreshSize();
-        int nextEventIndex = ajaxService.getNextEventIndex(3);
-        int remainingEvents = allEvents.size() - nextEventIndex;
+    public String otherEvents(Model model, @RequestParam("page") int page) {
+        model.addAttribute("events", ajaxService.loadMore(3, page));
 
-        if (remainingEvents > 0) {
-            int endIndex = nextEventIndex + Math.min(EventRefreshSize, remainingEvents);
-            model.addAttribute( "events", allEvents.subList(nextEventIndex, endIndex));
-            ajaxService.setNextEventIndex(3, endIndex);
-            if (allEvents.size() == endIndex){
-                model.addAttribute("lastEvents", "");
-            }
-            return "profileEvents";
+        if (ajaxService.getMaxPageNum(3) - 1 <= page) {
+            model.addAttribute("lastEvents", "");
         }
 
-        return "empty";
+        return "profileEvents";
     }
 
     @GetMapping("/ticket/{id}")
@@ -396,9 +372,8 @@ public class EventWebController {
         List<Event> allEvents = ajaxService.findAjax(id , 7, i);
         model.addAttribute("additionalEvents", allEvents);
 
-        if (ajaxService.getAllEvents(i).size() < ajaxService.getEventsRefreshSize()){
-            String aux = "lastEvents";
-            model.addAttribute(aux, "");
+        if (ajaxService.getMaxPageNum(i) <= 1) {
+            model.addAttribute("lastEvents", "");
         }
 
         return "moreEvents";
@@ -409,9 +384,8 @@ public class EventWebController {
         List<Event> allEvents = ajaxService.findAjax(8, input, i);
         model.addAttribute("additionalEvents", allEvents);
 
-        if (ajaxService.getAllEvents(i).size() < ajaxService.getEventsRefreshSize()){
-            String aux = "lastEvents";
-            model.addAttribute(aux, "");
+        if (ajaxService.getMaxPageNum(i) <= 1) {
+            model.addAttribute("lastEvents", "");
         }
 
         return "moreEvents";
@@ -503,23 +477,14 @@ public class EventWebController {
 
 
     @GetMapping("/moreEventsProfile/{i}")
-    public String moreEventsProfile(Model model, @PathVariable int i){
-        List<Event> allEvents = ajaxService.getAllEvents(i);
-        int EventRefreshSize = ajaxService.getEventsRefreshSize();
-        int nextEventIndex = ajaxService.getNextEventIndex(i);
-        int remainingEvents = allEvents.size() - nextEventIndex;
+    public String moreEventsProfile(Model model, @PathVariable int i, @RequestParam("page") int page){
+        model.addAttribute("events", ajaxService.loadMore(i,page));
 
-        if (remainingEvents > 0) {
-            int endIndex = nextEventIndex + Math.min(EventRefreshSize, remainingEvents);
-            model.addAttribute( "events", allEvents.subList(nextEventIndex, endIndex));
-            ajaxService.setNextEventIndex(i, endIndex);
-            if (allEvents.size() == endIndex){
-                model.addAttribute("lastEvents", "");
-            }
-            return "profileEvents";
+        if (ajaxService.getMaxPageNum(i) - 1 <= page) {
+            model.addAttribute("lastEvents", "");
         }
 
-        return "empty";
+        return "profileEvents";
     }
 
     @PostMapping("/event/setAttendance/{eventId}")

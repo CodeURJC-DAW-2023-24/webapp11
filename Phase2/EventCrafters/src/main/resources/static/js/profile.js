@@ -1,5 +1,4 @@
-const deleteAccountBtn = document.getElementById('delete-account-btn'),
-    categoriesContainer = document.getElementById('categories-container'),
+const categoriesContainer = document.getElementById('categories-container'),
     chartsContainer = document.getElementById('charts-container'),
     createdEventsContainer = document.getElementById('created-events-container'),
     pastCreatedEventsContainer = document.getElementById('past-created-events-container'),
@@ -16,24 +15,11 @@ const deleteAccountBtn = document.getElementById('delete-account-btn'),
     spinnerPPCE = document.getElementById('spinner-profile-past-created-events'),
     spinnerPRE = document.getElementById('spinner-profile-registered-events'),
     spinnerPRPE = document.getElementById('spinner-profile-registered-past-events'),
+    loadMoreTags = document.getElementById('load-more-tags'),
     loadMoreCreatedEventsBtn = document.getElementById('load-more-created-events'),
     loadMorePastCreatedEventsBtn = document.getElementById('load-more-past-created-events'),
     loadMoreRegisteredEventsBtn = document.getElementById('load-more-registered-events'),
     loadMoreRegisteredPastEventsBtn = document.getElementById('load-more-registered-past-events');
-
-
-
-const askForConfirmation = () => {
-    let result = confirm("¿Estás seguro de que deseas continuar?");
-    if (result == true) {
-        // El usuario hizo clic en "Aceptar"
-        alert("Has aceptado.");
-    } else {
-        // El usuario hizo clic en "Cancelar"
-        alert("Has cancelado la acción.");
-    }
-}
-//deleteAccountBtn.addEventListener('click', () => askForConfirmation());
 
 
 function sendProfileImage(){
@@ -130,28 +116,44 @@ const Ajax = (spinner, container, url) =>{
         });
 }
 
-document.getElementById('load-more-tags').addEventListener('click', () => {
-    Ajax(spinnerPT,categoriesContainer, "/categories")
+loadMoreTags.addEventListener('click', () => {
+    let page = loadMoreTags.getAttribute("data-nextPage");
+    let nextPage = parseInt(page,10) + 1;
+    Ajax(spinnerPT,categoriesContainer, `/categories?page=${page}`)
+    loadMoreTags.setAttribute("data-nextPage", nextPage);
 })
 
 loadMoreCreatedEventsBtn.addEventListener('click', () => {
     let i = loadMoreCreatedEventsBtn.getAttribute("data-i")
-    Ajax(spinnerPCE, createdEventsContainer, `/moreEventsProfile/${i}`)
+    let page = loadMoreCreatedEventsBtn.getAttribute("data-nextPage");
+    let nextPage = parseInt(page,10) + 1;
+    Ajax(spinnerPCE, createdEventsContainer, `/moreEventsProfile/${i}?page=${page}`)
+    loadMoreCreatedEventsBtn.setAttribute("data-nextPage", nextPage);
 })
 
 loadMorePastCreatedEventsBtn.addEventListener('click', () => {
     let i = loadMorePastCreatedEventsBtn.getAttribute("data-i")
-    Ajax(spinnerPPCE, pastCreatedEventsContainer, `/moreEventsProfile/${i}`)
+    let page = loadMorePastCreatedEventsBtn.getAttribute("data-nextPage");
+    let nextPage = parseInt(page,10) + 1;
+    Ajax(spinnerPPCE, pastCreatedEventsContainer, `/moreEventsProfile/${i}?page=${page}`)
+    loadMorePastCreatedEventsBtn.setAttribute("data-nextPage", nextPage);
 })
 
 loadMoreRegisteredEventsBtn.addEventListener('click', () => {
     let i = loadMoreRegisteredEventsBtn.getAttribute("data-i")
-    Ajax(spinnerPRE, registeredEventsContainer, `moreEventsProfile/${i}`)
+    let page = loadMoreRegisteredEventsBtn.getAttribute("data-nextPage");
+    let nextPage = parseInt(page,10) + 1;
+    Ajax(spinnerPRE, registeredEventsContainer, `moreEventsProfile/${i}?page=${page}`)
+    loadMoreRegisteredEventsBtn.setAttribute("data-nextPage", nextPage);
+
 })
 
 loadMoreRegisteredPastEventsBtn.addEventListener('click', () => {
     let i = loadMoreRegisteredPastEventsBtn.getAttribute("data-i")
-    Ajax(spinnerPRPE, registeredPastEventsContainer, `moreEventsProfile/${i}`)
+    let page = loadMoreRegisteredPastEventsBtn.getAttribute("data-nextPage");
+    let nextPage = parseInt(page,10) + 1;
+    Ajax(spinnerPRPE, registeredPastEventsContainer, `moreEventsProfile/${i}?page=${page}`)
+    loadMoreRegisteredPastEventsBtn.setAttribute("data-nextPage", nextPage);
 })
 
 document.addEventListener('DOMContentLoaded', () => {

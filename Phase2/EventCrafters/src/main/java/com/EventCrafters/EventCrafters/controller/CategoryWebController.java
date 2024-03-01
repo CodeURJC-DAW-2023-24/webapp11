@@ -5,6 +5,7 @@ import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.repository.CategoryRepository;
 import com.EventCrafters.EventCrafters.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,22 +54,11 @@ public class CategoryWebController {
 	}
 
 	@GetMapping("categories")
-	public String loadCategories(Model model) {
-		List<Category> allCategories = categoryService.getAllCategories();
-		int categoryRefreshSize = categoryService.getCategoryRefreshSize();
-		int nextCategoryIndex = categoryService.getNextCategoryIndex();
-		int remainingCategories = allCategories.size() - nextCategoryIndex;
-
-		if (remainingCategories > 0) {
-			int endIndex = nextCategoryIndex + Math.min(categoryRefreshSize, remainingCategories);
-			model.addAttribute("category", allCategories.subList(nextCategoryIndex, endIndex));
-			categoryService.setNextCategoryIndex(endIndex);
-			if (allCategories.size() == endIndex){
-				model.addAttribute("lastCategories", "");
-			}
-			return "categories";
+	public String loadCategories(Model model, @RequestParam("page") int page) {
+		model.addAttribute("category", categoryService.findAll(page) );
+		if (categoryService.getMaxPageNum() - 1 <= page){
+			model.addAttribute("lastCategories", "");
 		}
-
-		return "empty";
+		return "categories";
 	}
 }
