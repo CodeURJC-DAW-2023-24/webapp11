@@ -319,12 +319,28 @@ An event recommendation algorithm has been implemented. It consists of two main 
 | [4º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/cdd8d0ca50112f13dec92a6d25a7cd44be314f71#diff-ac9d3bdeb47b0ea0b9031b88d650f2b8de0210593e1dfef2000df9749f92fe85) | Updating ban/unban function |
 | [5º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/fb74dd95bb074b7392f9551e26b1e0b1d400ce1c) | Creation of Models |
 
+| File | Description |
+| :----: | :---------: |
+| [1º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/controller/UserWebController.java) | User Web controller |
+| [2º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/model/User.java) | User Model, and definition in the DataBase |
+| [3º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/service/UserService.java) | User service |
+| [4º](Phase2/EventCrafters/src/main/resources/templates/profile.mustache) | Profile mustache |
+| [5º](Phase2/EventCrafters/src/main/resources/static/js/profile.js) | Functions related to user |
+
 ### 👨‍🔧 Ángel Marqués García
 
 | Commit | Description |
 | :----: | :---------: |
 | [1º]() | |
 | [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+| File | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() |  |
 | [3º]() | |
 | [4º]() | |
 | [5º]() | |
@@ -339,6 +355,14 @@ An event recommendation algorithm has been implemented. It consists of two main 
 | [4º]() | |
 | [5º]() | |
 
+| File | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
 ### 👨‍🔧 Álvaro Serrano Rodrigo
 
 | Commit | Description |
@@ -349,9 +373,25 @@ An event recommendation algorithm has been implemented. It consists of two main 
 | [4º]() | |
 | [5º]() | |
 
+| File | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
 ### 👨‍🔧 Marcos Jiménez Pulido
 
 | Commit | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+| File | Description |
 | :----: | :---------: |
 | [1º]() | |
 | [2º]() | |
