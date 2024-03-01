@@ -66,13 +66,8 @@ public class Event {
 	@Setter(AccessLevel.NONE)
 	private int numRegisteredUsers;
 
-	private String formattedStartDate;
-	private String formattedEndDate;
-	private String shortDescription;
-
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Review> reviews = new HashSet<>();
-
 
 	@ManyToOne
 	private Category category;
@@ -92,9 +87,6 @@ public class Event {
 		this.additionalInfo = additionalInfo;
 
 		this.numRegisteredUsers = 0;
-		this.formattedStartDate = formatDate(startDate);
-		this.formattedEndDate = formatDate(endDate);
-		this.shortDescription = shortDescription(description);
 	}
 
 	public int getNumRegisteredUsers() {
@@ -102,18 +94,4 @@ public class Event {
 		return numRegisteredUsers;
 	}
 
-	public String formatDate(Date date) {
-		if (date == null) return null;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		return sdf.format(date);
-	}
-
-	public String shortDescription(String desc) {
-		int limit = 40;
-		if (desc.length() > limit) {
-			return desc.substring(0, limit - 3) + "...";
-		} else {
-			return desc;
-		}
-	}
 }

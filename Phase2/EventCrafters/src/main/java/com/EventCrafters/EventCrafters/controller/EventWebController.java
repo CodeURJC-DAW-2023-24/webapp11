@@ -61,14 +61,24 @@ public class EventWebController {
         if (isLoggedIn){
             String currentUsername = authentication.getName();
             Optional<User> user = userService.findByUserName(currentUsername);
-            user.ifPresent(value -> model.addAttribute("events", ajaxService.findAjax(value.getId(), 6)));
+            if(user.isPresent()){
+                List<Event> events = ajaxService.findAjax(user.get().getId(), 6);
+                for (Event e : events) {
+                    e.setDescription(eventService.getShortDescription(e.getDescription()));
+                }
+                model.addAttribute("events", events);
+            }
             model.addAttribute("i",6);
             if (ajaxService.getAllEvents(6).size() < ajaxService.getEventsRefreshSize()){
                 String aux = "moreEvents";
                 model.addAttribute(aux, "");
             }
         } else {
-            model.addAttribute("events", ajaxService.findAjax(5));
+            List<Event> events = ajaxService.findAjax(5);
+            for (Event e : events) {
+                e.setDescription(eventService.getShortDescription(e.getDescription()));
+            }
+            model.addAttribute("events", events);
             model.addAttribute("i",5);
             if (ajaxService.getAllEvents(5).size() < ajaxService.getEventsRefreshSize()){
                 String aux = "moreEvents";
@@ -91,7 +101,11 @@ public class EventWebController {
 
         if (remainingEvents > 0) {
             int endIndex = nextEventIndex + Math.min(EventRefreshSize, remainingEvents);
-            model.addAttribute( "additionalEvents", allEvents.subList(nextEventIndex, endIndex));
+            List<Event> additionalEvents = allEvents.subList(nextEventIndex, endIndex);
+            for (Event e : additionalEvents) {
+                e.setDescription(eventService.getShortDescription(e.getDescription()));
+            }
+            model.addAttribute( "additionalEvents", additionalEvents);
             ajaxService.setNextEventIndex(i, endIndex);
             if (allEvents.size() == endIndex){
                 model.addAttribute("lastEvents", "");
@@ -186,8 +200,8 @@ public class EventWebController {
             int numRegisteredUsers = event.getRegisteredUsers().size();
 
             String priceDisplay = event.getPrice() == 0.0 ? "Gratis" : String.format("%.2f €", event.getPrice());
-            String startDateFormatted = event.getFormattedStartDate();
-            String endDateFormatted = event.getFormattedEndDate();
+            String startDateFormatted = eventService.formatDate(event.getStartDate());;
+            String endDateFormatted = eventService.formatDate(event.getEndDate());;
             Duration duration = Duration.between(event.getStartDate().toInstant(), event.getEndDate().toInstant());
             long hours = duration.toHours();
             long minutes = duration.minusHours(hours).toMinutes();
@@ -276,8 +290,8 @@ public class EventWebController {
             int numRegisteredUsers = event.getRegisteredUsers().size()+1;
 
             String priceDisplay = event.getPrice() == 0.0 ? "Gratis" : String.format("%.2f €", event.getPrice());
-            String startDateFormatted = event.getFormattedStartDate();
-            String endDateFormatted = event.getFormattedEndDate();
+            String startDateFormatted = eventService.formatDate(event.getStartDate());
+            String endDateFormatted = eventService.formatDate(event.getEndDate());
             Duration duration = Duration.between(event.getStartDate().toInstant(), event.getEndDate().toInstant());
             long hours = duration.toHours();
             long minutes = duration.minusHours(hours).toMinutes();

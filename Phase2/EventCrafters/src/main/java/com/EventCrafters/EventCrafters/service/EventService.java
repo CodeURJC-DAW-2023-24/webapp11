@@ -1,6 +1,7 @@
 package com.EventCrafters.EventCrafters.service;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.EventCrafters.EventCrafters.model.Category;
@@ -129,5 +130,20 @@ public class EventService {
 		}
 
 		return result;
+	}
+
+	public String getShortDescription(String desc) {
+		int limit = 40;
+		if (desc.length() > limit) {
+			return desc.substring(0, limit - 3) + "...";
+		} else {
+			return desc;
+		}
+	}
+
+	public String formatDate(Date date) {
+		if (date == null) return null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		return sdf.format(date);
 	}
 }
