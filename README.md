@@ -251,12 +251,16 @@ Upon entering the application, all users are presented with the Home screen.
 
 ### 💽 DataBase diagram
 
-![diagram]()
-*Figure x - DataBase Diagram*
+![diagram](Phase2/diagrams/bbdd.png)
+*DataBase Diagram*
 
 ### 🏠  Clases and templates diagram
 ![diagram](Phase2/diagrams/classTemplates.svg)
-*Figure x - Clases and templates Diagram*
+*Clases and templates Diagram*
+
+## 🌐 ScreenFlow
+![scrennflow](Phase2/diagrams/Phase%202%20screenflow.png)
+*Screen Flow*
 
 ## 🧭 Possible actions to perform in the application
 ### Login
