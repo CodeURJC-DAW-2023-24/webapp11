@@ -385,19 +385,21 @@ An event recommendation algorithm has been implemented. It consists of two main 
 
 | Commit | Description |
 | :----: | :---------: |
-| [1º]() | Event Ticket Visualizer and PDF Generation |
-| [2º]() | Home Screen AJAX refreshing integration |
-| [3º]() | Event Info Screen AJAX loading |
-| [4º]() | Home Screen Mustache |
-| [5º]() | Event Info Screen Mustache |
+| [1º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/402c53f9dbac855cb8e0464f48fe568ade0c78cc) | Event Ticket Visualizer and PDF Generation |
+| [2º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/7198424529d14013ead9a203e210e53b6c7f538f) | Home Screen AJAX refreshing integration |
+| [3º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/6c3b0b2d2b7e77c0b692571275e8ae88baca1bf5) | Event Info Screen AJAX loading |
+| [4º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/2e921d3048d06872cc27cec93cfa2a7cc51acc2b#diff-19000967eb0fdd80a9e16668ee3e4fa4451d4e03de6b5c27d30c6ddf81434677) | Event Info Screen Mustache |
+| [5º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/1462c5d0a10596c51bb6a9afcf962b434db5ff0e) | Home Screen Mustache |
+
 
 | File | Description |
 | :----: | :---------: |
 | [1º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/controller/EventWebController.java) | Event Web Controller |
 | [2º](Phase2/EventCrafters/src/main/resources/static/js/ticket.js) | Ticket downloading |
-| [3º](Phase2/EventCrafters/src/main/resources/templates/eventInfo.mustache) | Event Info Screen Mustache |
-| [4º](Phase2/EventCrafters/src/main/resources/templates/index.mustache) | Home Screen Mustache |
-| [5º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/service/EventService.java) | Event Service |
+| [3º](Phase2/EventCrafters/src/main/resources/templates/ticket.mustache) | Ticket visualizer |
+| [4º](Phase2/EventCrafters/src/main/resources/static/js/events.js) | Home Screen AJAX loading |
+| [5º](Phase2/EventCrafters/src/main/resources/templates/eventInfo.mustache) | Event Info Screen Mustache |
+
 
 
 ## ⚔️ Sample users
