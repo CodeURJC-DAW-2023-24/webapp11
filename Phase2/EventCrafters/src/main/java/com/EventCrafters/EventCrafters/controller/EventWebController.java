@@ -401,8 +401,27 @@ public class EventWebController {
         return "redirect:/";
     }
 
+    private boolean checkUserPermissionForEvent(Long eventId, Authentication authentication) {
+        Optional<Event> eventOpt = eventService.findById(eventId);
+        if (!eventOpt.isPresent()) {
+            return false; 
+        }
+        Event event = eventOpt.get();
+        String currentUsername = authentication.getName();
+        Optional<User> currentUser = userService.findByUserName(currentUsername);
+
+        boolean isCreator = currentUser.isPresent() && event.getCreator().equals(currentUser.get());
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        return isCreator || isAdmin;
+    }
+
     @GetMapping("/event/edit/{id}")
-    public String showEditEventForm(@PathVariable Long id, Model model) {
+    public String showEditEventForm(@PathVariable Long id, Model model, Authentication authentication) {
+        if (!checkUserPermissionForEvent(id, authentication)) {
+            return "redirect:/error";
+        }
         Event event = eventService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento no encontrado para id :: " + id));
 
