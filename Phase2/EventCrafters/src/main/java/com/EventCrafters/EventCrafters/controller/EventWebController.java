@@ -92,7 +92,11 @@ public class EventWebController {
 
     @GetMapping("/newEvents{i}")
     public String newEvents(Model model, @PathVariable int i, @RequestParam("page") int page) {
-        model.addAttribute("additionalEvents",ajaxService.loadMore(i,page));
+        List<Event> additionalEvents = ajaxService.loadMore(i,page);
+        for (Event e : additionalEvents) {
+            e.setDescription(eventService.getShortDescription(e.getDescription()));
+        }
+        model.addAttribute("additionalEvents",additionalEvents);
 
         if (ajaxService.getMaxPageNum(i) - 1 <= page) {
             model.addAttribute("lastEvents", "");
