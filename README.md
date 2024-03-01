@@ -349,19 +349,19 @@ An event recommendation algorithm has been implemented. It consists of two main 
 
 | Commit | Description |
 | :----: | :---------: |
-| [1º]() | |
-| [2º]() | | 
-| [3º]() | |
-| [4º]() | |
-| [5º]() | |
+| [1º](https://github.com/CodeURJC-DAW-2023-24/webapp11/tree/6d39f7942e7353a3c297213f6ec5eae116b2dbd4) | Displayed event details and actions based on event status and user role, enabled attendance input and rating, showed average rating, enhanced page aesthetics, and fixed a bug related to event deletion on account removal |
+| [2º](https://github.com/CodeURJC-DAW-2023-24/webapp11/tree/34270bd8d92dd1412af232a623837f8302e8b90f) | Users can interact with events based on their roles and registration status. Event creators and admins can see edit and delete event secction. Registered users can sign up for and unsubscribe from events. Visitors are invited to register if they wish to participate | 
+| [3º](https://github.com/CodeURJC-DAW-2023-24/webapp11/tree/dc05d32c22c82bbf295134444cacbf749f6cf742) | The "Edit" and "Delete" event buttons are now operational. The same template is utilized for both creating and editing events, ensuring consistent functionality |
+| [4º](https://github.com/CodeURJC-DAW-2023-24/webapp11/tree/3f0cf64948b174bb91eb8541c24a4a71c35e2a17) | As a user who has signed up for an event, once the event has concluded, you will be able to submit a review and see how your comments influence the overall rating of the event |
+| [5º](https://github.com/CodeURJC-DAW-2023-24/webapp11/tree/f378662d8c7ebe144aaa7a83e0947b1e6c4e5d6c) | An email is sent to users registered for an active event in case the event itself is deleted or the creator's account is deleted |
 
 | File | Description |
 | :----: | :---------: |
-| [1º]() | |
-| [2º]() | |
-| [3º]() | |
-| [4º]() | |
-| [5º]() | |
+| [1º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/controller/EventWebController.java) | EventWebController|
+| [2º](Phase2/EventCrafters/src/main/resources/templates/eventInfo.mustache) | eventInfo|
+| [3º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/controller/ReviewController.java) | ReviewWebController|
+| [4º](Phase2/EventCrafters/src/main/resources/templates/create_event.mustache) | create/edit event|
+| [5º](https://github.com/CodeURJC-DAW-2023-24/webapp11/blob/main/Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/service/EventService.java) | EventService|
 
 ### 👨‍🔧 Álvaro Serrano Rodrigo
 
