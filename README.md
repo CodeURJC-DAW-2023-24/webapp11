@@ -26,7 +26,8 @@
 
  - [Phase 2](#phase-2)
    - [Execution instructions](#execution-instructions)
-   - [Diagrams](#diagrams)
+   - [Diagrams](#diagrams)  
+   - [ScreenFlow](#sreenflow) 
    - [Possible actions to perform in the application](#possible-actions-to-perform-in-the-application)
    - [Recommendation algorithm](#recommendation-algorithm)
    - [Members Participation](#members-participation)
@@ -220,7 +221,7 @@ Upon entering the application, all users are presented with the Home screen.
 
 ## 🔣Execution instructions
 
-### 👟 Steps 
+### 👟Steps 
 1. Download this repository
 2. Check Requirements 
 3. Configure DataBase
@@ -228,14 +229,14 @@ Upon entering the application, all users are presented with the Home screen.
 5. Run Application in the IDE
 6. Go to https://localhost/8443/
 
-### 📋 Requirements
+### 📋Requirements
 - Java: JDK 17 --> https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 - MySQL: v.8.0.36.0 (Explained in DataBase Configuration)
 - Maven: 4.0.0
 - Spring Boot 2.4.2
 - IDE (explained in IDE Configuration)
 
-### 💾 DataBase Config
+### 💾DataBase Config
 - Download MySQL v.8.0.36.0
 - Select default port (port 3306)
 - Create a user with name root and password "password" with DB admin as user role
@@ -243,22 +244,22 @@ Upon entering the application, all users are presented with the Home screen.
 - Grant full access to the user
 - Create a new Schema named EventCrafters in the server using MySQL Workbench
 
-### 🕹️ IDE Config
+### 🕹️IDE Config
 - We have used IntelliJ IDEA, bt it can be possible to use other IDE´S
 - Install Maven and Spring for your IDE
 
-## 🗃️ Diagrams
+## 🗃️Diagrams
 
-### 💽 DataBase diagram
+### 💽DataBase diagram
 
 ![diagram](Phase2/diagrams/bbdd.png)
 *DataBase Diagram*
 
-### 🏠  Clases and templates diagram
+### 🏠Clases and templates diagram
 ![diagram](Phase2/diagrams/classTemplates.svg)
 *Clases and templates Diagram*
 
-## 🌐 ScreenFlow
+## 🌐ScreenFlow
 ![scrennflow](Phase2/diagrams/Phase%202%20screenflow.png)
 *Screen Flow*
 
