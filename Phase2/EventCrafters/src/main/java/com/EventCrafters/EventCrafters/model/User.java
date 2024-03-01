@@ -30,7 +30,7 @@ import org.springframework.util.StreamUtils;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //mirar estrategia
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 

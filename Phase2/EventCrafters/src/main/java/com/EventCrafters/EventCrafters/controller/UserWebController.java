@@ -68,7 +68,7 @@ public class UserWebController {
 		return "loginerror";
 	}
 
-	@PostMapping("/logout") //might not be a simple post
+	@PostMapping("/logout")
 	public String logout(Model model) {
 		// To-do: implement the whole thing
 		return "login";

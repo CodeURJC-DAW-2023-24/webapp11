@@ -1,7 +1,7 @@
 window.jsPDF = window.jspdf.jsPDF;
 document.getElementById('myguionpdf').onclick= function(){
     /**
-     * crear PDF
+     * create PDF
      */
      var doc = new jsPDF('p', 'pt', 'letter');
      var margin = 10;
