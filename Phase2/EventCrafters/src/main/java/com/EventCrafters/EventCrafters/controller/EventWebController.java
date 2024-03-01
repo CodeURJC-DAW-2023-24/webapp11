@@ -407,6 +407,12 @@ public class EventWebController {
             return false; 
         }
         Event event = eventOpt.get();
+
+        boolean eventHasStarted = event.getStartDate().before(new Date());
+        if (eventHasStarted) {
+            return false;
+        }
+
         String currentUsername = authentication.getName();
         Optional<User> currentUser = userService.findByUserName(currentUsername);
 
