@@ -107,7 +107,7 @@
                         {{#isUserCreatorOrAdmin}}
                             <div class="m-2">
                                 <form action="/event/delete/{{event.id}}" method="post">
-                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i>Borrar Evento</button>
+                                    <button type="submit" class="btn btn-danger" onclick="return warnDeleteEvent()"><i class="fas fa-trash-alt"></i>Borrar Evento</button>
                                 </form>
                             </div>
                             <div class="m-2">

@@ -16,3 +16,15 @@ async function loadMore(e) {
 }
 
 homeLoadMoreBtn.addEventListener('click', (e) => loadMore(e));
+
+
+function warnDeleteEvent(){
+    var result = confirm("Si continua, se eliminará el evento. ¿Está seguro?");
+    if (result) {
+        alert("El evento ha sido eliminado");
+        return true;
+    } else {
+        alert("El evento no ha sido eliminado");
+        return false;
+    }
+}
