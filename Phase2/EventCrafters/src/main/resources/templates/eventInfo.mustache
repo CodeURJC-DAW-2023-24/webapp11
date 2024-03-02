@@ -150,10 +150,10 @@
         </div>
         {{/eventFinished}}
 
+        <div class="user-events actions-section mt-4">
+            <h3 class="next"><i class="fas fa-clipboard-list"></i> Retroalimentación</h3>
         {{#logged}}
             {{#eventFinished}}
-                <div class="user-events actions-section mt-4">
-                    <h3 class="next"><i class="fas fa-clipboard-list"></i> Retroalimentación</h3>
                     {{#isUserRegistered}}
                         {{^hasUserReviewed}}
                             <div class="review-section mt-3">
@@ -194,12 +194,13 @@
                         </div>
                     </div>
                     {{/isUserCreatorOrAdmin}}
-                </div>
-                <div class="event-average-rating-section mt-4">
-                    <h4><i class="fas fa-star-half-alt"></i> Valoración Media del Evento: {{averageRating}}</h4>
-                </div>
+
             {{/eventFinished}}
         {{/logged}}
+        </div>
+        <div class="event-average-rating-section mt-4">
+            <h4><i class="fas fa-star-half-alt"></i> Valoración Media del Evento: {{averageRating}}</h4>
+        </div>
 
         <!--Location section-->
         <div class="user-events" id="map">

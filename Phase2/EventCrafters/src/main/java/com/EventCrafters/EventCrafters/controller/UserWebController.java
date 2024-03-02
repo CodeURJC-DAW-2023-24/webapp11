@@ -70,7 +70,6 @@ public class UserWebController {
 
 	@PostMapping("/logout")
 	public String logout(Model model) {
-		// To-do: implement the whole thing
 		return "login";
 	}
 
