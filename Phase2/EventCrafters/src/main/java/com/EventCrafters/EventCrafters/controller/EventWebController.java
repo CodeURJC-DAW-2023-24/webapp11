@@ -374,6 +374,9 @@ public class EventWebController {
     @GetMapping("/search{i}")
     public String filterByTag(Model model, @RequestParam("categoryId") long id, @PathVariable int i){
         List<Event> allEvents = ajaxService.findAjax(id , 7, i);
+        for (Event e : allEvents) {
+            e.setDescription(eventService.getShortDescription(e.getDescription()));
+        }
         model.addAttribute("additionalEvents", allEvents);
 
         if (ajaxService.getMaxPageNum(i) <= 1) {
@@ -386,6 +389,9 @@ public class EventWebController {
     @GetMapping("/navbarSearch{i}")
     public String navbarSearch(Model model, @RequestParam("input") String input, @PathVariable int i){
         List<Event> allEvents = ajaxService.findAjax(8, input, i);
+        for (Event e : allEvents) {
+            e.setDescription(eventService.getShortDescription(e.getDescription()));
+        }
         model.addAttribute("additionalEvents", allEvents);
 
         if (ajaxService.getMaxPageNum(i) <= 1) {
