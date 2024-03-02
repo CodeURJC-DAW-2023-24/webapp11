@@ -367,19 +367,19 @@ An event recommendation algorithm has been implemented. It consists of two main 
 
 | Commit | Description |
 | :----: | :---------: |
-| [1º]() | |
-| [2º]() | |
-| [3º]() | |
-| [4º]() | |
-| [5º]() | |
+| [1º](1b099887bdc9343601164db396a8dd00667a971e) | Category editing |
+| [2º](1c067613f8fdf383f70914e3c66f3338c1c90227) | Filtering by category |
+| [3º]b2a1e5c3e62d16d5549fb6462ecbb5239d52b67e() | Use of search bar|
+| [4º](ed72835cbcfde0133bff019c6525a18c11351a9e) | Category use chart |
+| [5º](c829551f408f989ac5155582b099e5103878da26) | The web's ajax is now working correctly |
 
 | File | Description |
 | :----: | :---------: |
-| [1º]() | |
-| [2º]() | |
-| [3º]() | |
-| [4º]() | |
-| [5º]() | |
+| [1º](1b099887bdc9343601164db396a8dd00667a971e) | The categories can now be changed in the admins profile screen |
+| [2º](1c067613f8fdf383f70914e3c66f3338c1c90227) | The option of filtering events by category was added in the home screen |
+| [3º](b2a1e5c3e62d16d5549fb6462ecbb5239d52b67e) | The home screen search bar is now working |
+| [4º](ed72835cbcfde0133bff019c6525a18c11351a9e) | A chart is now available in the admin's profile screen |
+| [5º](c829551f408f989ac5155582b099e5103878da26) | The ajax has been improved |
 
 ### 👨‍🔧 Marcos Jiménez Pulido
 
