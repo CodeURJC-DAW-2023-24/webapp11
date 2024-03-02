@@ -173,7 +173,7 @@
                     <!-- Option visible only for regular users (to delete account) -->
                     <div class="col-lg-2 {{showWhenUser}}">
                         <form action="delete-account" method="post">
-                            <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+                            <button type="submit" onclick="return warnDelete()" class="btn btn-danger">Eliminar Cuenta</button>
                         </form>
                     </div>
                 </div>

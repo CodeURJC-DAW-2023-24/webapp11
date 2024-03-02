@@ -233,6 +233,16 @@ unbanUserBtn.addEventListener('click', () => {
 });
 
 
+function warnDelete(){
+    var result = confirm("Si continua, se eliminará la cuenta. ¿Está seguro?");
+    if (result) {
+        alert("La cuenta ha sido eliminada");
+        return true;
+    } else {
+        alert("La cuenta no ha sido eliminada");
+        return false;
+    }
+}
 
 
 
