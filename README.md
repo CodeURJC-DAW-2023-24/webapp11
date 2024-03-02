@@ -345,7 +345,7 @@ An event recommendation algorithm has been implemented. It consists of two main 
 | [4º]() | |
 | [5º]() | |
 
-### 👨‍🔧 Tarek ELshami Ahmed
+### 👨‍🔧 Tarek Elshami Ahmed
 
 | Commit | Description |
 | :----: | :---------: |
