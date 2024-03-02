@@ -362,19 +362,19 @@ becomes the last one in its parent element
 }
 
 .btn-delete-account {
-    background-color: #dc3545; /* Color de fondo rojo */
-    color: white; /* Color del texto blanco */
-    border: none; /* Sin borde */
-    padding: 10px 20px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    font-size: 16px; /* Tamaño del texto */
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
-    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+    background-color: #dc3545; /* Red background color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* Estilos para el botón de borrar cuenta al pasar el cursor por encima */
+/* Styles for the delete account button on hover */
 .btn-delete-account:hover {
-    background-color: #c82333; /* Color de fondo rojo más oscuro */
+    background-color: #c82333;
 }
 
 .event-container-text{
