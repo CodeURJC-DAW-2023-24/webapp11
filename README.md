@@ -375,11 +375,11 @@ An event recommendation algorithm has been implemented. It consists of two main 
 
 | File | Description |
 | :----: | :---------: |
-| [1º](1b099887bdc9343601164db396a8dd00667a971e) | The categories can now be changed in the admins profile screen |
-| [2º](1c067613f8fdf383f70914e3c66f3338c1c90227) | The option of filtering events by category was added in the home screen |
-| [3º](b2a1e5c3e62d16d5549fb6462ecbb5239d52b67e) | The home screen search bar is now working |
-| [4º](ed72835cbcfde0133bff019c6525a18c11351a9e) | A chart is now available in the admin's profile screen |
-| [5º](c829551f408f989ac5155582b099e5103878da26) | The ajax has been improved |
+| [1º](Phase2/EventCrafters/src/main/resources/static/js/categories.js) | Categories javascript |
+| [2º](Phase2/EventCrafters/src/main/resources/static/js/profile.js) | Profile javascript |
+| [3º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/service/AjaxService.java) | The service in charge of the ajax requests |
+| [4º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/repository/UserRepository.java) | Registered user algorithm |
+| [5º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/controller/EventWebController.java) | EventWebController |
 
 ### 👨‍🔧 Marcos Jiménez Pulido
 
