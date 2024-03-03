@@ -462,11 +462,12 @@ public class EventWebController {
 
         Category category = categoryService.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
-
-        Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photo.getBytes());
-
+        
         event.setName(name);
-        event.setPhoto(photoBlob);
+        if (!photo.isEmpty()) {
+            Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photo.getBytes());
+            event.setPhoto(photoBlob);
+        }
         event.setDescription(description);
         event.setMaxCapacity(maxCapacity);
         event.setPrice(price);
