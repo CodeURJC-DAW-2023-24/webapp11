@@ -341,7 +341,7 @@ An event recommendation algorithm has been implemented. It consists of two main 
 | :----: | :---------: |
 | [1º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/controller/UserWebController.java) | UserWebController |
 | [2º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/service/MailService.java) | MailService |
-| [3º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/service/MailService.java) | Token Service |
+| [3º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/service/TokenService.java) | Token Service |
 | [4º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/security/WebSecurityConfig.java) | WebSecurityConfig |
 | [5º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/model/User.java) | User |
 
