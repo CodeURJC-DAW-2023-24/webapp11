@@ -331,19 +331,19 @@ An event recommendation algorithm has been implemented. It consists of two main 
 
 | Commit | Description |
 | :----: | :---------: |
-| [1º]() | |
-| [2º]() | |
-| [3º]() | |
-| [4º]() | |
-| [5º]() | |
+| [1º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/744521f412b9c9630ebb39b6d11b2ffe919ac03e) | Started Phase 2 |
+| [2º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/963814930c9f9342366b02f9a88ee66b488e9383) | Modified register. Can't create account with existing username |
+| [3º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/8af44555feea51ce2c12ef96d6cd0038ec407e8f) | Implemented logic to change password without login |
+| [4º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/c25af774b3c3d43e3b8e18538445b17fd1f0e500) | implemented sendMail in UserController to actually send a mail to the user's address |
+| [5º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/338b522d0a1e6874db1d32da3c9629fa7f637792) | Implemented pfp editing |
 
 | File | Description |
 | :----: | :---------: |
-| [1º]() | |
-| [2º]() |  |
-| [3º]() | |
-| [4º]() | |
-| [5º]() | |
+| [1º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/controller/UserWebController.java) | UserWebController |
+| [2º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/service/MailService.java) | MailService |
+| [3º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/service/MailService.java) | Token Service |
+| [4º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/security/WebSecurityConfig.java) | WebSecurityConfig |
+| [5º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/model/User.java) | User |
 
 ### 👨‍🔧 Tarek Elshami Ahmed
 
