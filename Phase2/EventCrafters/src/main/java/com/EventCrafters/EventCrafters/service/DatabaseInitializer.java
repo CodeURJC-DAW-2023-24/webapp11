@@ -156,13 +156,15 @@ public class DatabaseInitializer {
 		review.setEvent(event6);
 		reviewRepository.save(review);
 
-		event.getRegisteredUsers().add(user2);
 		event.getRegisteredUsers().add(user3);
 		event.getRegisteredUsers().add(user4);
 		event2.getRegisteredUsers().add(user2);
 		event6.getRegisteredUsers().add(user);
+		event6.getRegisteredUsers().add(user3);
+		event6.getRegisteredUsers().add(user4);
 		eventRepository.save(event);
 		eventRepository.save(event2);
+		eventRepository.save(event6);
 
 	}
 
