@@ -414,8 +414,8 @@ public class EventWebController {
         }
         Event event = eventOpt.get();
 
-        boolean eventHasStarted = event.getStartDate().before(new Date());
-        if (eventHasStarted) {
+        boolean eventHasEnded = event.getEndDate().before(new Date());
+        if (eventHasEnded) {
             return false;
         }
 
