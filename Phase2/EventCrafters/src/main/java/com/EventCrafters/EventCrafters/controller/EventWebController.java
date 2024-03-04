@@ -402,7 +402,10 @@ public class EventWebController {
     }
 
     @PostMapping("/event/delete/{id}")
-    public String deleteEvent(@PathVariable Long id) {
+    public String deleteEvent(@PathVariable Long id, Authentication authentication) {
+        if (!checkUserPermissionForEvent(id, authentication)) {
+            return "redirect:/error";
+        }
         eventService.delete(id);
         return "redirect:/";
     }
@@ -455,7 +458,11 @@ public class EventWebController {
                             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
                             @RequestParam("category") Long categoryId,
-                            @RequestParam(value = "additionalInfo", required = false) String additionalInfo) throws IOException, SQLException {
+                            @RequestParam(value = "additionalInfo", required = false) String additionalInfo, Authentication authentication) throws IOException, SQLException {
+
+        if (!checkUserPermissionForEvent(id, authentication)) {
+            return "redirect:/error";
+        }
 
         Event event = eventService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento no encontrado para id :: " + id));
