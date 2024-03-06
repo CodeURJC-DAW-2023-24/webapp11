@@ -288,6 +288,9 @@ This function will be accessible on the profile screen. In the "Mis eventos crea
 ### Edit/Delete Event
 When accessing the event information screen, in the "Detalles del evento" section, if the user is the creator or an admin, they will be given the option to edit/delete the event through the "Editar evento"/ "Borrar evento" button.
 
+### View Event Details
+To see the details of an event, you need to click on the "View Details" button located on the event card itself. This action will take you to a page where all the specific information about the event is displayed, including date, time, location, description, and any other relevant details.
+
 ### Make a Review
 Once you have signed up for an event and it has ended, if you enter it, you will see the option to leave a review in "Retroalimentación" section.
 
@@ -299,6 +302,27 @@ If you want to generate your event ticket, you should go to the event informatio
 
 ### Attendance chart
 Once the event is concluded, if the user is the creator or an administrator, they should enter the number of attendees in the event information screen. After providing this information, a chart representing the percentage of attendance to the event will be displayed.
+
+### Filter Events by Category
+In the navigation bar of the home screen, there is a "Filter Events" button. Clicking on this button opens a dropdown menu where you can select from all available categories to filter the events accordingly.
+
+### Search for Events
+Also located in the navigation bar, the event search functionality allows you to type a keyword present in the name of an event and press the search button to find matching events.
+
+### Create Categories
+If you are an admin, upon entering your profile, you will find a button with a "+" symbol in the "Tags" section. Clicking on this button will prompt a pop-up where you can fill in the details for a new category and save it.
+
+### Edit/Delete a Category
+Within the same "Tags" section, you can view the details of a category by clicking on it. In the pop-up, you can modify the data and save the changes. If you wish to delete the category, press the trash bin symbol button in the pop-up and confirm your action.
+
+### Delete Account
+Non-admin users can delete their accounts by accessing their profile and clicking on the "Delete Account" button in red.
+
+### View Your Events
+In your profile screen, there are four sections separated for events you have created and have not yet ended, events you have created that have ended, events you have signed up for and have not yet ended, and events you have signed up for that have ended.
+
+### Log Out
+You can log out by clicking on the profile bar on the person icon and selecting "Log Out" in the dropdown menu.
 
 ## 🚀 Recommendation algorithm
 An event recommendation algorithm has been implemented. It consists of two main parts:
