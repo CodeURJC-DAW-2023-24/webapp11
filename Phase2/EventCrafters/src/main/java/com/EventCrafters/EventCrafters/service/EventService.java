@@ -37,8 +37,8 @@ public class EventService {
 		return repository.findAll(PageRequest.of(page, pageSize)).getContent();
 	}
 
-	public void save(Event event) {
-		repository.save(event);
+	public Event save(Event event) {
+		return repository.save(event);
 	}
 
 
