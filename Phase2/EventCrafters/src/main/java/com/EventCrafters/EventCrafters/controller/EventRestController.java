@@ -68,14 +68,11 @@ public class EventRestController {
                     .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
 
             byte[] decodedBytes = Base64.getDecoder().decode(event.getPhoto());
-            Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(decodedBytes);
-
-            Date start = Date.from(Instant.parse(event.getStartDate().clone().toString()));
-            Date end = Date.from(Instant.parse(event.getEndDate().clone().toString()));*/
+            Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(decodedBytes);*/
 
             Event newEvent = new Event(event.getName(), null, event.getDescription(),
                     event.getMaxCapacity(), event.getPrice(), event.getLocation(),
-                    event.getMap(), null, null, event.getAdditionalInfo());
+                    event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo());
 
             newEvent.setCategory(null);
 
