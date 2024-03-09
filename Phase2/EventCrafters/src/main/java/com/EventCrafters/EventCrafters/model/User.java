@@ -113,4 +113,8 @@ public class User {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public void clearRoles() {
+		this.roles.clear();
+	}
 }
