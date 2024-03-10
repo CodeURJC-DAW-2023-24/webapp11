@@ -52,18 +52,6 @@ public class EventRestController {
         }
     }
 
-    private EventDTO transformDTO(Event event) {
-        Set<Long> registredUsersId = new HashSet<>();
-        for (User u : event.getRegisteredUsers()) {
-            registredUsersId.add(u.getId());
-        }
-        Set<Long> reviewId = new HashSet<>();
-        for (Review review : event.getReviews()) {
-            reviewId.add(review.getId());
-        }
-        return new EventDTO(event.getId(), event.getName(), event.getAttendeesCount(), event.getDescription(), event.getMaxCapacity(), event.getPrice(), event.getLocation(), event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo(), event.getCreator().getId(), registredUsersId, event.getNumRegisteredUsers(), reviewId, event.getCategory().getId());
-    }
-
     @PostMapping("/events")
     public ResponseEntity<EventDTO> createEvent(@RequestBody Event event) {
         // Check for empty fields in the event
@@ -92,10 +80,6 @@ public class EventRestController {
             // Set the category
             event.setCategory(categoryOpt.get());
 
-            /*Event newEvent = new Event(event.getName(), event.getPhoto(), event.getDescription(),
-                    event.getMaxCapacity(), event.getPrice(), event.getLocation(),
-                    event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo());*/
-
             // Save the event
             Event savedEvent = eventService.save(event);
 
@@ -116,14 +100,45 @@ public class EventRestController {
         }
     }
 
+    private EventDTO transformDTO(Event event) {
+        Set<Long> registredUsersId = new HashSet<>();
+        for (User u : event.getRegisteredUsers()) {
+            registredUsersId.add(u.getId());
+        }
+        Set<Long> reviewId = new HashSet<>();
+        for (Review review : event.getReviews()) {
+            reviewId.add(review.getId());
+        }
+        return new EventDTO(event.getId(), event.getName(), event.getAttendeesCount(), event.getDescription(), event.getMaxCapacity(), event.getPrice(), event.getLocation(), event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo(), event.getCreator().getId(), registredUsersId, event.getNumRegisteredUsers(), reviewId, event.getCategory().getId());
+    }
+
     private boolean eventHasEmptyFields(Event event) {
-        if (event.getName() == null || event.getName().trim().isEmpty() ||
+        if (
+                event.getName() == null || event.getName().trim().isEmpty() ||
                 event.getDescription() == null || event.getDescription().trim().isEmpty() ||
                 event.getLocation() == null || event.getLocation().trim().isEmpty() ||
+                event.getMap() == null || event.getMap().trim().isEmpty() ||
                 event.getStartDate() == null || event.getEndDate() == null ||
-                event.getCategory() == null || event.getCategory().getId() == null) {
+                event.getCategory() == null || event.getCategory().getId() == null ||
+                event.getAdditionalInfo() == null || event.getAdditionalInfo().trim().isEmpty())
+        {
             return true;
         }
+
+        if (event.getMaxCapacity() <= 0 || event.getPrice() < 0) {
+            return true;
+        }
+
+        Date now = new Date();
+
+        if (event.getStartDate() == null || event.getStartDate().before(now)) {
+            return true;
+        }
+
+        if (event.getEndDate() == null || event.getEndDate().before(event.getStartDate())) {
+            return true;
+        }
+
         return false;
     }
 }
