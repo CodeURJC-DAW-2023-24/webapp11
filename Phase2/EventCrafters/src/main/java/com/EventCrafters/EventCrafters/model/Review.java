@@ -36,4 +36,11 @@ public class Review {
         this.text = textValoration;
     }
 
+    public Review(Long id, User user, Event event, int rating, String text) {
+        this.id = id;
+        this.user = user;
+        this.event = event;
+        this.rating = rating;
+        this.text = text;
+    }
 }

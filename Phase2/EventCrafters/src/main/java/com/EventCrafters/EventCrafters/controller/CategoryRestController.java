@@ -69,14 +69,14 @@ public class CategoryRestController {
     }
 
     @PostMapping("/category/new")
-    public ResponseEntity<Category> newChef(@RequestBody CategoryDTO category){
+    public ResponseEntity<Category> newCategory(@RequestBody CategoryDTO category){
         Category newCategory = transformFromDTO(category);
         categoryService.save(newCategory);
         return ResponseEntity.status(200).body(null);
     }
 
     @PutMapping("/category/{id}")
-    public ResponseEntity<CategoryDTO> substituteChef(@PathVariable Long id, @RequestBody CategoryDTO category){
+    public ResponseEntity<CategoryDTO> substituteCategory(@PathVariable Long id, @RequestBody CategoryDTO category){
         Optional<Category> oldCategory = categoryService.findById(id);
         if (oldCategory.isPresent()){
             category.setId(id);
@@ -100,7 +100,7 @@ public class CategoryRestController {
  */
 
     @DeleteMapping("/category/{id}")
-    public ResponseEntity<Category> newChef(@PathVariable Long id){
+    public ResponseEntity<Category> deleteCategory(@PathVariable Long id){
         if (id != 1) {
             Optional<Category> category = categoryService.findById(id);
             if (category.isPresent()) {
