@@ -8,6 +8,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
@@ -125,6 +127,13 @@ public class EventWebController {
                               @RequestParam("category") Long categoryId,
                               @RequestParam(value = "additionalInfo", required = false) String additionalInfo) {
         try {
+            String mapIframeRegex = "<iframe.*src=\"https?.*\".*></iframe>";
+            Pattern pattern = Pattern.compile(mapIframeRegex, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(map);
+
+            if (!matcher.find()) {
+                return "redirect:/error";
+            }
             Category category = categoryService.findById(categoryId)
                     .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
 
@@ -464,6 +473,14 @@ public class EventWebController {
             return "redirect:/error";
         }
 
+        String mapIframeRegex = "<iframe.*src=\"https?.*\".*></iframe>";
+        Pattern pattern = Pattern.compile(mapIframeRegex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(map);
+
+        if (!matcher.find()) {
+            return "redirect:/error";
+        }
+
         Event event = eventService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento no encontrado para id :: " + id));
 
@@ -475,6 +492,8 @@ public class EventWebController {
             Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photo.getBytes());
             event.setPhoto(photoBlob);
         }
+
+
         event.setDescription(description);
         event.setMaxCapacity(maxCapacity);
         event.setPrice(price);

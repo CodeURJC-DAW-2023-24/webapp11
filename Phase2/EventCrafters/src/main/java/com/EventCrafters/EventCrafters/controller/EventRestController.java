@@ -24,6 +24,8 @@ import java.sql.Blob;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api")
@@ -162,6 +164,14 @@ public class EventRestController {
         }
 
         if (event.getEndDate() == null || event.getEndDate().before(event.getStartDate())) {
+            return true;
+        }
+
+        String mapIframeRegex = "<iframe.*src=\"https?.*\".*></iframe>";
+        Pattern pattern = Pattern.compile(mapIframeRegex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(event.getMap());
+
+        if (!matcher.find()) {
             return true;
         }
 
