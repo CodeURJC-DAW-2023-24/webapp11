@@ -31,5 +31,8 @@ const chartObserver = () => {
 }
 
 // this is so that it check when child nodes are added
-let cObserver = chartObserver();
-cObserver.observe(document.getElementById('charts-container'), {childList: true});
+let chartContainer = document.getElementById('charts-container')
+if (chartContainer != null) {
+    let cObserver = chartObserver();
+    cObserver.observe(chartContainer, {childList: true});
+}

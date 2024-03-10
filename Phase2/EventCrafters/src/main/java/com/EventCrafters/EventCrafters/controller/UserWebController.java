@@ -113,6 +113,7 @@ public class UserWebController {
 				if (categoryService.getMaxPageNum() <= 2){
 					model.addAttribute("thereAreNoMore0", "");
 				}
+				model.addAttribute("AdminOnly", "");
 				model.addAttribute("category",c);
 				model.addAttribute("events",e);
 				model.addAttribute("showWhenAdmin","");

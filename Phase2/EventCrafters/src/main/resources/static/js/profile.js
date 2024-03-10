@@ -88,8 +88,10 @@ const repeatableObserver = (btn) => {
 }
 
 // this is so that it check when child nodes are added
-let tagsObserver = repeatableObserver(moreTagsBtnDiv);
-tagsObserver.observe(categoriesContainer, {childList: true});
+if (categoriesContainer != null) {
+    let tagsObserver = repeatableObserver(moreTagsBtnDiv);
+    tagsObserver.observe(categoriesContainer, {childList: true});
+}
 
 let createdEventsObserver = repeatableObserver(moreCreatedEventsBtnDiv);
 createdEventsObserver.observe(createdEventsContainer, {childList: true});

@@ -32,11 +32,18 @@ const newButton = (e) => {
 }
 
 // makes it so that all elements with id=open-button do the same function when clicked
-document.getElementById('categories-container').addEventListener('click', (e) => {
-    if (e.target && e.target.matches('#open-button')) {
-        newButton(e)
+let categoriesCont = document.getElementById('categories-container')
+let categoriesContarinerFunction = () => {
+    if (categoriesCont != null){
+        categoriesCont.addEventListener('click', (e) => {
+            if (e.target && e.target.matches('#open-button')) {
+                newButton(e)
+            }
+        })
     }
-})
+}
+
+categoriesContarinerFunction();
 
 //to close the tag popup
 const closeWindow = () => {

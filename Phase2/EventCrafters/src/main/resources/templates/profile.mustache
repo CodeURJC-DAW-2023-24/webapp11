@@ -53,6 +53,7 @@
 </nav>
 
 <!-- Popup for tag creation/editing -->
+{{#adminOnly}}
 <div class="window-background" id="window-background">
     <div class="window-container" id="window-container">
         <!-- Close button for the popup -->
@@ -86,6 +87,7 @@
         </form>
     </div>
 </div>
+{{/adminOnly}}
 
 <!-- Main content area -->
 <div class="container mt-4" id="main-container-profile">
@@ -180,6 +182,7 @@
                 </div>
             </div>
         </div>
+        {{#adminOnly}}
         <!-- Tags section -->
         <div class="user-events {{showWhenAdmin}}">
             <h3 class="created">Tags</h3>
@@ -217,6 +220,7 @@
                 </div>
             </div>
         </div>
+        {{/adminOnly}}
         <!-- User-created events section -->
         <div class="user-events">
             <h3 class="created">{{eventsText}}</h3>
@@ -268,6 +272,7 @@
             </div>
         </div>
         <!--Charts-->
+        {{#adminOnly}}
         <div class="Charts {{showWhenAdmin}}">
             <h3 class="created">Gráficas</h3>
             <div id="charts-container" >
@@ -279,6 +284,7 @@
                 </div>
             </div>
         </div>
+        {{/adminOnly}}
         <!-- User-created events that have already ended section -->
         <div class="user-events {{showWhenUser}}">
             <h3 class="next">Eventos pasados que he creado </h3>
@@ -397,9 +403,12 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!-- Custom JavaScript file -->
 <script src="../js/profile.js"></script>
+{{#adminOnly}}
 <script src="../js/categories.js"></script>
-<script src="../js/editProfile.js"></script>
 <script src="../js/charts.js"></script>
+{{/adminOnly}}
+<script src="../js/editProfile.js"></script>
+
 
 </body>
 
