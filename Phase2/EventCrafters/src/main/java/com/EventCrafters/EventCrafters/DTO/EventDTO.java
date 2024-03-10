@@ -31,6 +31,7 @@ public class EventDTO {
     private int numRegisteredUsers;
     private Set<Long> reviewsId = new HashSet<>();
     private Long categoryId;
+    private String imageUrl;
 
     public EventDTO(Long id, String name, int attendeesCount, String description, int maxCapacity, double price, String location, String map, Date startDate, Date endDate, String additionalInfo, Long creatorId, Set<Long> registeredUsersId, int numRegisteredUsers, Set<Long> reviewsId, Long categoryId) {
         this.id = id;
@@ -49,6 +50,11 @@ public class EventDTO {
         this.numRegisteredUsers = numRegisteredUsers;
         this.reviewsId = reviewsId;
         this.categoryId = categoryId;
+        this.imageUrl = generateImageUrl(id);
+    }
+
+    private String generateImageUrl(Long id) {
+        return "https://localhost:8443/api/events/image/" + id;
     }
 
     public EventDTO() {

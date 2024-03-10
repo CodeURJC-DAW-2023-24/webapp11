@@ -53,9 +53,10 @@ public class EventRestController {
     }
 
     @PostMapping("/events")
-    public ResponseEntity<EventDTO> createEvent(@RequestBody Event event) {
+    public ResponseEntity<EventDTO> createEvent(@RequestPart("event") Event event,
+                                                @RequestPart("photo") MultipartFile photo) {
         // Check for empty fields in the event
-        if (eventHasEmptyFields(event)) {
+        if (eventHasEmptyFields(event) || photo == null) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -80,6 +81,7 @@ public class EventRestController {
             // Set the category
             event.setCategory(categoryOpt.get());
 
+            event.setPhoto(new javax.sql.rowset.serial.SerialBlob(photo.getBytes()));
             // Save the event
             Event savedEvent = eventService.save(event);
 
@@ -118,7 +120,6 @@ public class EventRestController {
                 event.getDescription() == null || event.getDescription().trim().isEmpty() ||
                 event.getLocation() == null || event.getLocation().trim().isEmpty() ||
                 event.getMap() == null || event.getMap().trim().isEmpty() ||
-                event.getStartDate() == null || event.getEndDate() == null ||
                 event.getCategory() == null || event.getCategory().getId() == null ||
                 event.getAdditionalInfo() == null || event.getAdditionalInfo().trim().isEmpty())
         {
