@@ -15,7 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.sql.Blob;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -62,32 +65,66 @@ public class EventRestController {
     }
 
     @PostMapping("/events")
-    public ResponseEntity<?> createEvent(@RequestBody Event event) {
+    public ResponseEntity<EventDTO> createEvent(@RequestBody Event event) {
+        // Check for empty fields in the event
+        if (eventHasEmptyFields(event)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // Check if category exists
+        Optional<Category> categoryOpt = categoryService.findById(event.getCategory().getId());
+        if (!categoryOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
         try {
-            /*Category category = categoryService.findById(event.getCategory().getId())
-                    .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
-
-            byte[] decodedBytes = Base64.getDecoder().decode(event.getPhoto());
-            Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(decodedBytes);*/
-
-            Event newEvent = new Event(event.getName(), null, event.getDescription(),
-                    event.getMaxCapacity(), event.getPrice(), event.getLocation(),
-                    event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo());
-
-            newEvent.setCategory(null);
-
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
             String currentUsername = authentication.getName();
             Optional<User> userOpt = userService.findByUserName(currentUsername);
+            if (!userOpt.isPresent()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            event.setCreator(userOpt.get());
 
-            userOpt.ifPresent(newEvent::setCreator);
+            // Set the category
+            event.setCategory(categoryOpt.get());
 
-            eventService.save(newEvent);
+            /*Event newEvent = new Event(event.getName(), event.getPhoto(), event.getDescription(),
+                    event.getMaxCapacity(), event.getPrice(), event.getLocation(),
+                    event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo());*/
 
-            return ResponseEntity.ok().build();
+            // Save the event
+            Event savedEvent = eventService.save(event);
+
+            // Transform the saved event to EventDTO
+            EventDTO eventDTO = transformDTO(savedEvent);
+
+            // Build the URL created event
+            URI location = ServletUriComponentsBuilder.fromHttpUrl("https://localhost:8443")
+                    .path("/event/{id}")
+                    .buildAndExpand(savedEvent.getId())
+                    .toUri();
+
+            return ResponseEntity.created(location).body(eventDTO);
+
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el evento");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    private boolean eventHasEmptyFields(Event event) {
+        if (event.getName() == null || event.getName().trim().isEmpty() ||
+                event.getDescription() == null || event.getDescription().trim().isEmpty() ||
+                event.getLocation() == null || event.getLocation().trim().isEmpty() ||
+                event.getStartDate() == null || event.getEndDate() == null ||
+                event.getCategory() == null || event.getCategory().getId() == null) {
+            return true;
+        }
+        return false;
+    }
 }
+
