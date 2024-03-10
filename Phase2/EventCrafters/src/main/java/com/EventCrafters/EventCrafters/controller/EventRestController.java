@@ -11,6 +11,7 @@ import com.EventCrafters.EventCrafters.service.ReviewService;
 import com.EventCrafters.EventCrafters.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -101,6 +102,30 @@ public class EventRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/events/image/{id}")
+    public ResponseEntity<byte[]> showEventImage(@PathVariable long id) {
+        Optional<Event> eventOptional = eventService.findById(id);
+        if (eventOptional.isPresent()) {
+            Event event = eventOptional.get();
+
+            try {
+                Blob photoBlob = event.getPhoto();
+                byte[] photoBytes = photoBlob.getBytes(1, (int) photoBlob.length());
+
+                return ResponseEntity
+                        .ok()
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(photoBytes);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     private EventDTO transformDTO(Event event) {
         Set<Long> registredUsersId = new HashSet<>();
