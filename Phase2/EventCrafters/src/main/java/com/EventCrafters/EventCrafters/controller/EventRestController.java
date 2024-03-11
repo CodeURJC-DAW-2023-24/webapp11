@@ -93,7 +93,7 @@ public class EventRestController {
 
             // Build the URL created event
             URI location = ServletUriComponentsBuilder.fromHttpUrl("https://localhost:8443")
-                    .path("/event/{id}")
+                    .path("/api/events/{id}")
                     .buildAndExpand(savedEvent.getId())
                     .toUri();
 
@@ -130,15 +130,15 @@ public class EventRestController {
 
 
     private EventDTO transformDTO(Event event) {
-        Set<Long> registredUsersId = new HashSet<>();
+        /*Set<Long> registredUsersId = new HashSet<>();
         for (User u : event.getRegisteredUsers()) {
             registredUsersId.add(u.getId());
         }
         Set<Long> reviewId = new HashSet<>();
         for (Review review : event.getReviews()) {
             reviewId.add(review.getId());
-        }
-        return new EventDTO(event.getId(), event.getName(), event.getAttendeesCount(), event.getDescription(), event.getMaxCapacity(), event.getPrice(), event.getLocation(), event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo(), event.getCreator().getId(), registredUsersId, event.getNumRegisteredUsers(), reviewId, event.getCategory().getId());
+        }*/
+        return new EventDTO(event.getId(), event.getName(), event.getAttendeesCount(), event.getDescription(), event.getMaxCapacity(), event.getPrice(), event.getLocation(), event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo(), event.getCreator().getId(), event.getNumRegisteredUsers(), event.getCategory().getId());
     }
 
     private boolean eventHasEmptyFields(Event event) {

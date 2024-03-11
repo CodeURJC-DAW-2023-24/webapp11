@@ -27,13 +27,13 @@ public class EventDTO {
     private Date endDate;
     private String additionalInfo;
     private Long creatorId;
-    private Set<Long> registeredUsersId = new HashSet<>();
+    //private Set<Long> registeredUsersId = new HashSet<>();
     private int numRegisteredUsers;
-    private Set<Long> reviewsId = new HashSet<>();
+    //private Set<Long> reviewsId = new HashSet<>();
     private Long categoryId;
     private String imageUrl;
 
-    public EventDTO(Long id, String name, int attendeesCount, String description, int maxCapacity, double price, String location, String map, Date startDate, Date endDate, String additionalInfo, Long creatorId, Set<Long> registeredUsersId, int numRegisteredUsers, Set<Long> reviewsId, Long categoryId) {
+    public EventDTO(Long id, String name, int attendeesCount, String description, int maxCapacity, double price, String location, String map, Date startDate, Date endDate, String additionalInfo, Long creatorId, /*Set<Long> registeredUsersId,*/ int numRegisteredUsers, /*Set<Long> reviewsId,*/ Long categoryId) {
         this.id = id;
         this.name = name;
         this.attendeesCount = attendeesCount;
@@ -46,9 +46,9 @@ public class EventDTO {
         this.endDate = endDate;
         this.additionalInfo = additionalInfo;
         this.creatorId = creatorId;
-        this.registeredUsersId = registeredUsersId;
+        //this.registeredUsersId = registeredUsersId;
         this.numRegisteredUsers = numRegisteredUsers;
-        this.reviewsId = reviewsId;
+        //this.reviewsId = reviewsId;
         this.categoryId = categoryId;
         this.imageUrl = generateImageUrl(id);
     }
