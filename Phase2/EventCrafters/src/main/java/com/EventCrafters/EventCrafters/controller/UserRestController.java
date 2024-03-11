@@ -1,30 +1,20 @@
 package com.EventCrafters.EventCrafters.controller;
 
-import com.EventCrafters.EventCrafters.model.Category;
-import com.EventCrafters.EventCrafters.model.Event;
+import com.EventCrafters.EventCrafters.DTO.CensoredUserDTO;
+import com.EventCrafters.EventCrafters.DTO.FullUserDTO;
 import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.service.*;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.http.HttpHeaders;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.rowset.serial.SerialBlob;
-import java.io.IOException;
 import java.security.Principal;
 import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.*;
 
 @RestController
@@ -63,7 +53,7 @@ public class UserRestController {
 
 
 	@GetMapping("/{id}")
-	public ResponseEntity<User> getUser(HttpServletRequest request, @PathVariable Long id){
+	public ResponseEntity<CensoredUserDTO> getUser(HttpServletRequest request, @PathVariable Long id){
 		Principal principal = request.getUserPrincipal();
 		Optional<User> optionalUser = userService.findById(id);
 		User user;
@@ -74,18 +64,15 @@ public class UserRestController {
 		}
 
 		if (principal != null && user.getUsername().equals(principal.getName())) {
-			return ResponseEntity.ok(user);
+
+			return ResponseEntity.ok(new FullUserDTO(user));
 		} else {
-			User censoredUser = new User();
-			censoredUser.setPhoto(user.getPhoto());
-			censoredUser.setName(user.getName());
-			censoredUser.setUsername(user.getUsername());
-			return ResponseEntity.ok(user);
+			return ResponseEntity.ok(new CensoredUserDTO(user));
 		}
 	}
 
 	@PostMapping("/new")
-	public ResponseEntity<User> newUser(@RequestParam User user){
+	public ResponseEntity<FullUserDTO> newUser(@RequestPart("User") User user){
 		if (userService.findByUserName(user.getUsername()).isPresent()) {
 			return ResponseEntity.status(409).build(); //409 conflict
 		}
@@ -94,15 +81,38 @@ public class UserRestController {
 		user.setPassword(encodedPassword);
 		user.clearRoles();
 		user.setRole("USER");
+		user.setDefaultPhoto();
 
-		if (user.getPhoto()==null){
-			user.setDefaultPhoto();
-		}
 		userService.save(user);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Location", "/api/users/"+user.getUsername());
 
-		return new ResponseEntity<>(user, headers, HttpStatus.CREATED);
+		FullUserDTO fullUserDTO = new FullUserDTO(user);
+		return new ResponseEntity<>(fullUserDTO, headers, HttpStatus.CREATED);
+	}
+
+	@GetMapping ("/img/{id}")
+	public ResponseEntity<byte[]> showEventImage(@PathVariable long id){
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+
+			try {
+				Blob photoBlob = user.getPhoto();
+				byte[] photoBytes = photoBlob.getBytes(1, (int) photoBlob.length());
+
+				return ResponseEntity
+						.ok()
+						.contentType(MediaType.IMAGE_JPEG)
+						.body(photoBytes);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			}
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
 	}
 
 	@PutMapping("/{id}")
