@@ -550,8 +550,21 @@ public class EventWebController {
     }
 
     @PostMapping("/event/setAttendance/{eventId}")
-    public String setEventAttendance(@PathVariable Long eventId, @RequestParam("attendeesCount") Integer attendeesCount) {
-        if (attendeesCount != null && attendeesCount >= 0) {
+    public String setEventAttendance(@PathVariable Long eventId, @RequestParam("attendeesCount") Integer attendeesCount, Authentication authentication) {
+        Optional<Event> eventOpt = eventService.findById(eventId);
+        if (!eventOpt.isPresent()) {
+            return "redirect:/error";
+        }
+        Event event = eventOpt.get();
+
+        String currentUsername = authentication.getName();
+        Optional<User> currentUser = userService.findByUserName(currentUsername);
+
+        boolean isCreator = currentUser.isPresent() && event.getCreator().equals(currentUser.get());
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (attendeesCount != null && attendeesCount >= 0 && (isAdmin || isCreator) && attendeesCount<event.getNumRegisteredUsers()) {
             eventService.updateAttendeesCount(eventId, attendeesCount);
         }
         return "redirect:/event/" + eventId;

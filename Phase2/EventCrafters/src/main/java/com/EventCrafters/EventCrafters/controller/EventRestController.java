@@ -21,14 +21,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.sql.Blob;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/events")
 public class EventRestController {
 
     @Autowired
@@ -43,7 +41,7 @@ public class EventRestController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/events/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<EventDTO> showEvent(@PathVariable long id){
         Optional<Event> eventOptional = eventService.findById(id);
         if (eventOptional.isPresent()){
@@ -55,7 +53,7 @@ public class EventRestController {
         }
     }
 
-    @PostMapping("/events")
+    @PostMapping("/")
     public ResponseEntity<EventDTO> createEvent(@RequestPart("event") Event event,
                                                 @RequestPart("photo") MultipartFile photo) {
         // Check for empty fields in the event
@@ -105,7 +103,7 @@ public class EventRestController {
         }
     }
 
-    @GetMapping("/events/image/{id}")
+    @GetMapping("/image/{id}")
     public ResponseEntity<byte[]> showEventImage(@PathVariable long id) {
         Optional<Event> eventOptional = eventService.findById(id);
         if (eventOptional.isPresent()) {
@@ -126,6 +124,82 @@ public class EventRestController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PutMapping("/{eventId}/attendees")
+    public ResponseEntity<EventDTO> updateEventAttendees(@PathVariable Long eventId, @RequestBody Integer attendeesCount) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            // User is not authenticated
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String currentUsername = authentication.getName();
+
+        Optional<Event> eventOpt = eventService.findById(eventId);
+        if (!eventOpt.isPresent()) {
+            // Event not found
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Event event = eventOpt.get();
+
+        if (!isUserAdminOrCreator(currentUsername, event)) {
+            // Unauthorized to update the event
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        if (event.getEndDate().before(new Date()) && attendeesCount != null && attendeesCount >= 0 && attendeesCount <= event.getNumRegisteredUsers()) {
+            // Update the attendees count (the event has already ended)
+            event.setAttendeesCount(attendeesCount);
+            eventService.save(event);
+
+            EventDTO eventDTO = transformDTO(event);
+            // Return the "Location" header pointing to the event's URL
+            String graphUrl = "https://localhost:8443/api/events/" + eventId;
+            return ResponseEntity.ok().header("Location", graphUrl).body(eventDTO);
+        } else {
+            // Event has not ended yet
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/{eventId}/graph")
+    public ResponseEntity<Map<String, Integer>> getEventGraphData(@PathVariable Long eventId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            // User is not authenticated
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String currentUsername = authentication.getName();
+
+        Optional<Event> eventOptional = eventService.findById(eventId);
+        if(!eventOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
+
+        }
+        Event event = eventOptional.get();
+        if (!isUserAdminOrCreator(currentUsername, event)) {
+            // Unauthorized to update the event
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Map<String, Integer> graphData = new HashMap<>();
+        if (event.getAttendeesCount() == -1) {
+            // If the attendees count has not been set returning -1 for both registeredUsers and didNotAttend to indicate data is not available
+            graphData.put("registeredUsers", -1);
+            graphData.put("attendeesCount", -1);
+            graphData.put("didNotAttend", -1);
+        } else {
+            // If attendees count is available, populate the map with actual data
+            graphData.put("registeredUsers", event.getNumRegisteredUsers());
+            graphData.put("attendeesCount", event.getAttendeesCount());
+            int didNotAttend = event.getNumRegisteredUsers() - event.getAttendeesCount();
+            graphData.put("didNotAttend", didNotAttend);
+        }
+
+        return ResponseEntity.ok(graphData);
     }
 
 
@@ -177,5 +251,23 @@ public class EventRestController {
 
         return false;
     }
+    private boolean isUserAdminOrCreator(String username, Event event) {
+        Optional<User> userOpt = userService.findByUserName(username);
+        if (!userOpt.isPresent()) {
+            return false;
+        }
+        User user = userOpt.get();
+
+        // Check if the user has ROLE_ADMIN authority
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        // Check if the user is the event creator
+        boolean isCreator = event.getCreator().equals(user);
+
+        return isAdmin || isCreator;
+    }
+
 }
 
