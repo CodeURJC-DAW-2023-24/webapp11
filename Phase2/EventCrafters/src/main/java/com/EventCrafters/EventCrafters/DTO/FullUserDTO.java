@@ -4,6 +4,7 @@ package com.EventCrafters.EventCrafters.DTO;
 import com.EventCrafters.EventCrafters.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public class FullUserDTO extends CensoredUserDTO {
     private Long id;
@@ -36,5 +37,69 @@ public class FullUserDTO extends CensoredUserDTO {
         this.roles = user.getRoles();
         this.id = user.getId();
         this.photo = "/api/users/img/" + user.getId();
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String getPhoto() {
+        return photo;
+    }
+
+    @Override
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

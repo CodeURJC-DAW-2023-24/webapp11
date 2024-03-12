@@ -35,11 +35,10 @@ public class UserRestController {
 	private Map<String, TokenService> tokens = new HashMap<>();
 
 	@GetMapping("/me")
-	public ResponseEntity<User> currentUser(HttpServletRequest request){
+	public ResponseEntity<FullUserDTO> currentUser(HttpServletRequest request){
 		Principal principal = request.getUserPrincipal();
-
 		if(principal != null) {
-			return ResponseEntity.ok(userService.findByUserName(principal.getName()).orElseThrow());
+			return ResponseEntity.ok(new FullUserDTO(userService.findByUserName(principal.getName()).orElseThrow()));
 		} else {
 			return ResponseEntity.notFound().build();
 		}
@@ -62,7 +61,6 @@ public class UserRestController {
 		} else {
 			return ResponseEntity.status(404).build();
 		}
-
 		if (principal != null && user.getUsername().equals(principal.getName())) {
 
 			return ResponseEntity.ok(new FullUserDTO(user));
@@ -72,7 +70,7 @@ public class UserRestController {
 	}
 
 	@PostMapping("/new")
-	public ResponseEntity<FullUserDTO> newUser(@RequestPart("User") User user){
+	public ResponseEntity<FullUserDTO> newUser(@RequestBody User user){
 		if (userService.findByUserName(user.getUsername()).isPresent()) {
 			return ResponseEntity.status(409).build(); //409 conflict
 		}

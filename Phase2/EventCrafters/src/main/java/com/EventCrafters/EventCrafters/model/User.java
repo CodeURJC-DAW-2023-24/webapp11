@@ -92,7 +92,6 @@ public class User {
 	}
 
 	public void setRole(String roleUser) {
-
 		if (this.roles == null){
 			this.roles =  new ArrayList<>();
 		}
@@ -115,6 +114,10 @@ public class User {
 	}
 
 	public void clearRoles() {
-		this.roles.clear();
+		if (this.roles !=null) {
+			this.roles.clear();
+		} else {
+			this.roles = new ArrayList<>();
+		}
 	}
 }
