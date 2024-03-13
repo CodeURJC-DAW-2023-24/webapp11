@@ -11,7 +11,11 @@ import com.EventCrafters.EventCrafters.service.EventService;
 import com.EventCrafters.EventCrafters.service.ReviewService;
 import com.EventCrafters.EventCrafters.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -38,12 +42,24 @@ public class ReviewRestController {
 
     private Review transformFromDTO(ReviewDTO review) {
         Long id = review.getId();
-        User user = userService.findById(review.getUserId()).get();
-        Event event = eventService.findById(review.getEventId()).get();
+        User user;
+        if (userService.findById(review.getUserId()).isPresent())
+            user = userService.findById(review.getUserId()).get();
+        else
+            user = null;
+        Event event;
+        if (eventService.findById(review.getEventId()).isPresent())
+            event = eventService.findById(review.getEventId()).get();
+        else
+            event = null;
         int rating = review.getRating();
         String text = review.getText();
         return new Review(id, user, event, rating, text);
 
+    }
+
+    private boolean isAuthenticated(Authentication authentication) {
+        return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 
     @GetMapping("/reviews")
@@ -58,7 +74,7 @@ public class ReviewRestController {
         return answer;
     }
 
-    @GetMapping("/review/{id}")
+    @GetMapping("/reviews/{id}")
     public ResponseEntity<ReviewDTO> showCategory(@PathVariable Long id) {
         Optional<Review> review = reviewService.findById(id);
         if (review.isPresent()) {
@@ -70,46 +86,32 @@ public class ReviewRestController {
 
     }
 
-    @PostMapping("/review/new")
-    public ResponseEntity<Category> newReview(@RequestBody ReviewDTO review) {
+    @PostMapping("/reviews")
+    public ResponseEntity<String> newReview(@RequestBody ReviewDTO review) {
         Review newReview = transformFromDTO(review);
-        reviewService.save(newReview);
-        return ResponseEntity.status(200).body(null);
-    }
-
-    @PutMapping("/review/{id}")
-    public ResponseEntity<ReviewDTO> substituteReview(@PathVariable Long id, @RequestBody ReviewDTO review) {
-        Optional<Review> oldReview = reviewService.findById(id);
-        if (oldReview.isPresent()) {
-            review.setId(id);
-            Review review1 = transformFromDTO(review);
-            reviewService.save(review1);
-            return ResponseEntity.ok(review);
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    /*
-        @PatchMapping("/category/{id}")
-        public ResponseEntity<Category> modifyChef(@PathVariable Long id, @RequestBody Category category){
-            Optional<Category> oldCategory = categoryService.findById(id);
-            if (oldCategory.isPresent()){
-                return ResponseEntity.notFound().build();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(isAuthenticated(authentication)){
+            System.out.println("hola");
+            Optional<User> user = userService.findByUserName(authentication.getName());
+            Optional<Event> event = eventService.findById(review.getEventId());
+            System.out.println(user);
+            System.out.println(event);
+            if (user.isPresent() && event.isPresent()){
+                System.out.println("hola2");
+                if (user.get().getId().equals(review.getUserId()) &&
+                        event.get().getRegisteredUsers().contains(user.get()) &&
+                        event.get().getEndDate().before(new Date())){
+                    reviewService.save(newReview);
+                    int id = reviewService.findAll().size();
+                    return ResponseEntity.status(200).body("/api/reviews/"+id);
+                }
             }
-            //categoryService.modifyToMatch(id,chef);
-            return ResponseEntity.ok(categoryService.findById(id).get());
+        }else if (!isAuthenticated(authentication)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
-     */
-    @DeleteMapping("/review/{id}")
-    public ResponseEntity<Review> deleteReview(@PathVariable Long id) {
-        Optional<Review> review = reviewService.findById(id);
-        if (review.isPresent()) {
-            reviewService.delete(id);
-            return ResponseEntity.ok(review.get());
-        }
-        return ResponseEntity.notFound().build();
-
+        return ResponseEntity.badRequest().build();
     }
+
+
 
 }

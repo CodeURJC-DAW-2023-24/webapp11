@@ -47,8 +47,8 @@ public class CategoryRestController {
 
     }
     @GetMapping("/categories")
-    public List<CategoryDTO> showCategories(){
-        List<Category> all = categoryService.findAll();
+    public List<CategoryDTO> showCategories(@RequestParam("page") int page){
+        List<Category> all = categoryService.findAll(page);
         List<CategoryDTO> answer = new ArrayList<>();
         for (Category c : all){
             CategoryDTO categoryDTO = transformToDTO(c);
@@ -56,7 +56,7 @@ public class CategoryRestController {
         }
         return answer;
     }
-    @GetMapping("/category/{id}")
+    @GetMapping("/categories/{id}")
     public ResponseEntity<CategoryDTO> showCategory(@PathVariable Long id){
         Optional<Category> category = categoryService.findById(id);
         if (category.isPresent()){
@@ -68,14 +68,15 @@ public class CategoryRestController {
 
     }
 
-    @PostMapping("/category/new")
-    public ResponseEntity<Category> newCategory(@RequestBody CategoryDTO category){
+    @PostMapping("/categories")
+    public ResponseEntity<String> newCategory(@RequestBody CategoryDTO category){
         Category newCategory = transformFromDTO(category);
         categoryService.save(newCategory);
-        return ResponseEntity.status(200).body(null);
+        int id = categoryService.findAll().size();
+        return ResponseEntity.status(200).body("/api/category/"+id);
     }
 
-    @PutMapping("/category/{id}")
+    @PutMapping("/categories/{id}")
     public ResponseEntity<CategoryDTO> substituteCategory(@PathVariable Long id, @RequestBody CategoryDTO category){
         Optional<Category> oldCategory = categoryService.findById(id);
         if (oldCategory.isPresent()){
@@ -86,20 +87,8 @@ public class CategoryRestController {
         }
         return ResponseEntity.notFound().build();
     }
-/*
-    @PatchMapping("/category/{id}")
-    public ResponseEntity<Category> modifyChef(@PathVariable Long id, @RequestBody Category category){
-        Optional<Category> oldCategory = categoryService.findById(id);
-        if (oldCategory.isPresent()){
-            return ResponseEntity.notFound().build();
-        }
-        //categoryService.modifyToMatch(id,chef);
-        return ResponseEntity.ok(categoryService.findById(id).get());
-    }
 
- */
-
-    @DeleteMapping("/category/{id}")
+    @DeleteMapping("/categories/{id}")
     public ResponseEntity<Category> deleteCategory(@PathVariable Long id){
         if (id != 1) {
             Optional<Category> category = categoryService.findById(id);
