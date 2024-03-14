@@ -1,23 +1,16 @@
 package com.EventCrafters.EventCrafters.DTO;
 
-import com.EventCrafters.EventCrafters.model.Category;
-import com.EventCrafters.EventCrafters.model.Review;
-import com.EventCrafters.EventCrafters.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Blob;
+import java.time.Duration;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
 public class EventDTO {
     private Long id;
     private String name;
-    private int attendeesCount = -1;
-    //private Blob photo;
     private String description;
     private int maxCapacity;
     private double price;
@@ -25,18 +18,20 @@ public class EventDTO {
     private String map;
     private Date startDate;
     private Date endDate;
+    private String duration;
     private String additionalInfo;
     private Long creatorId;
-    //private Set<Long> registeredUsersId = new HashSet<>();
     private int numRegisteredUsers;
-    //private Set<Long> reviewsId = new HashSet<>();
     private Long categoryId;
     private String imageUrl;
 
-    public EventDTO(Long id, String name, int attendeesCount, String description, int maxCapacity, double price, String location, String map, Date startDate, Date endDate, String additionalInfo, Long creatorId, /*Set<Long> registeredUsersId,*/ int numRegisteredUsers, /*Set<Long> reviewsId,*/ Long categoryId) {
+
+    public EventDTO() {
+    }
+
+    public EventDTO(Long id, String name, String description, int maxCapacity, double price, String location, String map, Date startDate, Date endDate, String additionalInfo, Long creatorId, int numRegisteredUsers, Long categoryId) {
         this.id = id;
         this.name = name;
-        this.attendeesCount = attendeesCount;
         this.description = description;
         this.maxCapacity = maxCapacity;
         this.price = price;
@@ -44,19 +39,22 @@ public class EventDTO {
         this.map = map;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.duration  = formatDuration(startDate, endDate);
         this.additionalInfo = additionalInfo;
         this.creatorId = creatorId;
-        //this.registeredUsersId = registeredUsersId;
         this.numRegisteredUsers = numRegisteredUsers;
-        //this.reviewsId = reviewsId;
         this.categoryId = categoryId;
-        this.imageUrl = generateImageUrl(id);
+        this.imageUrl = this.generateImageUrl(id);
     }
 
     private String generateImageUrl(Long id) {
         return "https://localhost:8443/api/events/image/" + id;
     }
 
-    public EventDTO() {
+    private String formatDuration(Date start, Date end) {
+        Duration duration = Duration.between(start.toInstant(), end.toInstant());
+        long hours = duration.toHours();
+        long minutes = duration.minusHours(hours).toMinutes();
+        return String.format("%d horas y %d minutos", hours, minutes);
     }
 }

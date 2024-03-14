@@ -1,6 +1,7 @@
 package com.EventCrafters.EventCrafters.controller;
 
 import com.EventCrafters.EventCrafters.DTO.EventDTO;
+import com.EventCrafters.EventCrafters.DTO.EventFinishedDTO;
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.Review;
@@ -53,7 +54,7 @@ public class EventRestController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<EventDTO> createEvent(@RequestPart("event") Event event,
                                                 @RequestPart("photo") MultipartFile photo) {
         // Check for empty fields in the event
@@ -204,15 +205,10 @@ public class EventRestController {
 
 
     private EventDTO transformDTO(Event event) {
-        /*Set<Long> registredUsersId = new HashSet<>();
-        for (User u : event.getRegisteredUsers()) {
-            registredUsersId.add(u.getId());
+        if (event.getEndDate().before(new Date())) {
+            return new EventFinishedDTO(event.getId(), event.getName(), event.getDescription(), event.getMaxCapacity(), event.getPrice(), event.getLocation(), event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo(), event.getCreator().getId(), event.getNumRegisteredUsers(), event.getCategory().getId(), event.getAttendeesCount(), reviewService.calculateAverageRatingForEvent(event.getId()), reviewService.countReviewsForEvent(event.getId()));
         }
-        Set<Long> reviewId = new HashSet<>();
-        for (Review review : event.getReviews()) {
-            reviewId.add(review.getId());
-        }*/
-        return new EventDTO(event.getId(), event.getName(), event.getAttendeesCount(), event.getDescription(), event.getMaxCapacity(), event.getPrice(), event.getLocation(), event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo(), event.getCreator().getId(), event.getNumRegisteredUsers(), event.getCategory().getId());
+        return new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getMaxCapacity(), event.getPrice(), event.getLocation(), event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo(), event.getCreator().getId(), event.getNumRegisteredUsers(), event.getCategory().getId());
     }
 
     private boolean eventHasEmptyFields(Event event) {

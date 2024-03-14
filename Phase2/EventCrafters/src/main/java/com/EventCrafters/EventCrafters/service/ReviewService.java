@@ -50,5 +50,7 @@ public class ReviewService {
 		return repository.findByEventIdAndUserId(user.getId(), event.getId());
 	}
 
-
+	public int countReviewsForEvent(Long eventId) {
+		return repository.countByEventId(eventId);
+	}
 }

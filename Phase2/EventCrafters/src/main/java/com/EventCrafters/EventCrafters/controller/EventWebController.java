@@ -212,8 +212,10 @@ public class EventWebController {
 
             double averageRating = reviewService.calculateAverageRatingForEvent(id);
 
+            int reviewNum = reviewService.countReviewsForEvent(id);
             model.addAttribute("hasUserReviewed", hasUserReviewed);
             model.addAttribute("averageRating", averageRating);
+            model.addAttribute("reviewNum", reviewNum);
             model.addAttribute("attendeesCountSet", attendeesCountSet);
             model.addAttribute("eventFinished", eventFinished);
             model.addAttribute("event", event);
