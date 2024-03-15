@@ -3,9 +3,11 @@ package com.EventCrafters.EventCrafters.DTO;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.Date;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Getter
 @Setter
+@Schema(name = "EventFinishedDTO", description = "Extended event details available once the event has finished.")
 public class EventFinishedDTO extends EventDTO {
     private int attendeesCount;
     private int reviewNum;

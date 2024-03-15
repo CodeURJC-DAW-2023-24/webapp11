@@ -2,6 +2,7 @@ package com.EventCrafters.EventCrafters.controller;
 
 import com.EventCrafters.EventCrafters.DTO.EventDTO;
 import com.EventCrafters.EventCrafters.DTO.EventFinishedDTO;
+import com.EventCrafters.EventCrafters.DTO.EventManipulationDTO;
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.Review;
@@ -10,6 +11,11 @@ import com.EventCrafters.EventCrafters.service.CategoryService;
 import com.EventCrafters.EventCrafters.service.EventService;
 import com.EventCrafters.EventCrafters.service.ReviewService;
 import com.EventCrafters.EventCrafters.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -43,6 +49,14 @@ public class EventRestController {
     private CategoryService categoryService;
 
     @GetMapping("/{id}")
+    @Operation(summary = "Gets an event by its ID",
+            description = "Returns basic event details. Once the event has finished, additional information is included in the response.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Event found",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(oneOf = {EventDTO.class, EventFinishedDTO.class})) }),
+            @ApiResponse(responseCode = "404", description = "Event not found", content = @Content)
+    })
     public ResponseEntity<EventDTO> showEvent(@PathVariable long id){
         Optional<Event> eventOptional = eventService.findById(id);
         if (eventOptional.isPresent()){
@@ -55,20 +69,22 @@ public class EventRestController {
     }
 
     @PostMapping
-    public ResponseEntity<EventDTO> createEvent(@RequestPart("event") Event event,
+    public ResponseEntity<EventDTO> createEvent(@RequestPart("event") EventManipulationDTO eventManipulationDTO,
                                                 @RequestPart("photo") MultipartFile photo) {
         // Check for empty fields in the event
-        if (eventHasEmptyFields(event) || photo == null) {
+        if (eventHasEmptyFields(eventManipulationDTO) || photo == null) {
             return ResponseEntity.badRequest().build();
         }
 
         // Check if category exists
-        Optional<Category> categoryOpt = categoryService.findById(event.getCategory().getId());
+        Optional<Category> categoryOpt = categoryService.findById(eventManipulationDTO.getCategoryId());
         if (!categoryOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         try {
+            Event event = transformEvent(eventManipulationDTO);
+
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication == null || !authentication.isAuthenticated()) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -211,13 +227,13 @@ public class EventRestController {
         return new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getMaxCapacity(), event.getPrice(), event.getLocation(), event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo(), event.getCreator().getId(), event.getNumRegisteredUsers(), event.getCategory().getId());
     }
 
-    private boolean eventHasEmptyFields(Event event) {
+    private boolean eventHasEmptyFields(EventManipulationDTO event) {
         if (
                 event.getName() == null || event.getName().trim().isEmpty() ||
                 event.getDescription() == null || event.getDescription().trim().isEmpty() ||
                 event.getLocation() == null || event.getLocation().trim().isEmpty() ||
                 event.getMap() == null || event.getMap().trim().isEmpty() ||
-                event.getCategory() == null || event.getCategory().getId() == null ||
+                event.getCategoryId() == null ||
                 event.getAdditionalInfo() == null || event.getAdditionalInfo().trim().isEmpty())
         {
             return true;
@@ -265,5 +281,19 @@ public class EventRestController {
         return isAdmin || isCreator;
     }
 
+    public Event transformEvent(EventManipulationDTO dto) {
+        Event event = new Event();
+
+        event.setName(dto.getName());
+        event.setDescription(dto.getDescription());
+        event.setMaxCapacity(dto.getMaxCapacity());
+        event.setPrice(dto.getPrice());
+        event.setLocation(dto.getLocation());
+        event.setMap(dto.getMap());
+        event.setStartDate(dto.getStartDate());
+        event.setEndDate(dto.getEndDate());
+        event.setAdditionalInfo(dto.getAdditionalInfo());
+        return event;
+    }
 }
 

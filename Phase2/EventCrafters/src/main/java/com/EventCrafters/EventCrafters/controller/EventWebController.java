@@ -16,6 +16,7 @@ import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.Review;
 import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.service.*;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.apache.catalina.filters.RemoteIpFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -365,7 +366,7 @@ public class EventWebController {
         return "redirect:/event/" + eventId;
     }
 
-
+    @Hidden
     @GetMapping("/event/image/{id}")
     @ResponseBody
     public byte[] showEventImage(@PathVariable long id) throws SQLException, IOException {

@@ -6,6 +6,7 @@ import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.Authentication;
@@ -277,6 +278,7 @@ public class UserWebController {
 		return ResponseEntity.status(500).body("Username not found");
 	}
 
+	@Hidden
 	@GetMapping("/profile/img/{username}")
 	@ResponseBody
 	public byte[] showPFP(@PathVariable String username) throws SQLException, IOException {

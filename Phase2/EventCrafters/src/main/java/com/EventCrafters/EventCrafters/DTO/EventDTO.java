@@ -2,12 +2,13 @@ package com.EventCrafters.EventCrafters.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.Duration;
 import java.util.Date;
 
 @Getter
 @Setter
+@Schema(name = "EventDTO", description = "Standard response for events.")
 public class EventDTO {
     private Long id;
     private String name;
