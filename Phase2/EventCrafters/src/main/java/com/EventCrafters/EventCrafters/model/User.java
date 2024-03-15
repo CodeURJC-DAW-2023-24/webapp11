@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.sql.rowset.serial.SerialBlob;
 
+import com.EventCrafters.EventCrafters.DTO.FullUserDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
@@ -76,6 +77,15 @@ public class User {
 		}
 	}
 
+	public User(FullUserDTO userDTO) {
+		this.name = userDTO.getName();
+		this.username = userDTO.getUsername();
+		this.email = userDTO.getEmail();
+		this.roles = userDTO.getRoles();
+		this.banned = userDTO.isBanned();
+		this.setDefaultPhoto();
+	}
+
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Event> createdEvents = new HashSet<>();
 
@@ -119,5 +129,9 @@ public class User {
 		} else {
 			this.roles = new ArrayList<>();
 		}
+	}
+
+	public boolean hasRole(String role) {
+		return this.roles.contains(role);
 	}
 }

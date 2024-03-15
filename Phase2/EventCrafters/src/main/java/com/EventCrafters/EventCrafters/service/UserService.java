@@ -133,4 +133,25 @@ public class UserService {
 		}
 		return result;
 	}
+
+	public boolean isValidUser(User user) {
+		Long id = user.getId();
+		String name = user.getName();
+		String username = user.getUsername();
+		String email = user.getEmail();
+		String password = user.getEncodedPassword();
+
+		if (id!=null) {
+			return false;
+		} else if (name==null || name.isEmpty()){
+			return false;
+		} else if (username==null || username.isEmpty()){
+			return false;
+		} else if (email==null || email.isEmpty()){
+			return false;
+		} else if (password==null || password.isEmpty()){
+			return false;
+		}
+		return true;
+	}
 }

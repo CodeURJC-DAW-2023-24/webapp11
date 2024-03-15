@@ -53,26 +53,40 @@ public class UserRestController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<CensoredUserDTO> getUser(HttpServletRequest request, @PathVariable Long id){
-		Principal principal = request.getUserPrincipal();
 		Optional<User> optionalUser = userService.findById(id);
-		User user;
-		if (optionalUser.isPresent()) {
-			user = (optionalUser.get());
-		} else {
+		if (optionalUser.isEmpty()) {
 			return ResponseEntity.status(404).build();
 		}
-		if (principal != null && user.getUsername().equals(principal.getName())) {
 
+		User user = (optionalUser.get());
+		Principal principal = request.getUserPrincipal();
+		if (principal != null){
+			Optional<User> userPrincipalOptional = userService.findByUserName(principal.getName());
+			if (userPrincipalOptional.isPresent()) {
+				User userPrincipal = userPrincipalOptional.get();
+				if (userPrincipal.hasRole("ADMIN")){
+					return ResponseEntity.ok(new FullUserDTO(user));
+				}
+			}
+		}
+
+		if (principal != null && user.getUsername().equals(principal.getName())) {
 			return ResponseEntity.ok(new FullUserDTO(user));
 		} else {
 			return ResponseEntity.ok(new CensoredUserDTO(user));
 		}
+
+
 	}
 
 	@PostMapping("/new")
-	public ResponseEntity<FullUserDTO> newUser(@RequestBody User user){
+	public ResponseEntity<FullUserDTO> newUser(@RequestBody User user){ //especificar en la documentación que no se debe poner un campo photo
 		if (userService.findByUserName(user.getUsername()).isPresent()) {
 			return ResponseEntity.status(409).build(); //409 conflict
+		}
+
+		if (!userService.isValidUser(user)){
+			return ResponseEntity.badRequest().build();
 		}
 
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -90,7 +104,7 @@ public class UserRestController {
 	}
 
 	@GetMapping ("/img/{id}")
-	public ResponseEntity<byte[]> showEventImage(@PathVariable long id){
+	public ResponseEntity<byte[]> showUserImage(@PathVariable long id){
 		Optional<User> userOptional = userService.findById(id);
 		if (userOptional.isPresent()) {
 			User user = userOptional.get();
@@ -114,9 +128,23 @@ public class UserRestController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<User> newUser(@RequestParam User user, @PathVariable Long id){
+	public ResponseEntity<FullUserDTO> modifyUser(@RequestBody FullUserDTO userDTO, @PathVariable Long id, Principal principal){
+		if (userService.findByUserName(userDTO.getUsername()).isPresent()) return ResponseEntity.status(409).build(); //conflict
+
+		User user = new User(userDTO);
+		user.setPassword("temporaryPass");
+		if (!userService.isValidUser(user)){
+			return ResponseEntity.badRequest().build();
+		}
+
 		Optional<User> optUser = userService.findById(id);
 		if (optUser.isPresent()) {
+			if (optUser.get().hasRole("ADMIN")) return ResponseEntity.status(403).build();
+
+			if (checkUserPrivileges(principal, optUser)) return ResponseEntity.status(403).build();
+
+			user.setId(optUser.get().getId());
+			user.setEncodedPassword(optUser.get().getEncodedPassword());
 			String encodedPassword = passwordEncoder.encode(user.getPassword());
 			user.setPassword(encodedPassword);
 			user.clearRoles();
@@ -127,16 +155,19 @@ public class UserRestController {
 				user.setDefaultPhoto();
 			}
 			userService.save(user);
-			return ResponseEntity.ok(user);
+			return ResponseEntity.ok(new FullUserDTO(user));
 		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<User> deleteUser(@PathVariable Long id){
+	public ResponseEntity<User> deleteUser(@PathVariable Long id, Principal principal){
 		Optional<User> optUser = userService.findById(id);
+		if (checkUserPrivileges(principal, optUser)) return ResponseEntity.status(403).build(); //403 forbidden
+
 		if (optUser.isPresent()) {
+			if (optUser.get().hasRole("ADMIN")) return ResponseEntity.status(403).build();
 			userService.deleteUserById(id);
 			return ResponseEntity.ok().build();
 		} else {
@@ -144,7 +175,18 @@ public class UserRestController {
 		}
 	}
 
-
+	private boolean checkUserPrivileges(Principal principal, Optional<User> optUser) {
+		if (principal==null) return false;
+		Optional<User> authenticatedUser = userService.findByUserName(principal.getName());
+		if (authenticatedUser.isPresent()){
+			if (!authenticatedUser.get().hasRole("ADMIN") && !principal.getName().equals(optUser.get().getUsername())){
+				return true;
+			}
+		} else {
+			return true;
+		}
+		return false;
+	}
 
 
 }
