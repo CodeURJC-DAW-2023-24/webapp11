@@ -68,7 +68,17 @@ public class EventRestController {
         }
     }
 
-    @PostMapping
+    @PostMapping(consumes = {"multipart/form-data"})
+    @Operation(summary = "Creates a new event")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Event successfully created",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = EventDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid event data or photo", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Category not found", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     public ResponseEntity<EventDTO> createEvent(@RequestPart("event") EventManipulationDTO eventManipulationDTO,
                                                 @RequestPart("photo") MultipartFile photo) {
         // Check for empty fields in the event
@@ -120,6 +130,13 @@ public class EventRestController {
         }
     }
 
+    @Operation(summary = "Gets the image of an event")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Image found",
+                    content = { @Content(mediaType = "image/jpeg") }),
+            @ApiResponse(responseCode = "404", description = "Event or image not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error retrieving the image", content = @Content)
+    })
     @GetMapping("/image/{id}")
     public ResponseEntity<byte[]> showEventImage(@PathVariable long id) {
         Optional<Event> eventOptional = eventService.findById(id);
@@ -143,7 +160,18 @@ public class EventRestController {
         }
     }
 
+
     @PutMapping("/{eventId}/attendees")
+    @Operation(summary = "sets the number of attendees for an event")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Number of attendees updated",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = EventFinishedDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Provided information not valid", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Event not found", content = @Content)
+    })
     public ResponseEntity<EventDTO> updateEventAttendees(@PathVariable Long eventId, @RequestBody Integer attendeesCount) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -181,7 +209,16 @@ public class EventRestController {
         }
     }
 
+
     @GetMapping("/{eventId}/graph")
+    @Operation(summary = "Gets graph data of the event")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Graph data obtained",
+                    content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Event not found", content = @Content)
+    })
     public ResponseEntity<Map<String, Integer>> getEventGraphData(@PathVariable Long eventId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
