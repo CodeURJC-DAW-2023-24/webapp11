@@ -115,8 +115,6 @@ public class EventService {
 	public List<Event> findByRegisteredUserIdCurrentEvents(Long id) {return repository.findByRegisteredUserIdCurrentEvents(id);}
 
 	public List<Event> findByRegisteredUserIdCurrentEvents(Long id, int page, int  pageSize) {
-		System.out.println("hola");
-		System.out.println(page);
 		Pageable pageable = PageRequest.of(page, pageSize);
 		return repository.findByRegisteredUserIdCurrentEvents(id, pageable).getContent();
 	}

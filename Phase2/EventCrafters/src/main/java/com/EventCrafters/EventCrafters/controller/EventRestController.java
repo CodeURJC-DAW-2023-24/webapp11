@@ -221,7 +221,7 @@ public class EventRestController {
     })
     public ResponseEntity<Map<String, Integer>> getEventGraphData(@PathVariable Long eventId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
+        if (authentication.getName().equals("anonymousUser")) {
             // User is not authenticated
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -254,6 +254,67 @@ public class EventRestController {
         }
 
         return ResponseEntity.ok(graphData);
+    }
+
+    @GetMapping("/AdminProfile/graph")
+    public ResponseEntity<Map<String, Integer>> getAdminProfileGraphData() {
+
+        Map<String, Integer> graphData = new HashMap<>();
+        List<String> labels = categoryService.findAllNames();
+        List<Integer> data = categoryService.categoriesNumbers();
+        for (int i= 0; i<labels.size(); i++){
+            graphData.put(labels.get(i), data.get(i));
+        }
+
+        return ResponseEntity.ok(graphData);
+    }
+
+    @GetMapping("/recommended")
+    public List<EventDTO> recommendedEvents(@RequestParam("page") int page){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        int pageSize = 3;
+        List<Event> events = new ArrayList<>();
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        if (authentication.getName().equals("anonymousUser")) {
+            events = eventService.eventsOrderedByPopularity(page, pageSize);
+            System.out.println(events.size());
+        } else {
+            String currentUsername = authentication.getName();
+            Optional<User> userOp = userService.findByUserName(currentUsername);
+            if (userOp.isPresent()){
+                User user = userOp.get();
+                events = userService.getUserCategoryPreferences(user.getId(), page, pageSize);
+            }
+        }
+
+        for (Event e : events){
+            eventDTOS.add(transformDTO(e));
+        }
+        return eventDTOS;
+
+    }
+
+    @GetMapping("/filter/category/{id}")
+    public List<EventDTO> filterByCategory(@RequestParam("page") int page, @PathVariable long id){
+        int pageSize = 3;
+        List<Event> events = eventService.findByCategory(id,page, pageSize);
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        for (Event e: events){
+            eventDTOS.add(transformDTO(e));
+        }
+        return eventDTOS;
+    }
+
+    @GetMapping("/filter/searchBar")
+    public List<EventDTO> filterBySearchBar(@RequestParam("page") int page, @RequestParam("input") String input){
+        int pageSize = 3;
+        List<Event> events = eventService.findBySearchBar(input, page, pageSize);
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        for (Event e: events){
+            eventDTOS.add(transformDTO(e));
+        }
+        return eventDTOS;
     }
 
 
