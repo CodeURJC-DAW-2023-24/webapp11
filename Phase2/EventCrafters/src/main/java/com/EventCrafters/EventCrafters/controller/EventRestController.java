@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.security.Principal;
 import java.sql.Blob;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -73,10 +74,11 @@ public class EventRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Event successfully created",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = EventDTO.class))),
+                            schema = @Schema(implementation = EventManipulationDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid event data or photo", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Category not found", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Category not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
     public ResponseEntity<EventDTO> createEvent(@RequestPart("event") EventManipulationDTO eventManipulationDTO,
@@ -96,7 +98,7 @@ public class EventRestController {
             Event event = transformEvent(eventManipulationDTO);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication == null || !authentication.isAuthenticated()) {
+            if (authentication.getName().equals("anonymousUser")) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
             String currentUsername = authentication.getName();
@@ -130,6 +132,7 @@ public class EventRestController {
         }
     }
 
+    @GetMapping("/image/{id}")
     @Operation(summary = "Gets the image of an event")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Image found",
@@ -137,7 +140,6 @@ public class EventRestController {
             @ApiResponse(responseCode = "404", description = "Event or image not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error retrieving the image", content = @Content)
     })
-    @GetMapping("/image/{id}")
     public ResponseEntity<byte[]> showEventImage(@PathVariable long id) {
         Optional<Event> eventOptional = eventService.findById(id);
         if (eventOptional.isPresent()) {
@@ -174,7 +176,7 @@ public class EventRestController {
     })
     public ResponseEntity<EventDTO> updateEventAttendees(@PathVariable Long eventId, @RequestBody Integer attendeesCount) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
+        if (authentication.getName().equals("anonymousUser")) {
             // User is not authenticated
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -210,7 +212,7 @@ public class EventRestController {
     }
 
 
-    @GetMapping("/{eventId}/graph")
+    @GetMapping("/graph/{eventId}")
     @Operation(summary = "Gets graph data of the event")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Graph data obtained",
@@ -255,6 +257,148 @@ public class EventRestController {
 
         return ResponseEntity.ok(graphData);
     }
+
+    @GetMapping("/AdminProfile/graph")
+    @Operation(summary = "Gets graph data of categories in relation to events")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Graph data obtained",
+                    content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
+    })
+    public ResponseEntity<Map<String, Integer>> getAdminProfileGraphData() {
+
+        Map<String, Integer> graphData = new HashMap<>();
+        List<String> labels = categoryService.findAllNames();
+        List<Integer> data = categoryService.categoriesNumbers();
+        for (int i= 0; i<labels.size(); i++){
+            graphData.put(labels.get(i), data.get(i));
+        }
+
+        return ResponseEntity.ok(graphData);
+    }
+
+    @GetMapping("/recommended")
+    public List<EventDTO> recommendedEvents(@RequestParam("page") int page){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        int pageSize = 3;
+        List<Event> events = new ArrayList<>();
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        if (authentication.getName().equals("anonymousUser")) {
+            events = eventService.eventsOrderedByPopularity(page, pageSize);
+            System.out.println(events.size());
+        } else {
+            String currentUsername = authentication.getName();
+            Optional<User> userOp = userService.findByUserName(currentUsername);
+            if (userOp.isPresent()){
+                User user = userOp.get();
+                events = userService.getUserCategoryPreferences(user.getId(), page, pageSize);
+            }
+        }
+
+        for (Event e : events){
+            eventDTOS.add(transformDTO(e));
+        }
+        return eventDTOS;
+
+    }
+
+    @GetMapping("/filter/category/{id}")
+    public List<EventDTO> filterByCategory(@RequestParam("page") int page, @PathVariable long id){
+        int pageSize = 3;
+        List<Event> events = eventService.findByCategory(id,page, pageSize);
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        for (Event e: events){
+            eventDTOS.add(transformDTO(e));
+        }
+        return eventDTOS;
+    }
+
+    @GetMapping("/filter/searchBar")
+    public List<EventDTO> filterBySearchBar(@RequestParam("page") int page, @RequestParam("input") String input){
+        int pageSize = 3;
+        List<Event> events = eventService.findBySearchBar(input, page, pageSize);
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        for (Event e: events){
+            eventDTOS.add(transformDTO(e));
+        }
+        return eventDTOS;
+    }
+
+    @GetMapping("/user/created/present")
+    public ResponseEntity<List<EventDTO>> userPresentCreatedEvents(@RequestParam("page") int page, Principal principal){
+        int pageSize = 3;
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        if (principal == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        Optional<User> userOp = userService.findByUserName(principal.getName());
+        if (userOp.isPresent()){
+            List<Event> events = eventService.findByCreatorIdCurrentCreatedEvents(userOp.get().getId(), page, pageSize);
+            for (Event e : events){
+                eventDTOS.add(transformDTO(e));
+            }
+        }
+
+        return ResponseEntity.ok(eventDTOS);
+    }
+
+    @GetMapping("/user/created/past")
+    public ResponseEntity<List<EventDTO>> userPastCreatedEvents(@RequestParam("page") int page, Principal principal){
+        int pageSize = 3;
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        if (principal == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        Optional<User> userOp = userService.findByUserName(principal.getName());
+        if (userOp.isPresent()){
+            List<Event> events = eventService.findByCreatorIdPastCreatedEvents(userOp.get().getId(), page, pageSize);
+            for (Event e : events){
+                eventDTOS.add(transformDTO(e));
+            }
+        }
+
+        return ResponseEntity.ok(eventDTOS);
+    }
+
+    @GetMapping("/user/registered/present")
+    public ResponseEntity<List<EventDTO>> userPresentRegisteredEvents(@RequestParam("page") int page, Principal principal){
+        int pageSize = 3;
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        if (principal == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        Optional<User> userOp = userService.findByUserName(principal.getName());
+        if (userOp.isPresent()){
+            List<Event> events = eventService.findByRegisteredUserIdCurrentEvents(userOp.get().getId(), page, pageSize);
+            for (Event e : events){
+                eventDTOS.add(transformDTO(e));
+            }
+        }
+
+        return ResponseEntity.ok(eventDTOS);
+    }
+
+    @GetMapping("/user/registered/past")
+    public ResponseEntity<List<EventDTO>> userPastRegisteredEvents(@RequestParam("page") int page, Principal principal){
+        int pageSize = 3;
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        if (principal == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        Optional<User> userOp = userService.findByUserName(principal.getName());
+        if (userOp.isPresent()){
+            List<Event> events = eventService.findByRegisteredUserIdPastEvents(userOp.get().getId(), page, pageSize);
+            for (Event e : events){
+                eventDTOS.add(transformDTO(e));
+            }
+        }
+
+        return ResponseEntity.ok(eventDTOS);
+    }
+
+
+
 
 
     private EventDTO transformDTO(Event event) {
