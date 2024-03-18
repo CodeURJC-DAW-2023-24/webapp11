@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.security.Principal;
 import java.sql.Blob;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -221,7 +222,7 @@ public class EventRestController {
     })
     public ResponseEntity<Map<String, Integer>> getEventGraphData(@PathVariable Long eventId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getName().equals("anonymousUser")) {
+        if (authentication == null || !authentication.isAuthenticated()) {
             // User is not authenticated
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -257,6 +258,12 @@ public class EventRestController {
     }
 
     @GetMapping("/AdminProfile/graph")
+    @Operation(summary = "Gets graph data of categories in relation to events")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Graph data obtained",
+                    content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
+    })
     public ResponseEntity<Map<String, Integer>> getAdminProfileGraphData() {
 
         Map<String, Integer> graphData = new HashMap<>();
@@ -316,6 +323,81 @@ public class EventRestController {
         }
         return eventDTOS;
     }
+
+    @GetMapping("/user/created/present")
+    public ResponseEntity<List<EventDTO>> userPresentCreatedEvents(@RequestParam("page") int page, Principal principal){
+        int pageSize = 3;
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        if (principal == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        Optional<User> userOp = userService.findByUserName(principal.getName());
+        if (userOp.isPresent()){
+            List<Event> events = eventService.findByCreatorIdCurrentCreatedEvents(userOp.get().getId(), page, pageSize);
+            for (Event e : events){
+                eventDTOS.add(transformDTO(e));
+            }
+        }
+
+        return ResponseEntity.ok(eventDTOS);
+    }
+
+    @GetMapping("/user/created/past")
+    public ResponseEntity<List<EventDTO>> userPastCreatedEvents(@RequestParam("page") int page, Principal principal){
+        int pageSize = 3;
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        if (principal == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        Optional<User> userOp = userService.findByUserName(principal.getName());
+        if (userOp.isPresent()){
+            List<Event> events = eventService.findByCreatorIdPastCreatedEvents(userOp.get().getId(), page, pageSize);
+            for (Event e : events){
+                eventDTOS.add(transformDTO(e));
+            }
+        }
+
+        return ResponseEntity.ok(eventDTOS);
+    }
+
+    @GetMapping("/user/registered/present")
+    public ResponseEntity<List<EventDTO>> userPresentRegisteredEvents(@RequestParam("page") int page, Principal principal){
+        int pageSize = 3;
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        if (principal == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        Optional<User> userOp = userService.findByUserName(principal.getName());
+        if (userOp.isPresent()){
+            List<Event> events = eventService.findByRegisteredUserIdCurrentEvents(userOp.get().getId(), page, pageSize);
+            for (Event e : events){
+                eventDTOS.add(transformDTO(e));
+            }
+        }
+
+        return ResponseEntity.ok(eventDTOS);
+    }
+
+    @GetMapping("/user/registered/past")
+    public ResponseEntity<List<EventDTO>> userPastRegisteredEvents(@RequestParam("page") int page, Principal principal){
+        int pageSize = 3;
+        List<EventDTO> eventDTOS = new ArrayList<>();
+        if (principal == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        Optional<User> userOp = userService.findByUserName(principal.getName());
+        if (userOp.isPresent()){
+            List<Event> events = eventService.findByRegisteredUserIdPastEvents(userOp.get().getId(), page, pageSize);
+            for (Event e : events){
+                eventDTOS.add(transformDTO(e));
+            }
+        }
+
+        return ResponseEntity.ok(eventDTOS);
+    }
+
+
+
 
 
     private EventDTO transformDTO(Event event) {

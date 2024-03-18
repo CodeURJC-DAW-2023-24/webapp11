@@ -48,7 +48,13 @@ public class CategoryRestController {
     }
     @GetMapping("/categories")
     public List<CategoryDTO> showCategories(@RequestParam("page") int page){
-        List<Category> all = categoryService.findAll(page);
+        List<Category> all;
+        if (page != -1){
+            all = categoryService.findAll(page);
+        } else {
+            all = categoryService.findAll();
+        }
+
         List<CategoryDTO> answer = new ArrayList<>();
         for (Category c : all){
             CategoryDTO categoryDTO = transformToDTO(c);
