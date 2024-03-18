@@ -73,7 +73,7 @@ public class EventRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Event successfully created",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = EventDTO.class))),
+                            schema = @Schema(implementation = EventManipulationDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid event data or photo", content = @Content),
             @ApiResponse(responseCode = "404", description = "Category not found", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
@@ -130,6 +130,7 @@ public class EventRestController {
         }
     }
 
+    @GetMapping("/image/{id}")
     @Operation(summary = "Gets the image of an event")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Image found",
@@ -137,7 +138,6 @@ public class EventRestController {
             @ApiResponse(responseCode = "404", description = "Event or image not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error retrieving the image", content = @Content)
     })
-    @GetMapping("/image/{id}")
     public ResponseEntity<byte[]> showEventImage(@PathVariable long id) {
         Optional<Event> eventOptional = eventService.findById(id);
         if (eventOptional.isPresent()) {
