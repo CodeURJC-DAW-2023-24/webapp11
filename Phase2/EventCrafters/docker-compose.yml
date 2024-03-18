@@ -6,7 +6,7 @@ services:
     #  context: .
     #  dockerfile: restart-on-failure.Dockerfile
     ports:
-      - 8083:8083
+      - 8443:8443
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/EventCrafters?serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
