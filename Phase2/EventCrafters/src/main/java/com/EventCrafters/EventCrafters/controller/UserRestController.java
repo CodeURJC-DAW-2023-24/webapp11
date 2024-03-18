@@ -226,14 +226,13 @@ public class UserRestController {
 					description = "Not Found. No user found with provided id")
 	})
 	@DeleteMapping("/{id}")
-	public ResponseEntity<User> deleteUser(@PathVariable Long id, Principal principal){
+	public ResponseEntity<FullUserDTO> deleteUser(@PathVariable Long id, Principal principal){
 		Optional<User> optUser = userService.findById(id);
 		if (checkUserPrivileges(principal, optUser)) return ResponseEntity.status(403).build(); //403 forbidden
 
 		if (optUser.isPresent()) {
 			if (optUser.get().hasRole("ADMIN")) return ResponseEntity.status(403).build();
-			userService.deleteUserById(id);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok(new FullUserDTO(userService.deleteUserById(id)));
 		} else {
 			return ResponseEntity.notFound().build();
 		}
