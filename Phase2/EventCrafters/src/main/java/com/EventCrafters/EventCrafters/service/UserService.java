@@ -1,6 +1,5 @@
 package com.EventCrafters.EventCrafters.service;
 
-import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.User;
 import com.EventCrafters.EventCrafters.repository.EventRepository;
@@ -69,7 +68,7 @@ public class UserService {
 	}
 
 	@Transactional
-	public void deleteUserById(Long userId) {
+	public User deleteUserById(Long userId) {
 		Optional<User> userOptional = repository.findById(userId);
 		if (userOptional.isPresent()) {
 			User user = userOptional.get();
@@ -79,7 +78,9 @@ public class UserService {
 				eventService.delete(event.getId());
 			}
 			repository.deleteById(userId);
+			return user;
 		}
+		return null;
 	}
 
 	public void banUserByUsername(String username) {
