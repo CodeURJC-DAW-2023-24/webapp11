@@ -69,22 +69,20 @@ public class EventRestController {
         }
     }
 
-    @PostMapping(consumes = {"multipart/form-data"})
+    @PostMapping
     @Operation(summary = "Creates a new event")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Event successfully created",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = EventManipulationDTO.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid event data or photo", content = @Content),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid event data", content = @Content),
+            @ApiResponse(responseCode = "403", description = "The operation is not allowed without registration", content = @Content),
             @ApiResponse(responseCode = "404", description = "Category not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
-    public ResponseEntity<EventDTO> createEvent(@RequestPart("event") EventManipulationDTO eventManipulationDTO,
-                                                @RequestPart("photo") MultipartFile photo) {
+    public ResponseEntity<EventDTO> createEvent(@RequestBody EventManipulationDTO eventManipulationDTO) {
         // Check for empty fields in the event
-        if (eventHasEmptyFields(eventManipulationDTO) || photo == null) {
+        if (eventHasEmptyFields(eventManipulationDTO)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -98,20 +96,17 @@ public class EventRestController {
             Event event = transformEvent(eventManipulationDTO);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication.getName().equals("anonymousUser")) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
             String currentUsername = authentication.getName();
             Optional<User> userOpt = userService.findByUserName(currentUsername);
             if (!userOpt.isPresent()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
+
             event.setCreator(userOpt.get());
 
             // Set the category
             event.setCategory(categoryOpt.get());
 
-            event.setPhoto(new javax.sql.rowset.serial.SerialBlob(photo.getBytes()));
             // Save the event
             Event savedEvent = eventService.save(event);
 
@@ -125,7 +120,40 @@ public class EventRestController {
                     .toUri();
 
             return ResponseEntity.created(location).body(eventDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
+    @PutMapping("/{eventId}/photo")
+    @Operation(summary = "Uploads a photo for an existing event", description = "Allows uploading a photo for an existing event. Only the event creator or an admin can perform this action.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Image uploaded",
+                    content = { @Content(mediaType = "image/jpeg") }),
+            @ApiResponse(responseCode = "403", description = "Current user not is not the creator or an admin"),
+            @ApiResponse(responseCode = "404", description = "Event not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error retrieving the image", content = @Content)
+    })
+    public ResponseEntity<byte[]> uploadEventPhoto(@PathVariable Long eventId, @RequestPart("photo") MultipartFile photo) {
+        Optional<Event> eventOptional = eventService.findById(eventId);
+        if (!eventOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Event event = eventOptional.get();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        if (!isUserAdminOrCreator(currentUsername, event)) {
+            // Unauthorized to update the event
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        try {
+            event.setPhoto(new javax.sql.rowset.serial.SerialBlob(photo.getBytes()));
+            eventService.save(event);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -170,18 +198,11 @@ public class EventRestController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = EventFinishedDTO.class))),
             @ApiResponse(responseCode = "400", description = "Provided information not valid", content = @Content),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
             @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
             @ApiResponse(responseCode = "404", description = "Event not found", content = @Content)
     })
     public ResponseEntity<EventDTO> updateEventAttendees(@PathVariable Long eventId, @RequestBody Integer attendeesCount) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getName().equals("anonymousUser")) {
-            // User is not authenticated
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
 
-        String currentUsername = authentication.getName();
 
         Optional<Event> eventOpt = eventService.findById(eventId);
         if (!eventOpt.isPresent()) {
@@ -190,6 +211,7 @@ public class EventRestController {
         }
 
         Event event = eventOpt.get();
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
 
         if (!isUserAdminOrCreator(currentUsername, event)) {
             // Unauthorized to update the event
@@ -217,18 +239,10 @@ public class EventRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Graph data obtained",
                     content = { @Content(mediaType = "application/json") }),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
             @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
             @ApiResponse(responseCode = "404", description = "Event not found", content = @Content)
     })
     public ResponseEntity<Map<String, Integer>> getEventGraphData(@PathVariable Long eventId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            // User is not authenticated
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        String currentUsername = authentication.getName();
 
         Optional<Event> eventOptional = eventService.findById(eventId);
         if(!eventOptional.isPresent()) {
@@ -236,6 +250,7 @@ public class EventRestController {
 
         }
         Event event = eventOptional.get();
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!isUserAdminOrCreator(currentUsername, event)) {
             // Unauthorized to update the event
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
