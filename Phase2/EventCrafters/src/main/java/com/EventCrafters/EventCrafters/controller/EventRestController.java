@@ -76,8 +76,9 @@ public class EventRestController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = EventManipulationDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid event data or photo", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Category not found", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Category not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
     public ResponseEntity<EventDTO> createEvent(@RequestPart("event") EventManipulationDTO eventManipulationDTO,
@@ -211,7 +212,7 @@ public class EventRestController {
     }
 
 
-    @GetMapping("/{eventId}/graph")
+    @GetMapping("/graph/{eventId}")
     @Operation(summary = "Gets graph data of the event")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Graph data obtained",
