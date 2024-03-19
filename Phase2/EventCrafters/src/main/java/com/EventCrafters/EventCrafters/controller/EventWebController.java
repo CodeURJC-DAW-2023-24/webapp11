@@ -342,7 +342,7 @@ public class EventWebController {
     }
 
     @PostMapping("/event/leave/{eventId}")
-    public String desapuntarteDelEvento(@PathVariable("eventId") Long eventId, Authentication authentication, Model model) {
+    public String leaveAnEvent(@PathVariable("eventId") Long eventId, Authentication authentication, Model model) {
         // Check if the user is authenticated
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String username = authentication.getName();
