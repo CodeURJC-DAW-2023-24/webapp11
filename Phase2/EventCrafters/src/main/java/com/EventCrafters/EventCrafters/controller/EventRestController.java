@@ -126,7 +126,7 @@ public class EventRestController {
     @Operation(summary = "Uploads a photo for an existing event", description = "Allows uploading a photo for an existing event. Only the event creator or an admin can perform this action.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Image uploaded",
-                    content = { @Content(mediaType = "image/jpeg") }),
+                    content = {@Content(mediaType = "image/jpeg")}),
             @ApiResponse(responseCode = "403", description = "Current user not is not the creator or an admin"),
             @ApiResponse(responseCode = "404", description = "Event not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error retrieving the image", content = @Content)
@@ -242,7 +242,7 @@ public class EventRestController {
     @Operation(summary = "Gets graph data of the event")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Graph data obtained",
-                    content = { @Content(mediaType = "application/json") }),
+                    content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
             @ApiResponse(responseCode = "404", description = "Event not found", content = @Content)
     })
@@ -296,70 +296,59 @@ public class EventRestController {
         return ResponseEntity.ok(graphData);
     }
 
-    @GetMapping("/recommended")
-    @Operation(summary = "Gets the users most likely to sing up to events")
+
+    @GetMapping("/filter")
+    @Operation(summary = "Retrieves events filtered by category, with the category's ID specified in the URL, by input from the search bar or depending on our recommendation algorithm.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Events obtained",
                     content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
     })
-    public List<EventDTO> recommendedEvents(@RequestParam("page") int page) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+    public ResponseEntity<List<EventDTO>> filterByCategory(@RequestParam("page") int page, @RequestParam(value = "Id", required = false) Long id, @RequestParam("type") String type, @RequestParam(value = "input", required = false) String input, Principal principal) {
         int pageSize = 3;
         List<Event> events = new ArrayList<>();
         List<EventDTO> eventDTOS = new ArrayList<>();
-        if (authentication.getName().equals("anonymousUser")) {
-            events = eventService.eventsOrderedByPopularity(page, pageSize);
-            System.out.println(events.size());
-        } else {
-            String currentUsername = authentication.getName();
-            Optional<User> userOp = userService.findByUserName(currentUsername);
-            if (userOp.isPresent()) {
-                User user = userOp.get();
-                events = userService.getUserCategoryPreferences(user.getId(), page, pageSize);
-            }
-        }
+        switch (type) {
+            case "category":
 
+                try {
+                    events = eventService.findByCategory(id, page, pageSize);
+                } catch (Exception e) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+                break;
+            case "searchBar":
+                try {
+                    events = eventService.findBySearchBar(input, page, pageSize);
+                } catch (Exception e) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+                break;
+            case "recommended":
+                boolean adminOrUnregistered = false;
+                if (principal != null) {
+                    Optional<User> userOp = userService.findByUserName(principal.getName());
+                    if (userOp.isPresent()) {
+                        if (userOp.get().hasRole("USER")){
+                            User user = userOp.get();
+                            events = userService.getUserCategoryPreferences(user.getId(), page, pageSize);
+
+                        } else {
+                            adminOrUnregistered = true;
+                        }
+                    }
+                } else {
+                    adminOrUnregistered = true;
+                }
+                if (adminOrUnregistered){
+                    events = eventService.eventsOrderedByPopularity(page, pageSize);
+                }
+                break;
+        }
         for (Event e : events) {
             eventDTOS.add(transformDTO(e));
         }
-        return eventDTOS;
-
-    }
-
-    @GetMapping("/filter/category/{id}")
-    @Operation(summary = "Retrieves the events that are filtered by the category, with the category's ID specified in the URL")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Events obtained",
-                    content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-    })
-    public List<EventDTO> filterByCategory(@RequestParam("page") int page, @PathVariable long id) {
-        int pageSize = 3;
-        List<Event> events = eventService.findByCategory(id, page, pageSize);
-        List<EventDTO> eventDTOS = new ArrayList<>();
-        for (Event e : events) {
-            eventDTOS.add(transformDTO(e));
-        }
-        return eventDTOS;
-    }
-
-    @GetMapping("/filter/searchBar")
-    @Operation(summary = "Retrieves the events that are filtered by the searchBars input")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Events obtained",
-                    content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-    })
-    public List<EventDTO> filterBySearchBar(@RequestParam("page") int page, @RequestParam("input") String input) {
-        int pageSize = 3;
-        List<Event> events = eventService.findBySearchBar(input, page, pageSize);
-        List<EventDTO> eventDTOS = new ArrayList<>();
-        for (Event e : events) {
-            eventDTOS.add(transformDTO(e));
-        }
-        return eventDTOS;
+        return ResponseEntity.ok(eventDTOS);
     }
 
     @GetMapping("/user")
@@ -371,7 +360,8 @@ public class EventRestController {
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
             @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content)
     })
-    public ResponseEntity<List<EventDTO>> userPresentCreatedEvents(@RequestParam("page") int page, Principal principal, @RequestParam("time") String time, @RequestParam("type") String type) {
+    public ResponseEntity<List<EventDTO>> userEvents(@RequestParam("page") int page, Principal principal, @RequestParam(value = "time", required = false) String time, @RequestParam(value = "type", required = false) String type) {
+        System.out.println("hola");
         int pageSize = 3;
         List<EventDTO> eventDTOS = new ArrayList<>();
         List<Event> events = new ArrayList<>();
@@ -380,9 +370,9 @@ public class EventRestController {
         }
         Optional<User> userOp = userService.findByUserName(principal.getName());
         if (userOp.isPresent()) {
-            if (userOp.get().hasRole("ADMIN")){
+            if (userOp.get().hasRole("ADMIN")) {
                 events = eventService.findAll(page, pageSize);
-            }else{ // if role user
+            } else { // if role user
                 switch (type) {
                     case "created":
                         if (time.equals("present")) {
@@ -411,8 +401,6 @@ public class EventRestController {
 
         return ResponseEntity.ok(eventDTOS);
     }
-
-
 
 
     private EventDTO transformDTO(Event event) {
