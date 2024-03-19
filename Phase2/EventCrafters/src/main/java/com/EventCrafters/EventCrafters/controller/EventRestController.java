@@ -92,38 +92,34 @@ public class EventRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        try {
-            Event event = transformEvent(eventManipulationDTO);
 
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String currentUsername = authentication.getName();
-            Optional<User> userOpt = userService.findByUserName(currentUsername);
-            if (!userOpt.isPresent()) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+        Event event = transformEvent(eventManipulationDTO);
 
-            event.setCreator(userOpt.get());
-
-            // Set the category
-            event.setCategory(categoryOpt.get());
-
-            // Save the event
-            Event savedEvent = eventService.save(event);
-
-            // Transform the saved event to EventDTO
-            EventDTO eventDTO = transformDTO(savedEvent);
-
-            // Build the URL created event
-            URI location = ServletUriComponentsBuilder.fromHttpUrl("https://localhost:8443")
-                    .path("/api/events/{id}")
-                    .buildAndExpand(savedEvent.getId())
-                    .toUri();
-
-            return ResponseEntity.created(location).body(eventDTO);
-        } catch (Exception e) {
-            e.printStackTrace();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        Optional<User> userOpt = userService.findByUserName(currentUsername);
+        if (!userOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+
+        event.setCreator(userOpt.get());
+
+        // Set the category
+        event.setCategory(categoryOpt.get());
+
+        // Save the event
+        Event savedEvent = eventService.save(event);
+
+        // Transform the saved event to EventDTO
+        EventDTO eventDTO = transformDTO(savedEvent);
+
+        // Build the URL created event
+        URI location = ServletUriComponentsBuilder.fromHttpUrl("https://localhost:8443")
+                .path("/api/events/{id}")
+                .buildAndExpand(savedEvent.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(eventDTO);
     }
 
     @PutMapping("/{eventId}/photo")
@@ -135,7 +131,7 @@ public class EventRestController {
             @ApiResponse(responseCode = "404", description = "Event not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error retrieving the image", content = @Content)
     })
-    public ResponseEntity<byte[]> uploadEventPhoto(@PathVariable Long eventId, @RequestPart("photo") MultipartFile photo) {
+    public ResponseEntity<EventDTO> uploadEventPhoto(@PathVariable Long eventId, @RequestPart("photo") MultipartFile photo) {
         Optional<Event> eventOptional = eventService.findById(eventId);
         if (!eventOptional.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -153,7 +149,15 @@ public class EventRestController {
         try {
             event.setPhoto(new javax.sql.rowset.serial.SerialBlob(photo.getBytes()));
             eventService.save(event);
-            return ResponseEntity.ok().build();
+            EventDTO eventDTO = transformDTO(event);
+
+            // Build the URL created event
+            URI location = ServletUriComponentsBuilder.fromHttpUrl("https://localhost:8443")
+                    .path("/api/events/{id}")
+                    .buildAndExpand(event.getId())
+                    .toUri();
+
+            return ResponseEntity.created(location).body(eventDTO);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -218,15 +222,15 @@ public class EventRestController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        if (event.getEndDate().before(new Date()) && attendeesCount != null && attendeesCount >= 0 && attendeesCount <= event.getNumRegisteredUsers()) {
+        if (event.getEndDate().before(new Date()) && attendeesCount != null && attendeesCount >= 0 && attendeesCount <= event.getNumRegisteredUsers() && event.getAttendeesCount() == -1) {
             // Update the attendees count (the event has already ended)
             event.setAttendeesCount(attendeesCount);
             eventService.save(event);
 
             EventDTO eventDTO = transformDTO(event);
             // Return the "Location" header pointing to the event's URL
-            String graphUrl = "https://localhost:8443/api/events/" + eventId;
-            return ResponseEntity.ok().header("Location", graphUrl).body(eventDTO);
+            String eventUrl = "https://localhost:8443/api/events/" + eventId;
+            return ResponseEntity.ok().header("Location", eventUrl).body(eventDTO);
         } else {
             // Event has not ended yet
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
