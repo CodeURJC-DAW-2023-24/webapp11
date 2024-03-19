@@ -1,6 +1,9 @@
 package com.EventCrafters.EventCrafters.model;
 
 import javax.persistence.*;
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -12,6 +15,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StreamUtils;
 
 /**
  *
@@ -76,7 +81,11 @@ public class Event {
 	public Event(String name, Blob photo, String description, int maxCapacity, double price, String location,
 				 String map, Date startDate, Date endDate, String additionalInfo) {
 		this.name = name;
-		this.photo = photo;
+		if (photo!=null){
+			this.photo = photo;
+		} else {
+			this.setDefaultPhoto();
+		}
 		this.description = description;
 		this.maxCapacity = maxCapacity;
 		this.price = price;
@@ -87,6 +96,17 @@ public class Event {
 		this.additionalInfo = additionalInfo;
 
 		this.numRegisteredUsers = 0;
+	}
+
+	private void setDefaultPhoto() {
+		try {
+			ClassPathResource imgFile = new ClassPathResource("static/img/logo.jpeg");
+			byte[] photoBytes = new byte[0];
+			photoBytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+			this.photo = new SerialBlob(photoBytes);
+		} catch (IOException | SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public int getNumRegisteredUsers() {

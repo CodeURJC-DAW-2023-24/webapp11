@@ -477,17 +477,8 @@ public class EventRestController {
     }
 
     public Event transformEvent(EventManipulationDTO dto) {
-        Event event = new Event();
-
-        event.setName(dto.getName());
-        event.setDescription(dto.getDescription());
-        event.setMaxCapacity(dto.getMaxCapacity());
-        event.setPrice(dto.getPrice());
-        event.setLocation(dto.getLocation());
-        event.setMap(dto.getMap());
-        event.setStartDate(dto.getStartDate());
-        event.setEndDate(dto.getEndDate());
-        event.setAdditionalInfo(dto.getAdditionalInfo());
+        Event event = new Event(dto.getName(), null, dto.getDescription(), dto.getMaxCapacity(),
+                dto.getPrice(), dto.getLocation(), dto.getMap(),dto.getStartDate(), dto.getEndDate(), dto.getAdditionalInfo());
         return event;
     }
 }
