@@ -54,13 +54,13 @@ public class EventRestController {
             description = "Returns basic event details. Once the event has finished, additional information is included in the response.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Event found",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(oneOf = {EventDTO.class, EventFinishedDTO.class})) }),
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(oneOf = {EventDTO.class, EventFinishedDTO.class}))}),
             @ApiResponse(responseCode = "404", description = "Event not found", content = @Content)
     })
-    public ResponseEntity<EventDTO> showEvent(@PathVariable long id){
+    public ResponseEntity<EventDTO> showEvent(@PathVariable long id) {
         Optional<Event> eventOptional = eventService.findById(id);
-        if (eventOptional.isPresent()){
+        if (eventOptional.isPresent()) {
             Event event = eventOptional.get();
             EventDTO eventDTO = transformDTO(event);
             return ResponseEntity.ok(eventDTO);
@@ -164,7 +164,7 @@ public class EventRestController {
     @Operation(summary = "Gets the image of an event")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Image found",
-                    content = { @Content(mediaType = "image/jpeg") }),
+                    content = {@Content(mediaType = "image/jpeg")}),
             @ApiResponse(responseCode = "404", description = "Event or image not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error retrieving the image", content = @Content)
     })
@@ -245,7 +245,7 @@ public class EventRestController {
     public ResponseEntity<Map<String, Integer>> getEventGraphData(@PathVariable Long eventId) {
 
         Optional<Event> eventOptional = eventService.findById(eventId);
-        if(!eventOptional.isPresent()) {
+        if (!eventOptional.isPresent()) {
             return ResponseEntity.notFound().build();
 
         }
@@ -277,7 +277,7 @@ public class EventRestController {
     @Operation(summary = "Gets graph data of categories in relation to events")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Graph data obtained",
-                    content = { @Content(mediaType = "application/json") }),
+                    content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
     })
     public ResponseEntity<Map<String, Integer>> getAdminProfileGraphData() {
@@ -285,7 +285,7 @@ public class EventRestController {
         Map<String, Integer> graphData = new HashMap<>();
         List<String> labels = categoryService.findAllNames();
         List<Integer> data = categoryService.categoriesNumbers();
-        for (int i= 0; i<labels.size(); i++){
+        for (int i = 0; i < labels.size(); i++) {
             graphData.put(labels.get(i), data.get(i));
         }
 
@@ -293,7 +293,13 @@ public class EventRestController {
     }
 
     @GetMapping("/recommended")
-    public List<EventDTO> recommendedEvents(@RequestParam("page") int page){
+    @Operation(summary = "Gets the users most likely to sing up to events")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Events obtained",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+    })
+    public List<EventDTO> recommendedEvents(@RequestParam("page") int page) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         int pageSize = 3;
@@ -305,13 +311,13 @@ public class EventRestController {
         } else {
             String currentUsername = authentication.getName();
             Optional<User> userOp = userService.findByUserName(currentUsername);
-            if (userOp.isPresent()){
+            if (userOp.isPresent()) {
                 User user = userOp.get();
                 events = userService.getUserCategoryPreferences(user.getId(), page, pageSize);
             }
         }
 
-        for (Event e : events){
+        for (Event e : events) {
             eventDTOS.add(transformDTO(e));
         }
         return eventDTOS;
@@ -319,99 +325,88 @@ public class EventRestController {
     }
 
     @GetMapping("/filter/category/{id}")
-    public List<EventDTO> filterByCategory(@RequestParam("page") int page, @PathVariable long id){
+    @Operation(summary = "Retrieves the events that are filtered by the category, with the category's ID specified in the URL")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Events obtained",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+    })
+    public List<EventDTO> filterByCategory(@RequestParam("page") int page, @PathVariable long id) {
         int pageSize = 3;
-        List<Event> events = eventService.findByCategory(id,page, pageSize);
+        List<Event> events = eventService.findByCategory(id, page, pageSize);
         List<EventDTO> eventDTOS = new ArrayList<>();
-        for (Event e: events){
+        for (Event e : events) {
             eventDTOS.add(transformDTO(e));
         }
         return eventDTOS;
     }
 
     @GetMapping("/filter/searchBar")
-    public List<EventDTO> filterBySearchBar(@RequestParam("page") int page, @RequestParam("input") String input){
+    @Operation(summary = "Retrieves the events that are filtered by the searchBars input")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Events obtained",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+    })
+    public List<EventDTO> filterBySearchBar(@RequestParam("page") int page, @RequestParam("input") String input) {
         int pageSize = 3;
         List<Event> events = eventService.findBySearchBar(input, page, pageSize);
         List<EventDTO> eventDTOS = new ArrayList<>();
-        for (Event e: events){
+        for (Event e : events) {
             eventDTOS.add(transformDTO(e));
         }
         return eventDTOS;
     }
 
-    @GetMapping("/user/created/present")
-    public ResponseEntity<List<EventDTO>> userPresentCreatedEvents(@RequestParam("page") int page, Principal principal){
+    @GetMapping("/user")
+    @Operation(summary = "Retrieves the events that the registered user has created and have not ended yet")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Events obtained",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content)
+    })
+    public ResponseEntity<List<EventDTO>> userPresentCreatedEvents(@RequestParam("page") int page, Principal principal, @RequestParam("time") String time, @RequestParam("type") String type) {
         int pageSize = 3;
         List<EventDTO> eventDTOS = new ArrayList<>();
-        if (principal == null){
+        List<Event> events = new ArrayList<>();
+        if (principal == null || principal.getName().equals("anonymousUser")) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         Optional<User> userOp = userService.findByUserName(principal.getName());
-        if (userOp.isPresent()){
-            List<Event> events = eventService.findByCreatorIdCurrentCreatedEvents(userOp.get().getId(), page, pageSize);
-            for (Event e : events){
-                eventDTOS.add(transformDTO(e));
+        if (userOp.isPresent()) {
+            if (userOp.get().hasRole("ADMIN")){
+                events = eventService.findAll(page, pageSize);
+            }else{ // if role user
+                switch (type) {
+                    case "created":
+                        if (time.equals("present")) {
+                            events = eventService.findByCreatorIdCurrentCreatedEvents(userOp.get().getId(), page, pageSize);
+                        } else if (time.equals("past")) {
+                            events = eventService.findByCreatorIdPastCreatedEvents(userOp.get().getId(), page, pageSize);
+                        } else {
+                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                        }
+                        break;
+                    case "registered":
+                        if (time.equals("present")) {
+                            events = eventService.findByRegisteredUserIdCurrentEvents(userOp.get().getId(), page, pageSize);
+                        } else if (time.equals("past")) {
+                            events = eventService.findByRegisteredUserIdPastEvents(userOp.get().getId(), page, pageSize);
+                        } else {
+                            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                        }
+                }
             }
+        }
+
+        for (Event e : events) {
+            eventDTOS.add(transformDTO(e));
         }
 
         return ResponseEntity.ok(eventDTOS);
     }
-
-    @GetMapping("/user/created/past")
-    public ResponseEntity<List<EventDTO>> userPastCreatedEvents(@RequestParam("page") int page, Principal principal){
-        int pageSize = 3;
-        List<EventDTO> eventDTOS = new ArrayList<>();
-        if (principal == null){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        Optional<User> userOp = userService.findByUserName(principal.getName());
-        if (userOp.isPresent()){
-            List<Event> events = eventService.findByCreatorIdPastCreatedEvents(userOp.get().getId(), page, pageSize);
-            for (Event e : events){
-                eventDTOS.add(transformDTO(e));
-            }
-        }
-
-        return ResponseEntity.ok(eventDTOS);
-    }
-
-    @GetMapping("/user/registered/present")
-    public ResponseEntity<List<EventDTO>> userPresentRegisteredEvents(@RequestParam("page") int page, Principal principal){
-        int pageSize = 3;
-        List<EventDTO> eventDTOS = new ArrayList<>();
-        if (principal == null){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        Optional<User> userOp = userService.findByUserName(principal.getName());
-        if (userOp.isPresent()){
-            List<Event> events = eventService.findByRegisteredUserIdCurrentEvents(userOp.get().getId(), page, pageSize);
-            for (Event e : events){
-                eventDTOS.add(transformDTO(e));
-            }
-        }
-
-        return ResponseEntity.ok(eventDTOS);
-    }
-
-    @GetMapping("/user/registered/past")
-    public ResponseEntity<List<EventDTO>> userPastRegisteredEvents(@RequestParam("page") int page, Principal principal){
-        int pageSize = 3;
-        List<EventDTO> eventDTOS = new ArrayList<>();
-        if (principal == null){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        Optional<User> userOp = userService.findByUserName(principal.getName());
-        if (userOp.isPresent()){
-            List<Event> events = eventService.findByRegisteredUserIdPastEvents(userOp.get().getId(), page, pageSize);
-            for (Event e : events){
-                eventDTOS.add(transformDTO(e));
-            }
-        }
-
-        return ResponseEntity.ok(eventDTOS);
-    }
-
 
 
 
@@ -426,12 +421,11 @@ public class EventRestController {
     private boolean eventHasEmptyFields(EventManipulationDTO event) {
         if (
                 event.getName() == null || event.getName().trim().isEmpty() ||
-                event.getDescription() == null || event.getDescription().trim().isEmpty() ||
-                event.getLocation() == null || event.getLocation().trim().isEmpty() ||
-                event.getMap() == null || event.getMap().trim().isEmpty() ||
-                event.getCategoryId() == null ||
-                event.getAdditionalInfo() == null || event.getAdditionalInfo().trim().isEmpty())
-        {
+                        event.getDescription() == null || event.getDescription().trim().isEmpty() ||
+                        event.getLocation() == null || event.getLocation().trim().isEmpty() ||
+                        event.getMap() == null || event.getMap().trim().isEmpty() ||
+                        event.getCategoryId() == null ||
+                        event.getAdditionalInfo() == null || event.getAdditionalInfo().trim().isEmpty()) {
             return true;
         }
 
@@ -459,6 +453,7 @@ public class EventRestController {
 
         return false;
     }
+
     private boolean isUserAdminOrCreator(String username, Event event) {
         Optional<User> userOpt = userService.findByUserName(username);
         if (!userOpt.isPresent()) {

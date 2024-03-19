@@ -5,10 +5,16 @@ import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.service.CategoryService;
 import com.EventCrafters.EventCrafters.service.EventService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.*;
 
 @RestController
@@ -47,6 +53,12 @@ public class CategoryRestController {
 
     }
     @GetMapping("/categories")
+    @Operation(summary = "Retrieves the categories available")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Categories obtained",
+                    content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+    })
     public List<CategoryDTO> showCategories(@RequestParam("page") int page){
         List<Category> all;
         if (page != -1){
@@ -63,6 +75,12 @@ public class CategoryRestController {
         return answer;
     }
     @GetMapping("/categories/{id}")
+    @Operation(summary = "Retrieves the category, with the ID specified in the url")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Category obtained",
+                    content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content),
+    })
     public ResponseEntity<CategoryDTO> showCategory(@PathVariable Long id){
         Optional<Category> category = categoryService.findById(id);
         if (category.isPresent()){
@@ -75,12 +93,20 @@ public class CategoryRestController {
     }
 
     @PostMapping("/categories")
+    @Operation(summary = "Adds a category to the database")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Category created",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+    })
     public ResponseEntity<String> newCategory(@RequestBody CategoryDTO category){
         Category newCategory = transformFromDTO(category);
         categoryService.save(newCategory);
-        int id = categoryService.findAll().size();
-        return ResponseEntity.status(200).body("/api/category/"+id);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newCategory.getId()).toUri();
+        return ResponseEntity.created(location).body(location.toString());
     }
+
 
     @PutMapping("/categories/{id}")
     public ResponseEntity<CategoryDTO> substituteCategory(@PathVariable Long id, @RequestBody CategoryDTO category){
