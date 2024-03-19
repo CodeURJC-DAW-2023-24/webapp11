@@ -41,6 +41,7 @@
                         <div class="dropdown-divider"></div>
                         <form action="/logout" method="post">
                             <input type="hidden" name="_method" value="POST">
+                            <input type="hidden" name="_csrf" value="{{token}}"/>
                             <button type="submit" name="logout" class="dropdown-item">Cerrar Sesión</button>
                         </form>
                     </div>
@@ -107,6 +108,7 @@
                         {{#isUserCreatorOrAdmin}}
                             <div class="m-2">
                                 <form action="/event/delete/{{event.id}}" method="post">
+                                    <input type="hidden" name="_csrf" value="{{token}}"/>
                                     <button type="submit" class="btn btn-danger" onclick="return warnDeleteEvent()"><i class="fas fa-trash-alt"></i>Borrar Evento</button>
                                 </form>
                             </div>
@@ -119,6 +121,7 @@
                             {{#isUserRegistered}}
                                 <div class="m-2">
                                     <form action="/event/leave/{{event.id}}" method="post">
+                                        <input type="hidden" name="_csrf" value="{{token}}"/>
                                         <button type="submit" class="btn btn-warning">Desapuntarte de {{event.name}}</button>
                                     </form>
                                     <br>
@@ -131,6 +134,7 @@
                                 {{^isUserRegistered}}
                                     <div class="m-2">
                                         <form action="/event/register/{{event.id}}" method="post">
+                                            <input type="hidden" name="_csrf" value="{{token}}"/>
                                             <button type="submit" class="btn btn-primary">Apuntarte a {{event.name}}</button>
                                         </form>
                                     </div>
@@ -141,6 +145,7 @@
                         {{^logged}}
                             <div class="m-2">
                                 <form action="/event/register/{{event.id}}" method="post">
+                                    <input type="hidden" name="_csrf" value="{{token}}"/>
                                     <button type="submit" class="btn btn-primary">Apuntarte a {{event.name}}</button>
                                 </form>
                             </div>
@@ -176,6 +181,7 @@
                                         <label for="attendeesCount" class="sr-only">Número de asistentes</label>
                                         <input type="number" class="form-control" name="attendeesCount" placeholder="Número de asistentes" min="0" max="{{numRegisteredUsers}}" required>
                                     </div>
+                                    <input type="hidden" name="_csrf" value="{{token}}"/>
                                     <button type="submit" class="btn btn-info mb-2 ml-2"><i class="fas fa-save"></i> Guardar</button>
                                 </form>
                             {{/attendeesCountSet}}

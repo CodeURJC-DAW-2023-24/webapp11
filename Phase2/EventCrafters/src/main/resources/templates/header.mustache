@@ -18,6 +18,7 @@
                         <div class="dropdown-divider"></div>
                         <form action="/logout" method="post">
                             <input type="hidden" name="_method" value="POST">
+                            <input type="hidden" name="_csrf" value="{{token}}"/>
                             <button type="submit" name="logout"  class="dropdown-item">Cerrar Sesión</button>
                         </form>
                     </div>

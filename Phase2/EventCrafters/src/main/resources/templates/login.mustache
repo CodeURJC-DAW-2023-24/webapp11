@@ -29,6 +29,7 @@
             <div class="form-group">
               <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" required>
             </div>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
             <button type="submit" id="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
           </form>
           <div class="text-center mt-3">

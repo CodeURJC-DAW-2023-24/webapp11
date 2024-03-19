@@ -8,7 +8,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.HttpStatus;
@@ -16,21 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.*;
@@ -147,9 +138,9 @@ public class UserWebController {
 		return "redirect:/login";
 	}
 
-	@PostMapping("/IsUsernameTaken")
-	public ResponseEntity<String> isUserNameTaken(@RequestBody String body ) {
-		Optional<User> userOptional = userService.findByUserName(body);
+	@GetMapping("/IsUsernameTaken")
+	public ResponseEntity<String> isUserNameTaken(@RequestParam("username") String username) {
+		Optional<User> userOptional = userService.findByUserName(username);
 		if (userOptional.isPresent()){
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken");
 		} else {
@@ -157,9 +148,9 @@ public class UserWebController {
 		}
 	}
 
-	@PostMapping("/IsUserBanned")
-	public ResponseEntity<Boolean> isUserBanned(@RequestBody String body ) {
-		Optional<User> userOptional = userService.findByUserName(body);
+	@GetMapping("/IsUserBanned")
+	public ResponseEntity<Boolean> isUserBanned(@RequestParam("username") String username) {
+		Optional<User> userOptional = userService.findByUserName(username);
 		if (userOptional.isPresent()) {
 			return ResponseEntity.ok(userOptional.get().isBanned());
 		}
@@ -225,6 +216,8 @@ public class UserWebController {
 		User user = userOptional.get();
 		Long currentUserId = user.getId();
 		userService.deleteUserById(currentUserId);
+		//this is problematic, as it sends a GET request to /logout, which only accepts
+		//POST requests.
 		return "redirect:/logout";
 	}
 

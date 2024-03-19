@@ -39,6 +39,7 @@
             <div class="form-group">
               <input type="password" class="form-control" id="confirmPassword" placeholder="Confirmar Contraseña" required>
             </div>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
             <button type="submit" id="submit" onclick="return validateForm();" class="btn btn-primary btn-block">Registrarse</button>
           </form>
         </div>

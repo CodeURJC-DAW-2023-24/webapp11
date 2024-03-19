@@ -31,6 +31,7 @@
                             <label for="event-review">Reseña</label>
                             <textarea class="form-control" id="event-review" rows="5" name="text" placeholder="Escribe tu reseña aquí" required></textarea>
                         </div>
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                         <button type="submit" class="btn btn-primary btn-block">Enviar Reseña</button>
                     </form>
                 </div>

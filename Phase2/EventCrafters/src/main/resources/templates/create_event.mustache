@@ -98,6 +98,7 @@
                                 <textarea name="additionalInfo" class="form-control" id="event-extras"
                                     placeholder="Informacion Extra del Evento" rows="3" required>{{#event.id}}{{event.additionalInfo}}{{/event.id}}</textarea>
                             </div>
+                            <input type="hidden" name="_csrf" value="{{token}}"/>
                             <button type="submit" class="btn btn-primary btn-block">{{#event.id}}Actualizar Evento{{/event.id}}{{^event.id}}Crear Evento{{/event.id}}</button>
                         </form>
                     </div>

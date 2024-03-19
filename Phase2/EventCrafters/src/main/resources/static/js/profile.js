@@ -175,10 +175,7 @@ function warnBan() {
         alert("No se puede banear al administrador del sistema.")
         return false;
     }
-    fetch("/IsUsernameTaken",{
-        method : "POST",
-        body : userName,
-    })
+    fetch("/IsUsernameTaken?username="+userName)
         .then(response => {
             if (!response.ok) {
                 alert("Ha baneado al usuario.");
@@ -192,10 +189,7 @@ function warnBan() {
 function warnUnBan() {
     var userName = document.getElementById("usernameUnBan").value;
 
-    fetch("/IsUserBanned",{
-        method : "POST",
-        body : userName,
-    })
+    fetch("/IsUserBanned?username="+userName)
         .then(response => response.json())
         .then(isBanned => {
             if (isBanned) {

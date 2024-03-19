@@ -86,6 +86,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         https.logout().logoutSuccessUrl("/login");
 
         //Disable CSRF at the moment
-        https.csrf().disable();
+        //https.csrf().disable();
     }
 }

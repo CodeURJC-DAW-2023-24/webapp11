@@ -40,10 +40,7 @@ function checkUserBanned(){
         document.getElementById("submit").onclick = null;
         return;
     }
-    fetch("/IsUserBanned", {
-        method : "POST",
-        body : username,
-    })
+    fetch("/IsUserBanned?username="+username)
         .then(response => response.json())
         .then(isBanned => {
             if (isBanned) {

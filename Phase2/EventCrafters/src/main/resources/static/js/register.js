@@ -13,10 +13,7 @@ function userNameTaken(){
 
     var userName = document.getElementById("username").value;
 
-    fetch("/IsUsernameTaken",{
-        method : "POST",
-        body : userName,
-    })
+    fetch("/IsUsernameTaken?username="+userName)
         .then(response => {
             var submitButton = document.getElementById("submit");
             if (!response.ok) {
