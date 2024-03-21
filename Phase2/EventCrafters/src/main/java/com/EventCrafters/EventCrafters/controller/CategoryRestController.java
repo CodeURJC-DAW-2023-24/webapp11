@@ -9,7 +9,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.aspectj.weaver.patterns.HasMemberTypePatternForPerThisMatching;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -93,7 +95,7 @@ public class CategoryRestController {
     }
 
     @PostMapping("/categories")
-    @Operation(summary = "Adds a category to the database")
+    @Operation(summary = "Adds a category to the database and returns the url to visualize it.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Category created",
                     content = { @Content(mediaType = "application/json")}),
@@ -109,20 +111,37 @@ public class CategoryRestController {
 
 
     @PutMapping("/categories/{id}")
+    @Operation(summary = "Shows the information of a specific category.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Category created",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Not found", content=@Content),
+    })
     public ResponseEntity<CategoryDTO> substituteCategory(@PathVariable Long id, @RequestBody CategoryDTO category){
-        Optional<Category> oldCategory = categoryService.findById(id);
-        if (oldCategory.isPresent()){
-            category.setId(id);
-            Category category1 = transformFromDTO(category);
-            categoryService.save(category1);
-            return ResponseEntity.ok(category);
+        if  (id != 1){  // the first category is the default one, it can´t be modified
+            Optional<Category> oldCategory = categoryService.findById(id);
+            if (oldCategory.isPresent()){
+                category.setId(id);
+                Category category1 = transformFromDTO(category);
+                categoryService.save(category1);
+                return ResponseEntity.ok(category);
+            }
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
     }
 
     @DeleteMapping("/categories/{id}")
+    @Operation(summary = "Deletes a specific category.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Category created",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "403", description = "Operation not permitted", content=@Content),
+            @ApiResponse(responseCode = "404", description = "Not found", content=@Content),
+    })
     public ResponseEntity<Category> deleteCategory(@PathVariable Long id){
-        if (id != 1) {
+        if (id != 1) { // the first category is the default one, it can´t be deleted
             Optional<Category> category = categoryService.findById(id);
             if (category.isPresent()) {
                 categoryService.delete(id);
@@ -130,7 +149,7 @@ public class CategoryRestController {
             }
             return ResponseEntity.notFound().build();
         } else {
-            return ResponseEntity.unprocessableEntity().build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 }

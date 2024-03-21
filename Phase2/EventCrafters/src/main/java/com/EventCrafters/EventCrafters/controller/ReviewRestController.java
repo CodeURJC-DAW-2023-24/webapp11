@@ -10,6 +10,10 @@ import com.EventCrafters.EventCrafters.service.CategoryService;
 import com.EventCrafters.EventCrafters.service.EventService;
 import com.EventCrafters.EventCrafters.service.ReviewService;
 import com.EventCrafters.EventCrafters.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +66,7 @@ public class ReviewRestController {
         return authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 
+    /*
     @GetMapping("/reviews")
     public List<ReviewDTO> showReviews() {
         List<Review> all = reviewService.findAll();
@@ -73,7 +78,9 @@ public class ReviewRestController {
 
         return answer;
     }
+     */
 
+    /*
     @GetMapping("/reviews/{id}")
     public ResponseEntity<ReviewDTO> showCategory(@PathVariable Long id) {
         Optional<Review> review = reviewService.findById(id);
@@ -86,24 +93,30 @@ public class ReviewRestController {
 
     }
 
+     */
+    // no se devuelve la url de la review creada, porque se supone que la web no tiene la opción de ver las reviews
     @PostMapping("/reviews")
+    @Operation(summary = "Create a review for an event that has ended and for which the user had signed up.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Review created",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content)
+    })
     public ResponseEntity<String> newReview(@RequestBody ReviewDTO review) {
         Review newReview = transformFromDTO(review);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(isAuthenticated(authentication)){
-            System.out.println("hola");
             Optional<User> user = userService.findByUserName(authentication.getName());
             Optional<Event> event = eventService.findById(review.getEventId());
-            System.out.println(user);
-            System.out.println(event);
             if (user.isPresent() && event.isPresent()){
-                System.out.println("hola2");
                 if (user.get().getId().equals(review.getUserId()) &&
                         event.get().getRegisteredUsers().contains(user.get()) &&
                         event.get().getEndDate().before(new Date())){
                     reviewService.save(newReview);
                     int id = reviewService.findAll().size();
-                    return ResponseEntity.status(200).body("/api/reviews/"+id);
+                    return ResponseEntity.status(201).body("");
                 }
             }
         }else if (!isAuthenticated(authentication)){

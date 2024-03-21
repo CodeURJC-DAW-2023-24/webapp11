@@ -361,7 +361,6 @@ public class EventRestController {
             @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content)
     })
     public ResponseEntity<List<EventDTO>> userEvents(@RequestParam("page") int page, Principal principal, @RequestParam(value = "time", required = false) String time, @RequestParam(value = "type", required = false) String type) {
-        System.out.println("hola");
         int pageSize = 3;
         List<EventDTO> eventDTOS = new ArrayList<>();
         List<Event> events = new ArrayList<>();
