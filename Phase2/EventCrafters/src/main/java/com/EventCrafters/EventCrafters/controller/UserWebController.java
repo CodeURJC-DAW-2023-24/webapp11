@@ -48,7 +48,8 @@ public class UserWebController {
 	private void ChartController(ObjectMapper objectMapper) {
 		this.objectMapper = objectMapper;
 	}
-	private Map<String, TokenService> tokens = new HashMap<>();
+	private static Map<String, TokenService> tokens = new HashMap<>();
+	public static void addToken(String user, TokenService token){tokens.put(user, token);}
 
 	@RequestMapping("/login")
 	public String login() {
@@ -158,7 +159,7 @@ public class UserWebController {
 	}
 
 	@GetMapping("/recoverPassword/{user}")
-	public String recoverPassword(Model model, @PathVariable String user) {
+	public String recoverPassword(@PathVariable String user) {
 		Optional<User> userOptional = userService.findByUserName(user);
         if (userOptional.isPresent()) {
             TokenService tokenService = new TokenService(userOptional.get());
@@ -183,15 +184,17 @@ public class UserWebController {
 				return "invalidLink";
 			}
 			model.addAttribute("recover", true);
-			model.addAttribute("token", tokenService.getToken());
+			model.addAttribute("recoverToken", tokenService.getToken());
 			model.addAttribute("username",userOptional.get().getUsername());
 		}
 		return "change_password";
 	}
 
 	@PostMapping("/recoverPassword/{user}/randomToken")
-	public String sendRecoverPasswordWithToken(Model model, @PathVariable String user,
-											   @RequestParam("token") String token, @RequestParam("password") String password) {
+	public String sendRecoverPasswordWithToken(Model model,
+											   @PathVariable String user,
+											   @RequestParam("token") String token,
+											   @RequestParam("password") String password) {
 		Optional<User> userOptional = userService.findByUserName(user);
 		if (userOptional.isPresent()) {
 			TokenService tokenService = tokens.get(userOptional.get().getUsername());

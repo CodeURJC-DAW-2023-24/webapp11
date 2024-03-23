@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 
@@ -37,16 +38,13 @@ public class UserRestController {
 	@Autowired
 	private AjaxService ajaxService;
 
-	private Map<String, TokenService> tokens = new HashMap<>();
-
 	@Operation(summary = "Gets the currently authenticated user",
 			description = "Returns all information associated to the authenticated user. If no user is authenticated, returns 404 not found")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "User found",
 					content = { @Content(mediaType = "application/json",
 							schema = @Schema(implementation = FullUserDTO.class)) }),
-			@ApiResponse(responseCode = "404",
-					description = "No user currently authenticated")
+			@ApiResponse(responseCode = "404", description = "No user currently authenticated")
 	})
 	@GetMapping("/me")
 	public ResponseEntity<FullUserDTO> currentUser(HttpServletRequest request){
@@ -58,20 +56,13 @@ public class UserRestController {
 		}
 	}
 
-	//@GetMapping("/test/test")
-	//public ResponseEntity<Event> test(){
-	//	Optional<Event> optionalUser = eventService.findById(1L);
-	//	return ResponseEntity.ok(optionalUser.get());
-	//}
-
 	@Operation(summary = "Gets a specific user by their id",
 			description = "Returns the user with the id specified in the URL. If it is the currently authenticated user, all information about them will be returned. If it is some other user, a censored version will be returned, omitting some information. If there is no user with the specified id, returns 404 not found.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "User found",
 					content = { @Content(mediaType = "application/json",
 							schema = @Schema(oneOf = {FullUserDTO.class, CensoredUserDTO.class})) }),
-			@ApiResponse(responseCode = "404",
-					description = "User not found")
+			@ApiResponse(responseCode = "404", description = "User not found")
 	})
 	@GetMapping("/{id}")
 	public ResponseEntity<CensoredUserDTO> getUser(HttpServletRequest request, @PathVariable Long id){
@@ -110,7 +101,7 @@ public class UserRestController {
 			@ApiResponse(responseCode = "400",
 					description = "Bad Request. Body must not have a photo attribute.")
 	})
-	@PostMapping("/new")
+	@PostMapping
 	public ResponseEntity<FullUserDTO> newUser(@RequestBody User user){ //especificar en la documentación que no se debe poner un campo photo
 		if (userService.findByUserName(user.getUsername()).isPresent()) {
 			return ResponseEntity.status(409).build(); //409 conflict
@@ -178,7 +169,9 @@ public class UserRestController {
 			@ApiResponse(responseCode = "403",
 					description = "Forbidden. Current user lacks authority to modify specified user"),
 			@ApiResponse(responseCode = "404",
-					description = "Not Found. No user found with provided id")
+					description = "Not Found. No user found with provided id"),
+			@ApiResponse(responseCode = "409",
+					description = "Conflict. Invalid Username.")
 	})
 	@PutMapping("/{id}")
 	public ResponseEntity<FullUserDTO> modifyUser(@RequestBody FullUserDTO userDTO, @PathVariable Long id, Principal principal){
@@ -238,6 +231,30 @@ public class UserRestController {
 		}
 	}
 
+	@Operation(summary = "Sends an email for password recovery.",
+			description = "Sends a one time email to the user with specified id for them to recover their password through the web app.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Email sent"),
+			@ApiResponse(responseCode = "404", description = "Not Found. No user found with provided id")
+	})
+	@GetMapping("/{id}/recoverPassword")
+	public ResponseEntity<String> recoverPassword(@PathVariable Long id) {
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isPresent()) {
+			TokenService tokenService = new TokenService(userOptional.get());
+			UserWebController.addToken(userOptional.get().getUsername(), tokenService);
+			String link = "https://localhost:8443/recoverPassword/" + userOptional.get().getUsername() +"/randomToken?token=" + tokenService.getToken();
+			new MailService().sendEmail(
+					userOptional.get(),
+					"Recuperación de contraseña de Event Crafters",
+					"He aquí un enlace de un solo uso para que restablezcas tu contraseña" + "\n\n" + link,
+					false
+			);
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.notFound().build();
+	}
+
 	private boolean checkUserPrivileges(Principal principal, Optional<User> optUser) {
 		if (principal==null) return false;
 		Optional<User> authenticatedUser = userService.findByUserName(principal.getName());
@@ -250,6 +267,7 @@ public class UserRestController {
 		}
 		return false;
 	}
+
 
 
 }

@@ -111,7 +111,7 @@ public class DatabaseInitializer {
 		Event event6 = new Event("(Completed) Observación de estrellas", photoBlob6, "Pasa una noche celestial de asombro y descubrimiento en nuestro evento de observación de estrellas, donde el cosmos se despliega ante tus ojos, guiados por astrónomos apasionados que revelarán los secretos del universo bajo el manto estrellado.", 100, 0.00, "Móstoles", "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34410.667558609544!2d-3.7930695448574747!3d40.33120762078209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ed7bdbd7db%3A0x881389995ff67ff3!2sEstadio%20Municipal%20Butarque!5e0!3m2!1ses!2ses!4v1708693009768!5m2!1ses!2ses\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
 				inThePast1, inThePast2, "Pueden llevarse prismáticos o telescopio propios.");
 
-		String mail = "";
+		String mail = "marquesgarciaangel@gmail.com";
 		User user2 = new User("Juan Pérez","user2", mail, photoBlobuser, passwordEncoder.encode("pass"), "USER" );
 		userRepository.save(user2);
 		User user3 = new User("Ana Gómez","user3", mail, photoBlobuser, passwordEncoder.encode("pass"), "USER");
