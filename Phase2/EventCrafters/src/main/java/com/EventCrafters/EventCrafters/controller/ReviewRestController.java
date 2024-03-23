@@ -115,7 +115,6 @@ public class ReviewRestController {
                         event.get().getRegisteredUsers().contains(user.get()) &&
                         event.get().getEndDate().before(new Date())){
                     reviewService.save(newReview);
-                    int id = reviewService.findAll().size();
                     return ResponseEntity.status(201).body("");
                 }
             }

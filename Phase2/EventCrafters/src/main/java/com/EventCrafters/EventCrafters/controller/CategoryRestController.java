@@ -41,17 +41,22 @@ public class CategoryRestController {
     }
 
     private Category transformFromDTO(CategoryDTO category){
-        Set<Event> eventsIdInCategories = new HashSet<>();
-        String name = category.getName();
-        String color = category.getColor();
-        Long id = category.getId();
+        Category newCategory = new Category();
+
+        newCategory.setName(category.getName());
+        newCategory.setColor(category.getColor());
+
+        // solo se cambian las categorias de los eventos sin categoría
         for (Long e : category.getEventIdInCategories()){
             if (eventService.findById(e).isPresent()) {
-                eventsIdInCategories.add(eventService.findById(e).get());
+                Event event = eventService.findById(e).get();
+                if (event.getCategory().getId() == 1){
+                    event.setCategory(newCategory);
+                }
             }
 
         }
-        return new Category(id, name, color, eventsIdInCategories);
+        return newCategory;
 
     }
     @GetMapping("/categories")
@@ -102,6 +107,7 @@ public class CategoryRestController {
             @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
     })
     public ResponseEntity<String> newCategory(@RequestBody CategoryDTO category){
+        category.setId(-1L);
         Category newCategory = transformFromDTO(category);
         categoryService.save(newCategory);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -117,14 +123,20 @@ public class CategoryRestController {
                     content = { @Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", description = "Not found", content=@Content),
     })
-    public ResponseEntity<CategoryDTO> substituteCategory(@PathVariable Long id, @RequestBody CategoryDTO category){
+    public ResponseEntity<String> substituteCategory(@PathVariable Long id, @RequestBody CategoryDTO category){
         if  (id != 1){  // the first category is the default one, it can´t be modified
             Optional<Category> oldCategory = categoryService.findById(id);
             if (oldCategory.isPresent()){
+                Set<Event> events = oldCategory.get().getEventsInCategories();
+                for (Event e : events ){
+                    e.setCategory(categoryService.findById(1).get());
+                }
                 category.setId(id);
                 Category category1 = transformFromDTO(category);
                 categoryService.save(category1);
-                return ResponseEntity.ok(category);
+                URI location = ServletUriComponentsBuilder.fromHttpUrl("https://localhost:8443").path("/api/categories/{id}")
+                        .buildAndExpand(id).toUri();
+                return ResponseEntity.created(location).body(location.toString());
             }
             return ResponseEntity.notFound().build();
         }
@@ -140,12 +152,12 @@ public class CategoryRestController {
             @ApiResponse(responseCode = "403", description = "Operation not permitted", content=@Content),
             @ApiResponse(responseCode = "404", description = "Not found", content=@Content),
     })
-    public ResponseEntity<Category> deleteCategory(@PathVariable Long id){
+    public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable Long id){
         if (id != 1) { // the first category is the default one, it can´t be deleted
             Optional<Category> category = categoryService.findById(id);
             if (category.isPresent()) {
                 categoryService.delete(id);
-                return ResponseEntity.ok(category.get());
+                return ResponseEntity.ok(transformToDTO(category.get()));
             }
             return ResponseEntity.notFound().build();
         } else {
