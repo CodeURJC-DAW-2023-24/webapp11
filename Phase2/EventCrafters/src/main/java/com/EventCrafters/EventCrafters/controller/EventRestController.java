@@ -296,6 +296,37 @@ public class EventRestController {
         return ResponseEntity.ok(graphData);
     }
 
+    @DeleteMapping("/{eventId}")
+    @Operation(summary = "Delete an event created if user is registered as event creator or as admin")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Event deleted successfully"),
+            @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Event not found", content = @Content)
+    })
+    public ResponseEntity<EventDTO> deleteEvent(@PathVariable long eventId) {
+        //Check if event exists
+        Optional<Event> eventOptional = eventService.findById(eventId);
+        if (!eventOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Event deletedEvent = eventOptional.get();
+
+        //Check if current user is the event creator or an admin
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!isUserAdminOrCreator(currentUsername, deletedEvent)) {
+            // Unauthorized to delete the event
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        eventService.delete(eventId);
+
+        // Transform the saved event to EventDTO
+        EventDTO eventDTO = transformDTO(deletedEvent);
+
+        return ResponseEntity.status(200).body(eventDTO);
+    }
+
 
     @GetMapping("/filter")
     @Operation(summary = "Retrieves events filtered by category, with the category's ID specified in the URL, by input from the search bar or depending on our recommendation algorithm.")
