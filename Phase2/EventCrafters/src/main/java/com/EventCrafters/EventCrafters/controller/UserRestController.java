@@ -17,10 +17,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
 import java.security.Principal;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.*;
 
 @RestController
@@ -187,7 +191,7 @@ public class UserRestController {
 		if (optUser.isPresent()) {
 			if (optUser.get().hasRole("ADMIN")) return ResponseEntity.status(403).build();
 
-			if (checkUserPrivileges(principal, optUser)) return ResponseEntity.status(403).build();
+			if (!checkUserPrivileges(principal, optUser)) return ResponseEntity.status(403).build();
 
 			user.setId(optUser.get().getId());
 			user.setEncodedPassword(optUser.get().getEncodedPassword());
@@ -221,7 +225,7 @@ public class UserRestController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<FullUserDTO> deleteUser(@PathVariable Long id, Principal principal){
 		Optional<User> optUser = userService.findById(id);
-		if (checkUserPrivileges(principal, optUser)) return ResponseEntity.status(403).build(); //403 forbidden
+		if (!checkUserPrivileges(principal, optUser)) return ResponseEntity.status(403).build(); //403 forbidden
 
 		if (optUser.isPresent()) {
 			if (optUser.get().hasRole("ADMIN")) return ResponseEntity.status(403).build();
@@ -231,13 +235,44 @@ public class UserRestController {
 		}
 	}
 
+	@Operation(summary = "Changes the profile picture of the specified user",
+			description = "Changes the profile picture of the user with the given id to a picture created from the data provided in the body")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Ok. Profile picture changed"),
+			@ApiResponse(responseCode = "400", description = "Bad Request. No data provided, or data provided was empty"),
+			@ApiResponse(responseCode = "403", description = "Forbidden. Authenticated user lacks permission to edit this resource"),
+			@ApiResponse(responseCode = "404", description = "Not Found. No user found with provided id"),
+			@ApiResponse(responseCode = "500", description = "Internal Server Error. Couldn't create a Blob from provided data.")
+	})
+	@PostMapping("/img/{id}")
+	public ResponseEntity<String> changeProfilePicture(@PathVariable("id") Long id, @RequestPart("photo") MultipartFile pfpData, Principal principal) {
+		if (pfpData==null) return ResponseEntity.badRequest().build();
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isEmpty()) return ResponseEntity.notFound().build();
+		User user = userOptional.get();
+
+		if (user.hasRole("ADMIN")) return ResponseEntity.status(403).build();
+		if (!checkUserPrivileges(principal, userOptional)) return ResponseEntity.status(403).build();
+
+        try {
+            Blob pfp = new SerialBlob(pfpData.getBytes());
+			user.setPhoto(pfp);
+			userService.save(user);
+			return ResponseEntity.ok().build();
+		} catch (SQLException e) {
+            return ResponseEntity.status(500).build();
+        } catch (IOException e) {
+			return ResponseEntity.status(500).build();
+        }
+    }
+
 	@Operation(summary = "Sends an email for password recovery.",
 			description = "Sends a one time email to the user with specified id for them to recover their password through the web app.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Email sent"),
 			@ApiResponse(responseCode = "404", description = "Not Found. No user found with provided id")
 	})
-	@GetMapping("/{id}/recoverPassword")
+	@PostMapping("/{id}/recoverPassword")
 	public ResponseEntity<String> recoverPassword(@PathVariable Long id) {
 		Optional<User> userOptional = userService.findById(id);
 		if (userOptional.isPresent()) {
@@ -256,14 +291,13 @@ public class UserRestController {
 	}
 
 	private boolean checkUserPrivileges(Principal principal, Optional<User> optUser) {
+		if (optUser.isEmpty()) return false;
 		if (principal==null) return false;
-		Optional<User> authenticatedUser = userService.findByUserName(principal.getName());
-		if (authenticatedUser.isPresent()){
-			if (!authenticatedUser.get().hasRole("ADMIN") && !principal.getName().equals(optUser.get().getUsername())){
+		Optional<User> principalUser = userService.findByUserName(principal.getName());
+		if (principalUser.isPresent()){
+			if (principalUser.get().hasRole("ADMIN") || principal.getName().equals(optUser.get().getUsername())){
 				return true;
 			}
-		} else {
-			return true;
 		}
 		return false;
 	}
