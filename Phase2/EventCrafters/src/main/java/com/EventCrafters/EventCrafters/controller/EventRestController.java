@@ -196,8 +196,90 @@ public class EventRestController {
     }
 
     @PostMapping("/registration/{eventId}")
-    public ResponseEntity<> registerToEvent(@PathVariable("eventId") Long eventId) {
+    @Operation(summary = "Registers current user for selected event")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User successfully registered in the event", content = @Content),
+            @ApiResponse(responseCode = "403", description = "User is already registered in the event, or is the event creator or event is full", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Event not found", content = @Content),
+            @ApiResponse(responseCode = "405", description = "Event has already finished", content = @Content),
+            @ApiResponse(responseCode = "500", description = "User is not registered", content = @Content)
+    })
+    public ResponseEntity<String> registerToEvent(@PathVariable("eventId") Long eventId) {
+        //Check if event exists
+        Optional<Event> eventOptional = eventService.findById(eventId);
+        if (!eventOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        Event existingEvent = eventOptional.get();
 
+        //Check if event has not finished yet
+        boolean eventFinished = LocalDateTime.now().isAfter(existingEvent.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        if(eventFinished){
+            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+        }
+
+        //Check if user is registered
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        Optional<User> userOpt = userService.findByUserName(currentUsername);
+        if (!userOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        User currentUser = userOpt.get();
+
+        //Check if user is not registered in the event yet, is not the event creator and event is not full
+        if (existingEvent.getRegisteredUsers().contains(currentUser) || existingEvent.getCreator().equals(currentUser) || existingEvent.getRegisteredUsers().size() >= existingEvent.getMaxCapacity()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        existingEvent.getRegisteredUsers().add(currentUser);
+        eventService.save(existingEvent);
+
+        return ResponseEntity.ok("");
+    }
+
+
+    @PostMapping("/unregistration/{eventId}")
+    @Operation(summary = "Unregisters current user for selected event")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User successfully unregistered in the event", content = @Content),
+            @ApiResponse(responseCode = "403", description = "User is not registered in the event yet", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Event not found", content = @Content),
+            @ApiResponse(responseCode = "405", description = "Event has already finished", content = @Content),
+            @ApiResponse(responseCode = "500", description = "User is not registered", content = @Content)
+    })
+    public ResponseEntity<String> leaveAnEvent(@PathVariable("eventId") Long eventId) {
+        //Check if event exists
+        Optional<Event> eventOptional = eventService.findById(eventId);
+        if (!eventOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        Event existingEvent = eventOptional.get();
+
+        //Check if event has not finished yet
+        boolean eventFinished = LocalDateTime.now().isAfter(existingEvent.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        if(eventFinished){
+            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+        }
+
+        //Check if user is registered
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        Optional<User> userOpt = userService.findByUserName(currentUsername);
+        if (!userOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        User currentUser = userOpt.get();
+
+        //Check if user is registered in the event
+        if (!existingEvent.getRegisteredUsers().contains(currentUser)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        existingEvent.getRegisteredUsers().remove(currentUser);
+        eventService.save(existingEvent);
+
+        return ResponseEntity.ok("");
     }
 
 
