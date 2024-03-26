@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.net.http.HttpResponse;
 import java.security.Principal;
 import java.sql.Blob;
 import java.time.LocalDateTime;
@@ -192,6 +193,11 @@ public class EventRestController {
         EventDTO eventDTO = transformDTO(savedEvent);
 
         return ResponseEntity.accepted().body(eventDTO);
+    }
+
+    @PostMapping("/registration/{eventId}")
+    public ResponseEntity<> registerToEvent(@PathVariable("eventId") Long eventId) {
+
     }
 
 
@@ -374,7 +380,8 @@ public class EventRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Event deleted successfully"),
             @ApiResponse(responseCode = "403", description = "Operation not permitted", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Event not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Event not found", content = @Content),
+            @ApiResponse(responseCode = "405", description = "The operation is not allowed when event has finished", content = @Content)
     })
     public ResponseEntity<EventDTO> deleteEvent(@PathVariable long eventId) {
         //Check if event exists
@@ -383,11 +390,17 @@ public class EventRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        Event deletedEvent = eventOptional.get();
+        Event existingEvent = eventOptional.get();
+
+        //Check if event has not finished yet
+        boolean eventFinished = LocalDateTime.now().isAfter(existingEvent.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        if(eventFinished){
+            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+        }
 
         //Check if current user is the event creator or an admin
         String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!isUserAdminOrCreator(currentUsername, deletedEvent)) {
+        if (!isUserAdminOrCreator(currentUsername, existingEvent)) {
             // Unauthorized to delete the event
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -395,7 +408,7 @@ public class EventRestController {
         eventService.delete(eventId);
 
         // Transform the saved event to EventDTO
-        EventDTO eventDTO = transformDTO(deletedEvent);
+        EventDTO eventDTO = transformDTO(existingEvent);
 
         return ResponseEntity.status(200).body(eventDTO);
     }
