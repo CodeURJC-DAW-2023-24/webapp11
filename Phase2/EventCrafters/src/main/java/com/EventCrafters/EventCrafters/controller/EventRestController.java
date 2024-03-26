@@ -29,6 +29,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.security.Principal;
 import java.sql.Blob;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -121,6 +123,77 @@ public class EventRestController {
 
         return ResponseEntity.created(location).body(eventDTO);
     }
+
+
+    @PutMapping("/{eventId}")
+    @Operation(summary = "Modifies an existing event")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Event successfully modified",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = EventManipulationDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid event data", content = @Content),
+            @ApiResponse(responseCode = "403", description = "The operation is not allowed without registration", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Event or category not found", content = @Content),
+            @ApiResponse(responseCode = "405", description = "The operation is not allowed when event has finished", content = @Content)
+    })
+    public ResponseEntity<EventDTO> editEvent(@PathVariable Long eventId, @RequestBody EventManipulationDTO eventManipulationDTO) {
+        // Check for empty fields in the event
+        if (eventHasEmptyFields(eventManipulationDTO)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        //Check if event exists
+        Optional<Event> eventOptional = eventService.findById(eventId);
+        if (!eventOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        Event existingEvent = eventOptional.get();
+
+        //Check if event has not finished yet
+        boolean eventFinished = LocalDateTime.now().isAfter(existingEvent.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        if(eventFinished){
+            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+        }
+
+        //Check if current user is the event creator or an admin
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        Optional<User> userOpt = userService.findByUserName(currentUsername);
+        if(!userOpt.isPresent() || !isUserAdminOrCreator(currentUsername,eventOptional.get())){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        //Check that, in case category is modified, the new category already exists
+        Optional<Category> categoryOpt = categoryService.findById(eventManipulationDTO.getCategoryId());
+        if (!categoryOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        existingEvent.setName(eventManipulationDTO.getName());
+        existingEvent.setDescription(eventManipulationDTO.getDescription());
+        existingEvent.setMaxCapacity(eventManipulationDTO.getMaxCapacity());
+        existingEvent.setPrice(eventManipulationDTO.getPrice());
+        existingEvent.setLocation(eventManipulationDTO.getLocation());
+        existingEvent.setMap(eventManipulationDTO.getMap());
+        existingEvent.setStartDate(eventManipulationDTO.getStartDate());
+        existingEvent.setEndDate(eventManipulationDTO.getEndDate());
+        existingEvent.setAdditionalInfo(eventManipulationDTO.getAdditionalInfo());
+
+        //Set event creator
+        existingEvent.setCreator(userOpt.get());
+
+        // Set the category
+        existingEvent.setCategory(categoryOpt.get());
+
+        // Save the event
+        Event savedEvent = eventService.save(existingEvent);
+
+        // Transform the saved event to EventDTO
+        EventDTO eventDTO = transformDTO(savedEvent);
+
+        return ResponseEntity.accepted().body(eventDTO);
+    }
+
 
     @PutMapping("/{eventId}/photo")
     @Operation(summary = "Uploads a photo for an existing event", description = "Allows uploading a photo for an existing event. Only the event creator or an admin can perform this action.")
