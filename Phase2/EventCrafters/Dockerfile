@@ -4,7 +4,6 @@
 FROM --platform=linux/amd64 ubuntu:jammy
 FROM maven:3.9.6-eclipse-temurin-17 as builder
 
-
 # Define el directorio de trabajo donde ejecutar comandos
 WORKDIR /project
 
@@ -29,10 +28,10 @@ FROM openjdk:17.0.2
 WORKDIR /usr/src/app
 
 # Copia el JAR del contenedor de compilación
-COPY --from=builder /project/target/*.jar /usr/src/app/app.jar
+COPY --from=builder /project/target/*.jar /usr/src/app/eventcrafters.jar
 
 # Indica el puerto que expone el contenedor
-EXPOSE 8443
+EXPOSE 5000
 
 # Comando que se ejecuta al hacer docker run
-CMD [ "java", "-jar", "app.jar" ]
+CMD [ "java", "-jar", "eventcrafters.jar" ]
