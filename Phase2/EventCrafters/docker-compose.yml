@@ -3,7 +3,7 @@ services:
     image: luciadominguezrodrigo/eventcrafters:latest
     #build:
     #  context: .
-    #  dockerfile: restart-on-failure.Dockerfile
+    #  dockerfile: Dockerfile
     ports:
       - 8443:8443
     environment:
@@ -19,6 +19,5 @@ services:
       - MYSQL_DATABASE=EventCrafters
     volumes:
       - ./mysql:/var/lib/mysql
-
 
 

@@ -32,7 +32,7 @@ WORKDIR /usr/src/app
 COPY --from=builder /project/target/*.jar /usr/src/app/app.jar
 
 # Indica el puerto que expone el contenedor
-EXPOSE 5000
+EXPOSE 8443
 
 # Comando que se ejecuta al hacer docker run
 CMD [ "java", "-jar", "app.jar" ]
