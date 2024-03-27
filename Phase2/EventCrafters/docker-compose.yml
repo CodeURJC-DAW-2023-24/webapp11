@@ -7,7 +7,7 @@ services:
     ports:
       - 8443:8443
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/EventCrafters?serverTimezone=UTC
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/eventcrafters?serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=password
     restart: on-failure
@@ -16,7 +16,7 @@ services:
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=eventcrafters
+      - MYSQL_DATABASE=EventCrafters
     volumes:
       - ./mysql:/var/lib/mysql
 
