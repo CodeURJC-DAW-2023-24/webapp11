@@ -3,6 +3,8 @@ package com.EventCrafters.EventCrafters.controller;
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.User;
+import com.EventCrafters.EventCrafters.security.jwt.AuthResponse;
+import com.EventCrafters.EventCrafters.security.jwt.UserLoginService;
 import com.EventCrafters.EventCrafters.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;
@@ -37,6 +40,8 @@ public class UserWebController {
 	private CategoryService categoryService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserLoginService userLoginService;
 	@Autowired
 	private EventService eventService;
 	@Autowired
@@ -61,9 +66,9 @@ public class UserWebController {
 		return "loginerror";
 	}
 
-	@PostMapping("/logout")
-	public String logout(Model model) {
-		return "login";
+	@GetMapping("/logout")
+	public String logout() {
+		return "redirect:/login";
 	}
 
 	@GetMapping("/profile")
@@ -212,7 +217,7 @@ public class UserWebController {
 
 
 	@PostMapping("/delete-account")
-	public String deleteAccount() {
+	public String deleteAccount(HttpServletRequest request, HttpServletResponse response) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentUsername = authentication.getName();
 		Optional<User> userOptional = userService.findByUserName(currentUsername);
@@ -221,6 +226,7 @@ public class UserWebController {
 		userService.deleteUserById(currentUserId);
 		//this is problematic, as it sends a GET request to /logout, which only accepts
 		//POST requests.
+		new AuthResponse(AuthResponse.Status.SUCCESS, userLoginService.logout(request, response));
 		return "redirect:/logout";
 	}
 
