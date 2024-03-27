@@ -16,7 +16,7 @@ services:
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=EventCrafters
+      - MYSQL_DATABASE=eventcrafters
     volumes:
       - ./mysql:/var/lib/mysql
 
