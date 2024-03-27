@@ -25,9 +25,11 @@ const categoriesContainer = document.getElementById('categories-container'),
 function sendProfileImage(){
     let pfp = document.getElementById("pfp");
     let formData = new FormData();
+    let csrfToken = document.getElementById("csrfToken").getAttribute("data-token");
 
     if (isValidInput(pfp)){
         formData.append("profilePicture", pfp.files[0]);
+        formData.append('_csrf', csrfToken); //possibly _csrf
         fetch("/setProfilePicture", {
             method:"POST",
             body: formData,
