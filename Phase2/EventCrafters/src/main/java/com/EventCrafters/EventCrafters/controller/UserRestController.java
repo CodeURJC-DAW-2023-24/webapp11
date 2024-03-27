@@ -48,7 +48,7 @@ public class UserRestController {
 			@ApiResponse(responseCode = "200", description = "User found",
 					content = { @Content(mediaType = "application/json",
 							schema = @Schema(implementation = FullUserDTO.class)) }),
-			@ApiResponse(responseCode = "404", description = "No user currently authenticated")
+			@ApiResponse(responseCode = "404", description = "No user currently authenticated", content = @Content)
 	})
 	@GetMapping("/me")
 	public ResponseEntity<FullUserDTO> currentUser(HttpServletRequest request){
@@ -66,7 +66,7 @@ public class UserRestController {
 			@ApiResponse(responseCode = "200", description = "User found",
 					content = { @Content(mediaType = "application/json",
 							schema = @Schema(oneOf = {FullUserDTO.class, CensoredUserDTO.class})) }),
-			@ApiResponse(responseCode = "404", description = "User not found")
+			@ApiResponse(responseCode = "404", description = "User not found", content = @Content)
 	})
 	@GetMapping("/{id}")
 	public ResponseEntity<CensoredUserDTO> getUser(HttpServletRequest request, @PathVariable Long id){
@@ -101,9 +101,9 @@ public class UserRestController {
 					content = { @Content(mediaType = "application/json",
 							schema = @Schema(implementation = FullUserDTO.class)) }),
 			@ApiResponse(responseCode = "409",
-					description = "Conflict. Username is taken."),
+					description = "Conflict. Username is taken.", content = @Content),
 			@ApiResponse(responseCode = "400",
-					description = "Bad Request. Body must not have a photo attribute.")
+					description = "Bad Request. Body must not have a photo attribute.", content = @Content)
 	})
 	@PostMapping
 	public ResponseEntity<FullUserDTO> newUser(@RequestBody User user){ //especificar en la documentación que no se debe poner un campo photo
@@ -135,9 +135,9 @@ public class UserRestController {
 			@ApiResponse(responseCode = "200", description = "Image found",
 					content = { @Content(mediaType = "image/jpeg")}),
 			@ApiResponse(responseCode = "404",
-					description = "Image not found"),
+					description = "Image not found", content = @Content),
 			@ApiResponse(responseCode = "500",
-					description = "Internal Server Error")
+					description = "Internal Server Error", content = @Content)
 	})
 	@GetMapping ("/img/{id}")
 	public ResponseEntity<byte[]> showUserImage(@PathVariable long id){
@@ -169,13 +169,13 @@ public class UserRestController {
 					content = { @Content(mediaType = "application/json",
 							schema = @Schema(implementation = FullUserDTO.class))}),
 			@ApiResponse(responseCode = "400",
-					description = "Bad Request. Provided user must not have a id attribute."),
+					description = "Bad Request. Provided user must not have a id attribute.", content = @Content),
 			@ApiResponse(responseCode = "403",
-					description = "Forbidden. Current user lacks authority to modify specified user"),
+					description = "Forbidden. Current user lacks authority to modify specified user", content = @Content),
 			@ApiResponse(responseCode = "404",
-					description = "Not Found. No user found with provided id"),
+					description = "Not Found. No user found with provided id", content = @Content),
 			@ApiResponse(responseCode = "409",
-					description = "Conflict. Invalid Username.")
+					description = "Conflict. Invalid Username.", content = @Content)
 	})
 	@PutMapping("/{id}")
 	public ResponseEntity<FullUserDTO> modifyUser(@RequestBody FullUserDTO userDTO, @PathVariable Long id, Principal principal){
@@ -218,9 +218,9 @@ public class UserRestController {
 					content = { @Content(mediaType = "application/json",
 							schema = @Schema(implementation = FullUserDTO.class))}),
 			@ApiResponse(responseCode = "403",
-					description = "Forbidden. Current user lacks authority to delete specified user"),
+					description = "Forbidden. Current user lacks authority to delete specified user", content = @Content),
 			@ApiResponse(responseCode = "404",
-					description = "Not Found. No user found with provided id")
+					description = "Not Found. No user found with provided id", content = @Content)
 	})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<FullUserDTO> deleteUser(@PathVariable Long id, Principal principal){
@@ -239,10 +239,10 @@ public class UserRestController {
 			description = "Changes the profile picture of the user with the given id to a picture created from the data provided in the body")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Ok. Profile picture changed"),
-			@ApiResponse(responseCode = "400", description = "Bad Request. No data provided, or data provided was empty"),
-			@ApiResponse(responseCode = "403", description = "Forbidden. Authenticated user lacks permission to edit this resource"),
-			@ApiResponse(responseCode = "404", description = "Not Found. No user found with provided id"),
-			@ApiResponse(responseCode = "500", description = "Internal Server Error. Couldn't create a Blob from provided data.")
+			@ApiResponse(responseCode = "400", description = "Bad Request. No data provided, or data provided was empty", content = @Content),
+			@ApiResponse(responseCode = "403", description = "Forbidden. Authenticated user lacks permission to edit this resource", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Not Found. No user found with provided id",content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal Server Error. Couldn't create a Blob from provided data.",content = @Content)
 	})
 	@PostMapping("/img/{id}")
 	public ResponseEntity<String> changeProfilePicture(@PathVariable("id") Long id, @RequestPart("photo") MultipartFile pfpData, Principal principal) {
@@ -270,7 +270,7 @@ public class UserRestController {
 			description = "Sends a one time email to the user with specified id for them to recover their password through the web app.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Email sent"),
-			@ApiResponse(responseCode = "404", description = "Not Found. No user found with provided id")
+			@ApiResponse(responseCode = "404", description = "Not Found. No user found with provided id", content = @Content)
 	})
 	@PostMapping("/{id}/recoverPassword")
 	public ResponseEntity<String> recoverPassword(@PathVariable Long id) {

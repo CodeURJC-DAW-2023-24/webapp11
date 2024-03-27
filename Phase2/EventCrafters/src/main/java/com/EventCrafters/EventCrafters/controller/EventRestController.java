@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -283,7 +284,7 @@ public class EventRestController {
     }
 
 
-    @PutMapping("/{eventId}/photo")
+    @PostMapping("/{eventId}/photo")
     @Operation(summary = "Uploads a photo for an existing event", description = "Allows uploading a photo for an existing event. Only the event creator or an admin can perform this action.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Image uploaded",
@@ -318,7 +319,10 @@ public class EventRestController {
                     .buildAndExpand(event.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).body(eventDTO);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(location);
+
+            return new ResponseEntity<>(eventDTO, headers, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -551,7 +555,7 @@ public class EventRestController {
     }
 
     @GetMapping("/user")
-    @Operation(summary = "Retrieves the events that the registered user has created and have not ended yet")
+    @Operation(summary = "Returns the events in which the user is a participant or creator")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Events obtained",
                     content = {@Content(mediaType = "application/json")}),

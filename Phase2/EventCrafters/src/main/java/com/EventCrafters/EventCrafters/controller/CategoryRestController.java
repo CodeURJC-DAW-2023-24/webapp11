@@ -117,7 +117,7 @@ public class CategoryRestController {
 
 
     @PutMapping("/categories/{id}")
-    @Operation(summary = "Shows the information of a specific category.")
+    @Operation(summary = "Modifies an existing category.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Category created",
                     content = { @Content(mediaType = "application/json")}),
