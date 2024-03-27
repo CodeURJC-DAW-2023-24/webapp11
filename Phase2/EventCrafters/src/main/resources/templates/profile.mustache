@@ -117,7 +117,7 @@
                         <label for="pfp" class="custom-file-upload" >
                             <i class="fas fa-camera"></i>
                         </label>
-
+                        <input type="hidden" id="csrfToken" data-token="{{token}}">
                         <input type="file" accept="image/png, image/jpeg, image/jpg" id="pfp" onchange="sendProfileImage()" class="btn btn-primary" placeholder="Editar foto de perfil">
                     </div>
                     <div class="col text-center btn-edit-account {{showWhenUser}}">

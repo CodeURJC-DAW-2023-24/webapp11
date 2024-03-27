@@ -490,13 +490,12 @@ public class EventWebController {
         Category category = categoryService.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
         
-        event.setName(name);
         if (!photo.isEmpty()) {
             Blob photoBlob = new javax.sql.rowset.serial.SerialBlob(photo.getBytes());
             event.setPhoto(photoBlob);
         }
 
-
+        event.setName(name);
         event.setDescription(description);
         event.setMaxCapacity(maxCapacity);
         event.setPrice(price);
@@ -507,38 +506,10 @@ public class EventWebController {
         event.setAdditionalInfo(additionalInfo);
         event.setCategory(category);
 
-        eventService.save(event);
-
-        Set<User> registeredUsers = event.getRegisteredUsers();
-        String subject = "Actualización del Evento: " + name;
-        for (User user : registeredUsers) {
-            String content = generateUpdateEmailContent(name);
-            mailService.sendEmail(user, subject, content, true);
-        }
-
+        eventService.update(event);
         return "redirect:/event/" + id;
     }
 
-    private String generateUpdateEmailContent(String eventName) {
-        return String.format(
-                "<html>" +
-                        "<head>" +
-                        "<style>" +
-                        "body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #333; }" +
-                        ".container { background-color: #f8f8f8; border-radius: 10px; padding: 20px; text-align: center; }" +
-                        "h2 { color: #4CAF50; }" +
-                        "p { margin: 10px 0; }" +
-                        "</style>" +
-                        "</head>" +
-                        "<body>" +
-                        "<div class='container'>" +
-                        "<h2>Uno de los eventos en los que estás inscrito ha sido modificado</h2>" +
-                        "<p>El evento '%s' ha recibido importantes actualizaciones.</p>" +
-                        "<p>Te invitamos a iniciar sesión en tu cuenta para descubrir todas las novedades.</p>" +
-                        "</div>" +
-                        "</body>" +
-                        "</html>", eventName);
-    }
 
 
     @GetMapping("/moreEventsProfile/{i}")

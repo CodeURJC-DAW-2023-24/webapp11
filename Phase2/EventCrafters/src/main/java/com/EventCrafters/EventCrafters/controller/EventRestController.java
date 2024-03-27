@@ -187,7 +187,7 @@ public class EventRestController {
         existingEvent.setCategory(categoryOpt.get());
 
         // Save the event
-        Event savedEvent = eventService.save(existingEvent);
+        Event savedEvent = eventService.update(existingEvent);
 
         // Transform the saved event to EventDTO
         EventDTO eventDTO = transformDTO(savedEvent);

@@ -41,6 +41,37 @@ public class EventService {
 		return repository.save(event);
 	}
 
+	public Event update(Event event){
+		Set<User> registeredUsers = event.getRegisteredUsers();
+		String subject = "Actualización del Evento: " + event.getName();
+		for (User user : registeredUsers) {
+			String content = generateUpdateEmailContent(event.getName());
+			mailService.sendEmail(user, subject, content, true);
+		}
+
+		return repository.save(event);
+	}
+
+	private String generateUpdateEmailContent(String eventName) {
+		return String.format(
+				"<html>" +
+						"<head>" +
+						"<style>" +
+						"body { font-family: Arial, sans-serif; margin: 0; padding: 20px; color: #333; }" +
+						".container { background-color: #f8f8f8; border-radius: 10px; padding: 20px; text-align: center; }" +
+						"h2 { color: #4CAF50; }" +
+						"p { margin: 10px 0; }" +
+						"</style>" +
+						"</head>" +
+						"<body>" +
+						"<div class='container'>" +
+						"<h2>Uno de los eventos en los que estás inscrito ha sido modificado</h2>" +
+						"<p>El evento '%s' ha recibido importantes actualizaciones.</p>" +
+						"<p>Te invitamos a iniciar sesión en tu cuenta para descubrir todas las novedades.</p>" +
+						"</div>" +
+						"</body>" +
+						"</html>", eventName);
+	}
 
 	@Transactional
 	public void delete(Long eventId) {
