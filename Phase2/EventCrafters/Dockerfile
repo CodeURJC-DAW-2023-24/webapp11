@@ -28,10 +28,10 @@ FROM openjdk:17.0.2
 WORKDIR /usr/src/app
 
 # Copia el JAR del contenedor de compilación
-COPY --from=builder /project/target/*.jar /usr/src/app/eventcrafters.jar
+COPY --from=builder /project/target/*.jar /usr/src/app/ec.jar
 
 # Indica el puerto que expone el contenedor
 EXPOSE 5000
 
 # Comando que se ejecuta al hacer docker run
-CMD [ "java", "-jar", "eventcrafters.jar" ]
+CMD [ "java", "-jar", "ec.jar" ]
