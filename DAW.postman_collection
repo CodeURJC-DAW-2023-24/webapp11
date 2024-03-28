@@ -1,0 +1,480 @@
+{
+	"info": {
+		"_postman_id": "ac8c8209-23fa-4e9b-97f7-754219e38e5a",
+		"name": "Práctica DAW",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33136046"
+	},
+	"item": [
+		{
+			"name": "VM",
+			"item": [
+				{
+					"name": "Events",
+					"item": [
+						{
+							"name": "Get an event",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://10.100.139.249:8443/api/events/1",
+									"protocol": "https",
+									"host": [
+										"10",
+										"100",
+										"139",
+										"249"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get the image of an event",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://10.100.139.249:8443/api/events/image/5",
+									"protocol": "https",
+									"host": [
+										"10",
+										"100",
+										"139",
+										"249"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events",
+										"image",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get the graph of an event",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://10.100.139.249:8443/api/events/graph/6",
+									"protocol": "https",
+									"host": [
+										"10",
+										"100",
+										"139",
+										"249"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events",
+										"graph",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create event",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Tech Conference 2024\",\r\n    \"description\": \"A comprehensive tech conference covering all aspects of software development.\",\r\n    \"maxCapacity\": 500,\r\n    \"price\": 299.99,\r\n    \"location\": \"Tech Arena, Silicon Valley\",\r\n      \"map\": \"<iframe src=\\\"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12166.31030718179!2d-3.8806475!3d40.3295317!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418fc5ceff7897%3A0x811e3f75ccc3b6fb!2sUniversidad%20Rey%20Juan%20Carlos%2C%20campus%20de%20M%C3%B3stoles!5e0!3m2!1ses!2ses!4v1710094939356!5m2!1ses!2ses\\\" width=\\\"600\\\" height=\\\"450\\\" style=\\\"border:0;\\\" allowfullscreen=\\\"\\\" loading=\\\"lazy\\\" referrerpolicy=\\\"no-referrer-when-downgrade\\\"></iframe>\",\r\n    \"startDate\": \"2024-05-15T09:00:00Z\",\r\n    \"endDate\": \"2024-05-17T17:00:00Z\",\r\n    \"additionalInfo\": \"Bring your tech enthusiasm!\",\r\n    \"categoryId\": 1\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://10.100.139.249:8443/api/events",
+									"protocol": "https",
+									"host": [
+										"10",
+										"100",
+										"139",
+										"249"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set event photo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "photo",
+											"type": "file",
+											"src": "postman-cloud:///1eedef88-e0da-4a60-9079-ba77f840a725"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://10.100.139.249:8443/api/events/7/photo",
+									"protocol": "https",
+									"host": [
+										"10",
+										"100",
+										"139",
+										"249"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events",
+										"7",
+										"photo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add attendance for an event",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "2",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://10.100.139.249:8443/api/events/6/attendees",
+									"protocol": "https",
+									"host": [
+										"10",
+										"100",
+										"139",
+										"249"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events",
+										"6",
+										"attendees"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"user2\",\r\n    \"password\":\"pass\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://10.100.139.249:8443/api/auth/login",
+									"protocol": "https",
+									"host": [
+										"10",
+										"100",
+										"139",
+										"249"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://10.100.139.249:8443/api/auth/logout",
+									"protocol": "https",
+									"host": [
+										"10",
+										"100",
+										"139",
+										"249"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Localhost",
+			"item": [
+				{
+					"name": "Events",
+					"item": [
+						{
+							"name": "Get an event",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:8443/api/events/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get the image of an event",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:8443/api/events/image/5",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events",
+										"image",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get the graph of an event",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:8443/api/events/graph/6",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events",
+										"graph",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create event",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Tech Conference 2024\",\r\n    \"description\": \"A comprehensive tech conference covering all aspects of software development.\",\r\n    \"maxCapacity\": 500,\r\n    \"price\": 299.99,\r\n    \"location\": \"Tech Arena, Silicon Valley\",\r\n      \"map\": \"<iframe src=\\\"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12166.31030718179!2d-3.8806475!3d40.3295317!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418fc5ceff7897%3A0x811e3f75ccc3b6fb!2sUniversidad%20Rey%20Juan%20Carlos%2C%20campus%20de%20M%C3%B3stoles!5e0!3m2!1ses!2ses!4v1710094939356!5m2!1ses!2ses\\\" width=\\\"600\\\" height=\\\"450\\\" style=\\\"border:0;\\\" allowfullscreen=\\\"\\\" loading=\\\"lazy\\\" referrerpolicy=\\\"no-referrer-when-downgrade\\\"></iframe>\",\r\n    \"startDate\": \"2024-05-15T09:00:00Z\",\r\n    \"endDate\": \"2024-05-17T17:00:00Z\",\r\n    \"additionalInfo\": \"Bring your tech enthusiasm!\",\r\n    \"categoryId\": 1\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:8443/api/events",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set event photo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "photo",
+											"type": "file",
+											"src": "postman-cloud:///1eedef88-e0da-4a60-9079-ba77f840a725"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://localhost:8443/api/events/7/photo",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events",
+										"7",
+										"photo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add attendance for an event",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "3",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:8443/api/events/6/attendees",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"events",
+										"6",
+										"attendees"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"user2\",\r\n    \"password\":\"pass\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:8443/api/auth/login",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:8443/api/auth/logout",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "8443",
+									"path": [
+										"api",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
