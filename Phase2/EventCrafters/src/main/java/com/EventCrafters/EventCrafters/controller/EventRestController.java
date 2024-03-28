@@ -88,7 +88,7 @@ public class EventRestController {
     })
     public ResponseEntity<EventDTO> createEvent(@RequestBody EventManipulationDTO eventManipulationDTO) {
         // Check for empty fields in the event
-        if (eventHasEmptyFields(eventManipulationDTO)) {
+        if (eventService.eventHasEmptyFields(eventManipulationDTO)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -142,7 +142,7 @@ public class EventRestController {
     })
     public ResponseEntity<EventDTO> editEvent(@PathVariable Long eventId, @RequestBody EventManipulationDTO eventManipulationDTO) {
         // Check for empty fields in the event
-        if (eventHasEmptyFields(eventManipulationDTO)) {
+        if (eventService.eventHasEmptyFields(eventManipulationDTO)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -664,42 +664,6 @@ public class EventRestController {
             return new EventFinishedDTO(event.getId(), event.getName(), event.getDescription(), event.getMaxCapacity(), event.getPrice(), event.getLocation(), event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo(), event.getCreator().getId(), event.getNumRegisteredUsers(), event.getCategory().getId(), event.getAttendeesCount(), reviewService.calculateAverageRatingForEvent(event.getId()), reviewService.countReviewsForEvent(event.getId()));
         }
         return new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getMaxCapacity(), event.getPrice(), event.getLocation(), event.getMap(), event.getStartDate(), event.getEndDate(), event.getAdditionalInfo(), event.getCreator().getId(), event.getNumRegisteredUsers(), event.getCategory().getId());
-    }
-
-    private boolean eventHasEmptyFields(EventManipulationDTO event) {
-        if (
-                event.getName() == null || event.getName().trim().isEmpty() ||
-                        event.getDescription() == null || event.getDescription().trim().isEmpty() ||
-                        event.getLocation() == null || event.getLocation().trim().isEmpty() ||
-                        event.getMap() == null || event.getMap().trim().isEmpty() ||
-                        event.getCategoryId() == null ||
-                        event.getAdditionalInfo() == null || event.getAdditionalInfo().trim().isEmpty()) {
-            return true;
-        }
-
-        if (event.getMaxCapacity() <= 0 || event.getPrice() < 0) {
-            return true;
-        }
-
-        Date now = new Date();
-
-        if (event.getStartDate() == null || event.getStartDate().before(now)) {
-            return true;
-        }
-
-        if (event.getEndDate() == null || event.getEndDate().before(event.getStartDate())) {
-            return true;
-        }
-
-        String mapIframeRegex = "<iframe.*src=\"https?.*\".*></iframe>";
-        Pattern pattern = Pattern.compile(mapIframeRegex, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(event.getMap());
-
-        if (!matcher.find()) {
-            return true;
-        }
-
-        return false;
     }
 
     private boolean isUserAdminOrCreator(String username, Event event) {
