@@ -513,13 +513,13 @@ To deploy the application on the virtual machine provided by the university, fol
 
 4. Deploying the Application with Docker Compose:
    ```
-   docker-compose up -d
+   docker compose up -d
    ```
 5. The application will be accesible in the following URL: [https://10.100.139.249:8443](https://10.100.139.249:8443)
 
 6. To stop the deployment, run the following command:
    ```
-   docker-compose down
+   docker compose down
    ```
 
 ## 🔗 Virtual Machine Application URL and Example Users
