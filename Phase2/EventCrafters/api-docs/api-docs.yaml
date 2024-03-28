@@ -1,0 +1,1113 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8443
+  description: Generated server url
+paths:
+  /api/users/{id}:
+    get:
+      tags:
+      - user-rest-controller
+      summary: Gets a specific user by their id
+      description: "Returns the user with the id specified in the URL. If it is the\
+        \ currently authenticated user, all information about them will be returned.\
+        \ If it is some other user, a censored version will be returned, omitting\
+        \ some information. If there is no user with the specified id, returns 404\
+        \ not found."
+      operationId: getUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: User not found
+        "200":
+          description: User found
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/FullUserDTO'
+                - $ref: '#/components/schemas/CensoredUserDTO'
+    put:
+      tags:
+      - user-rest-controller
+      summary: Substitutes a user with the one provided
+      description: Substitutes the user with the specified id with a user created
+        from the provided data
+      operationId: modifyUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FullUserDTO'
+        required: true
+      responses:
+        "200":
+          description: User modified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUserDTO'
+        "400":
+          description: Bad Request. Provided user must not have a id attribute.
+        "409":
+          description: Conflict. Invalid Username.
+        "403":
+          description: Forbidden. Current user lacks authority to modify specified
+            user
+        "404":
+          description: Not Found. No user found with provided id
+    delete:
+      tags:
+      - user-rest-controller
+      summary: Deletes user with specified id.
+      description: "Deletes user with specified id. If no such user exists, return\
+        \ 404. If current user has no permissions to delete specified user, return\
+        \ 403."
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: User deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUserDTO'
+        "404":
+          description: Not Found. No user found with provided id
+        "403":
+          description: Forbidden. Current user lacks authority to delete specified
+            user
+  /api/events/{eventId}:
+    put:
+      tags:
+      - event-rest-controller
+      summary: Modifies an existing event
+      operationId: editEvent
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventManipulationDTO'
+        required: true
+      responses:
+        "400":
+          description: Invalid event data
+        "405":
+          description: The operation is not allowed when event has finished
+        "403":
+          description: The operation is not allowed without registration
+        "404":
+          description: Event or category not found
+        "202":
+          description: Event successfully modified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventManipulationDTO'
+    delete:
+      tags:
+      - event-rest-controller
+      summary: Delete an event created if user is registered as event creator or as
+        admin
+      operationId: deleteEvent
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Event not found
+        "405":
+          description: The operation is not allowed when event has finished
+        "200":
+          description: Event deleted successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EventDTO'
+        "403":
+          description: Operation not permitted
+  /api/events/{eventId}/attendees:
+    put:
+      tags:
+      - event-rest-controller
+      summary: sets the number of attendees for an event
+      operationId: updateEventAttendees
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int32
+        required: true
+      responses:
+        "200":
+          description: Number of attendees updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventFinishedDTO'
+        "404":
+          description: Event not found
+        "400":
+          description: Provided information not valid
+        "403":
+          description: Operation not permitted
+  /api/categories/{id}:
+    get:
+      tags:
+      - category-rest-controller
+      summary: "Retrieves the category, with the ID specified in the url"
+      operationId: showCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not found
+        "200":
+          description: Category obtained
+          content:
+            application/json: {}
+    put:
+      tags:
+      - category-rest-controller
+      summary: Modifies an existing category.
+      operationId: substituteCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDTO'
+        required: true
+      responses:
+        "404":
+          description: Not found
+        "201":
+          description: Category created
+          content:
+            application/json: {}
+    delete:
+      tags:
+      - category-rest-controller
+      summary: Deletes a specific category.
+      operationId: deleteCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not found
+        "201":
+          description: Category created
+          content:
+            application/json: {}
+        "403":
+          description: Operation not permitted
+  /api/users:
+    post:
+      tags:
+      - user-rest-controller
+      summary: Creates a new user
+      description: Creates a new user from the data specified in the request body.
+      operationId: newUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "409":
+          description: Conflict. Username is taken.
+        "400":
+          description: Bad Request. Body must not have a photo attribute.
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUserDTO'
+  /api/users/{id}/recoverPassword:
+    post:
+      tags:
+      - user-rest-controller
+      summary: Sends an email for password recovery.
+      description: Sends a one time email to the user with specified id for them to
+        recover their password through the web app.
+      operationId: recoverPassword
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found. No user found with provided id
+        "200":
+          description: Email sent
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/users/img/{id}:
+    get:
+      tags:
+      - user-rest-controller
+      summary: Gets the image associated with a user.
+      description: Returns the image associated to the user with the specified id.
+      operationId: showUserImage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Image not found
+        "500":
+          description: Internal Server Error
+        "200":
+          description: Image found
+          content:
+            image/jpeg: {}
+    post:
+      tags:
+      - user-rest-controller
+      summary: Changes the profile picture of the specified user
+      description: Changes the profile picture of the user with the given id to a
+        picture created from the data provided in the body
+      operationId: changeProfilePicture
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                photo:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Ok. Profile picture changed
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: "Bad Request. No data provided, or data provided was empty"
+        "403":
+          description: Forbidden. Authenticated user lacks permission to edit this
+            resource
+        "404":
+          description: Not Found. No user found with provided id
+        "500":
+          description: Internal Server Error. Couldn't create a Blob from provided
+            data.
+  /api/reviews:
+    post:
+      tags:
+      - review-rest-controller
+      summary: Create a review for an event that has ended and for which the user
+        had signed up.
+      operationId: newReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewDTO'
+        required: true
+      responses:
+        "400":
+          description: Bad request
+        "201":
+          description: Review created
+          content:
+            application/json: {}
+        "403":
+          description: Operation not permitted
+        "401":
+          description: Unauthorized
+  /api/events:
+    post:
+      tags:
+      - event-rest-controller
+      summary: Creates a new event
+      operationId: createEvent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventManipulationDTO'
+        required: true
+      responses:
+        "404":
+          description: Category not found
+        "201":
+          description: Event successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventManipulationDTO'
+        "400":
+          description: Invalid event data
+        "403":
+          description: The operation is not allowed without registration
+        "500":
+          description: Internal server error
+  /api/events/{eventId}/photo:
+    post:
+      tags:
+      - event-rest-controller
+      summary: Uploads a photo for an existing event
+      description: Allows uploading a photo for an existing event. Only the event
+        creator or an admin can perform this action.
+      operationId: uploadEventPhoto
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                photo:
+                  type: string
+                  format: binary
+      responses:
+        "404":
+          description: Event not found
+        "403":
+          description: Current user not is not the creator or an admin
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EventDTO'
+        "200":
+          description: Image uploaded
+          content:
+            image/jpeg: {}
+        "500":
+          description: Error retrieving the image
+  /api/events/unregistration/{eventId}:
+    post:
+      tags:
+      - event-rest-controller
+      summary: Unregisters current user for selected event
+      operationId: leaveAnEvent
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Event not found
+        "405":
+          description: Event has already finished
+        "500":
+          description: User is not registered
+        "403":
+          description: User is not registered in the event yet
+        "200":
+          description: User successfully unregistered in the event
+  /api/events/registration/{eventId}:
+    post:
+      tags:
+      - event-rest-controller
+      summary: Registers current user for selected event
+      operationId: registerToEvent
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Event not found
+        "405":
+          description: Event has already finished
+        "500":
+          description: User is not registered
+        "200":
+          description: User successfully registered in the event
+        "403":
+          description: "User is already registered in the event, or is the event creator\
+            \ or event is full"
+  /api/categories:
+    get:
+      tags:
+      - category-rest-controller
+      summary: Retrieves the categories available
+      operationId: showCategories
+      parameters:
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Categories obtained
+          content:
+            application/json: {}
+        "400":
+          description: Bad request
+    post:
+      tags:
+      - category-rest-controller
+      summary: Adds a category to the database and returns the url to visualize it.
+      operationId: newCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDTO'
+        required: true
+      responses:
+        "400":
+          description: Bad request
+        "201":
+          description: Category created
+          content:
+            application/json: {}
+  /api/auth/refresh:
+    post:
+      tags:
+      - login-controller
+      summary: Refresh token
+      description: Refreshes authentication tokens.
+      operationId: refreshToken
+      parameters:
+      - name: refreshToken
+        in: cookie
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Token refreshed successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /api/auth/logout:
+    post:
+      tags:
+      - login-controller
+      summary: User logout
+      description: Logs out the user and clears the tokens.
+      operationId: logOut
+      responses:
+        "200":
+          description: Logout successful
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /api/auth/login:
+    post:
+      tags:
+      - login-controller
+      summary: User login
+      description: Authenticates a user with username and password.
+      operationId: login
+      parameters:
+      - name: accessToken
+        in: cookie
+        required: false
+        schema:
+          type: string
+      - name: refreshToken
+        in: cookie
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        "200":
+          description: Authentication successful
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /api/users/me:
+    get:
+      tags:
+      - user-rest-controller
+      summary: Gets the currently authenticated user
+      description: "Returns all information associated to the authenticated user.\
+        \ If no user is authenticated, returns 404 not found"
+      operationId: currentUser
+      responses:
+        "404":
+          description: No user currently authenticated
+        "200":
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUserDTO'
+  /api/events/{id}:
+    get:
+      tags:
+      - event-rest-controller
+      summary: Gets an event by its ID
+      description: "Returns basic event details. Once the event has finished, additional\
+        \ information is included in the response."
+      operationId: showEvent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Event not found
+        "200":
+          description: Event found
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/EventDTO'
+                - $ref: '#/components/schemas/EventFinishedDTO'
+  /api/events/user:
+    get:
+      tags:
+      - event-rest-controller
+      summary: Returns the events in which the user is a participant or creator
+      operationId: userEvents
+      parameters:
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: time
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        "400":
+          description: Bad request
+        "200":
+          description: Events obtained
+          content:
+            application/json: {}
+        "403":
+          description: Operation not permitted
+        "401":
+          description: Unauthorized
+  /api/events/image/{id}:
+    get:
+      tags:
+      - event-rest-controller
+      summary: Gets the image of an event
+      operationId: showEventImage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Event or image not found
+        "500":
+          description: Error retrieving the image
+        "200":
+          description: Image found
+          content:
+            image/jpeg: {}
+  /api/events/graph/{eventId}:
+    get:
+      tags:
+      - event-rest-controller
+      summary: Gets graph data of the event
+      operationId: getEventGraphData
+      parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Graph data obtained
+          content:
+            application/json: {}
+        "404":
+          description: Event not found
+        "403":
+          description: Operation not permitted
+  /api/events/filter:
+    get:
+      tags:
+      - event-rest-controller
+      summary: "Retrieves events filtered by category, with the category's ID specified\
+        \ in the URL, by input from the search bar or depending on our recommendation\
+        \ algorithm."
+      operationId: filterByCategory
+      parameters:
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: Id
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: input
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        "400":
+          description: Bad request
+        "200":
+          description: Events obtained
+          content:
+            application/json: {}
+  /api/events/AdminProfile/graph:
+    get:
+      tags:
+      - event-rest-controller
+      summary: Gets graph data of categories in relation to events
+      operationId: getAdminProfileGraphData
+      responses:
+        "200":
+          description: Graph data obtained
+          content:
+            application/json: {}
+        "403":
+          description: Operation not permitted
+components:
+  schemas:
+    FullUserDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        username:
+          type: string
+        photo:
+          type: string
+        email:
+          type: string
+        banned:
+          type: boolean
+        roles:
+          type: array
+          items:
+            type: string
+    EventManipulationDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        maxCapacity:
+          type: integer
+          format: int32
+        price:
+          type: number
+          format: double
+        location:
+          type: string
+        map:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        additionalInfo:
+          type: string
+        categoryId:
+          type: integer
+          format: int64
+      description: For event creation and edition.
+    EventFinishedDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        maxCapacity:
+          type: integer
+          format: int32
+        price:
+          type: number
+          format: double
+        location:
+          type: string
+        map:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        duration:
+          type: string
+        additionalInfo:
+          type: string
+        creatorId:
+          type: integer
+          format: int64
+        numRegisteredUsers:
+          type: integer
+          format: int32
+        categoryId:
+          type: integer
+          format: int64
+        imageUrl:
+          type: string
+        attendeesCount:
+          type: integer
+          format: int32
+        reviewNum:
+          type: integer
+          format: int32
+        averageRating:
+          type: number
+          format: double
+      description: Extended event details available once the event has finished.
+    CategoryDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        color:
+          type: string
+        eventIdInCategories:
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int64
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        color:
+          type: string
+        eventsInCategories:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        attendeesCount:
+          type: integer
+          format: int32
+        photo:
+          type: object
+          properties:
+            binaryStream:
+              type: object
+        description:
+          type: string
+        maxCapacity:
+          type: integer
+          format: int32
+        price:
+          type: number
+          format: double
+        location:
+          type: string
+        map:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        additionalInfo:
+          type: string
+        creator:
+          $ref: '#/components/schemas/User'
+        registeredUsers:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        numRegisteredUsers:
+          type: integer
+          format: int32
+        reviews:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+        category:
+          $ref: '#/components/schemas/Category'
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user:
+          $ref: '#/components/schemas/User'
+        event:
+          $ref: '#/components/schemas/Event'
+        rating:
+          type: integer
+          format: int32
+        text:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        photo:
+          type: object
+          properties:
+            binaryStream:
+              type: object
+        roles:
+          type: array
+          items:
+            type: string
+        banned:
+          type: boolean
+        createdEvents:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        registeredInEvents:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        role:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+    ReviewDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        eventId:
+          type: integer
+          format: int64
+        rating:
+          type: integer
+          format: int32
+        text:
+          type: string
+    EventDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        maxCapacity:
+          type: integer
+          format: int32
+        price:
+          type: number
+          format: double
+        location:
+          type: string
+        map:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        duration:
+          type: string
+        additionalInfo:
+          type: string
+        creatorId:
+          type: integer
+          format: int64
+        numRegisteredUsers:
+          type: integer
+          format: int32
+        categoryId:
+          type: integer
+          format: int64
+        imageUrl:
+          type: string
+      description: Standard response for events.
+    AuthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+          - FAILURE
+        message:
+          type: string
+        error:
+          type: string
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    CensoredUserDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        username:
+          type: string
+        photo:
+          type: string
