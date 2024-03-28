@@ -2,7 +2,7 @@
 
 # <p align="center"> Events Crafters </p>
 ## 📑Index
-- [Phase 0](phase-0)
+- [Phase 0](#phase-0)
    - [Team members](#team-members)
    - [Team organization](#team-organization)
    - [Entities](#entities)
@@ -32,6 +32,16 @@
    - [Recommendation algorithm](#recommendation-algorithm)
    - [Members Participation](#members-participation)
    - [Sample users](#sample-users)
+     
+- [Phase 3](#phase-3---add-a-rest-api-to-the-web-application-and-package-with-docker)
+   - [API REST documentation](#api-rest-documentation)
+   - [Updated Class and Templates Diagram](#updated-class-and-templates-diagram)
+   - [Docker Application Execution Instructions](#docker-application-execution-instructions)
+   - [Docker Image Construction Documentation](#docker-image-construction-documentation)
+   - [Deployment on Virtual Machine](#deployment-on-virtual-machine)
+   - [Virtual Machine Application URL and Example Users](#virtual-machine-application-url-and-example-users)
+   - [Members Participation Phase 3](#members-participation-phase-3)
+     
 ***   
 ### ♨️Phase 0
 ***
@@ -463,4 +473,119 @@ To generate or update this documentation, follow these commands:
 2. Then, use the command to generate or update the documentation:
    ```shell
    mvn verify
+
+## 📊 Updated Class and Templates Diagram
+
+(TODO: Insert content here)
+
+## 🐳 Docker Application Execution Instructions
+
+(TODO: Insert content here)
+
+## 🛠️ Docker Image Construction Documentation
+
+(TODO: Insert content here)
+
+## 🖥️ Deployment on Virtual Machine
+
+(TODO: Insert content here)
+
+## 🔗 Virtual Machine Application URL and Example Users
+
+(TODO: Insert content here)
+
+## 💪 Members Participation Phase 3
+
+### 👩‍🔧Lucía Domínguez Rodrigo
+
+| Commit | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+| File | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+### 👨‍🔧 Ángel Marqués García
+
+| Commit | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+| File | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+### 👨‍🔧 Tarek Elshami Ahmed
+
+| Commit | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+| File | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+### 👨‍🔧 Álvaro Serrano Rodrigo
+
+| Commit | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+| File | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+### 👨‍🔧 Marcos Jiménez Pulido
+
+| Commit | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+
+| File | Description |
+| :----: | :---------: |
+| [1º]() | |
+| [2º]() | |
+| [3º]() | |
+| [4º]() | |
+| [5º]() | |
+
+***
 
