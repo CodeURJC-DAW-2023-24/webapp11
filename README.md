@@ -488,11 +488,61 @@ To generate or update this documentation, follow these commands:
 
 ## 🖥️ Deployment on Virtual Machine
 
-(TODO: Insert content here)
+To deploy the application on the virtual machine provided by the university, follow these steps:
+
+### Prerequisites
+- Ensure you have access to a machine with an internet connection and SSH (Secure Shell) installed. This is standard on most Linux and MacOS systems, and available on Windows through tools like PowerShell or Git Bash.
+- You must be connected to the university's network directly or via MyApps to access the virtual machine.
+- Make sure you have the private key (`prAppWeb11.key`) downloaded on your local machine and have set the appropriate permissions. For Linux/MacOS users, this can be done with the command `chmod 600 prAppWeb11.key`. Windows users may need to adjust permissions by following the guides provided in these links: [Microsoft vscode-remote release issue #1619](https://github.com/microsoft/vscode-remote-release/issues/1619#issuecomment-760990038), [Anuj Varma's SSH on Windows guide](https://www.anujvarma.com/ssh-on-windows-permissions-for-private-key-too-open/).
+
+### Deployment Steps
+1. Open a terminal on your system and use the following command to connect to the virtual machine.
+   ```
+   ssh -i prAppWeb11.key vmuser@10.100.139.249
+   ```
+
+2. Clone the repository in the virtual machine with the following command:
+   ```
+   git clone https://github.com/CodeURJC-DAW-2023-24/webapp11
+   ```
+
+3. Navigating to the Directory Containing docker-compose.yml:
+   ```
+   cd webapp11/Phase2/EventCrafters/
+   ```
+
+4. Deploying the Application with Docker Compose:
+   ```
+   docker-compose up -d
+   ```
+5. The application will be accesible in the following URL: [https://10.100.139.249:8443](https://10.100.139.249:8443)
+
+6. To stop the deployment, run the following command:
+   ```
+   docker-compose down
+   ```
 
 ## 🔗 Virtual Machine Application URL and Example Users
 
-(TODO: Insert content here)
+The application is deployed and can be accessed at the following URL: [https://10.100.139.249:8443](https://10.100.139.249:8443)
+
+Below are the credentials for example users, including an administrator user, to test the application:
+
+### 🔑 @admin
+- username: admin
+- password: adminpass
+  
+### 🛡️ @user
+- username: user
+- password: pass
+
+### 🛡️ @user
+- username: user2
+- password: pass
+
+### 🛡️ @user
+- username: user3
+- password: pass
 
 ## 💪 Members Participation Phase 3
 
