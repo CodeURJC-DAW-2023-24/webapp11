@@ -443,3 +443,24 @@ An event recommendation algorithm has been implemented. It consists of two main 
 - username: user3
 - password: pass
 
+***   
+### :whale2: Phase 3 - Add a REST API to the web application and package with Docker
+***   
+
+## 🌐 API REST documentation
+The REST API documentation is automatically generated and can be accessed in the following formats:
+
+
+- **OpenAPI Specification (YAML):** [api-docs.yaml](Phase2/EventCrafters/api-docs/api-docs.yaml)
+- **HTML Documentation (Viewable in browser):** [api-docs.html](https://raw.githack.com/CodeURJC-DAW-2023-24/webapp11/main/Phase2/EventCrafters/api-docs/api-docs.html)
+
+To generate or update this documentation, follow these commands:
+
+1. Change to the directory containing the `pom.xml` file:
+   ```shell
+   cd Phase2/EventCrafters
+
+2. Then, use the command to generate or update the documentation:
+   ```shell
+   mvn verify
+
