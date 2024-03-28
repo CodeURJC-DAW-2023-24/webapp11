@@ -536,19 +536,19 @@ To generate or update this documentation, follow these commands:
 
 | Commit | Description |
 | :----: | :---------: |
-| [1º]() | |
-| [2º]() | |
-| [3º]() | |
-| [4º]() | |
-| [5º]() | |
+| [1º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/79b748a3fa9febd0c7593ccf38457c7d8cb0eddc) | In this commit, the event creator (or admin) can enter the number of people who attended the event and view a graph showing the percentage of those who registered and attended versus those who did not. If an attempt is made to view the graph without specifying the attendance number, a graph with all values set to -1 is returned. |
+| [2º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/bc3841f967c0a3c1233ef7f10c2af44329a942c6) | This commit updates `EventFinishedDTO` to inherit from `EventDTO` so that one or the other can be returned depending on whether the event has finished to show more information. Additionally, the dates and the average rating of an event along with the number of ratings are formatted nicely in both WEB and REST contexts. |
+| [3º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/037fd429aef62e4661f629bf9028dad38f9d87b8) | In this commit, events are created with their category assigned and linked to the user who has logged in. |
+| [4º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/70222fec814c691da34167b38a9e324f663092f0) | This commit begins the API documentation and creates a DTO to display the necessary data to create an event. |
+| [5º](https://github.com/CodeURJC-DAW-2023-24/webapp11/commit/cfb2ec44eec15ff838f5db7844c682d186b82d72) | In this commit, the creation of an event is separated into two parts: one for creating the event and another for assigning an image to it. |
 
 | File | Description |
 | :----: | :---------: |
-| [1º]() | |
-| [2º]() | |
-| [3º]() | |
-| [4º]() | |
-| [5º]() | |
+| [1º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/controller/EventRestController.java) | EventRestController|
+| [2º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/DTO/EventDTO.java) | EventDTO|
+| [3º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/DTO/EventFinishedDTO.java) | EventFinishedDTO|
+| [4º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/DTO/EventManipulationDTO.java) | EventManipulationDTO|
+| [5º](Phase2/EventCrafters/src/main/java/com/EventCrafters/EventCrafters/controller/EventWebController.java) | EventWebController|
 
 ### 👨‍🔧 Álvaro Serrano Rodrigo
 
