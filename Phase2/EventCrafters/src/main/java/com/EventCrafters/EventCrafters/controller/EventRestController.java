@@ -3,6 +3,7 @@ package com.EventCrafters.EventCrafters.controller;
 import com.EventCrafters.EventCrafters.DTO.EventDTO;
 import com.EventCrafters.EventCrafters.DTO.EventFinishedDTO;
 import com.EventCrafters.EventCrafters.DTO.EventManipulationDTO;
+import com.EventCrafters.EventCrafters.DTO.TicketDTO;
 import com.EventCrafters.EventCrafters.model.Category;
 import com.EventCrafters.EventCrafters.model.Event;
 import com.EventCrafters.EventCrafters.model.Review;
@@ -31,6 +32,7 @@ import java.net.URI;
 import java.net.http.HttpResponse;
 import java.security.Principal;
 import java.sql.Blob;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
@@ -281,6 +283,58 @@ public class EventRestController {
         eventService.save(existingEvent);
 
         return ResponseEntity.ok("");
+    }
+
+    @GetMapping("/ticket/{eventId}")
+    @Operation(summary = "Generates an event ticket")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ticket successfully generated", content = @Content),
+            @ApiResponse(responseCode = "403", description = "User is not registered in the event yet", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Event not found", content = @Content),
+            @ApiResponse(responseCode = "405", description = "Event has already finished", content = @Content),
+            @ApiResponse(responseCode = "500", description = "User is not registered", content = @Content)
+    })
+    public ResponseEntity<TicketDTO> getEventTicket(@PathVariable Long eventId){
+        //Check if event exists
+        Optional<Event> eventOptional = eventService.findById(eventId);
+        if (!eventOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        Event existingEvent = eventOptional.get();
+
+        //Check if event has not finished yet
+        boolean eventFinished = LocalDateTime.now().isAfter(existingEvent.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+        if(eventFinished){
+            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+        }
+
+        //Check if user is registered
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        Optional<User> userOpt = userService.findByUserName(currentUsername);
+        if (!userOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        User currentUser = userOpt.get();
+
+        //Check if user is registered in the event
+        if (!existingEvent.getRegisteredUsers().contains(currentUser)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        User eventCreator = existingEvent.getCreator();
+
+        String priceDisplay = existingEvent.getPrice() == 0.0 ? "Gratis" : String.format("%.2f €", existingEvent.getPrice());
+        String startDateFormatted = eventService.formatDate(existingEvent.getStartDate());
+        String endDateFormatted = eventService.formatDate(existingEvent.getEndDate());
+        Duration duration = Duration.between(existingEvent.getStartDate().toInstant(), existingEvent.getEndDate().toInstant());
+        long hours = duration.toHours();
+        long minutes = duration.minusHours(hours).toMinutes();
+        String durationFormatted = String.format("%d horas y %d minutos", hours, minutes);
+
+        TicketDTO ticketDTO = new TicketDTO(existingEvent.getName(), currentUser.getName(), currentUser.getUsername(), currentUser.getEmail(), eventCreator.getName(), eventCreator.getUsername(), eventCreator.getEmail(), existingEvent.getMaxCapacity(), existingEvent.getLocation(), startDateFormatted, endDateFormatted, durationFormatted, existingEvent.getAdditionalInfo(), priceDisplay);
+
+        return ResponseEntity.accepted().body(ticketDTO);
     }
 
 
